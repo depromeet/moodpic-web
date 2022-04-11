@@ -3,12 +3,7 @@ import React from 'react';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import Head from 'next/head';
-
-const theme = {
-  colors: {
-    primary: '#0070f3',
-  },
-};
+import theme from '@styles/theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
