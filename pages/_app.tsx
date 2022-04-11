@@ -1,12 +1,12 @@
-import "@styles/globals.css";
-import React from "react";
-import type { AppProps } from "next/app";
-import { ThemeProvider } from "styled-components";
-import Head from "next/head";
+import '@styles/globals.css';
+import React from 'react';
+import type { AppProps } from 'next/app';
+import { ThemeProvider } from 'styled-components';
+import Head from 'next/head';
 
 const theme = {
   colors: {
-    primary: "#0070f3",
+    primary: '#0070f3',
   },
 };
 
