@@ -1,6 +1,6 @@
 ## Description
 
-<!-- 관련 이슈를 기입해주세요. -->
+<!-- 해당 Pull Request에 대한 설명을 해주세요. -->
 
 Fixes (issue #)
 
