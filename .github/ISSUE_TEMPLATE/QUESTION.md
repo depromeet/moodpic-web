@@ -1,6 +1,6 @@
 ---
-name: ':question: 질문'
-about: 기능을 변경하거나 추가하지 않고 추가하거나 개선 할 부분
+name: '❓ 질문'
+about: 궁금한 내용 질문
 labels: 'Type: Question :question:'
 ---
 
@@ -10,7 +10,7 @@ labels: 'Type: Question :question:'
 어떤 issue에 관한 질문이라면 이슈를 태그해주세요.
 -->
 
-About issues #
+About (issues #)
 
 ## Checklist
 
