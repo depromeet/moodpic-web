@@ -13,8 +13,8 @@ labels: 'Type: Feature Request :raised_hands:'
 <!-- 새로운 기능인지 기존 기능에 대한 변경인지 체크해주세요. 
 체크 후에는 해당 사항 아닌 거라면 삭제해주세요. -->
 
-- [ ] 새로운 기능
-- [ ] 기존 기능 변경
+✅ 새로운 기능
+✅ 기존 기능 변경 - Fixes(issue #)
 
 ## Motivation
 
@@ -26,5 +26,6 @@ labels: 'Type: Feature Request :raised_hands:'
 
 ## Checklist
 
-- [ ] Type에 체크하지 않은 체크 박스를 삭제하셨나요?
-- [ ] 기능에 대해 필요한 내용을 올바르게 설명했나요?
+✅ Type에 해당 사항이 아닌 체크박스를 제거하셨나요?
+✅ 기존 기능 변경에 대한 내용인 경우 issue를 태그 하셨나요?
+✅ 기능에 대해 필요한 내용을 올바르게 설명했나요?
