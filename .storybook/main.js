@@ -8,7 +8,12 @@ module.exports = {
     '../pages/**/*.stories.mdx',
     '../pages/**/*.stories.@(js|jsx|ts|tsx)',
   ],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-actions',
+    '@storybook/addon-interactions',
+  ],
   webpackFinal: async (config) => {
     return {
       ...config,
