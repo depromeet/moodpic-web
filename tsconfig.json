@@ -15,10 +15,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@hooks/*": ["hooks/*"],
-      "@styles/*": ["styles/*"],
-      "@reducers/*": ["reducers/*"],
-      "@components/*": ["components/*"]
+      "@/*": ["./*"]
     },
     "incremental": true
   },
