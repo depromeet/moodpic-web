@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "clean": "rm -rf ./next ./node_modules",
     "svgo": "npx svgo -f public/svgs",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
@@ -15,10 +16,12 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.181",
+    "axios": "^0.26.1",
     "lodash": "^4.17.21",
     "next": "12.1.4",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-query": "^3.34.19",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
@@ -30,8 +33,8 @@
     "@storybook/react": "^6.4.21",
     "@storybook/testing-library": "^0.0.9",
     "@types/node": "17.0.23",
-    "@types/react": "17.0.43",
-    "@types/react-dom": "17.0.14",
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
     "@types/styled-components": "^5.1.24",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
@@ -51,6 +54,7 @@
     "eslint-plugin-storybook": "^0.5.8",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
+    "msw": "^0.39.2",
     "prettier": "^2.6.2",
     "react-docgen-typescript-loader": "^3.7.2",
     "typescript": "4.6.3"
@@ -60,5 +64,8 @@
       "eslint --fix",
       "prettier --write"
     ]
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
