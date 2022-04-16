@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import theme from '@styles/theme';
+import theme from '@/styles/theme';
 
 export const ExampleWrap = styled.div`
   background-color: ${theme.colors.primary}; // 방법 1

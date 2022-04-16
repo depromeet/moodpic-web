@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Header } from '@components/Common';
+import { Header } from '@/components/Common';
 import SvgIcon from 'public/svgs/vercel.svg';
 import { ExampleWrap } from './Example.styles';
 
