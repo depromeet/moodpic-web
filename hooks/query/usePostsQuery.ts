@@ -1,7 +1,7 @@
 import Error from 'next/error';
 import { useQuery } from 'react-query';
 import { apiClient } from '@/shared/api/apiClient';
-import QueryKey from '@/shared/constants/queryKey';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
 
 // TODO: 예시 interface -> 이후 제거
 interface Post {
@@ -16,7 +16,7 @@ const fetchPosts = async (): Promise<Post[]> => {
 };
 
 const usePostsQuery = () => {
-  return useQuery<Post[], Error>(QueryKey.GET_POSTS, fetchPosts);
+  return useQuery<Post[], Error>(QUERY_KEY.GET_POSTS, fetchPosts);
 };
 
 export { usePostsQuery, fetchPosts };
