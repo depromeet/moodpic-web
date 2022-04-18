@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePostsQuery } from '@hooks/query';
+import { usePostsQuery } from '@/hooks/query';
 import Example from '../components/Example/Example';
 
 const Home = () => {
@@ -15,12 +15,12 @@ const Home = () => {
 if (process.env.NODE_ENV === 'development') {
   if (typeof window === 'undefined') {
     (async () => {
-      const { server } = await import('@mocks/server');
+      const { server } = await import('@/mocks/server');
       server.listen();
     })();
   } else {
     (async () => {
-      const { worker } = await import('@mocks/browser');
+      const { worker } = await import('@/mocks/browser');
       worker.start();
     })();
   }

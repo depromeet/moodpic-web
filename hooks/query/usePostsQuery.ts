@@ -1,7 +1,7 @@
 import Error from 'next/error';
 import { useQuery } from 'react-query';
-import { apiClient } from '@shared/api/apiClient';
-import QueryKey from '@shared/constants/queryKey';
+import { apiClient } from '@/shared/api/apiClient';
+import QueryKey from '@/shared/constants/queryKey';
 
 // TODO: 예시 interface -> 이후 제거
 interface Post {
