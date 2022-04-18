@@ -16,7 +16,7 @@
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   cursor: default;
-  line-height: 1.16;
+  line-height: 1.2;
   overflow-wrap: break-word;
   -moz-tab-size: 4;
   tab-size: 4;
@@ -25,9 +25,11 @@
 html,
 body {
   height: 100%;
+  font-size: 62.5%;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
     'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
     'Malgun Gothic', sans-serif;
+  letter-spacing: -0.01rem;
 }
 
 img,
