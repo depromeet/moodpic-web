@@ -1,21 +1,62 @@
-const theme = {
-  colors: {
-    primary: '#0070f3',
-    gray9: '#3b3f4a',
-    gray8: '#5a5e6a',
-    gray7: '#7f828c',
-    gray6: '#9da0a8',
-    gray5: '#bec1c7',
-    gray4: '#d5d8dc',
-    gray3: '#e4e6ea',
-    gray2: '#eff1f4',
-    gray1: '#f9fafc',
-    black: '#000000',
-    white: '#ffffff',
-    caution: '#f9a825',
-    error: '#e03028',
-    success: '#2fb916',
-  },
+import { css } from 'styled-components';
+
+const colors = {
+  primary: '#ffec3e',
+  black: '#121212',
+  gray1: '#1f1f1f',
+  gray2: '#272727',
+  gray3: '#3a3a3b',
+  gray4: '#7f7f7f',
+  gray5: '#a6a6a6',
+  gray6: '#bfbfbf',
+  white: '#f2f2f2',
 } as const;
+
+const fonts = {
+  h1: () => css`
+    font-size: 2.4rem;
+    font-weight: bold;
+  `,
+  h3: () => css`
+    font-size: 1.8rem;
+    font-weight: bold;
+  `,
+  h4: () => css`
+    font-size: 1.6rem;
+  `,
+  h5: () => css`
+    font-size: 1.4rem;
+    font-weight: bold;
+  `,
+  h6: () => css`
+    font-size: 1.4rem;
+  `,
+  subtitle1: () => css`
+    font-size: 2.4rem;
+    line-height: 144%;
+  `,
+  body: () => css`
+    font-size: 1.4rem;
+    line-height: 170%;
+  `,
+  caption1: () => css`
+    font-size: 1.2rem;
+  `,
+  caption2: () => css`
+    font-size: 1.2rem;
+    font-weight: bold;
+  `,
+  btn1: () => css`
+    font-size: 1.6rem;
+    font-weight: bold;
+    line-height: 1.8rem;
+  `,
+  btn2: () => css`
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+  `,
+} as const;
+
+const theme = { colors, fonts };
 
 export default theme;
