@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import theme from '@styles/theme';
+import theme from '@/styles/theme';
 
 export const Container = styled.main`
-  background-color: ${theme.colors.gray7};
+  background-color: ${theme.colors.gray6};
 `;
 export const ContainerInner = styled.div`
   display: flex;

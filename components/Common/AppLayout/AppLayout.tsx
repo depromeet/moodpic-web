@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppProps } from 'next/app';
-import { Header } from '@components/Common';
+import { Header } from '@/components/Common';
 import { Container, ContainerInner } from './AppLayout.styles';
 
 interface AppLayoutProps {
