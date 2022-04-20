@@ -15,12 +15,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>11th 5team front-end</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          rel="stylesheet"
-          as="style"
-          crossOrigin=""
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
-        />
       </Head>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>

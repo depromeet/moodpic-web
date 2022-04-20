@@ -39,7 +39,14 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          <link
+            rel="stylesheet"
+            as="style"
+            crossOrigin=""
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />
