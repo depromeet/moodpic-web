@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppProps } from 'next/app';
+import { Header } from '@components/Common';
 import { Container, ContainerInner } from './AppLayout.styles';
 
 interface AppLayoutProps {
@@ -9,7 +10,10 @@ interface AppLayoutProps {
 const AppLayout = ({ children }: AppLayoutProps): React.ReactElement => {
   return (
     <Container>
-      <ContainerInner>{children}</ContainerInner>
+      <ContainerInner>
+        <Header />
+        {children}
+      </ContainerInner>
     </Container>
   );
 };
