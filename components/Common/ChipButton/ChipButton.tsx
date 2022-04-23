@@ -3,7 +3,7 @@ import CloseIcon from '@/assets/icons/close.svg';
 import { ChipButtonContainer, Text, CloseImage } from './ChipButton.styles';
 
 export interface ChipButtonProps {
-  canDelete?: boolean;
+  canDelete: boolean;
   onDelete: MouseEventHandler<HTMLImageElement>;
   children: React.ReactNode;
 }
