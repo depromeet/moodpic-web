@@ -2,7 +2,12 @@ name: front-test
 
 on:
   pull_request:
-    branches: ['feat/*']
+    types: [opened, assigned, synchronize, labeled]
+
+
+defaults:
+  run:
+    working-directory: ./
 
 jobs:
   test:
