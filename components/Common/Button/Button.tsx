@@ -11,9 +11,9 @@ export interface ButtonProps {
 
 const Button = ({
   children,
-  size = 'lg',
-  color = 'primary',
-  hasShadow = false,
+  size,
+  color,
+  hasShadow,
   onClick,
 }: ButtonProps): React.ReactElement => {
   return (
@@ -26,6 +26,12 @@ const Button = ({
       {children}
     </ButtonContainer>
   );
+};
+
+Button.defaultProps = {
+  size: 'lg',
+  color: 'primary',
+  hasShadow: false,
 };
 
 export default Button;
