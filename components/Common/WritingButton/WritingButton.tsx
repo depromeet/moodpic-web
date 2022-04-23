@@ -10,7 +10,7 @@ export interface WritingButtonProps {
 const WritingButton = ({ onClick }: WritingButtonProps): React.ReactElement => {
   return (
     <ButtonContainer onClick={onClick}>
-      <Image src={WritingIcon} alt="기록하기" />
+      <Image src={WritingIcon} alt="기록하기" width={24} height={24} />
     </ButtonContainer>
   );
 };
