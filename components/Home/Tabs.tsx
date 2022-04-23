@@ -12,17 +12,17 @@ interface Tab {
   label: typeof HOME_TAB_LABEL[keyof typeof HOME_TAB_LABEL];
 }
 
-export interface TabProps {
+export interface TabsProps {
   currentTab: CurrentTabType;
   setCurrentTab: (tab: CurrentTabType) => void;
   onClick: () => void;
 }
 
-const Tab = ({
+const Tabs = ({
   currentTab,
   setCurrentTab,
   onClick,
-}: TabProps): React.ReactElement => {
+}: TabsProps): React.ReactElement => {
   const tabList = [
     {
       key: HOME_TAB_TYPE.FOLDER,
@@ -44,11 +44,7 @@ const Tab = ({
 
   return (
     <TabContainer>
-      <TabHeader>
-        <TabTitle>나의 기록</TabTitle>
-        {currentTab === HOME_TAB_TYPE.FOLDER && <Button>편집</Button>}
-      </TabHeader>
-      <Tabs>
+      <TabList>
         {tabList.map((tab: Tab) => {
           return (
             <TabButton
@@ -61,40 +57,27 @@ const Tab = ({
           );
         })}
         {currentTab === HOME_TAB_TYPE.FOLDER && <FolderPlus />}
-      </Tabs>
+      </TabList>
     </TabContainer>
   );
 };
 
-const TabTitle = styled.h3`
-  ${theme.fonts.h3};
-  color: ${theme.colors.gray6};
-`;
-
-const TabHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 52px;
-`;
-
 const TabContainer = styled.div`
-  padding-top: 33px;
+  position: sticky;
+  top: 0;
 `;
 
-const Tabs = styled.div`
+const TabList = styled.div`
   display: flex;
-  position: relative;
+  padding: 0 18px;
+  margin-right: -18px;
+  margin-left: -18px;
+  background-color: ${theme.colors.black};
 `;
 
 const FolderImage = styled.button`
   justify-self: flex-end;
   margin-left: auto;
-`;
-
-const Button = styled.button`
-  ${theme.fonts.h6};
-  color: ${theme.colors.gray6};
 `;
 
 const TabButton = styled.button<{ activate: boolean }>`
@@ -113,4 +96,4 @@ const TabButton = styled.button<{ activate: boolean }>`
   }
 `;
 
-export default Tab;
+export default Tabs;
