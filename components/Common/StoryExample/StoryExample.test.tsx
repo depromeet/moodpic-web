@@ -11,6 +11,14 @@ describe('<StoryExample />', () => {
 
     expect(Content).toBeInTheDocument();
   });
+
+  it('실패하는 테스트', () => {
+    const { Content } = renderStoryExample({
+      content: 'example',
+    });
+
+    expect(Content).not.toBeInTheDocument();
+  });
 });
 
 const renderStoryExample = ({ content = 'default' }: Partial<Props>) => {
