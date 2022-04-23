@@ -6,7 +6,7 @@ const Home = () => {
   const posts = usePostsQuery();
 
   if (posts.isLoading) {
-    return <p>Loading</p>;
+    return <p>Loadinzg</p>;
   }
 
   return <Example />;
