@@ -1,6 +1,8 @@
 const path = require('path');
 const toPath = (_path) => path.join(process.cwd(), _path);
 
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
 module.exports = {
   stories: [
     '../components/**/*.stories.mdx',
@@ -19,6 +21,7 @@ module.exports = {
       ...config,
       resolve: {
         ...config.resolve,
+        plugins: [new TsconfigPathsPlugin({})],
         alias: {
           ...config.resolve.alias,
         },
