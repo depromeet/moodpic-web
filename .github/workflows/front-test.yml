@@ -1,0 +1,23 @@
+name: front-test
+
+on:
+  pull_request:
+    types: [opened, assigned, synchronize, labeled]
+
+
+defaults:
+  run:
+    working-directory: ./
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Test
+        run: npm run test
