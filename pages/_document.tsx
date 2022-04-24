@@ -50,6 +50,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <div id="root-bottomsheet" />
+          <div id="root-dialog" />
           <NextScript />
         </body>
       </Html>
