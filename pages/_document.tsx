@@ -49,6 +49,7 @@ class MyDocument extends Document {
         </Head>
         <body>
           <Main />
+          <div id="root-bottomsheet" />
           <NextScript />
         </body>
       </Html>
