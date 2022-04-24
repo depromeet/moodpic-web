@@ -15,7 +15,8 @@
     "build-storybook": "build-storybook public",
     "test": "jest",
     "watch": "jest --watchAll",
-    "watch:silent": "jest --watchAll --silent"
+    "watch:silent": "jest --watchAll --silent",
+    "chromatic": "npx chromatic --project-token=f450ebe134d3"
   },
   "dependencies": {
     "@types/lodash": "^4.14.181",
@@ -49,6 +50,7 @@
     "@typescript-eslint/parser": "^5.17.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.4",
+    "chromatic": "^6.5.4",
     "eslint": "^8.12.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.2.0",
