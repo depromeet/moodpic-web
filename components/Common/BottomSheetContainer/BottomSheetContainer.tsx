@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { AppProps } from 'next/app';
 import { createPortal } from 'react-dom';
 import { useSpring } from 'react-spring';
 
@@ -15,7 +14,7 @@ import {
 } from './BottomSheetContainer.styles';
 
 interface BottomSheetProps {
-  children: React.ReactNode | AppProps;
+  children: React.ReactNode;
   onClose: () => void;
   BottomSheetHeight: number;
   headerTitle?: React.ReactNode;
