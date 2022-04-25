@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import BottomSheetContainer from '@/components/Common/BottomSheetContainer/BottomSheetContainer';
 import BottomSheetFolerList from '@/components/Common/BottomSheetFolderList/BottomSheetFolerList';
-import BottomSheetShare from '@/components/Common/BottomSheetShare/BottomSheetShare';
+// import BottomSheetShare from '@/components/Common/BottomSheetShare/BottomSheetShare';
 
 import FolderIcon from 'public/svgs/folder.svg';
 

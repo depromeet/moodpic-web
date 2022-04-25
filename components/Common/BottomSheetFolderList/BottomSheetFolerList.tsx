@@ -1,9 +1,9 @@
 import React from 'react';
 import { BottomSheetFolerListWrap } from './BottomSheetFolerList.styles';
 
+type FolderDataType = { folderId: number; folderName: string };
 interface BottomSheetFolerListProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  folderData: any;
+  folderData: FolderDataType[];
 }
 
 const BottomSheetFolerList = ({ folderData }: BottomSheetFolerListProps) => {
