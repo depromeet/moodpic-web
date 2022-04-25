@@ -3,9 +3,9 @@ import { ButtonContainer } from './Button.styles';
 
 export interface ButtonProps {
   children: React.ReactNode;
-  hasShadow: boolean;
-  size: 'lg' | 'md';
-  color: 'primary' | 'gray';
+  hasShadow?: boolean;
+  size?: 'lg' | 'md';
+  color?: 'primary' | 'gray';
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -26,12 +26,6 @@ const Button = ({
       {children}
     </ButtonContainer>
   );
-};
-
-Button.defaultProps = {
-  size: 'lg',
-  color: 'primary',
-  hasShadow: false,
 };
 
 export default Button;
