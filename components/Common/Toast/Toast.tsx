@@ -3,13 +3,13 @@ import React from 'react';
 import { CustomedToastContainer } from './Toast.styles';
 
 interface ToastProps {
-  showType: 'error' | 'warning';
+  type: 'error' | 'warning';
 }
 
-const Toast = ({ showType }: ToastProps) => {
+const Toast = ({ type }: ToastProps) => {
   return (
     <CustomedToastContainer
-      showType={showType}
+      type={type}
       position="bottom-center"
       autoClose={5000}
       hideProgressBar
