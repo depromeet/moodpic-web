@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import HomeBanner from '@/components/Home/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader';
 import HomeTabs, { CurrentTabType } from '@/components/Home/Tabs';
-import Example from '@/components/Example/Example';
+import BottomSheetExample from '@/components/Example/BottomSheetExample';
 import { HOME_TAB_TYPE } from '@/shared/constants/home';
 import styled from 'styled-components';
 
@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <>
-      <Example />
+      <BottomSheetExample />
       <HomeBanner nickname="홍길동" />
       <HomeTabHeader currentTab={currentTab} />
       <HomeTabs
@@ -22,6 +22,7 @@ const Home = () => {
         onClick={() => console.log('폴더 추가')}
       />
       <Contents />
+      <BottomSheetExample />
     </>
   );
 };

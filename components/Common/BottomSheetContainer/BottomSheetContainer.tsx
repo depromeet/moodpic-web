@@ -52,7 +52,7 @@ const BottomSheetContainer = ({
     typeof window !== 'undefined' &&
     document.getElementById('root-bottomsheet');
 
-  const onClickDimmed = () => {
+  const closeModal = () => {
     setPrevClose(true);
   };
 
@@ -60,7 +60,7 @@ const BottomSheetContainer = ({
 
   return createPortal(
     <BottomSheetWrapper>
-      <BottomSheetDimmed style={opacityAnimation} onClick={onClickDimmed} />
+      <BottomSheetDimmed style={opacityAnimation} onClick={closeModal} />
       <BottomSheetWrap>
         <BottomSheetInner style={heightAnimation}>
           {headerTitle ? (
@@ -69,7 +69,7 @@ const BottomSheetContainer = ({
               <CustomImage
                 src={CloseIcon}
                 alt="closeIcon"
-                onClick={onClickDimmed}
+                onClick={closeModal}
               />
             </BottomSheetHeader>
           ) : null}
