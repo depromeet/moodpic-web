@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { HOME_TAB_TYPE } from '@/shared/constants/home';
-
-export type CurrentTabType = typeof HOME_TAB_TYPE[keyof typeof HOME_TAB_TYPE];
+import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
 
 export interface TabHeaderProps {
   currentTab: CurrentTabType;
