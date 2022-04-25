@@ -45,7 +45,7 @@ const mockResponse = [
   },
 ];
 
-const Example = () => {
+const BottomSheetExample = () => {
   const [isVisible, setVisible] = useState(false);
 
   const folderDataLength = mockResponse.length;
@@ -55,18 +55,22 @@ const Example = () => {
     return 66 + 61.8 * folderDataLength + 58;
   };
 
-  const onClickModal = useCallback(() => {
-    setVisible((prev) => !prev);
-  }, []);
+  const handleModal = (action: string) => () => {
+    if (action === 'open') setVisible(true);
+    if (action === 'close') setVisible(false);
+  };
 
   return (
     <>
-      <button onClick={onClickModal} style={{ backgroundColor: 'white' }}>
+      <button
+        onClick={handleModal('open')}
+        style={{ backgroundColor: 'white' }}
+      >
         오픈
       </button>
       {isVisible ? (
         <BottomSheetContainer
-          onClose={onClickModal}
+          onClose={handleModal('close')}
           BottomSheetHeight={calcBottomSheetHeight()}
           headerTitle={
             <>
@@ -83,4 +87,4 @@ const Example = () => {
   );
 };
 
-export default Example;
+export default BottomSheetExample;
