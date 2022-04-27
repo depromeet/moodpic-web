@@ -21,9 +21,9 @@ interface BottomSheetProps {
 }
 
 /**
- * @notice 부모 컴포넌트에서 height를 계산해줘야함
- *
- * padding은 자연스러운 애니메이션을 위해 콘텐츠들에서 패딩을 확보해줘야함
+ * @notice
+ * - 부모 컴포넌트에서 height를 계산해줘야함
+ * - padding은 자연스러운 애니메이션을 위해 콘텐츠들에서 패딩을 확보해줘야함
  */
 
 const BottomSheetContainer = ({
@@ -38,7 +38,16 @@ const BottomSheetContainer = ({
     to: { opacity: isPrevClose ? 0 : 1 },
     from: { opacity: isPrevClose ? 1 : 0.6 },
     onRest: () => {
-      if (isPrevClose) onClose();
+      if (isPrevClose) {
+        onClose();
+      }
+    },
+    onStart: () => {
+      if (isPrevClose) {
+        document.body.style.overflow = 'unset';
+      } else {
+        document.body.style.overflow = 'hidden';
+      }
     },
   });
 
