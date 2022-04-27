@@ -5,8 +5,14 @@ const ModalExample = () => {
   const [isVisible, setVisible] = useState(false);
 
   const handleModal = (action: string) => () => {
-    if (action === 'open') setVisible(true);
-    if (action === 'close') setVisible(false);
+    if (action === 'open') {
+      setVisible(true);
+      document.body.style.overflow = 'hidden';
+    }
+    if (action === 'close') {
+      setVisible(false);
+      document.body.style.overflow = 'unset';
+    }
   };
 
   return (
