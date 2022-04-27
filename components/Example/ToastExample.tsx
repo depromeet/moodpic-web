@@ -10,7 +10,7 @@ const ToastExample = () => {
   return (
     <div>
       <button onClick={notify} style={{ backgroundColor: 'yellow' }}>
-        이미 존재하는 폴더명이에요.
+        토스트 띄우기
       </button>
     </div>
   );

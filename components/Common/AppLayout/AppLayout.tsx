@@ -16,7 +16,7 @@ const AppLayout = ({ children }: AppLayoutProps): React.ReactElement => {
           {children}
         </ContainerInner>
       </Container>
-      <Toast type="error" />
+      <Toast type="confirm" />
     </>
   );
 };

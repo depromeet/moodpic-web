@@ -15,7 +15,6 @@ const Home = () => {
 
   return (
     <>
-      <BottomSheetExample />
       <HomeBanner nickname="홍길동" />
       <HomeTabHeader currentTab={currentTab} />
       <HomeTabs
