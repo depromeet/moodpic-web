@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from 'react';
 import Image from 'next/image';
 import { ButtonContainer } from './WritingButton.styles';
-import WritingIcon from '@/assets/icons/writing.svg';
+import WritingIcon from 'public/svgs/writing.svg';
 
 export interface WritingButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
