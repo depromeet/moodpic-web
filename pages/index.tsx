@@ -1,38 +1,41 @@
 import React, { useState } from 'react';
-import HomeBanner from '@/components/Home/Banner';
-import HomeTabHeader from '@/components/Home/TabHeader';
-import HomeTabs, { CurrentTabType } from '@/components/Home/Tabs';
-import ModalExample from '@/components/Example/ModalExample';
+import { useRouter } from 'next/router';
+import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
+import HomeBanner from '@/components/Home/Banner/Banner';
+import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
+import HomeTabs from '@/components/Home/Tabs/Tabs';
 import BottomSheetExample from '@/components/Example/BottomSheetExample';
-import ToastExample from '@/components/Example/ToastExample';
-import { HOME_TAB_TYPE } from '@/shared/constants/home';
-import styled from 'styled-components';
+import ModalExample from '@/components/Example/ModalExample';
+import FolderList from '@/components/Home/FolderList/FolderList';
+import WritingButon from '@/components/Common/WritingButton/WritingButton';
 
 const Home = () => {
+  const router = useRouter();
   const [currentTab, setCurrentTab] = useState<CurrentTabType>(
     HOME_TAB_TYPE.FOLDER,
   );
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   return (
     <>
       <HomeBanner nickname="홍길동" />
-      <HomeTabHeader currentTab={currentTab} />
+      <HomeTabHeader
+        currentTab={currentTab}
+        isEditMode={isEditMode}
+        toggleEditMode={() => setIsEditMode(!isEditMode)}
+      />
       <HomeTabs
         currentTab={currentTab}
         setCurrentTab={(tab: CurrentTabType) => setCurrentTab(tab)}
         onClick={() => console.log('폴더 추가')}
       />
-      <Contents />
       <BottomSheetExample />
       <ModalExample />
-      <ToastExample />
+      <FolderList />
+      <WritingButon onClick={() => router.push('/write/pre-emotion')} />
     </>
   );
 };
-
-const Contents = styled.div`
-  height: 1500px;
-`;
 
 if (process.env.NODE_ENV === 'development') {
   if (typeof window === 'undefined') {
