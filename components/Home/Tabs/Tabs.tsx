@@ -3,9 +3,11 @@ import styled, { css } from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import FolderIcon from 'public/svgs/folderplus.svg';
-import { HOME_TAB_TYPE, HOME_TAB_LABEL } from '@/shared/constants/home';
-
-export type CurrentTabType = typeof HOME_TAB_TYPE[keyof typeof HOME_TAB_TYPE];
+import {
+  HOME_TAB_TYPE,
+  HOME_TAB_LABEL,
+  CurrentTabType,
+} from '@/shared/constants/home';
 
 interface Tab {
   key: CurrentTabType;
@@ -65,13 +67,15 @@ const Tabs = ({
 const TabContainer = styled.div`
   position: sticky;
   top: 44px;
+  margin-right: -18px;
+  margin-left: -18px;
+  padding: 0 18px;
+  border-bottom: 1px solid ${theme.colors.gray3};
+  z-index: 1;
 `;
 
 const TabList = styled.div`
   display: flex;
-  padding: 0 18px;
-  margin-right: -18px;
-  margin-left: -18px;
   background-color: ${theme.colors.black};
 `;
 
