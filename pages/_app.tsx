@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { RecoilRoot } from 'recoil';
 import theme from '@/styles/theme';
 import AppLayout from '@/components/Common/AppLayout/AppLayout';
 
@@ -18,12 +19,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <AppLayout>
-            <Component {...pageProps} />
-          </AppLayout>
-        </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        <RecoilRoot>
+          <ThemeProvider theme={theme}>
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
+          </ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        </RecoilRoot>
       </QueryClientProvider>
     </>
   );
