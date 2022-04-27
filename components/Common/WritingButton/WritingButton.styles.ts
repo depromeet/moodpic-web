@@ -2,6 +2,9 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 export const ButtonContainer = styled.button`
+  position: fixed;
+  right: 12px;
+  bottom: 40px;
   width: 60px;
   height: 60px;
   background-color: ${theme.colors.primary};
