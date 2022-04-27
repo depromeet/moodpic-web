@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import HomeBanner from '@/components/Home/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader';
 import HomeTabs, { CurrentTabType } from '@/components/Home/Tabs';
-import BottomSheetExample from '@/components/Example/BottomSheetExample';
 import ModalExample from '@/components/Example/ModalExample';
+import BottomSheetExample from '@/components/Example/BottomSheetExample';
+import ToastExample from '@/components/Example/ToastExample';
 import { HOME_TAB_TYPE } from '@/shared/constants/home';
 import styled from 'styled-components';
 
@@ -14,7 +15,6 @@ const Home = () => {
 
   return (
     <>
-      <BottomSheetExample />
       <HomeBanner nickname="홍길동" />
       <HomeTabHeader currentTab={currentTab} />
       <HomeTabs
@@ -25,6 +25,7 @@ const Home = () => {
       <Contents />
       <BottomSheetExample />
       <ModalExample />
+      <ToastExample />
     </>
   );
 };

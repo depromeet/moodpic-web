@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
-import FolderIcon from '@/assets/icons/folderplus.svg';
+import FolderIcon from 'public/svgs/folderplus.svg';
 import { HOME_TAB_TYPE, HOME_TAB_LABEL } from '@/shared/constants/home';
 
 export type CurrentTabType = typeof HOME_TAB_TYPE[keyof typeof HOME_TAB_TYPE];

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header } from '@/components/Common';
+import { Toast } from '@/components/Common';
 import { Container, ContainerInner } from './AppLayout.styles';
 
 interface AppLayoutProps {
@@ -8,12 +9,15 @@ interface AppLayoutProps {
 
 const AppLayout = ({ children }: AppLayoutProps): React.ReactElement => {
   return (
-    <Container>
-      <ContainerInner>
-        <Header />
-        {children}
-      </ContainerInner>
-    </Container>
+    <>
+      <Container>
+        <ContainerInner>
+          <Header />
+          {children}
+        </ContainerInner>
+      </Container>
+      <Toast type="confirm" />
+    </>
   );
 };
 

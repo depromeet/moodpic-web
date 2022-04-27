@@ -6,6 +6,11 @@ import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomShee
 
 import FolderIcon from 'public/svgs/folder.svg';
 
+const MAX_SHOW_LIST_ITEM = 7;
+const HEADER_HEIGHT = 66;
+const LIST_ITEM_HEIGHT = 61.8;
+const LIST_BOTTOM_HEIGHT = 58;
+
 const mockResponse = [
   {
     folderId: 1,
@@ -51,8 +56,10 @@ const BottomSheetExample = () => {
   const folderDataLength = mockResponse.length;
 
   const calcBottomSheetHeight = () => {
-    if (folderDataLength > 7) return 530;
-    return 66 + 61.8 * folderDataLength + 58;
+    if (folderDataLength > MAX_SHOW_LIST_ITEM) return 530;
+    return (
+      HEADER_HEIGHT + LIST_ITEM_HEIGHT * folderDataLength + LIST_BOTTOM_HEIGHT
+    );
   };
 
   const handleModal = (action: string) => () => {
