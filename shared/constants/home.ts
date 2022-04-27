@@ -1,3 +1,5 @@
+export const MAX_THUMBNAIL_SIZE = 4;
+
 export const HOME_TAB_TYPE = {
   FOLDER: 'folder',
   EMOTION: 'emotion',
