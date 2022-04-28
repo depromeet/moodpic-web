@@ -5,7 +5,7 @@ import MagnifyingGlassIcon from 'public/svgs/magnifyingglass.svg';
 import LeftIcon from 'public/svgs/left.svg';
 
 const Header = () => {
-  // main header 먼저 작업
+  // TODO: main header 이후 다른 페이지 헤더 작업 예정
   const MainHeader = () => (
     <>
       <TitleWrapper>
