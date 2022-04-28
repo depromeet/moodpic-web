@@ -8,10 +8,13 @@ import {
 } from './Folder.styles';
 import EmptyImage from 'public/images/empty.png';
 
-export interface FolderProps {
+export interface Folder {
   name: string;
   count: number;
-  thumbnail?: string;
+  thumbnail: string;
+}
+
+export interface FolderProps extends Folder {
   supportsMultipleLayout?: boolean;
 }
 

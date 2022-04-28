@@ -54,9 +54,9 @@ const FolderList = (): React.ReactElement => {
 
   return (
     <FolderListContainer>
-      <HomeCollectedFolder name="모든 폴더" count={3} items={folderList} />
+      <HomeCollectedFolder count={3} items={folderList} />
       {folderList.map((folder) => (
-        <HomeFolder key={folder.name} name="폴더명" count={3} />
+        <HomeFolder key={folder.name} name="폴더명" count={3} thumbnail="" />
       ))}
     </FolderListContainer>
   );
