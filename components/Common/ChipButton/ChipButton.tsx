@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from 'react';
-import CloseIcon from '@/assets/icons/close.svg';
+import CloseIcon from 'public/svgs/close.svg';
 import { ChipButtonContainer, Text, CloseImage } from './ChipButton.styles';
 
 export interface ChipButtonProps {
