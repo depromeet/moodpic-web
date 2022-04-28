@@ -18,28 +18,47 @@ const buttonColorStyle = (color: string) => {
   }
 };
 
+const borderRadiusStyle = (size: string) => {
+  if (size === 'large') {
+    return css`
+      border-radius: 14px;
+    `;
+  }
+
+  if (['medium', 'small'].includes(size)) {
+    return css`
+      border-radius: 4px;
+    `;
+  }
+};
+
 const buttonSizeStyle = (size: string) => {
   switch (size) {
-    case 'lg':
+    case 'large':
       return css`
         width: 100%;
         height: 56px;
         ${theme.fonts.btn1};
       `;
-
-    case 'md':
+    case 'medium':
       return css`
         padding: 0 33px;
         height: 42px;
+        ${theme.fonts.btn2};
+      `;
+    case 'small':
+      return css`
+        padding: 0 12px;
+        height: 36px;
         ${theme.fonts.btn2};
       `;
   }
 };
 
 export const ButtonContainer = styled.button<ButtonProps>`
-  border-radius: 14px;
-
-  ${(props) => buttonSizeStyle(props.size || 'lg')};
+  ${(props) =>
+    props.hasBorderRadius && borderRadiusStyle(props.size || 'large')};
+  ${(props) => buttonSizeStyle(props.size || 'large')};
   ${(props) => buttonColorStyle(props.color || 'primary')};
   ${(props) =>
     props.hasShadow &&

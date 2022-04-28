@@ -3,25 +3,28 @@ import { ButtonContainer } from './Button.styles';
 
 export interface ButtonProps {
   children: React.ReactNode;
-  hasShadow?: boolean;
-  size?: 'lg' | 'md';
+  size?: 'large' | 'medium' | 'small';
   color?: 'primary' | 'gray';
+  hasShadow?: boolean;
+  hasBorderRadius?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({
   children,
-  size,
-  color,
-  hasShadow,
+  size = 'large',
+  color = 'primary',
+  hasShadow = false,
+  hasBorderRadius = true,
   onClick,
 }: ButtonProps): React.ReactElement => {
   return (
     <ButtonContainer
       onClick={onClick}
-      hasShadow={hasShadow}
       size={size}
       color={color}
+      hasShadow={hasShadow}
+      hasBorderRadius={hasBorderRadius}
     >
       {children}
     </ButtonContainer>

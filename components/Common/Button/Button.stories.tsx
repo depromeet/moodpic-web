@@ -14,7 +14,7 @@ const Template: Story<ButtonProps> = (args) => <Button {...args} />;
 export const Primary = Template.bind({});
 
 Primary.args = {
-  size: 'lg',
+  size: 'large',
   onClick: action('click the button'),
   children: 'Button Example',
 };
@@ -30,5 +30,12 @@ export const MediumButton = Template.bind({});
 
 MediumButton.args = {
   ...Gray.args,
-  size: 'md',
+  size: 'medium',
+};
+
+export const SmallButton = Template.bind({});
+
+SmallButton.args = {
+  ...Gray.args,
+  size: 'small',
 };
