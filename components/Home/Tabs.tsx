@@ -64,8 +64,7 @@ const Tabs = ({
 
 const TabContainer = styled.div`
   position: sticky;
-  // TODO: Header 높이에 맞춰서 top 위치 변경
-  top: 0;
+  top: 44px;
 `;
 
 const TabList = styled.div`
