@@ -18,6 +18,10 @@ const fonts = {
     font-size: 2.4rem;
     font-weight: bold;
   `,
+  h2: () => css`
+    font-size: 2rem;
+    font-weight: bold;
+  `,
   h3: () => css`
     font-size: 1.8rem;
     font-weight: bold;
