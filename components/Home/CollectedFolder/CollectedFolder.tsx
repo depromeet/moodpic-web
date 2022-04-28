@@ -7,23 +7,16 @@ import {
   BoxContainer,
   FolderImage,
 } from './CollectedFolder.styles';
+import { Folder } from '../Folder/Folder';
 import { MAX_THUMBNAIL_SIZE } from '@/shared/constants/home';
 
 // TODO: 이후 mocking 추가하면서 알맞는 폴더에 위치할 예정
-interface Folder {
-  name: string;
-  count: number;
-  thumbnail: string;
-}
-
 export interface CollectedFolderProps {
-  name: string;
   count: number;
   items: Folder[];
 }
 
-const Folder = ({
-  name,
+const CollectedFolder = ({
   count,
   items,
 }: CollectedFolderProps): React.ReactElement => {
@@ -35,11 +28,11 @@ const Folder = ({
         ))}
       </BoxContainer>
       <Caption>
-        <FolderName>{name}</FolderName>
+        <FolderName>모든 폴더</FolderName>
         <FolderCount>{count}</FolderCount>
       </Caption>
     </CollectedFolderContainer>
   );
 };
 
-export default Folder;
+export default CollectedFolder;
