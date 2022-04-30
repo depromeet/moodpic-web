@@ -11,7 +11,7 @@ const DropdownMenu = (): React.ReactElement => {
   const setDropdownState = useSetRecoilState(dropdownStateAtom);
 
   const dropdownRef =
-    typeof window !== 'undefined' && document.getElementById('dropdown-menu3');
+    typeof window !== 'undefined' && document.getElementById('dropdown-menu');
 
   const unsetDropdownState = () => {
     setDropdownState(false);
