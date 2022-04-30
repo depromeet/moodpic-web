@@ -8,6 +8,9 @@ export const CustomedToastContainer = styled(ToastContainer)<{
 }>`
   padding: 12px 22px;
   text-align: center;
+  &.Toastify__toast-container--top-center {
+    margin-top: 94px;
+  }
   & .Toastify__toast {
     display: inline-flex;
     min-height: 40px;
