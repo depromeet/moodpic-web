@@ -7,17 +7,17 @@ import LeftIcon from 'public/svgs/left.svg';
 import { createPortal } from 'react-dom';
 import { dropdownStateAtom } from '@/store/dropdown/atom';
 
-const DropdownMenu = (): React.ReactElement | null => {
+const DropdownMenu = (): React.ReactElement => {
   const setDropdownState = useSetRecoilState(dropdownStateAtom);
 
   const dropdownRef =
-    typeof window !== 'undefined' && document.getElementById('dropdown-menu');
+    typeof window !== 'undefined' && document.getElementById('dropdown-menu3');
 
   const unsetDropdownState = () => {
     setDropdownState(false);
   };
 
-  if (!dropdownRef) return null;
+  if (!dropdownRef) return <></>;
 
   return createPortal(
     <DropdownContainer>
