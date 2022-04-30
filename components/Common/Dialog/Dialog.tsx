@@ -39,7 +39,10 @@ const Dialog = ({ onClose, type = 'modal' }: DialogProps) => {
           {type === 'alert' ? (
             <DialogContent className="alert">
               <Image src={Warning} alt="Warning" />
-              <div>‘폴더명’ 폴더를 삭제하시겠어요?</div>
+              <div>
+                ‘가나다라마바사아자차카’ 폴더를 <br />
+                삭제하시겠어요?
+              </div>
             </DialogContent>
           ) : (
             <DialogContent>
