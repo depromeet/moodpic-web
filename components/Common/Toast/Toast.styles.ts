@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import theme from '@/styles/theme';
-import { Type } from '@/shared/type/global';
+import { ToastType } from '@/shared/type/global';
 
 export const CustomedToastContainer = styled(ToastContainer)<{
-  type: Type;
+  type: ToastType;
 }>`
   padding: 12px 22px;
   text-align: center;
