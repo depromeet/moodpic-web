@@ -12,7 +12,7 @@ const Toast = ({ type }: ToastProps) => {
     <CustomedToastContainer
       type={type}
       position="top-center"
-      autoClose={2001230}
+      autoClose={2000}
       hideProgressBar
       closeOnClick
     />
