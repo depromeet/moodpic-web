@@ -25,25 +25,23 @@ export const DialogWrap = styled.div`
 
 export const DialogInner = styled.div`
   width: 313px;
-  height: 195px;
   border-radius: 14px;
   background-color: ${theme.colors.gray2};
-  &.alert {
-    height: 164px;
-  }
 `;
 
 export const DialogContent = styled.div`
   width: 100%;
-  height: 136px;
-  padding: 24px 16px 0;
+  padding: 24px 16px 28px;
   &.alert {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 105px;
+    & > span {
+      flex-shrink: 0;
+    }
     & > div {
       margin-top: 10px;
+      text-align: center;
       ${theme.fonts.h4}
       color: ${theme.colors.white};
     }
