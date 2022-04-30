@@ -1,13 +1,11 @@
-import React, { MouseEventHandler } from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import { ButtonContainer } from './Button.styles';
 
-export interface ButtonProps {
-  children: React.ReactNode;
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'large' | 'medium' | 'small';
   color?: 'primary' | 'gray';
   hasShadow?: boolean;
   hasBorderRadius?: boolean;
-  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({
@@ -16,15 +14,15 @@ const Button = ({
   color = 'primary',
   hasShadow = false,
   hasBorderRadius = true,
-  onClick,
+  ...rest
 }: ButtonProps): React.ReactElement => {
   return (
     <ButtonContainer
-      onClick={onClick}
       size={size}
       color={color}
       hasShadow={hasShadow}
       hasBorderRadius={hasBorderRadius}
+      {...rest}
     >
       {children}
     </ButtonContainer>
