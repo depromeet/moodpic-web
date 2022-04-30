@@ -1,10 +1,10 @@
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { Type } from '@/shared/type/global';
+import { ToastType } from '@/shared/type/global';
 import { CustomedToastContainer } from './Toast.styles';
 
 interface ToastProps {
-  type: Type;
+  type: ToastType;
 }
 
 const Toast = ({ type }: ToastProps) => {

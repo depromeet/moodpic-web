@@ -8,7 +8,6 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 import theme from '@/styles/theme';
 import AppLayout from '@/components/Common/AppLayout/AppLayout';
-import { memoize } from 'lodash';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -34,12 +33,3 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
-
-const mutedConsole = memoize((console) => ({
-  ...console,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  warn: (...args: any[]) =>
-    args[0].includes('Duplicate atom key') ? null : console.warn(...args),
-}));
-
-global.console = mutedConsole(global.console);
