@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
+import { ToastType } from '@/shared/type/global';
 
-export const toastStateAtom = atom<boolean>({
+export const toastStateAtom = atom<ToastType>({
   key: 'toastState',
-  default: false,
+  default: 'error',
 });
