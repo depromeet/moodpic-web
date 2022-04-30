@@ -8,6 +8,7 @@ import BottomSheetExample from '@/components/Example/BottomSheetExample';
 import ModalExample from '@/components/Example/ModalExample';
 import FolderList from '@/components/Home/FolderList/FolderList';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
+import ToastExample from '@/components/Example/ToastExample';
 
 const Home = () => {
   const router = useRouter();
@@ -30,6 +31,7 @@ const Home = () => {
         onClick={() => console.log('폴더 추가')}
       />
       <BottomSheetExample />
+      <ToastExample />
       <ModalExample />
       <FolderList />
       <WritingButon onClick={() => router.push('/write/pre-emotion')} />
