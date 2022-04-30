@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
-export const BottomSheetFolerListWrap = styled.div`
+export const BottomSheetFolderListWrap = styled.div`
   max-height: 464px;
   overflow-y: auto;
   ::-webkit-scrollbar {
