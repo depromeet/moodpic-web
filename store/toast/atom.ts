@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { ToastType, ProgressStepType } from '@/shared/type/global';
+import { ToastType } from '@/shared/type/global';
 
 export const toastStateAtom = atom<ToastType>({
   key: 'toastState',
