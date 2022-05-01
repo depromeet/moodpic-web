@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import BottomSheetContainer from '@/components/Common/BottomSheetContainer/BottomSheetContainer';
+import { CommonBottomSheetContainer } from '@/components/Common';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
-// import BottomSheetShare from '@/components/Common/BottomSheetShare/BottomSheetShare';
 
 import FolderIcon from 'public/svgs/folder.svg';
 
@@ -76,7 +75,7 @@ const BottomSheetExample = () => {
         오픈
       </button>
       {isVisible ? (
-        <BottomSheetContainer
+        <CommonBottomSheetContainer
           onClose={handleModal('close')}
           BottomSheetHeight={calcBottomSheetHeight()}
           headerTitle={
@@ -87,8 +86,7 @@ const BottomSheetExample = () => {
           }
         >
           <BottomSheetFolderList folderData={mockResponse} />
-          {/* <BottomSheetShare /> */}
-        </BottomSheetContainer>
+        </CommonBottomSheetContainer>
       ) : null}
     </>
   );
