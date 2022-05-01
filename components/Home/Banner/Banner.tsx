@@ -17,7 +17,7 @@ const Banner = ({ nickname }: BannerProps): React.ReactElement => {
         {nickname}님, 오늘의 감정을 <br />
         풀어보는 시간을 가져봐요.
       </BannerTitle>
-      <CommonButton onClick={() => router.push('/write/pre-emotion')}>
+      <CommonButton onClick={() => router.push('/write')}>
         감정 기록하기 ✍🏻
       </CommonButton>
     </BannerContainer>

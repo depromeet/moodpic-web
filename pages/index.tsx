@@ -34,7 +34,7 @@ const Home = () => {
       <ToastExample />
       <ModalExample />
       <FolderList />
-      <WritingButon onClick={() => router.push('/write/pre-emotion')} />
+      <WritingButon onClick={() => router.push('/write')} />
     </>
   );
 };
