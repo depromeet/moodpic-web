@@ -2,6 +2,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.header`
+  z-index: 101;
   position: sticky;
   top: 0;
   display: flex;
