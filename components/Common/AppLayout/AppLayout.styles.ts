@@ -5,6 +5,7 @@ export const Container = styled.main`
   background-color: ${theme.colors.gray6};
 `;
 export const ContainerInner = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: ${theme.colors.black};
