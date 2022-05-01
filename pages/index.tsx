@@ -7,8 +7,7 @@ import HomeBanner from '@/components/Home/Banner/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
 import FolderList from '@/components/Home/FolderList/FolderList';
-import WritingButon from '@/components/Common/WritingButton/WritingButton';
-import CommonButton from '@/components/Common/Button/Button';
+import { CommonButton, CommonWritingButton } from '@/components/Common';
 
 const Home = () => {
   const router = useRouter();
@@ -31,7 +30,7 @@ const Home = () => {
         onClick={() => console.log('폴더 추가')}
       />
       <FolderList isEditMode={isEditMode} />
-      <WritingButon onClick={() => router.push('/write/pre-emotion')} />
+      <CommonWritingButton onClick={() => router.push('/write/pre-emotion')} />
       <FloatingContainer>
         <div>
           <CommonButton color="gray" onClick={() => router.push('/posts')}>
