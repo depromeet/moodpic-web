@@ -25,9 +25,25 @@ const borderRadiusStyle = (size: string) => {
     `;
   }
 
-  if (['medium', 'small'].includes(size)) {
+  if (size === 'medium') {
     return css`
       border-radius: 4px;
+
+      &:disabled {
+        background-color: ${theme.colors.gray3};
+        color: ${theme.colors.white};
+      }
+    `;
+  }
+
+  if (size === 'small') {
+    return css`
+      border-radius: 4px;
+
+      &:disabled {
+        background-color: ${theme.colors.gray3};
+        color: ${theme.colors.gray4};
+      }
     `;
   }
 };
@@ -42,7 +58,7 @@ const buttonSizeStyle = (size: string) => {
       `;
     case 'medium':
       return css`
-        padding: 0 33px;
+        padding: 0 22px;
         height: 42px;
         ${theme.fonts.btn2};
       `;
