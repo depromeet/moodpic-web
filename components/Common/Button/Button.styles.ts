@@ -58,6 +58,7 @@ const buttonSizeStyle = (size: string) => {
       `;
     case 'medium':
       return css`
+        min-width: 93px;
         padding: 0 22px;
         height: 42px;
         ${theme.fonts.btn2};
