@@ -20,7 +20,7 @@ const transition = (prop = null, time = null, func = null) => {
   `;
 };
 
-const ellipsis = (lines = null) => {
+const ellipsis = (lines = 0) => {
   return lines
     ? css`
         display: -webkit-box;
