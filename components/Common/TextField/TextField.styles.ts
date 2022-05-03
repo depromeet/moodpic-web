@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { TextFieldProps } from './TextField';
+import theme from '@/styles/theme';
 
 const IconStyle = (isFocused: boolean) => {
   switch (isFocused) {
@@ -30,15 +31,12 @@ export const InputStyled = styled.input<Pick<TextFieldProps, 'borderRadius'>>`
   padding: 0.6rem 4rem 0.6rem 1.4rem;
 
   border-radius: ${({ borderRadius }) => borderRadius};
-  background: #3a3a3b;
+  background: ${theme.colors.gray3};
   border: none;
   right: 0;
-  color: white;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.4rem;
-  line-height: 170%;
+  color: ${theme.colors.white};
   letter-spacing: -0.01em;
+  ${theme.fonts.body};
 `;
 
 export const RightSideIconStyled = styled.img<{ isFocused: boolean }>`
