@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
-import { TextFieldProps } from './TextField';
+import { TextFieldProps } from '@/components/Common/TextField/TextField';
+
 import theme from '@/styles/theme';
 
 const IconStyle = (isFocused: boolean) => {

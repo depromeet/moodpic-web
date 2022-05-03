@@ -3,7 +3,7 @@ import {
   ContainerStyled,
   InputStyled,
   RightSideIconStyled,
-} from './TextField.styles';
+} from '@/components/Common/TextField/TextField.styles';
 
 export type TextFieldAttributes = Pick<
   React.InputHTMLAttributes<HTMLInputElement>,
