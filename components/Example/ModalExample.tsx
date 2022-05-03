@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal from '@/components/Common/Dialog/Dialog';
+import { CommonDialog } from '@/components/Common';
 
 const ModalExample = () => {
   const [isVisible, setVisible] = useState(false);
@@ -23,7 +23,9 @@ const ModalExample = () => {
       >
         modal
       </button>
-      {isVisible ? <Modal type="alert" onClose={handleModal('close')} /> : null}
+      {isVisible ? (
+        <CommonDialog type="alert" onClose={handleModal('close')} />
+      ) : null}
     </>
   );
 };

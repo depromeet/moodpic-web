@@ -1,9 +1,10 @@
 import React from 'react';
-import { Header } from '@/components/Common';
-import { Toast } from '@/components/Common';
+import { useRecoilValue } from 'recoil';
+import { CommonHeader, CommonToast } from '@/components/Common';
 import { Container, ContainerInner } from './AppLayout.styles';
 import { toastStateAtom } from '@/store/toast/atom';
-import { useRecoilValue } from 'recoil';
+import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import { dropdownStateAtom } from '@/store/dropdown/atom';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -11,15 +12,18 @@ interface AppLayoutProps {
 
 const AppLayout = ({ children }: AppLayoutProps): React.ReactElement => {
   const toastType = useRecoilValue(toastStateAtom);
+  const dropdownState = useRecoilValue(dropdownStateAtom);
+
   return (
     <>
       <Container>
         <ContainerInner>
-          <Header />
+          {dropdownState && <DropdownMenu />}
+          <CommonHeader />
           {children}
         </ContainerInner>
       </Container>
-      <Toast type={toastType} />
+      <CommonToast type={toastType} />
     </>
   );
 };

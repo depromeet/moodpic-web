@@ -28,6 +28,7 @@ const fonts = {
   `,
   h4: `
     font-size: 1.6rem;
+    font-weight: 500;
   `,
   h5: `
     font-size: 1.4rem;
@@ -35,17 +36,21 @@ const fonts = {
   `,
   h6: `
     font-size: 1.4rem;
+    font-weight: 500;
   `,
   subtitle1: `
     font-size: 2.4rem;
+    font-weight: 500;
     line-height: 144%;
   `,
   body: `
     font-size: 1.4rem;
+    font-weight: 500;
     line-height: 170%;
   `,
   caption1: `
     font-size: 1.2rem;
+    font-weight: 500;
   `,
   caption2: `
     font-size: 1.2rem;
@@ -58,6 +63,7 @@ const fonts = {
   `,
   btn2: `
     font-size: 1.4rem;
+    font-weight: 500;
     line-height: 1.6rem;
   `,
 } as const;

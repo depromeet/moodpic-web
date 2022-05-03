@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 import theme from '@/styles/theme';
-import AppLayout from '@/components/Common/AppLayout/AppLayout';
+import { CommonAppLayout } from '@/components/Common';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -21,9 +21,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <ThemeProvider theme={theme}>
-            <AppLayout>
+            <CommonAppLayout>
               <Component {...pageProps} />
-            </AppLayout>
+            </CommonAppLayout>
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         </RecoilRoot>

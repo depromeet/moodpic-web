@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { progressStepStateAtom } from '@/store/toast/atom';
-import { Progress } from '@/components/Common';
+import { CommonProgress } from '@/components/Common';
 import PreEmotion from '@/components/PreEmotion/PreEmotion';
 import Question from '@/components/Question/Question';
 import CurrentEmotion from '@/components/CurrentEmotion/CurrentEmotion';
@@ -12,7 +12,7 @@ const Write = () => {
   const progressStep = useRecoilValue(progressStepStateAtom);
   return (
     <>
-      <Progress step={progressStep} />
+      <CommonProgress step={progressStep} />
       {progressStep === 1 && <PreEmotion />}
       {progressStep === 2 && <Question />}
       {progressStep === 3 && <CurrentEmotion />}

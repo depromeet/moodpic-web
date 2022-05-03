@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import CommonButton from '@/components/Common/Button/Button';
+import { CommonButton } from '@/components/Common';
 import theme from '@/styles/theme';
 
 export interface BannerProps {

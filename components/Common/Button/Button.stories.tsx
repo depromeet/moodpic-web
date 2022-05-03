@@ -17,6 +17,7 @@ Primary.args = {
   size: 'large',
   onClick: action('click the button'),
   children: 'Button Example',
+  disabled: true,
 };
 
 export const Gray = Template.bind({});
@@ -31,6 +32,7 @@ export const MediumButton = Template.bind({});
 MediumButton.args = {
   ...Gray.args,
   size: 'medium',
+  disabled: true,
 };
 
 export const SmallButton = Template.bind({});
@@ -38,4 +40,5 @@ export const SmallButton = Template.bind({});
 SmallButton.args = {
   ...Gray.args,
   size: 'small',
+  disabled: true,
 };

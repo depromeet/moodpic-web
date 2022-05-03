@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
+import { transition } from '@/styles/mixins';
 import HomeBanner from '@/components/Home/Banner/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
-import BottomSheetExample from '@/components/Example/BottomSheetExample';
-import ModalExample from '@/components/Example/ModalExample';
 import FolderList from '@/components/Home/FolderList/FolderList';
-import WritingButon from '@/components/Common/WritingButton/WritingButton';
-import ToastExample from '@/components/Example/ToastExample';
+import { CommonButton, CommonWritingButton } from '@/components/Common';
 
 const Home = () => {
   const router = useRouter();
@@ -30,27 +29,31 @@ const Home = () => {
         setCurrentTab={(tab: CurrentTabType) => setCurrentTab(tab)}
         onClick={() => console.log('폴더 추가')}
       />
-      <BottomSheetExample />
-      <ToastExample />
-      <ModalExample />
-      <FolderList />
-      <WritingButon onClick={() => router.push('/write')} />
+      <FolderList isEditMode={isEditMode} />
+      <CommonWritingButton onClick={() => router.push('/write/pre-emotion')} />
+      <FloatingContainer>
+        <div>
+          <CommonButton color="gray" onClick={() => router.push('/posts')}>
+            지난 감정 되돌아보기
+          </CommonButton>
+        </div>
+      </FloatingContainer>
     </>
   );
 };
 
-if (process.env.NODE_ENV === 'development') {
-  if (typeof window === 'undefined') {
-    (async () => {
-      const { server } = await import('@/mocks/server');
-      server.listen();
-    })();
-  } else {
-    (async () => {
-      const { worker } = await import('@/mocks/browser');
-      worker.start();
-    })();
+const FloatingContainer = styled.div`
+  ${transition()};
+  position: fixed;
+  left: 0;
+  bottom: 5.6rem;
+  width: 100%;
+  z-index: 1001;
+
+  > div {
+    width: 22.3rem;
+    margin: 0 auto;
   }
-}
+`;
 
 export default Home;
