@@ -23,6 +23,7 @@ export interface TextFieldProps extends TextFieldAttributes {
   rightSideIcon?: string;
   height?: string;
   borderRadius?: '1rem' | '0.4rem';
+  hasBorder: boolean;
 }
 
 const TextField = ({
@@ -32,6 +33,7 @@ const TextField = ({
   rightSideIcon,
   height = '4rem',
   borderRadius = '1rem',
+  hasBorder = true,
   ...restTextFieldProps
 }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -49,6 +51,7 @@ const TextField = ({
           setIsFocused(false);
           onBlur?.(event);
         }}
+        hasBorder={hasBorder}
         {...restTextFieldProps}
       />
       {rightSideIcon && (
