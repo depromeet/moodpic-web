@@ -42,6 +42,10 @@ const borderRadiusStyle = (size: string) => {
     default:
       return css`
         border-radius: 1.4rem;
+
+        &:disabled {
+          background-color: ${theme.colors.gray3};
+        }
       `;
   }
 };
