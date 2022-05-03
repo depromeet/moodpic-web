@@ -17,6 +17,20 @@ const IconStyle = (isFocused: boolean) => {
   }
 };
 
+const BorderStyle = (hasBorder: boolean) => {
+  switch (hasBorder) {
+    case true:
+      return css`
+        border: 0.1rem solid ${theme.colors.gray4};
+      `;
+
+    case false:
+      return css`
+        border: none;
+      `;
+  }
+};
+
 export const Container = styled.div<Pick<TextFieldProps, 'height'>>`
   display: flex;
   align-items: center;
@@ -24,20 +38,23 @@ export const Container = styled.div<Pick<TextFieldProps, 'height'>>`
   height: ${({ height }) => height};
 `;
 
-export const Input = styled.input<Pick<TextFieldProps, 'borderRadius'>>`
+export const Input = styled.input<
+  Pick<TextFieldProps, 'borderRadius' | 'hasBorder'>
+>`
   text-align: start;
   cursor: text;
   height: 100%;
   width: 100%;
   padding: 0.6rem 4rem 0.6rem 1.4rem;
-
   border-radius: ${({ borderRadius }) => borderRadius};
   background: ${theme.colors.gray3};
-  border: none;
   right: 0;
   color: ${theme.colors.white};
   letter-spacing: -0.01em;
+  outline: none;
+
   ${theme.fonts.body};
+  ${(props) => BorderStyle(props.hasBorder)}
 `;
 
 export const RightSideIcon = styled.img<{ isFocused: boolean }>`
