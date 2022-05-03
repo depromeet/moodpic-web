@@ -19,32 +19,30 @@ const buttonColorStyle = (color: string) => {
 };
 
 const borderRadiusStyle = (size: string) => {
-  if (size === 'large') {
-    return css`
-      border-radius: 14px;
-    `;
-  }
+  switch (size) {
+    case 'small':
+      return css`
+        border-radius: 0.4rem;
 
-  if (size === 'medium') {
-    return css`
-      border-radius: 4px;
+        &:disabled {
+          background-color: ${theme.colors.gray3};
+          color: ${theme.colors.gray4};
+        }
+      `;
+    case 'medium':
+      return css`
+        border-radius: 0.4rem;
 
-      &:disabled {
-        background-color: ${theme.colors.gray3};
-        color: ${theme.colors.white};
-      }
-    `;
-  }
-
-  if (size === 'small') {
-    return css`
-      border-radius: 4px;
-
-      &:disabled {
-        background-color: ${theme.colors.gray3};
-        color: ${theme.colors.gray4};
-      }
-    `;
+        &:disabled {
+          background-color: ${theme.colors.gray3};
+          color: ${theme.colors.white};
+        }
+      `;
+    case 'large':
+    default:
+      return css`
+        border-radius: 1.4rem;
+      `;
   }
 };
 
@@ -53,20 +51,20 @@ const buttonSizeStyle = (size: string) => {
     case 'large':
       return css`
         width: 100%;
-        height: 56px;
+        height: 5.6rem;
         ${theme.fonts.btn1};
       `;
     case 'medium':
       return css`
-        min-width: 93px;
-        padding: 0 22px;
-        height: 42px;
+        min-width: 9.3rem;
+        padding: 0 2.2rem;
+        height: 4.2rem;
         ${theme.fonts.btn2};
       `;
     case 'small':
       return css`
-        padding: 0 12px;
-        height: 36px;
+        padding: 0 1.2rem;
+        height: 3.6rem;
         ${theme.fonts.btn2};
       `;
   }
@@ -80,6 +78,6 @@ export const ButtonContainer = styled.button<ButtonProps>`
   ${(props) =>
     props.hasShadow &&
     css`
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
     `}
 `;
