@@ -17,4 +17,9 @@ export const Textarea = styled.textarea<
   right: 0;
   ${theme.fonts.body}
   color: ${theme.colors.white};
+  outline: none;
+
+  :focus {
+    border: 0.1rem solid ${theme.colors.gray4};
+  }
 `;
