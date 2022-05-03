@@ -63,7 +63,7 @@ const FolderList = ({ isEditMode }: FolderListProps): React.ReactElement => {
         <HomeFolder
           key={folder.name}
           name="폴더명"
-          count={3}
+          count={folder.count}
           thumbnail=""
           isEditMode={isEditMode}
         />
