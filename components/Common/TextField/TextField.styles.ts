@@ -35,7 +35,7 @@ export const Container = styled.div<Pick<TextFieldProps, 'height'>>`
   display: flex;
   align-items: center;
   flex: 0 1 auto;
-  height: ${({ height }) => height};
+  height: ${({ height }) => height || '4rem'};
 `;
 
 export const Input = styled.input<
@@ -46,7 +46,7 @@ export const Input = styled.input<
   height: 100%;
   width: 100%;
   padding: 0.6rem 4rem 0.6rem 1.4rem;
-  border-radius: ${({ borderRadius }) => borderRadius};
+  border-radius: ${({ borderRadius }) => borderRadius || '1rem'};
   background: ${theme.colors.gray3};
   right: 0;
   color: ${theme.colors.white};
@@ -54,7 +54,7 @@ export const Input = styled.input<
   outline: none;
 
   ${theme.fonts.body};
-  ${(props) => BorderStyle(props.hasBorder)}
+  ${(props) => BorderStyle(props.hasBorder || true)};
 `;
 
 export const RightSideIcon = styled.img<{ isFocused: boolean }>`

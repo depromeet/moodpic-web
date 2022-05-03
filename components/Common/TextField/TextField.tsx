@@ -31,9 +31,9 @@ const TextField = ({
   onFocus,
   onBlur,
   rightSideIcon,
-  height = '4rem',
-  borderRadius = '1rem',
-  hasBorder = true,
+  height,
+  borderRadius,
+  hasBorder,
   ...restTextFieldProps
 }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
