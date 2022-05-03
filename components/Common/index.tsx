@@ -8,3 +8,4 @@ export { default as CommonHeader } from './Header/Header';
 export { default as CommonToast } from './Toast/Toast';
 export { default as CommonToggle } from './Toggle/Toggle';
 export { default as CommonWritingButton } from './WritingButton/WritingButton';
+export { default as CommonTagButton } from './TagButton/TagButton';
