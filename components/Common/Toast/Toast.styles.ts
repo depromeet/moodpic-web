@@ -6,7 +6,7 @@ import { ToastType } from '@/shared/type/global';
 export const CustomedToastContainer = styled(ToastContainer)<{
   type: ToastType;
 }>`
-  padding: 12px 22px;
+  max-width: 480px;
   text-align: center;
   &.Toastify__toast-container--top-center {
     margin-top: 94px;
@@ -14,6 +14,7 @@ export const CustomedToastContainer = styled(ToastContainer)<{
   & .Toastify__toast {
     display: inline-flex;
     min-height: 40px;
+    width: 313px;
     ${theme.fonts.btn2};
   }
   & .Toastify__toast-theme--light {
