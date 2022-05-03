@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 
-export const ChipButtonContainer = styled.div`
+export const TagButtonContainer = styled.div`
   display: inline-flex;
   padding: 6px 14px;
   border: 1px solid ${theme.colors.gray6};
