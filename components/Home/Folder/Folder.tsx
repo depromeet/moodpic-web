@@ -30,6 +30,22 @@ const Folder = ({
   thumbnail = '',
   isEditMode = false,
 }: FolderProps): React.ReactElement => {
+  const renderDeleteButton = () => {
+    return (
+      <DeleteButton onClick={() => console.log('delete')}>
+        <Image src={TrashIcon} alt="삭제" />
+      </DeleteButton>
+    );
+  };
+
+  const renderEditButton = () => {
+    return (
+      <EditButton onClick={() => console.log('edit')}>
+        <Image src={EditFolderIcon} alt="편집" />
+      </EditButton>
+    );
+  };
+
   return (
     <FolderContainer>
       <BoxContainer>
@@ -38,18 +54,10 @@ const Folder = ({
         ) : (
           <Image src={thumbnail || EmptyImage} alt={name} />
         )}
-        {isEditMode && (
-          <DeleteButton onClick={() => console.log('delete')}>
-            <Image src={TrashIcon} alt="삭제" />
-          </DeleteButton>
-        )}
+        {isEditMode && renderDeleteButton()}
       </BoxContainer>
       <CaptionContainer>
-        {isEditMode && (
-          <EditButton onClick={() => console.log('edit')}>
-            <Image src={EditFolderIcon} alt="편집" />
-          </EditButton>
-        )}
+        {isEditMode && renderEditButton()}
         <div>
           <FolderName>{name}</FolderName>
           <FolderCount>{count}</FolderCount>
