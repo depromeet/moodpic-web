@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b334275c-d447-4490-a16e-2c96116796db" name="Changes" comment="refactor: TextField.tsx 와 관련된 파일 import 경로 상대 경로에서 절대 경로로 변경&#10;  - refactor: TextFiled.tsx에서 TextField.styles 경로 절대 경로로 변경&#10;  - refactor: TextFiled.styled.ts에서 TextField 경로 절대 경로로 변경" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feat/#53-custom-axios" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="28EeQHXzRKolOvmw2QkBOLzwyWm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="TypeScript&#10;JavaScript" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/icons" />
+      <recent name="$PROJECT_DIR$/components/Common/TextField" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b334275c-d447-4490-a16e-2c96116796db" name="Changes" comment="" />
+      <created>1650786155387</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1650786155387</updated>
+      <workItem from="1650786158048" duration="36413000" />
+      <workItem from="1650989053575" duration="374000" />
+      <workItem from="1651130349410" duration="123000" />
+      <workItem from="1651298731079" duration="8698000" />
+      <workItem from="1651552610939" duration="2577000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: TextArea.tsx 공용 컴포넌트 추가 및 테스트&#10;  * feat: TextArea.tsx 추가 &#10;   &#10;  * chore: TextArea.styles.ts 추가&#10;&#10;  * chore: TextArea.stories.tsx 추가 &#10;&#10;  * test: TextArea.test.tsx 추가&#10;    - it('초기 렌더링 시 textarea 요소가 렌더링 돼야 한다.')&#10;    - it('value 값을 받을 수 있다.')&#10;    - it('textarea에 글자를 입력하면 props로 받은 핸들러가 호출돼야 한다.')&#10;    - it('textarea을 클릭하면 focuse 된다.')&#10;    - it('focus된 상태에서 다른 부분으로 넘어가면 textarea의 focuse가 풀려야 한다.')">
+      <created>1650817486970</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1650817486970</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: TextField.tsx 공용 컴포넌트 추가 및 테스트&#10;  * feat: TextField.tsx 추가 &#10;   &#10;  * chore: TextField.styles.ts 추가&#10;&#10;  * chore: TextField.stories.tsx 추가 &#10;&#10;  * test: TextField.test.tsx 추가&#10;    - it('초기 렌더링 시 input 요소가 렌더링 돼야 한다.')&#10;    - it('value 값을 받을 수 있어야 한다.')&#10;    - it('input에 글자를 입력하면 props로 받은 핸들러가 호출돼야 한다.')&#10;    - it('input을 클릭하면 focuse 된다.')&#10;    - it('focus된 상태에서 다른 부분으로 넘어가면 input의 focuse가 풀려야 한다.')">
+      <created>1650817575391</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1650817575391</updated>
+    </task>
+    <task id="LOCAL-00003" summary="chore: add icon 추가 &#10; * chore: BlackAdd 아이콘 추가&#10; * chore: WhiteAdd 아이콘 추가">
+      <created>1650817650076</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1650817650076</updated>
+    </task>
+    <task id="LOCAL-00004" summary="chore: update package-lock.json">
+      <created>1650817665765</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1650817665765</updated>
+    </task>
+    <task id="LOCAL-00005" summary="chore: react-is 추가로 인한 package.json, package-lock.json 업데이트 &#10;  - Module not found: Can't resolve 'react-is' in '/vercel/path0/node_modules/styled-components/dist' 오류로 react-is 추가">
+      <created>1650818326094</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1650818326094</updated>
+    </task>
+    <task id="LOCAL-00006" summary="refactor: props에 대한 타입 type에서 interface로 변경&#10;  * refactor: TextFieldProps -&gt; type에서 interface로 변경">
+      <created>1651553535407</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1651553535407</updated>
+    </task>
+    <task id="LOCAL-00007" summary="refactor: fonts에 대한 css 속성 theme에 정의 된 것으로 변경">
+      <created>1651553591734</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1651553591734</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refactor: TextField.tsx 와 관련된 파일 import 경로 상대 경로에서 절대 경로로 변경&#10;  - refactor: TextFiled.tsx에서 TextField.styles 경로 절대 경로로 변경&#10;  - refactor: TextFiled.styled.ts에서 TextField 경로 절대 경로로 변경">
+      <created>1651553770841</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1651553770842</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: TextArea.tsx 공용 컴포넌트 추가 및 테스트&#10;  * feat: TextArea.tsx 추가 &#10;   &#10;  * chore: TextArea.styles.ts 추가&#10;&#10;  * chore: TextArea.stories.tsx 추가 &#10;&#10;  * test: TextArea.test.tsx 추가&#10;    - it('초기 렌더링 시 textarea 요소가 렌더링 돼야 한다.')&#10;    - it('value 값을 받을 수 있다.')&#10;    - it('textarea에 글자를 입력하면 props로 받은 핸들러가 호출돼야 한다.')&#10;    - it('textarea을 클릭하면 focuse 된다.')&#10;    - it('focus된 상태에서 다른 부분으로 넘어가면 textarea의 focuse가 풀려야 한다.')" />
+    <MESSAGE value="feat: TextField.tsx 공용 컴포넌트 추가 및 테스트&#10;  * feat: TextField.tsx 추가 &#10;   &#10;  * chore: TextField.styles.ts 추가&#10;&#10;  * chore: TextField.stories.tsx 추가 &#10;&#10;  * test: TextField.test.tsx 추가&#10;    - it('초기 렌더링 시 input 요소가 렌더링 돼야 한다.')&#10;    - it('value 값을 받을 수 있어야 한다.')&#10;    - it('input에 글자를 입력하면 props로 받은 핸들러가 호출돼야 한다.')&#10;    - it('input을 클릭하면 focuse 된다.')&#10;    - it('focus된 상태에서 다른 부분으로 넘어가면 input의 focuse가 풀려야 한다.')" />
+    <MESSAGE value="chore: add icon 추가 &#10; * chore: BlackAdd 아이콘 추가&#10; * chore: WhiteAdd 아이콘 추가" />
+    <MESSAGE value="chore: update package-lock.json" />
+    <MESSAGE value="chore: react-is 추가로 인한 package.json, package-lock.json 업데이트 &#10;  - Module not found: Can't resolve 'react-is' in '/vercel/path0/node_modules/styled-components/dist' 오류로 react-is 추가" />
+    <MESSAGE value="refactor: props에 대한 타입 type에서 interface로 변경&#10;  * refactor: TextFieldProps -&gt; type에서 interface로 변경" />
+    <MESSAGE value="refactor: fonts에 대한 css 속성 theme에 정의 된 것으로 변경" />
+    <MESSAGE value="refactor: TextField.tsx 와 관련된 파일 import 경로 상대 경로에서 절대 경로로 변경&#10;  - refactor: TextFiled.tsx에서 TextField.styles 경로 절대 경로로 변경&#10;  - refactor: TextFiled.styled.ts에서 TextField 경로 절대 경로로 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: TextField.tsx 와 관련된 파일 import 경로 상대 경로에서 절대 경로로 변경&#10;  - refactor: TextFiled.tsx에서 TextField.styles 경로 절대 경로로 변경&#10;  - refactor: TextFiled.styled.ts에서 TextField 경로 절대 경로로 변경" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
