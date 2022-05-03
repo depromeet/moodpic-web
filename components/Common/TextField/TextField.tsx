@@ -23,7 +23,7 @@ export interface TextFieldProps extends TextFieldAttributes {
   rightSideIcon?: string;
   height?: string;
   borderRadius?: '1rem' | '0.4rem';
-  hasBorder: boolean;
+  hasBorder?: boolean;
 }
 
 const TextField = ({
