@@ -18,12 +18,12 @@ export type TextFieldAttributes = Pick<
   | 'disabled'
 >;
 
-export type TextFieldProps = {
+export interface TextFieldProps extends TextFieldAttributes {
   value: string;
   rightSideIcon?: string;
   height?: string;
   borderRadius?: '1rem' | '0.4rem';
-} & TextFieldAttributes;
+}
 
 const TextField = ({
   value,
