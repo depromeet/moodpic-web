@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
 import { ButtonWrapper } from '@/pages/write';
 import Button from '@/components/Common/Button/Button';
-import { progressStepStateAtom } from '@/store/toast/atom';
 import theme from '@/styles/theme';
+import useNextProgressStep from '@/hooks/useNextProgressStep';
 
 const emotionList = [
   '짜증',
@@ -17,10 +16,7 @@ const emotionList = [
 ];
 
 const PreEmotion = () => {
-  const setNextProgressStep = useSetRecoilState(progressStepStateAtom);
-  const nextProgressStep = () => {
-    setNextProgressStep((prev) => prev + 1);
-  };
+  const nextProgressStep = useNextProgressStep();
   return (
     <>
       <MainTitle>

@@ -24,10 +24,5 @@ const Write = () => {
 export default Write;
 
 export const ButtonWrapper = styled.div`
-  position: sticky;
-  left: 0;
-  right: 0;
-  bottom: 0;
   margin: auto 0 80px;
-  z-index: 1;
 `;

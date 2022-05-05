@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { RefObject, useRef, useState } from 'react';
 import Image from 'next/image';
-import { useSetRecoilState } from 'recoil';
-import { progressStepStateAtom } from '@/store/toast/atom';
+import useInput from '@/hooks/useInput';
+import useNextProgressStep from '@/hooks/useNextProgressStep';
 import Button from '@/components/Common/Button/Button';
 import { ButtonWrapper } from '@/pages/write';
 import BgClose from 'public/svgs/bgclose.svg';
@@ -19,6 +19,7 @@ import {
   TooltipWrapper,
   Triangle,
 } from './Question.styles';
+import TextArea from '../Common/TextArea/TextArea';
 
 const questionList = [
   '왜 그렇게 생각했나요?',
@@ -29,47 +30,46 @@ const questionList = [
 const HEADER_HEIGHT = 50;
 
 const Question = () => {
-  const setNextProgressStep = useSetRecoilState(progressStepStateAtom);
   const [mode, setMode] = useState('providedQuestion');
+  const [firstTextAreaValue, onChangeFirstTextAreaValue] = useInput('');
+  const [secondTextAreaValue, onChangeSecondTextAreaValue] = useInput('');
+  const [thirdTextAreaValue, onChangeThirdTextAreaValue] = useInput('');
+  const [mySeltTextAreaValue, onChangeMySelfTextAreaValue] = useInput('');
   const firstTextAreaRef = useRef<HTMLDivElement>(null);
   const secondTextAreaRef = useRef<HTMLDivElement>(null);
   const thirdTextAreaRef = useRef<HTMLDivElement>(null);
-
-  const nextProgressStep = () => {
-    setNextProgressStep((prev) => prev + 1);
-  };
+  const nextProgressStep = useNextProgressStep();
 
   const onChangeMode = (target: string) => () => {
     if (target === 'providedQuestion') setMode('providedQuestion');
     if (target === 'myselfQuestion') setMode('myselfQuestion');
   };
 
-  // 내일 여기부터 타입잡고 시작
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const scrollToTextAreaOffestTop = (target: any) => () => {
-    const targetRef = target;
-    if (typeof window !== undefined) {
-      window.scrollTo({
-        top: (targetRef.current as HTMLDivElement).offsetTop - HEADER_HEIGHT,
-        left: 0,
-        behavior: 'smooth',
-      });
-    }
-  };
+  const scrollToTextAreaOffestTop =
+    (target: RefObject<HTMLDivElement>) => () => {
+      const targetRef = target;
+      if (typeof window !== undefined && targetRef.current) {
+        window.scrollTo({
+          top: targetRef.current.offsetTop - HEADER_HEIGHT,
+          left: 0,
+          behavior: 'smooth',
+        });
+      }
+    };
 
   return (
     <>
       <ButtonContainer>
         <div>
           <Button
-            color="primary"
+            color={mode === 'providedQuestion' ? 'primary' : 'gray'}
             size="medium"
             onClick={onChangeMode('providedQuestion')}
           >
             질문에 맞춰 쓸래요
           </Button>
           <Button
-            color="gray"
+            color={mode === 'providedQuestion' ? 'gray' : 'primary'}
             size="medium"
             onClick={onChangeMode('myselfQuestion')}
           >
@@ -102,8 +102,10 @@ const Question = () => {
             <ProvidedQuestionSubDescription>
               너무 깊게 생각하지 않아도 돼요. (가이드)
             </ProvidedQuestionSubDescription>
-            <input
-              style={{ width: '100%', height: 326 }}
+            <TextArea
+              value={firstTextAreaValue}
+              height="32.6rem"
+              onChange={onChangeFirstTextAreaValue}
               onFocus={scrollToTextAreaOffestTop(firstTextAreaRef)}
             />
           </ProvidedQuestionWrap>
@@ -118,8 +120,10 @@ const Question = () => {
             <ProvidedQuestionSubDescription>
               너무 깊게 생각하지 않아도 돼요. (가이드)
             </ProvidedQuestionSubDescription>
-            <input
-              style={{ width: '100%', height: 326 }}
+            <TextArea
+              value={secondTextAreaValue}
+              height="32.6rem"
+              onChange={onChangeSecondTextAreaValue}
               onFocus={scrollToTextAreaOffestTop(secondTextAreaRef)}
             />
           </ProvidedQuestionWrap>
@@ -134,8 +138,10 @@ const Question = () => {
             <ProvidedQuestionSubDescription>
               너무 깊게 생각하지 않아도 돼요. (가이드)
             </ProvidedQuestionSubDescription>
-            <input
-              style={{ width: '100%', height: 326 }}
+            <TextArea
+              value={thirdTextAreaValue}
+              height="32.6rem"
+              onChange={onChangeThirdTextAreaValue}
               onFocus={scrollToTextAreaOffestTop(thirdTextAreaRef)}
             />
           </ProvidedQuestionWrap>
@@ -145,6 +151,11 @@ const Question = () => {
           <MyselfQuestionTitle>
             ✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.
           </MyselfQuestionTitle>
+          <TextArea
+            value={mySeltTextAreaValue}
+            height="32.6rem"
+            onChange={onChangeMySelfTextAreaValue}
+          />
         </>
       )}
       <ButtonWrapper>
