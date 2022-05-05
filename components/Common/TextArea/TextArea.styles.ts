@@ -18,6 +18,7 @@ export const Textarea = styled.textarea<
   ${theme.fonts.body}
   color: ${theme.colors.white};
   outline: none;
+  resize: vertical; // 높이 조절만 가능하도록 처리
 
   :focus {
     border: 0.1rem solid ${theme.colors.gray4};
