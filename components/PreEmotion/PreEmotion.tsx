@@ -2,16 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { ButtonWrapper } from '@/pages/write';
 import Button from '@/components/Common/Button/Button';
-import theme from '@/styles/theme';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
+import theme from '@/styles/theme';
+import SelectButton from '../Common/SelectButton/SelectButton';
 
 const emotionList = [
-  '짜증',
-  '실망',
-  '슬픔',
-  '불안',
-  '무기력',
-  '후회',
+  '후회해요',
+  '슬퍼요',
+  '실망했어요',
+  '무기력해요',
+  '불안해요',
+  '짜증나요',
   '모르겠어요',
 ];
 
@@ -23,20 +24,7 @@ const PreEmotion = () => {
         홍길동님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
-      <ButtonContainer>
-        {emotionList.map((emotion) => (
-          <Button
-            color="gray"
-            size="medium"
-            onClick={() => {
-              console.log('asd');
-            }}
-            key={emotion}
-          >
-            {emotion}
-          </Button>
-        ))}
-      </ButtonContainer>
+      <SelectButton emotionList={emotionList} />
       <ButtonWrapper>
         <Button color="gray" onClick={nextProgressStep} size="large">
           다음
@@ -48,15 +36,14 @@ const PreEmotion = () => {
 
 export default PreEmotion;
 
-const MainTitle = styled.div`
+export const MainTitle = styled.div`
   ${theme.fonts.subtitle1}
   font-weight: 500;
-  margin-top: 54px;
+  margin: 54px 0 40px;
   color: ${theme.colors.white};
 `;
 
-const ButtonContainer = styled.div`
-  margin-top: 40px;
+export const ButtonContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, auto);

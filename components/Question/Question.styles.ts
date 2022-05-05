@@ -57,8 +57,8 @@ export const TooltipDescription = styled.li`
   margin-left: 1.6rem;
 `;
 
-export const NumberTitle = styled.span`
-  ${theme.fonts.h4};
+export const NumberTitle = styled.div`
+  ${theme.fonts.h5};
   color: ${theme.colors.gray4};
   letter-spacing: -0.01em;
   margin-bottom: 6px;
