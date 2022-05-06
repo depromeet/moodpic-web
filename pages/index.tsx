@@ -16,6 +16,10 @@ const Home = () => {
   );
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
+  const goToUndefinedFeelings = () => {
+    router.push('/posts/undefined-feelings');
+  };
+
   return (
     <>
       <HomeBanner nickname="홍길동" />
@@ -33,10 +37,7 @@ const Home = () => {
       <CommonWritingButton onClick={() => router.push('/write/pre-emotion')} />
       <FloatingContainer>
         <div>
-          <CommonButton
-            color="gray"
-            onClick={() => router.push('/posts/undefined-feelings')}
-          >
+          <CommonButton color="gray" onClick={goToUndefinedFeelings}>
             지난 감정 되돌아보기
           </CommonButton>
         </div>
