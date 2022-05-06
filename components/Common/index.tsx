@@ -12,3 +12,4 @@ export { default as CommonTextField } from './TextField/TextField';
 export { default as CommonTextArea } from './TextArea/TextArea';
 export { default as CommonAppBar } from './AppBar/AppBar';
 export { default as CommonIconButton } from './IconButton/IconButton';
+export { default as CommonCheckbox } from './Checkbox/Checkbox';
