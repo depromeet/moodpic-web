@@ -33,7 +33,10 @@ const Home = () => {
       <CommonWritingButton onClick={() => router.push('/write/pre-emotion')} />
       <FloatingContainer>
         <div>
-          <CommonButton color="gray" onClick={() => router.push('/posts')}>
+          <CommonButton
+            color="gray"
+            onClick={() => router.push('/posts/undefined-feelings')}
+          >
             지난 감정 되돌아보기
           </CommonButton>
         </div>
