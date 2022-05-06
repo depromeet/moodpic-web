@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from '@/styles/theme';
 
 export const DialogWrapper = styled.div`
@@ -31,32 +31,6 @@ export const DialogInner = styled.div`
 
 export const DialogContent = styled.div`
   width: 100%;
-  padding: 24px 16px 28px;
-  &.alert {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    & > span {
-      flex-shrink: 0;
-    }
-    & > div {
-      margin-top: 10px;
-      text-align: center;
-      ${theme.fonts.h4}
-      color: ${theme.colors.white};
-    }
-  }
-`;
-
-export const DialogHeader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & > div {
-    ${theme.fonts.h4}
-    color: ${theme.colors.white};
-    margin-left: 5px;
-  }
 `;
 
 export const DialogBottom = styled.div`
@@ -74,7 +48,7 @@ export const CancelBtn = styled.button`
   cursor: pointer;
 `;
 
-export const ActionBtn = styled.button`
+export const ActionBtn = styled.button<{ dialogType: 'alert' | 'modal' }>`
   display: inline-block;
   ${theme.fonts.h4}
   padding: 19px 0;
@@ -88,8 +62,11 @@ export const ActionBtn = styled.button`
     background-color: ${theme.colors.gray2};
     color: ${theme.colors.gray3};
   }
-  &.alert {
-    color: ${theme.colors.white};
-    background-color: ${theme.colors.red};
-  }
+
+  ${(props) =>
+    props.dialogType === 'alert' &&
+    css`
+      color: ${theme.colors.white};
+      background-color: ${theme.colors.red};
+    `};
 `;
