@@ -11,12 +11,14 @@ export interface PostItemProps {
   post: Post;
   supportsTag?: boolean;
   canEdit?: boolean;
+  isMine?: boolean;
 }
 
 const PostItem = ({
   post: { tags, firstCategory, secondCategory, content, createdAt, hit },
   supportsTag = false,
   canEdit = false,
+  isMine = false,
 }: PostItemProps): React.ReactElement => {
   return (
     <PostItemContainer>
@@ -28,7 +30,7 @@ const PostItem = ({
         </TagList>
       )}
       <ChipContainer>
-        <HighlightButton>MY</HighlightButton>
+        {isMine && <HighlightButton>MY</HighlightButton>}
         <CommonChipButton>{firstCategory}</CommonChipButton>
         <Arrow>
           <Image src={ArrowRightIcon} alt="" width={16} height={16} />
