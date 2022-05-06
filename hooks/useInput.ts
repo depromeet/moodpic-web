@@ -7,7 +7,7 @@ export default function useInput(initialValue: string) {
     ({ target }: ChangeEvent<HTMLInputElement>) => {
       const max = Number(target.getAttribute('maxlength'));
 
-      if (target.value.length > max) {
+      if (max && target.value.length > max) {
         target.value = target.value.slice(0, max);
       }
 
