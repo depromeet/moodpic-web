@@ -14,7 +14,7 @@ export interface PostItemProps {
 }
 
 const PostItem = ({
-  post,
+  post: { tags, firstCategory, secondCategory, content, createdAt, hit },
   supportsTag = false,
   canEdit = false,
 }: PostItemProps): React.ReactElement => {
@@ -22,23 +22,23 @@ const PostItem = ({
     <PostItemContainer>
       {supportsTag && (
         <TagList>
-          {post.tags.map((tag: string) => (
-            <CommonTagButton key={tag}>#{tag}</CommonTagButton>
+          {tags.map((tag: string, index: number) => (
+            <CommonTagButton key={index}>#{tag}</CommonTagButton>
           ))}
         </TagList>
       )}
       <ChipContainer>
         <HighlightButton>MY</HighlightButton>
-        <CommonChipButton>{post.firstCategory}</CommonChipButton>
+        <CommonChipButton>{firstCategory}</CommonChipButton>
         <Arrow>
           <Image src={ArrowRightIcon} alt="" width={16} height={16} />
         </Arrow>
-        <CommonChipButton>{post.secondCategory}</CommonChipButton>
+        <CommonChipButton>{secondCategory}</CommonChipButton>
       </ChipContainer>
-      <Content>{post.content}</Content>
+      <Content>{content}</Content>
       <CaptionContainer>
-        <Caption>{post.createdAt}</Caption>
-        <Caption>조회수 {post.hit}</Caption>
+        <Caption>{createdAt}</Caption>
+        <Caption>조회수 {hit}</Caption>
       </CaptionContainer>
     </PostItemContainer>
   );
