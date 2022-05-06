@@ -1,4 +1,5 @@
 export interface Post {
+  id: number;
   tags: string[];
   firstCategory: string;
   secondCategory: string;
