@@ -1,7 +1,7 @@
 import React from 'react';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
-import PostItem from '@/components/Post/PostItem.tsx/PostItem';
+import PostItem from '@/components/Post/PostItem/PostItem';
 import styled from 'styled-components';
 
 const postList = [
