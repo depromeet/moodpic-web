@@ -4,13 +4,13 @@ import { TagButtonContainer, Text, CloseImage } from './TagButton.styles';
 
 export interface TagButtonProps {
   canDelete?: boolean;
-  onDelete?: MouseEventHandler<HTMLImageElement>;
+  onClick?: MouseEventHandler<HTMLImageElement>;
   children: React.ReactNode;
 }
 
 const TagButton = ({
   canDelete = false,
-  onDelete,
+  onClick,
   children,
 }: TagButtonProps): React.ReactElement => {
   return (
@@ -22,7 +22,7 @@ const TagButton = ({
           alt="삭제"
           width={16}
           height={16}
-          onClick={onDelete}
+          onClick={onClick}
         />
       )}
     </TagButtonContainer>
