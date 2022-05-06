@@ -14,6 +14,7 @@ export const Default = Template.bind({});
 
 Default.args = {
   post: {
+    id: 1,
     firstCategory: '모르겠어요',
     secondCategory: '기쁨',
     content:
