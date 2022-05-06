@@ -1,9 +1,9 @@
 import React from 'react';
 import { CommonDialog } from '@/components/Common';
-import useModal from '@/hooks/useDialog';
+import useDialog from '@/hooks/useDialog';
 
 const ModalExample = () => {
-  const { dialogVisible, toggleDialog } = useModal();
+  const { dialogVisible, toggleDialog } = useDialog();
 
   return (
     <>
