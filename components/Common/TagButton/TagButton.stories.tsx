@@ -16,5 +16,5 @@ export const Default = Template.bind({});
 Default.args = {
   children: '#Button Example',
   canDelete: false,
-  onDelete: action('delete the tag'),
+  onClick: action('delete the tag'),
 };
