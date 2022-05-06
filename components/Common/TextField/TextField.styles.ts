@@ -33,13 +33,12 @@ const BorderStyle = (hasBorder: boolean) => {
 
 export const Container = styled.div<Pick<TextFieldProps, 'height'>>`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   flex: 0 1 auto;
-  height: ${({ height }) => height || '4rem'};
 `;
 
 export const Input = styled.input<
-  Pick<TextFieldProps, 'borderRadius' | 'hasBorder'>
+  Pick<TextFieldProps, 'borderRadius' | 'hasBorder' | 'height'>
 >`
   text-align: start;
   cursor: text;
@@ -52,6 +51,7 @@ export const Input = styled.input<
   color: ${theme.colors.white};
   letter-spacing: -0.01em;
   outline: none;
+  height: ${({ height }) => height || '4rem'};
 
   ${theme.fonts.body};
   ${(props) => BorderStyle(props.hasBorder || true)};
@@ -63,4 +63,10 @@ export const RightSideIcon = styled.img<{ isFocused: boolean }>`
   cursor: pointer;
 
   ${(props) => IconStyle(props.isFocused)};
+`;
+
+export const Caption = styled.span`
+  margin: 0.4rem 0 0 auto;
+  ${theme.fonts.caption1};
+  color: ${theme.colors.gray4};
 `;
