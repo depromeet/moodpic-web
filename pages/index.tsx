@@ -29,6 +29,8 @@ const Home = () => {
     router.push('/posts/undefined-feelings');
   };
 
+  const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
+
   return (
     <>
       <HomeBanner nickname="홍길동" />
@@ -39,7 +41,7 @@ const Home = () => {
       />
       <HomeTabs
         currentTab={currentTab}
-        setCurrentTab={(tab: CurrentTabType) => setCurrentTab(tab)}
+        setCurrentTab={handleCurrentTab}
         onClick={toggleDialog}
       />
       <FolderList isEditMode={isEditMode} />

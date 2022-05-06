@@ -36,14 +36,6 @@ const Tabs = ({
     },
   ];
 
-  const FolderPlus = () => {
-    return (
-      <FolderImage onClick={onClick}>
-        <Image src={FolderIcon} alt="폴더 추가" />
-      </FolderImage>
-    );
-  };
-
   return (
     <TabContainer>
       <TabList>
@@ -58,7 +50,11 @@ const Tabs = ({
             </TabButton>
           );
         })}
-        {currentTab === HOME_TAB_TYPE.FOLDER && <FolderPlus />}
+        {currentTab === HOME_TAB_TYPE.FOLDER && (
+          <FolderImage onClick={onClick}>
+            <Image src={FolderIcon} alt="폴더 추가" />
+          </FolderImage>
+        )}
       </TabList>
     </TabContainer>
   );
