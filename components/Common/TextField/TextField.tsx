@@ -45,7 +45,7 @@ const TextField = ({
   return (
     <Container height={height}>
       <Input
-        defaultValue={value}
+        value={value}
         borderRadius={borderRadius}
         onFocus={(event: React.FocusEvent<HTMLInputElement>) => {
           setIsFocused(true);
