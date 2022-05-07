@@ -30,18 +30,16 @@ const Dialog = ({
   const DialogRef =
     typeof window !== 'undefined' && document.getElementById('root-dialog');
 
-  const closeDialog = () => onClose();
-
   if (!DialogRef) return null;
 
   return createPortal(
     <DialogWrapper>
-      <DialogDimmed onClick={closeDialog} />
+      <DialogDimmed onClick={onClose} />
       <DialogWrap>
         <DialogInner>
           <DialogContent>{children}</DialogContent>
           <DialogBottom>
-            <CancelBtn onClick={closeDialog}>취소</CancelBtn>
+            <CancelBtn onClick={onClose}>취소</CancelBtn>
             <ActionBtn
               dialogType={type}
               disabled={disabledConfirm}
