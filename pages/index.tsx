@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
@@ -15,6 +15,7 @@ import {
   CommonWritingButton,
 } from '@/components/Common';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
+import axios from 'axios';
 
 const Home = () => {
   const router = useRouter();
@@ -30,6 +31,27 @@ const Home = () => {
   };
 
   const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
+
+  // 카카오 로그인 임시 테스트 코드 -------------------------------------------------
+  // const BASE_URL = 'http://localhost:8080';
+  const BASE_URL = 'http://3.35.50.139';
+
+  const AUTH_URL = '/oauth2/authorization/kakao';
+
+  axios.defaults.withCredentials = true;
+
+  const tmpLogin = async () => {
+    const {
+      data: { data },
+    } = await axios.get(`${BASE_URL}${AUTH_URL}`);
+    const { loginUrl } = data;
+
+    router.push(loginUrl);
+  };
+
+  useEffect(() => {
+    tmpLogin();
+  }, []);
 
   return (
     <>
