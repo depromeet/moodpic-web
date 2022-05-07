@@ -10,13 +10,13 @@ import { dropdownStateAtom } from '@/store/dropdown/atom';
 import { useAnimation } from '@/hooks/useAnimation';
 
 const DropdownMenu = (): React.ReactElement => {
-  const setDropdownState = useSetRecoilState(dropdownStateAtom);
+  const isDropdownOpen = useSetRecoilState(dropdownStateAtom);
   const { opacityAnimation, fullMenuAnimation } = useAnimation({
-    onClose: () => setDropdownState(false),
+    onClose: () => isDropdownOpen(false),
   });
 
   const closeDropdown = () => {
-    setDropdownState(false);
+    isDropdownOpen(false);
   };
 
   const dropdownRef =
