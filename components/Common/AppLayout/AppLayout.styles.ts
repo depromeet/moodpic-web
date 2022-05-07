@@ -8,9 +8,9 @@ export const ContainerInner = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${theme.colors.black};
-  max-width: 480px;
+  max-width: 48rem;
   width: 100%;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 0 18px;
+  padding: 0 1.8rem 8rem;
 `;
