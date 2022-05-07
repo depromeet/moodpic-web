@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
+import useBottomSheet from '@/hooks/useBottomSheet';
 import PostItem from '@/components/Post/PostItem/PostItem';
-import { CommonAppBar, CommonIconButton } from '@/components/Common';
+import {
+  CommonAppBar,
+  CommonBottomSheetContainer,
+  CommonIconButton,
+} from '@/components/Common';
 import styled from 'styled-components';
+import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 
 const postList = [
   {
@@ -51,6 +57,25 @@ const postList = [
 const PostList = () => {
   const router = useRouter();
   const goToWritePage = () => router.push('/write/pre-emotion');
+  const [isEditing, setIsEditing] = useState(false);
+
+  const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } =
+    useBottomSheet();
+
+  const bottomSheetItems = [
+    {
+      label: '기록 선택하기',
+      onClick: () => setIsEditing(true),
+    },
+    {
+      label: '폴더명 변경하기',
+      onClick: () => console.log('edit'),
+    },
+    {
+      label: '폴더 삭제하기',
+      onClick: () => console.log('delete'),
+    },
+  ];
 
   return (
     <>
@@ -60,17 +85,29 @@ const PostList = () => {
         </CommonAppBar.Left>
         <CommonAppBar.Right>
           <CommonIconButton iconName="share" alt="공유" />
-          <CommonIconButton iconName="more" alt="더보기" />
+          <CommonIconButton
+            iconName="more"
+            alt="더보기"
+            onClick={toggleSheet()}
+          />
         </CommonAppBar.Right>
       </CommonAppBar>
       <PostListContainer>
         {postList.map((post) => (
           <li key={post.id}>
-            <PostItem post={post} />
+            <PostItem post={post} isEditing={isEditing} />
           </li>
         ))}
         <WritingButon onClick={goToWritePage} />
       </PostListContainer>
+      {isVisibleSheet && (
+        <CommonBottomSheetContainer
+          onClose={toggleSheet()}
+          BottomSheetHeight={calcBottomSheetHeight(bottomSheetItems.length)}
+        >
+          <BottomSheetList items={bottomSheetItems} />
+        </CommonBottomSheetContainer>
+      )}
     </>
   );
 };

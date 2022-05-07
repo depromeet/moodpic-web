@@ -26,6 +26,8 @@ const BottomSheetList = ({ items }: BottomSheetListProps) => {
 export default BottomSheetList;
 
 const BottomSheetListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   padding-top: 2.2rem;
 
   & > button {
@@ -35,6 +37,7 @@ const BottomSheetListContainer = styled.div`
     ${theme.fonts.h5};
     color: ${theme.colors.white};
     cursor: pointer;
+    text-align: left;
   }
 
   & > button:last-child {
