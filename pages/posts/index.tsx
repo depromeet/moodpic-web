@@ -50,7 +50,7 @@ const postList = [
 
 const PostList = () => {
   const router = useRouter();
-  const handleWritingButton = () => router.push('/write/pre-emotion');
+  const goToWritePage = () => router.push('/write/pre-emotion');
 
   return (
     <>
@@ -69,7 +69,7 @@ const PostList = () => {
             <PostItem post={post} />
           </li>
         ))}
-        <WritingButon onClick={handleWritingButton} />
+        <WritingButon onClick={goToWritePage} />
       </PostListContainer>
     </>
   );
