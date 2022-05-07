@@ -1,7 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { a11y } from '@/styles/mixins';
-import theme from '@/styles/theme';
 import { ReactNode, ChangeEventHandler } from 'react';
 
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -25,7 +24,7 @@ function Checkbox({
         name={name}
         value={value}
         disabled={disabled}
-        checked={checked}
+        defaultChecked={checked}
         onChange={onChange}
       />
       <CheckboxIcon>
