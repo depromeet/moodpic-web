@@ -1,6 +1,6 @@
 import React, { RefObject, useRef, useState } from 'react';
 import Image from 'next/image';
-import useInput from '@/hooks/useInput';
+import useInput from '@/hooks/useTypeInput';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import Button from '@/components/Common/Button/Button';
 import { ButtonWrapper } from '@/pages/write';
