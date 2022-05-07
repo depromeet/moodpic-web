@@ -1,5 +1,5 @@
 import React from 'react';
-import PostItem from '@/components/Post/PostItem.tsx/PostItem';
+import PostItem from '@/components/Post/PostItem/PostItem';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { Post } from '@/shared/type/post';
