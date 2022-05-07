@@ -23,12 +23,14 @@ export const FolderCount = styled.span`
 export const BoxContainer = styled.figure`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 4px;
-  height: calc(100% - 42px);
+  gap: 0.4rem;
+  height: calc(100% - 4.2rem);
+  min-height: 16.5rem;
 `;
 
 export const FolderImage = styled.div<{ thumbnail: string }>`
-  border-radius: 10px;
-  background-image: url(thumbnail);
+  max-height: 50%;
+  border-radius: 1rem;
+  background-image: url(${(props) => props.thumbnail});
   background-color: ${theme.colors.gray3};
 `;
