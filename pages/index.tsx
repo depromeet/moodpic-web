@@ -8,6 +8,7 @@ import useInput from '@/hooks/useInput';
 import HomeBanner from '@/components/Home/Banner/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
+import HomeHeader from '@/components/Home/Header/Header';
 import FolderList from '@/components/Home/FolderList/FolderList';
 import {
   CommonButton,
@@ -33,6 +34,7 @@ const Home = () => {
 
   return (
     <>
+      <HomeHeader />
       <HomeBanner nickname="홍길동" />
       <HomeTabHeader
         currentTab={currentTab}
