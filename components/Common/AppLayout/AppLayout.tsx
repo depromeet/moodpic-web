@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { CommonHeader, CommonToast } from '@/components/Common';
+import { CommonToast } from '@/components/Common';
 import { Container, ContainerInner } from './AppLayout.styles';
 import { toastStateAtom } from '@/store/toast/atom';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
@@ -19,7 +19,6 @@ const AppLayout = ({ children }: AppLayoutProps): React.ReactElement => {
       <Container>
         <ContainerInner>
           {dropdownState && <DropdownMenu />}
-          <CommonHeader />
           {children}
         </ContainerInner>
       </Container>
