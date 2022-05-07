@@ -26,7 +26,7 @@ const ellipsis = (lines = 0) => {
         display: -webkit-box;
         overflow: hidden;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: $lines;
+        -webkit-line-clamp: ${lines};
         text-overflow: ellipsis;
         word-wrap: normal;
       `

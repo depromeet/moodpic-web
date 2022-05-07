@@ -9,3 +9,4 @@ export { default as CommonToast } from './Toast/Toast';
 export { default as CommonToggle } from './Toggle/Toggle';
 export { default as CommonWritingButton } from './WritingButton/WritingButton';
 export { default as CommonProgress } from './Progress/Progress';
+export { default as CommonTagButton } from './TagButton/TagButton';
