@@ -10,4 +10,5 @@ export const ButtonContainer = styled.button`
   background-color: ${theme.colors.primary};
   border-radius: 50%;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
 `;
