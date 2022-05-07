@@ -9,14 +9,14 @@ import { CommonIconButton } from '@/components/Common';
 
 const Header = () => {
   const router = useRouter();
-  const setDropdownState = useSetRecoilState<boolean>(dropdownStateAtom);
+  const isDropdownOpen = useSetRecoilState<boolean>(dropdownStateAtom);
 
   const handleButtonClick = () => {
     router.push('/search');
   };
 
   const handleLogoClick = () => {
-    setDropdownState(true);
+    isDropdownOpen(true);
   };
 
   return (
