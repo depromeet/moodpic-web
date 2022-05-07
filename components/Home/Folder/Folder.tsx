@@ -9,31 +9,25 @@ import {
   BoxContainer,
   CaptionContainer,
 } from './Folder.styles';
+import { Folder } from '@/shared/type/folder';
 import EmptyImage from 'public/images/empty.png';
 import TrashIcon from 'public/svgs/trash.svg';
 import EditFolderIcon from 'public/svgs/editfolder.svg';
 
-export interface Folder {
-  name: string;
-  count: number;
-  thumbnail: string;
-}
-
-export interface FolderProps extends Folder {
+export interface FolderProps {
   isEditMode?: boolean;
   supportsMultipleLayout?: boolean;
+  folder: Folder;
 }
 
 const Folder = ({
-  name,
-  count,
-  thumbnail = '',
+  folder: { postCount, folderName, coverImg },
   isEditMode = false,
 }: FolderProps): React.ReactElement => {
   const renderDeleteButton = () => {
     return (
       <DeleteButton onClick={() => console.log('delete')}>
-        <Image src={TrashIcon} alt="삭제" />
+        <Image src={TrashIcon} alt="삭제" width={24} height={24} />
       </DeleteButton>
     );
   };
@@ -41,7 +35,7 @@ const Folder = ({
   const renderEditButton = () => {
     return (
       <EditButton onClick={() => console.log('edit')}>
-        <Image src={EditFolderIcon} alt="편집" />
+        <Image src={EditFolderIcon} alt="편집" width={24} height={24} />
       </EditButton>
     );
   };
@@ -49,18 +43,28 @@ const Folder = ({
   return (
     <FolderContainer>
       <BoxContainer>
-        {count === 0 ? (
-          <Image src={EmptyImage} alt="기록이 없어요" />
+        {postCount === 0 ? (
+          <Image
+            src={EmptyImage}
+            alt="기록이 없어요"
+            layout="fill"
+            objectFit="cover"
+          />
         ) : (
-          <Image src={thumbnail || EmptyImage} alt={name} />
+          <Image
+            src={coverImg || EmptyImage}
+            alt={folderName}
+            layout="fill"
+            objectFit="cover"
+          />
         )}
         {isEditMode && renderDeleteButton()}
       </BoxContainer>
       <CaptionContainer>
         {isEditMode && renderEditButton()}
         <div>
-          <FolderName>{name}</FolderName>
-          <FolderCount>{count}</FolderCount>
+          <FolderName>{folderName}</FolderName>
+          <FolderCount>{postCount}</FolderCount>
         </div>
       </CaptionContainer>
     </FolderContainer>

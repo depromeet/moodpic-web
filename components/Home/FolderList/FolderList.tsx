@@ -1,70 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Folder } from '@/shared/type/folder';
 import HomeFolder from '@/components/Home/Folder/Folder';
 import HomeCollectedFolder from '@/components/Home/CollectedFolder/CollectedFolder';
 
 interface FolderListProps {
   isEditMode: boolean;
+  folderList: Folder[];
 }
 
-const FolderList = ({ isEditMode }: FolderListProps): React.ReactElement => {
-  const folderList = [
-    {
-      name: '폴더명1',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명2',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명3',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명4',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명5',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명6',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명7',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명8',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명9',
-      count: 3,
-      thumbnail: '',
-    },
-  ];
+const FolderList = ({
+  isEditMode,
+  folderList,
+}: FolderListProps): React.ReactElement => {
+  const totalCount = folderList.reduce((acc, curr) => acc + curr.postCount, 0);
 
   return (
     <FolderListContainer>
-      <HomeCollectedFolder count={3} items={folderList} />
-      {folderList.map((folder) => (
+      <HomeCollectedFolder count={totalCount} items={folderList} />
+      {folderList.map((folder: Folder) => (
         <HomeFolder
-          key={folder.name}
-          name="폴더명"
-          count={folder.count}
-          thumbnail=""
+          key={folder.folderId}
+          folder={folder}
           isEditMode={isEditMode}
         />
       ))}
