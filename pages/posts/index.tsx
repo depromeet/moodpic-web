@@ -2,6 +2,7 @@ import React from 'react';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
 import PostItem from '@/components/Post/PostItem/PostItem';
+import { CommonAppBar, CommonIconButton } from '@/components/Common';
 import styled from 'styled-components';
 
 const postList = [
@@ -52,14 +53,25 @@ const PostList = () => {
   const handleWritingButton = () => router.push('/write/pre-emotion');
 
   return (
-    <PostListContainer>
-      {postList.map((post) => (
-        <li key={post.id}>
-          <PostItem post={post} />
-        </li>
-      ))}
-      <WritingButon onClick={handleWritingButton} />
-    </PostListContainer>
+    <>
+      <CommonAppBar>
+        <CommonAppBar.Left>
+          <CommonIconButton iconName="left" alt="이전" />
+        </CommonAppBar.Left>
+        <CommonAppBar.Right>
+          <CommonIconButton iconName="share" alt="공유" />
+          <CommonIconButton iconName="more" alt="더보기" />
+        </CommonAppBar.Right>
+      </CommonAppBar>
+      <PostListContainer>
+        {postList.map((post) => (
+          <li key={post.id}>
+            <PostItem post={post} />
+          </li>
+        ))}
+        <WritingButon onClick={handleWritingButton} />
+      </PostListContainer>
+    </>
   );
 };
 
