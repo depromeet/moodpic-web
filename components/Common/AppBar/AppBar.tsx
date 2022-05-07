@@ -14,11 +14,6 @@ const AppBar = ({ children }: AppBarProps) => {
   return <AppBarWrapper>{children}</AppBarWrapper>;
 };
 
-AppBar.Left = SideContainer;
-AppBar.Right = SideContainer;
-
-export default AppBar;
-
 const AppBarWrapper = styled.header`
   z-index: 101;
   position: sticky;
@@ -41,3 +36,8 @@ const ButtonContainer = styled.div`
     margin: 0 1.2rem;
   }
 `;
+
+export default Object.assign(AppBar, {
+  Left: SideContainer,
+  Right: SideContainer,
+});
