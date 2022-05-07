@@ -7,7 +7,7 @@ import {
   BoxContainer,
   FolderImage,
 } from './CollectedFolder.styles';
-import { Folder } from '../Folder/Folder';
+import { Folder } from '@/shared/type/folder';
 import { MAX_THUMBNAIL_SIZE } from '@/shared/constants/home';
 
 // TODO: 이후 mocking 추가하면서 알맞는 폴더에 위치할 예정
@@ -24,7 +24,7 @@ const CollectedFolder = ({
     <CollectedFolderContainer>
       <BoxContainer>
         {items.slice(0, MAX_THUMBNAIL_SIZE).map((item) => (
-          <FolderImage key={item.name} thumbnail={item.thumbnail} />
+          <FolderImage key={item.folderId} thumbnail={item.coverImg} />
         ))}
       </BoxContainer>
       <Caption>
