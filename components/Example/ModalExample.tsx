@@ -1,30 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CommonDialog } from '@/components/Common';
+import useDialog from '@/hooks/useDialog';
 
 const ModalExample = () => {
-  const [isVisible, setVisible] = useState(false);
-
-  const handleModal = (action: string) => () => {
-    if (action === 'open') {
-      setVisible(true);
-      document.body.style.overflow = 'hidden';
-    }
-    if (action === 'close') {
-      setVisible(false);
-      document.body.style.overflow = 'unset';
-    }
-  };
+  const { dialogVisible, toggleDialog } = useDialog();
 
   return (
     <>
-      <button
-        style={{ backgroundColor: 'green' }}
-        onClick={handleModal('open')}
-      >
+      <button style={{ backgroundColor: 'green' }} onClick={toggleDialog}>
         modal
       </button>
-      {isVisible ? (
-        <CommonDialog type="alert" onClose={handleModal('close')} />
+      {dialogVisible ? (
+        <CommonDialog
+          type="alert"
+          onClose={toggleDialog}
+          onConfirm={toggleDialog}
+        >
+          모달 컨텐츠
+        </CommonDialog>
       ) : null}
     </>
   );

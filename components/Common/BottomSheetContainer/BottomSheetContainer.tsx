@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
-import { useSpring } from 'react-spring';
+import { useAnimation } from '@/hooks/useAnimation';
 
 import CloseIcon from 'public/svgs/close.svg';
 
@@ -32,28 +32,9 @@ const BottomSheetContainer = ({
   BottomSheetHeight,
   headerTitle,
 }: BottomSheetProps) => {
-  const [isPrevClose, setPrevClose] = useState(false);
-
-  const opacityAnimation = useSpring({
-    to: { opacity: isPrevClose ? 0 : 1 },
-    from: { opacity: isPrevClose ? 1 : 0.6 },
-    onRest: () => {
-      if (isPrevClose) {
-        onClose();
-      }
-    },
-    onStart: () => {
-      if (isPrevClose) {
-        document.body.style.overflow = 'unset';
-      } else {
-        document.body.style.overflow = 'hidden';
-      }
-    },
-  });
-
-  const heightAnimation = useSpring({
-    to: { height: isPrevClose ? 0 : BottomSheetHeight },
-    from: { height: isPrevClose ? BottomSheetHeight : 0 },
+  const { opacityAnimation, heightAnimation, setPrevClose } = useAnimation({
+    onClose,
+    fullHeight: BottomSheetHeight,
   });
 
   const bottomSheetRef =

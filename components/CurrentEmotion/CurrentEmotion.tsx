@@ -63,7 +63,7 @@ const CurrentEmotion = () => {
             <OptionTitle>폴더</OptionTitle>
             <FolderWrap>
               <FolderButton>폴더선택</FolderButton>
-              <Image src={FolderPlus} alt="FolderPlus" />
+              <CustomImage src={FolderPlus} alt="FolderPlus" />
             </FolderWrap>
           </div>
         </OptionWrapper>
@@ -105,4 +105,8 @@ const FolderWrap = styled.div`
   & > button {
     margin-right: 28px;
   }
+`;
+
+const CustomImage = styled(Image)`
+  cursor: pointer;
 `;

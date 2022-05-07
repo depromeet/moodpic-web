@@ -1,32 +1,30 @@
-import React, { MouseEventHandler } from 'react';
-import CloseIcon from 'public/svgs/close.svg';
-import { ChipButtonContainer, Text, CloseImage } from './ChipButton.styles';
+import theme from '@/styles/theme';
+import React, { ReactNode } from 'react';
+import styled from 'styled-components';
 
 export interface ChipButtonProps {
-  canDelete: boolean;
-  onDelete: MouseEventHandler<HTMLImageElement>;
-  children: React.ReactNode;
+  bgColor?: string;
+  children: ReactNode;
 }
 
 const ChipButton = ({
-  canDelete = false,
-  onDelete,
+  bgColor = theme.colors.gray3,
   children,
 }: ChipButtonProps): React.ReactElement => {
   return (
-    <ChipButtonContainer>
-      <Text canDelete={canDelete}>{children}</Text>
-      {canDelete && (
-        <CloseImage
-          src={CloseIcon}
-          alt="삭제"
-          width={16}
-          height={16}
-          onClick={onDelete}
-        />
-      )}
-    </ChipButtonContainer>
+    <ChipButtonContainer bgColor={bgColor}>{children}</ChipButtonContainer>
   );
 };
+
+const ChipButtonContainer = styled.div<{ bgColor: string }>`
+  display: inline-flex;
+  align-items: center;
+  height: 3.2rem;
+  padding: 0 1.6rem;
+  background-color: ${(props) => props.bgColor};
+  border-radius: 1rem;
+  ${theme.fonts.h4};
+  color: ${theme.colors.white};
+`;
 
 export default ChipButton;

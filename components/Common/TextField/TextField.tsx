@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Container,
   Input,
+  Caption,
   RightSideIcon,
 } from '@/components/Common/TextField/TextField.styles';
 
@@ -24,6 +25,7 @@ export interface TextFieldProps extends TextFieldAttributes {
   height?: string;
   borderRadius?: '1rem' | '0.4rem';
   hasBorder?: boolean;
+  supportsMaxLength?: boolean;
 }
 
 const TextField = ({
@@ -34,6 +36,8 @@ const TextField = ({
   height,
   borderRadius,
   hasBorder,
+  maxLength,
+  supportsMaxLength = false,
   ...restTextFieldProps
 }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -52,6 +56,7 @@ const TextField = ({
           onBlur?.(event);
         }}
         hasBorder={hasBorder}
+        maxLength={maxLength}
         {...restTextFieldProps}
       />
       {rightSideIcon && (
@@ -60,6 +65,11 @@ const TextField = ({
           alt="aside-icon"
           isFocused={isFocused}
         />
+      )}
+      {supportsMaxLength && (
+        <Caption>
+          {value.length}/{maxLength}
+        </Caption>
       )}
     </Container>
   );

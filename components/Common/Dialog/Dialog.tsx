@@ -1,64 +1,52 @@
-import React from 'react';
-import Image from 'next/image';
+import React, { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
-import Folder from 'public/svgs/folder.svg';
-import Warning from 'public/svgs/warning.svg';
 import {
   DialogWrapper,
   DialogWrap,
   DialogInner,
   DialogContent,
-  DialogHeader,
   DialogBottom,
   CancelBtn,
   ActionBtn,
   DialogDimmed,
 } from './Dialog.styles';
 
-interface DialogProps {
-  onClose: () => void;
+export interface DialogProps {
   type: 'modal' | 'alert';
+  children: ReactNode;
+  disabledConfirm?: boolean;
+  onConfirm: () => void;
+  onClose: () => void;
 }
 
-const Dialog = ({ onClose, type = 'modal' }: DialogProps) => {
+const Dialog = ({
+  type = 'modal',
+  disabledConfirm = false,
+  onConfirm,
+  onClose,
+  children,
+}: DialogProps) => {
   const DialogRef =
     typeof window !== 'undefined' && document.getElementById('root-dialog');
-
-  const closeDialog = () => {
-    onClose();
-  };
 
   if (!DialogRef) return null;
 
   return createPortal(
     <DialogWrapper>
-      <DialogDimmed onClick={closeDialog} />
+      <DialogDimmed onClick={onClose} />
       <DialogWrap>
-        <DialogInner className={type === 'alert' ? 'alert' : ''}>
-          {type === 'alert' ? (
-            <DialogContent className="alert">
-              <Image src={Warning} alt="Warning" />
-              <div>
-                ‘가나다라마바사아자차카’ 폴더를 <br />
-                삭제하시겠어요?
-              </div>
-            </DialogContent>
-          ) : (
-            <DialogContent>
-              <DialogHeader>
-                <Image src={Folder} alt="Folder" />
-                <div>새폴더의 이름을 입력해주세요.</div>
-              </DialogHeader>
-            </DialogContent>
-          )}
+        <DialogInner>
+          <DialogContent>{children}</DialogContent>
           <DialogBottom>
-            <CancelBtn onClick={closeDialog}>취소</CancelBtn>
-            {type === 'alert' ? (
-              <ActionBtn className="alert">삭제</ActionBtn>
-            ) : (
-              <ActionBtn>저장</ActionBtn>
-            )}
+            <CancelBtn onClick={onClose}>취소</CancelBtn>
+            <ActionBtn
+              dialogType={type}
+              disabled={disabledConfirm}
+              onClick={onConfirm}
+            >
+              {type === 'alert' ? '삭제' : '저장'}
+            </ActionBtn>
           </DialogBottom>
         </DialogInner>
       </DialogWrap>
