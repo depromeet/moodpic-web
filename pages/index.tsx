@@ -18,6 +18,7 @@ import {
   CommonWritingButton,
 } from '@/components/Common';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
+import { useFoldersQuery } from '@/hooks/query/useFoldersQuery';
 
 const Home = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ const Home = () => {
   const { dialogVisible, toggleDialog } = useDialog();
   const { inputValue, onChangeInput } = useInput('');
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
+  const { data } = useFoldersQuery();
 
   const goToUndefinedFeelings = () => {
     router.push('/posts/undefined-feelings');
@@ -54,7 +56,7 @@ const Home = () => {
         setCurrentTab={handleCurrentTab}
         onClick={toggleDialog}
       />
-      <FolderList isEditMode={isEditMode} />
+      {data && <FolderList isEditMode={isEditMode} folderList={data.folders} />}
       <CommonWritingButton onClick={goToWritePage} />
       <FloatingContainer>
         <div>
