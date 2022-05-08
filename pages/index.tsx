@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { useSetRecoilState } from 'recoil';
@@ -35,6 +35,12 @@ const Home = () => {
     router.push('/posts/undefined-feelings');
   };
 
+  useEffect(() => {
+    if (currentTab === HOME_TAB_TYPE.EMOTION) {
+      setIsEditMode(false);
+    }
+  }, [currentTab]);
+
   const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
 
   const goToWritePage = () => {
@@ -56,7 +62,7 @@ const Home = () => {
         setCurrentTab={handleCurrentTab}
         onClick={toggleDialog}
       />
-      {data && <FolderList isEditMode={isEditMode} folderList={data.folders} />}
+      {data && <FolderList isEditMode={isEditMode} folderList={data.folders} supportsCollectedFolder={currentTab === HOME_TAB_TYPE.FOLDER} />}
       <CommonWritingButton onClick={goToWritePage} />
       <FloatingContainer>
         <div>
