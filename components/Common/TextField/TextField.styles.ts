@@ -19,7 +19,7 @@ const IconStyle = (isFocused: boolean) => {
 
 export const Container = styled.div<Pick<TextFieldProps, 'height'>>`
   display: flex;
-  flex-direction: column;
+  align-items: center;
   flex: 0 1 auto;
 `;
 

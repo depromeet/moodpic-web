@@ -1,29 +1,26 @@
-import React, { MouseEventHandler } from 'react';
+import React, { HtmlHTMLAttributes } from 'react';
 import CloseIcon from 'public/svgs/close.svg';
 import { TagButtonContainer, Text, CloseImage } from './TagButton.styles';
 
-export interface TagButtonProps {
+export interface TagButtonProps extends HtmlHTMLAttributes<HTMLDivElement> {
   canDelete?: boolean;
-  onClick?: MouseEventHandler<HTMLImageElement>;
   children: React.ReactNode;
+  exampleTagMode?: boolean;
 }
 
 const TagButton = ({
   canDelete = false,
-  onClick,
+  exampleTagMode = false,
   children,
+  ...props
 }: TagButtonProps): React.ReactElement => {
   return (
-    <TagButtonContainer>
-      <Text canDelete={canDelete}>{children}</Text>
+    <TagButtonContainer exampleTagMode={exampleTagMode} {...props}>
+      <Text canDelete={canDelete} exampleTagMode={exampleTagMode}>
+        {children}
+      </Text>
       {canDelete && (
-        <CloseImage
-          src={CloseIcon}
-          alt="삭제"
-          width={16}
-          height={16}
-          onClick={onClick}
-        />
+        <CloseImage src={CloseIcon} alt="삭제" width={16} height={16} />
       )}
     </TagButtonContainer>
   );
