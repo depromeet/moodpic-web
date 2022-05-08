@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { CommonBottomSheetContainer } from '@/components/Common';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
 
 import FolderIcon from 'public/svgs/folder.svg';
-
-const MAX_SHOW_LIST_ITEM = 7;
-const HEADER_HEIGHT = 66;
-const LIST_ITEM_HEIGHT = 61.8;
-const LIST_BOTTOM_HEIGHT = 58;
+import useBottomSheet from '@/hooks/useBottomSheet';
 
 const mockResponse = [
   {
@@ -50,34 +46,22 @@ const mockResponse = [
 ];
 
 const BottomSheetExample = () => {
-  const [isVisible, setVisible] = useState(false);
-
+  const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } =
+    useBottomSheet();
   const folderDataLength = mockResponse.length;
-
-  const calcBottomSheetHeight = () => {
-    if (folderDataLength > MAX_SHOW_LIST_ITEM) return 530;
-    return (
-      HEADER_HEIGHT + LIST_ITEM_HEIGHT * folderDataLength + LIST_BOTTOM_HEIGHT
-    );
-  };
-
-  const handleModal = (action: string) => () => {
-    if (action === 'open') setVisible(true);
-    if (action === 'close') setVisible(false);
-  };
 
   return (
     <>
       <button
-        onClick={handleModal('open')}
+        onClick={() => toggleSheet()}
         style={{ backgroundColor: 'white' }}
       >
         오픈
       </button>
-      {isVisible ? (
+      {isVisibleSheet ? (
         <CommonBottomSheetContainer
-          onClose={handleModal('close')}
-          BottomSheetHeight={calcBottomSheetHeight()}
+          onClose={() => toggleSheet()}
+          BottomSheetHeight={calcBottomSheetHeight(folderDataLength)}
           headerTitle={
             <>
               <Image src={FolderIcon} alt="folderIcon" />
