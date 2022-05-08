@@ -14,6 +14,7 @@ export interface TextFieldProps
   borderRadius?: '1rem' | '0.4rem';
   hasBorder?: boolean;
   supportsMaxLength?: boolean;
+  onClickRightSideIcon?: () => void;
 }
 
 const TextField = ({
@@ -26,6 +27,7 @@ const TextField = ({
   hasBorder,
   maxLength,
   supportsMaxLength = false,
+  onClickRightSideIcon,
   ...restTextFieldProps
 }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -52,6 +54,7 @@ const TextField = ({
           src={rightSideIcon}
           alt="aside-icon"
           isFocused={isFocused}
+          onClick={onClickRightSideIcon}
         />
       )}
       {supportsMaxLength && (
