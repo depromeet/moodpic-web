@@ -46,7 +46,11 @@ const CurrentEmotion = () => {
 
   const onKeyPressEnter = useCallback(
     (event) => {
-      if (event.key === 'Enter' && tagList.length < MAX_TAG_LIST_LENGTH) {
+      if (
+        event.key === 'Enter' &&
+        !!tagValue.trim() &&
+        tagList.length < MAX_TAG_LIST_LENGTH
+      ) {
         const deduplicatedTagList = new Set(tagList.concat(tagValue));
         setTagList([...Array.from(deduplicatedTagList)]);
         setTagValue('');
@@ -56,7 +60,7 @@ const CurrentEmotion = () => {
   );
 
   const onClickRightSideIcon = useCallback(() => {
-    if (tagList.length < MAX_TAG_LIST_LENGTH) {
+    if (tagList.length < MAX_TAG_LIST_LENGTH && !!tagValue.trim()) {
       const deduplicatedTagList = new Set(tagList.concat(tagValue));
       setTagList([...Array.from(deduplicatedTagList)]);
       setTagValue('');
