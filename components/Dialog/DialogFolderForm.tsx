@@ -20,6 +20,7 @@ const DialogFolderForm = ({ value, onChange }: DialogFolderFormProps) => {
         value={value}
         hasBorder={true}
         onChange={onChange}
+        hasRightSideIcon
       />
     </DialogContainer>
   );
