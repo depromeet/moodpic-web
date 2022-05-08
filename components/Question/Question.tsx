@@ -115,16 +115,18 @@ const Question = () => {
               /3
             </NumberTitle>
             <ProvidedQuestionMainTitle>
-              왜 그렇게 생각했나요?
+              가나다라마바사가나다님에게 <br />
+              어떤 일이 있었나요?
             </ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>
-              너무 깊게 생각하지 않아도 돼요. (가이드)
+              상황을 객관적으로 파악해보는 시간을 가져보세요
             </ProvidedQuestionSubDescription>
             <TextArea
               value={firstTextAreaValue}
               height="32.6rem"
               onChange={onChangeFirstTextAreaValue}
               onFocus={scrollToTextAreaOffestTop(firstTextAreaRef)}
+              placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
           <ProvidedQuestionWrap ref={secondTextAreaRef}>
@@ -133,16 +135,17 @@ const Question = () => {
               /3
             </NumberTitle>
             <ProvidedQuestionMainTitle>
-              왜 그렇게 생각했나요?
+              그 때 어떤 감정이 들었나요?
             </ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>
-              너무 깊게 생각하지 않아도 돼요. (가이드)
+              너무 깊게 생각하지 않아도, 일목요연하게 쓰지 않아도 돼요 !
             </ProvidedQuestionSubDescription>
             <TextArea
               value={secondTextAreaValue}
               height="32.6rem"
               onChange={onChangeSecondTextAreaValue}
               onFocus={scrollToTextAreaOffestTop(secondTextAreaRef)}
+              placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
           <ProvidedQuestionWrap ref={thirdTextAreaRef}>
@@ -151,16 +154,17 @@ const Question = () => {
               /3
             </NumberTitle>
             <ProvidedQuestionMainTitle>
-              왜 그렇게 생각했나요?
+              고생했어요! 스스로에게 한마디를 쓴다면?
             </ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>
-              너무 깊게 생각하지 않아도 돼요. (가이드)
+              지금의 나에게 해줄 수 있는 말은 무엇이 있을까요?
             </ProvidedQuestionSubDescription>
             <TextArea
               value={thirdTextAreaValue}
               height="32.6rem"
               onChange={onChangeThirdTextAreaValue}
               onFocus={scrollToTextAreaOffestTop(thirdTextAreaRef)}
+              placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
         </>
@@ -173,6 +177,7 @@ const Question = () => {
             value={mySeltTextAreaValue}
             height="32.6rem"
             onChange={onChangeMySelfTextAreaValue}
+            placeholder="입력하기"
           />
         </>
       )}
