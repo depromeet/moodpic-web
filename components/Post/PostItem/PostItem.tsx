@@ -18,6 +18,7 @@ export interface PostItemProps {
   isMine?: boolean;
   isEditing?: boolean;
   checked?: boolean;
+  onClick: () => void;
 }
 
 const PostItem = ({
@@ -27,9 +28,10 @@ const PostItem = ({
   isMine = false,
   isEditing = false,
   checked = false,
+  onClick,
 }: PostItemProps): React.ReactElement => {
   return (
-    <PostItemContainer isEditing={isEditing}>
+    <PostItemContainer isEditing={isEditing} onClick={onClick}>
       {isEditing && (
         <>
           <CheckboxContainer>
@@ -71,6 +73,7 @@ const PostItemContainer = styled.div<
   padding: 1.6rem 1.8rem;
   border-radius: 1.4rem;
   background-color: ${theme.colors.gray2};
+  cursor: pointer;
 
   ${(props) =>
     props.isEditing &&
