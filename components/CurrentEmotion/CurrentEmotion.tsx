@@ -44,7 +44,7 @@ const CurrentEmotion = () => {
     setDisclose((prev) => !prev);
   };
 
-  const onKeyDownEnter = useCallback(
+  const onKeyPressEnter = useCallback(
     (event) => {
       if (event.key === 'Enter' && tagList.length < MAX_TAG_LIST_LENGTH) {
         const deduplicatedTagList = new Set(tagList.concat(tagValue));
@@ -53,6 +53,21 @@ const CurrentEmotion = () => {
       }
     },
     [tagValue, tagList, setTagValue],
+  );
+
+  const onClickRightSideIcon = useCallback(() => {
+    if (tagList.length < MAX_TAG_LIST_LENGTH) {
+      const deduplicatedTagList = new Set(tagList.concat(tagValue));
+      setTagList([...Array.from(deduplicatedTagList)]);
+      setTagValue('');
+    }
+  }, [tagValue, tagList, setTagValue]);
+
+  const onDeleteTag = useCallback(
+    (index: number) => () => {
+      setTagList(tagList.filter((_, i: number) => i !== index));
+    },
+    [tagList],
   );
 
   return (
@@ -74,26 +89,22 @@ const CurrentEmotion = () => {
       <Divider />
       <OptionWrapper>
         <OptionTitle>태그</OptionTitle>
-        <TextField
-          style={{ margin: '13px 0 24px' }}
-          value={tagValue}
-          rightSideIcon={Whiteadd.src}
-          hasBorder={false}
-          onChange={onChangeValue}
-          onKeyPress={onKeyDownEnter}
-          placeholder="태그를 추가헤주세요."
-        />
+        <TextFieldWrap>
+          <TextField
+            value={tagValue}
+            rightSideIcon={Whiteadd.src}
+            hasBorder={false}
+            onChange={onChangeValue}
+            onKeyPress={onKeyPressEnter}
+            onClickRightSideIcon={onClickRightSideIcon}
+            placeholder="태그를 추가헤주세요."
+          />
+        </TextFieldWrap>
         <TagButtonWrap>
           {tagList.length > 0 ? (
-            tagList.map((tag) => (
-              <TagButton
-                canDelete
-                onClick={() => {
-                  console.log('Zzz');
-                }}
-                key={`tag_${tag}`}
-              >
-                #{tag}
+            tagList.map((content, index) => (
+              <TagButton canDelete onClick={onDeleteTag(index)} key={content}>
+                #{content}
               </TagButton>
             ))
           ) : (
@@ -151,6 +162,10 @@ const FolderWrap = styled.div`
   & > button {
     margin-right: 28px;
   }
+`;
+
+const TextFieldWrap = styled.div`
+  margin: 13px 0 24px;
 `;
 
 const TagButtonWrap = styled.div`
