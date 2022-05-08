@@ -1,7 +1,7 @@
 import React, { RefObject, useRef, useState } from 'react';
 import Image from 'next/image';
-import useInput from '@/hooks/useTypeInput';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
+import useInput from '@/hooks/useTypeInput';
 import Button from '@/components/Common/Button/Button';
 import { ButtonWrapper } from '@/pages/write';
 import BgClose from 'public/svgs/bgclose.svg';
@@ -20,6 +20,8 @@ import {
   Triangle,
 } from './Question.styles';
 import TextArea from '../Common/TextArea/TextArea';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { tooltipStateAtom } from '@/store/tooltip/atom';
 
 const questionList = [
   '왜 그렇게 생각했나요?',
@@ -38,6 +40,8 @@ const Question = () => {
   const firstTextAreaRef = useRef<HTMLDivElement>(null);
   const secondTextAreaRef = useRef<HTMLDivElement>(null);
   const thirdTextAreaRef = useRef<HTMLDivElement>(null);
+  const isTooltipOpen = useRecoilValue(tooltipStateAtom);
+  const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const nextProgressStep = useNextProgressStep();
 
   const onChangeMode = (target: string) => () => {
@@ -56,6 +60,10 @@ const Question = () => {
         });
       }
     };
+
+  const onCloseTooltip = () => {
+    setTooltipState(false);
+  };
 
   return (
     <>
@@ -76,18 +84,28 @@ const Question = () => {
             내맘대로 쓸래요
           </Button>
         </div>
-        <TooltipWrapper style={{ display: 'none' }}>
-          <Triangle />
-          <ImageWrap>
-            <Image src={BgClose} alt="bgClose" width={24} height={24} />
-          </ImageWrap>
-          <TooltipTitle>📝 &nbsp; 이런 질문에 답하게 될거에요</TooltipTitle>
-          <TooltipDescriptionWrap>
-            {questionList.map((question) => (
-              <TooltipDescription key={question}>{question}</TooltipDescription>
-            ))}
-          </TooltipDescriptionWrap>
-        </TooltipWrapper>
+        {isTooltipOpen && (
+          <TooltipWrapper>
+            <Triangle />
+            <ImageWrap>
+              <Image
+                src={BgClose}
+                alt="bgClose"
+                width={24}
+                height={24}
+                onClick={onCloseTooltip}
+              />
+            </ImageWrap>
+            <TooltipTitle>📝 &nbsp; 이런 질문에 답하게 될거에요</TooltipTitle>
+            <TooltipDescriptionWrap>
+              {questionList.map((question) => (
+                <TooltipDescription key={question}>
+                  {question}
+                </TooltipDescription>
+              ))}
+            </TooltipDescriptionWrap>
+          </TooltipWrapper>
+        )}
       </ButtonContainer>
       {mode === 'providedQuestion' ? (
         <>

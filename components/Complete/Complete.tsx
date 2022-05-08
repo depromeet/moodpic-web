@@ -1,7 +1,14 @@
 import React from 'react';
+import Button from '../Common/Button/Button';
 
 const Complete = () => {
-  return <div>글 작성을 완료 하셨습니다</div>;
+  return (
+    <>
+      <Button color="gray" size="large">
+        감정기록 완료
+      </Button>
+    </>
+  );
 };
 
 export default Complete;

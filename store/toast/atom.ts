@@ -5,8 +5,3 @@ export const toastStateAtom = atom<ToastType>({
   key: 'toastState',
   default: 'error',
 });
-
-export const progressStepStateAtom = atom<number>({
-  key: 'progressStepState',
-  default: 1,
-});

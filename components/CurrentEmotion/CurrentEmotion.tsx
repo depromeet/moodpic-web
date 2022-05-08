@@ -8,6 +8,7 @@ import Button from '../Common/Button/Button';
 import SelectButton from '../Common/SelectButton/SelectButton';
 import Toggle from '../Common/Toggle/Toggle';
 import FolderButton from '../Common/Tag/FolderButton';
+import TextField from '../Common/TextField/TextField';
 import theme from '@/styles/theme';
 import FolderPlus from 'public/svgs/folderplus.svg';
 
@@ -30,7 +31,7 @@ const noChangeEmotionList = ['모르겠어요'];
 
 const CurrentEmotion = () => {
   const nextProgressStep = useNextProgressStep();
-  const [isDisclose, setDisclose] = useState(false);
+  const [isDisclose, setDisclose] = useState(true);
 
   const onChangeDisclose = () => {
     setDisclose((prev) => !prev);
@@ -52,23 +53,29 @@ const CurrentEmotion = () => {
         emotionList={noChangeEmotionList}
         title="🤔 &nbsp; 변화가 없었어요"
       />
-
+      <Divider />
+      <OptionWrapper>
+        <OptionTitle>태그</OptionTitle>
+        <TextField
+          value=""
+          rightSideIcon="/public/svgs/folderplus.svg"
+          hasBorder={false}
+        />
+        <div>
+          <OptionTitle>공개</OptionTitle>
+          <Toggle checked={isDisclose} onChange={onChangeDisclose} />
+        </div>
+        <div>
+          <OptionTitle>폴더</OptionTitle>
+          <FolderWrap>
+            <FolderButton>폴더선택</FolderButton>
+            <CustomImage src={FolderPlus} alt="FolderPlus" />
+          </FolderWrap>
+        </div>
+      </OptionWrapper>
       <ButtonWrapper>
-        <OptionWrapper>
-          <div>
-            <OptionTitle>공개</OptionTitle>
-            <Toggle checked={isDisclose} onChange={onChangeDisclose} />
-          </div>
-          <div>
-            <OptionTitle>폴더</OptionTitle>
-            <FolderWrap>
-              <FolderButton>폴더선택</FolderButton>
-              <CustomImage src={FolderPlus} alt="FolderPlus" />
-            </FolderWrap>
-          </div>
-        </OptionWrapper>
         <Button color="gray" onClick={nextProgressStep} size="large">
-          감정기록 완료
+          다음
         </Button>
       </ButtonWrapper>
     </>
@@ -105,6 +112,14 @@ const FolderWrap = styled.div`
   & > button {
     margin-right: 28px;
   }
+`;
+
+const Divider = styled.div`
+  width: calc(100% + 36px);
+  height: 6px;
+  background-color: ${theme.colors.gray1};
+  margin-bottom: 40px;
+  transform: translateX(-18px);
 `;
 
 const CustomImage = styled(Image)`

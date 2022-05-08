@@ -19,7 +19,7 @@ export const TooltipWrapper = styled.div`
   padding: 18px;
   background-color: ${theme.colors.white};
   border-radius: 14px;
-  z-index: 999;
+  z-index: 100;
 `;
 
 export const Triangle = styled.div`

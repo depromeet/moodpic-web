@@ -6,20 +6,8 @@ import {
   RightSideIcon,
 } from '@/components/Common/TextField/TextField.styles';
 
-export type TextFieldAttributes = Pick<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  | 'onChange'
-  | 'onBlur'
-  | 'onClick'
-  | 'onFocus'
-  | 'maxLength'
-  | 'minLength'
-  | 'placeholder'
-  | 'readOnly'
-  | 'disabled'
->;
-
-export interface TextFieldProps extends TextFieldAttributes {
+export interface TextFieldProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
   rightSideIcon?: string;
   height?: string;

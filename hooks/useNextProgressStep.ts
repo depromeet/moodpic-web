@@ -1,5 +1,5 @@
 import { useSetRecoilState } from 'recoil';
-import { progressStepStateAtom } from '@/store/toast/atom';
+import { progressStepStateAtom } from '@/store/progressStep/atom';
 
 const useNextProgressStep = () => {
   const setNextProgressStep = useSetRecoilState(progressStepStateAtom);

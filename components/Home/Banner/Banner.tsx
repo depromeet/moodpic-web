@@ -1,6 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { useSetRecoilState } from 'recoil';
+import { tooltipStateAtom } from '@/store/tooltip/atom';
 import { CommonButton } from '@/components/Common';
 import theme from '@/styles/theme';
 
@@ -10,6 +12,12 @@ export interface BannerProps {
 
 const Banner = ({ nickname }: BannerProps): React.ReactElement => {
   const router = useRouter();
+  const setTooltipState = useSetRecoilState(tooltipStateAtom);
+
+  const goToWritePage = () => {
+    router.push('/write');
+    setTooltipState(true);
+  };
 
   return (
     <BannerContainer>
@@ -17,9 +25,7 @@ const Banner = ({ nickname }: BannerProps): React.ReactElement => {
         {nickname}님, 오늘의 감정을 <br />
         풀어보는 시간을 가져봐요.
       </BannerTitle>
-      <CommonButton onClick={() => router.push('/write')}>
-        감정 기록하기 ✍🏻
-      </CommonButton>
+      <CommonButton onClick={goToWritePage}>감정 기록하기 ✍🏻</CommonButton>
     </BannerContainer>
   );
 };
