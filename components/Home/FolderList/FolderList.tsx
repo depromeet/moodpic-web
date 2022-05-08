@@ -7,17 +7,19 @@ import HomeCollectedFolder from '@/components/Home/CollectedFolder/CollectedFold
 interface FolderListProps {
   isEditMode: boolean;
   folderList: Folder[];
+  supportsCollectedFolder: boolean;
 }
 
 const FolderList = ({
   isEditMode,
   folderList,
+  supportsCollectedFolder
 }: FolderListProps): React.ReactElement => {
   const totalCount = folderList.reduce((acc, curr) => acc + curr.postCount, 0);
 
   return (
     <FolderListContainer>
-      <HomeCollectedFolder count={totalCount} items={folderList} />
+      {supportsCollectedFolder && <HomeCollectedFolder count={totalCount} items={folderList} />}
       {folderList.map((folder: Folder) => (
         <HomeFolder
           key={folder.folderId}
