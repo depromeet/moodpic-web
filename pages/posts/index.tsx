@@ -56,7 +56,7 @@ const postList = [
 
 const PostList = () => {
   const router = useRouter();
-  const goToWritePage = () => router.push('/write/pre-emotion');
+  const goToWritePage = () => router.push('/write');
   const [isEditing, setIsEditing] = useState(false);
 
   const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } =

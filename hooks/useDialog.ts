@@ -5,7 +5,7 @@ export default function useModal(initialMode = false) {
 
   const toggleDialog = (): void => {
     setDialogVisible(!dialogVisible);
-    document.body.style.overflow = dialogVisible ? 'hidden' : 'unset';
+    document.body.style.overflow = dialogVisible ? 'unset' : 'hidden';
   };
 
   return { dialogVisible, toggleDialog };

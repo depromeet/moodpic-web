@@ -20,7 +20,7 @@ export const ToggleText = styled.span<{ checked: boolean }>`
   position: absolute;
   top: 8px;
   right: 12px;
-  font-size: ${theme.fonts.caption2};
+  ${theme.fonts.caption2};
   color: ${theme.colors.black};
   ${(props) =>
     props.checked &&

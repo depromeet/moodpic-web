@@ -17,20 +17,6 @@ const IconStyle = (isFocused: boolean) => {
   }
 };
 
-const BorderStyle = (hasBorder: boolean) => {
-  switch (hasBorder) {
-    case true:
-      return css`
-        border: 0.1rem solid ${theme.colors.gray4};
-      `;
-
-    case false:
-      return css`
-        border: none;
-      `;
-  }
-};
-
 export const Container = styled.div<Pick<TextFieldProps, 'height'>>`
   display: flex;
   flex-direction: column;
@@ -54,7 +40,14 @@ export const Input = styled.input<
   height: ${({ height }) => height || '4rem'};
 
   ${theme.fonts.body};
-  ${(props) => BorderStyle(props.hasBorder || true)};
+  ${({ hasBorder }) =>
+    hasBorder
+      ? css`
+          border: 0.1rem solid ${theme.colors.gray4};
+        `
+      : css`
+          border: none;
+        `};
 `;
 
 export const RightSideIcon = styled.img<{ isFocused: boolean }>`

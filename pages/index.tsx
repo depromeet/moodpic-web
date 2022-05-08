@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { useSetRecoilState } from 'recoil';
+import { tooltipStateAtom } from '@/store/tooltip/atom';
 import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
 import { transition } from '@/styles/mixins';
 import useDialog from '@/hooks/useDialog';
@@ -25,12 +27,18 @@ const Home = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const { dialogVisible, toggleDialog } = useDialog();
   const { inputValue, onChangeInput } = useInput('');
+  const setTooltipState = useSetRecoilState(tooltipStateAtom);
 
   const goToUndefinedFeelings = () => {
     router.push('/posts/undefined-feelings');
   };
 
   const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
+
+  const goToWritePage = () => {
+    router.push('/write');
+    setTooltipState(true);
+  };
 
   return (
     <>
@@ -47,7 +55,7 @@ const Home = () => {
         onClick={toggleDialog}
       />
       <FolderList isEditMode={isEditMode} />
-      <CommonWritingButton onClick={() => router.push('/write/pre-emotion')} />
+      <CommonWritingButton onClick={goToWritePage} />
       <FloatingContainer>
         <div>
           <CommonButton color="gray" onClick={goToUndefinedFeelings}>

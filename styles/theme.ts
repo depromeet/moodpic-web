@@ -14,54 +14,54 @@ const colors = {
 } as const;
 
 const fonts = {
-  h1: () => css`
+  h1: `
     font-size: 2.4rem;
     font-weight: bold;
   `,
-  h2: () => css`
+  h2: `
     font-size: 2rem;
     font-weight: bold;
   `,
-  h3: () => css`
+  h3: `
     font-size: 1.8rem;
     font-weight: bold;
   `,
-  h4: () => css`
+  h4: `
     font-size: 1.6rem;
     font-weight: 500;
   `,
-  h5: () => css`
+  h5: `
     font-size: 1.4rem;
     font-weight: bold;
   `,
-  h6: () => css`
+  h6: `
     font-size: 1.4rem;
     font-weight: 500;
   `,
-  subtitle1: () => css`
+  subtitle1: `
     font-size: 2.4rem;
     font-weight: 500;
     line-height: 144%;
   `,
-  body: () => css`
+  body: `
     font-size: 1.4rem;
     font-weight: 500;
     line-height: 170%;
   `,
-  caption1: () => css`
+  caption1: `
     font-size: 1.2rem;
     font-weight: 500;
   `,
-  caption2: () => css`
+  caption2: `
     font-size: 1.2rem;
     font-weight: bold;
   `,
-  btn1: () => css`
+  btn1: `
     font-size: 1.6rem;
     font-weight: bold;
     line-height: 1.8rem;
   `,
-  btn2: () => css`
+  btn2: `
     font-size: 1.4rem;
     font-weight: 500;
     line-height: 1.6rem;
