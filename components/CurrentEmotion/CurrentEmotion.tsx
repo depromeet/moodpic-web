@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
@@ -11,6 +11,9 @@ import FolderButton from '../Common/Tag/FolderButton';
 import TextField from '../Common/TextField/TextField';
 import theme from '@/styles/theme';
 import FolderPlus from 'public/svgs/folderplus.svg';
+import useInput from '@/hooks/useTypeInput';
+import TagButton from '../Common/TagButton/TagButton';
+import Whiteadd from 'public/svgs/whiteadd.svg';
 
 const getBetterEmotionList = [
   '기뻐요',
@@ -29,13 +32,28 @@ const stillEmotionList = [
 ];
 const noChangeEmotionList = ['모르겠어요'];
 
+const MAX_TAG_LIST_LENGTH = 5;
+
 const CurrentEmotion = () => {
   const nextProgressStep = useNextProgressStep();
   const [isDisclose, setDisclose] = useState(true);
+  const [tagList, setTagList] = useState<string[]>([]);
+  const [tagValue, onChangeValue, setTagValue] = useInput('');
 
   const onChangeDisclose = () => {
     setDisclose((prev) => !prev);
   };
+
+  const onKeyDownEnter = useCallback(
+    (event) => {
+      if (event.key === 'Enter' && tagList.length < MAX_TAG_LIST_LENGTH) {
+        const deduplicatedTagList = new Set(tagList.concat(tagValue));
+        setTagList([...Array.from(deduplicatedTagList)]);
+        setTagValue('');
+      }
+    },
+    [tagValue, tagList, setTagValue],
+  );
 
   return (
     <>
@@ -57,15 +75,36 @@ const CurrentEmotion = () => {
       <OptionWrapper>
         <OptionTitle>태그</OptionTitle>
         <TextField
-          value=""
-          rightSideIcon="/public/svgs/folderplus.svg"
+          style={{ margin: '13px 0 24px' }}
+          value={tagValue}
+          rightSideIcon={Whiteadd.src}
           hasBorder={false}
+          onChange={onChangeValue}
+          onKeyPress={onKeyDownEnter}
+          placeholder="태그를 추가헤주세요."
         />
-        <div>
+        <TagButtonWrap>
+          {tagList.length > 0 ? (
+            tagList.map((tag) => (
+              <TagButton
+                canDelete
+                onClick={() => {
+                  console.log('Zzz');
+                }}
+                key={`tag_${tag}`}
+              >
+                #{tag}
+              </TagButton>
+            ))
+          ) : (
+            <TagButton exampleTagMode>#태그는 5개까지 입력 가능해요.</TagButton>
+          )}
+        </TagButtonWrap>
+        <div className="space-between">
           <OptionTitle>공개</OptionTitle>
           <Toggle checked={isDisclose} onChange={onChangeDisclose} />
         </div>
-        <div>
+        <div className="space-between">
           <OptionTitle>폴더</OptionTitle>
           <FolderWrap>
             <FolderButton>폴더선택</FolderButton>
@@ -87,7 +126,7 @@ export default CurrentEmotion;
 const OptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  & > div {
+  & > div.space-between {
     display: flex;
     justify-content: space-between;
     margin-bottom: 36px;
@@ -112,6 +151,14 @@ const FolderWrap = styled.div`
   & > button {
     margin-right: 28px;
   }
+`;
+
+const TagButtonWrap = styled.div`
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 50px;
 `;
 
 const Divider = styled.div`
