@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function useModal(initialMode = false) {
   const [dialogVisible, setDialogVisible] = useState(initialMode);
 
-  const toggleDialog = (): void => {
+  const toggleDialog = () => {
     setDialogVisible(!dialogVisible);
-    document.body.style.overflow = dialogVisible ? 'unset' : 'hidden';
   };
+
+  useEffect(() => {
+    document.body.style.overflow = dialogVisible ? 'hidden' : 'unset';
+  }, [dialogVisible]);
 
   return { dialogVisible, toggleDialog };
 }
