@@ -88,7 +88,7 @@ const PostList = () => {
           <CommonIconButton
             iconName="more"
             alt="더보기"
-            onClick={toggleSheet()}
+            onClick={() => toggleSheet()}
           />
         </CommonAppBar.Right>
       </CommonAppBar>
@@ -102,7 +102,7 @@ const PostList = () => {
       </PostListContainer>
       {isVisibleSheet && (
         <CommonBottomSheetContainer
-          onClose={toggleSheet()}
+          onClose={() => toggleSheet()}
           BottomSheetHeight={calcBottomSheetHeight(bottomSheetItems.length)}
         >
           <BottomSheetList items={bottomSheetItems} />

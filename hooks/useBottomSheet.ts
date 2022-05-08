@@ -15,7 +15,7 @@ export default function useBottomSheet() {
     );
   };
 
-  const toggleSheet = () => () => {
+  const toggleSheet = () => {
     setVisibleSheet(!isVisibleSheet);
   };
 
