@@ -95,7 +95,7 @@ const PostList = () => {
       <PostListContainer>
         {postList.map((post) => (
           <li key={post.id}>
-            <PostItem post={post} isEditing={isEditing} />
+            <PostItem {...{ post, isEditing }} />
           </li>
         ))}
         <WritingButon onClick={goToWritePage} />
