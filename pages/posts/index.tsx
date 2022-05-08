@@ -10,6 +10,7 @@ import {
 } from '@/components/Common';
 import styled from 'styled-components';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
+import theme from '@/styles/theme';
 
 const postList = [
   {
@@ -65,7 +66,10 @@ const PostList = () => {
   const bottomSheetItems = [
     {
       label: '기록 선택하기',
-      onClick: () => setIsEditing(true),
+      onClick: () => {
+        setIsEditing(true);
+        toggleSheet();
+      },
     },
     {
       label: '폴더명 변경하기',
@@ -81,21 +85,31 @@ const PostList = () => {
     <>
       <CommonAppBar>
         <CommonAppBar.Left>
-          <CommonIconButton iconName="left" alt="이전" />
+          <CommonIconButton
+            iconName="left"
+            alt="이전"
+            onClick={() => router.back()}
+          />
         </CommonAppBar.Left>
         <CommonAppBar.Right>
-          <CommonIconButton iconName="share" alt="공유" />
-          <CommonIconButton
-            iconName="more"
-            alt="더보기"
-            onClick={() => toggleSheet()}
-          />
+          {isEditing ? (
+            <TextButton>완료</TextButton>
+          ) : (
+            <CommonIconButton
+              iconName="more"
+              alt="더보기"
+              onClick={() => toggleSheet()}
+            />
+          )}
         </CommonAppBar.Right>
       </CommonAppBar>
       <PostListContainer>
         {postList.map((post) => (
           <li key={post.id}>
-            <PostItem {...{ post, isEditing }} />
+            <PostItem
+              {...{ post, isEditing }}
+              onClick={() => router.push(`/posts/${post.id}`)}
+            />
           </li>
         ))}
         <WritingButon onClick={goToWritePage} />
@@ -117,6 +131,15 @@ const PostListContainer = styled.ul`
 
   li ~ li {
     margin-top: 1.8rem;
+  }
+`;
+
+const TextButton = styled.button`
+  ${theme.fonts.h6};
+  color: ${theme.colors.primary};
+
+  &:disabled {
+    color: ${theme.colors.gray3};
   }
 `;
 
