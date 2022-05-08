@@ -6,8 +6,12 @@ export interface AppBarProps {
   children: ReactNode;
 }
 
-const SideContainer = ({ children }: AppBarProps) => {
+const LeftContainer = ({ children }: AppBarProps) => {
   return <ButtonContainer>{children}</ButtonContainer>;
+};
+
+const RightContainer = ({ children }: AppBarProps) => {
+  return <RightButtonContainer>{children}</RightButtonContainer>;
 };
 
 const AppBar = ({ children }: AppBarProps) => {
@@ -37,7 +41,11 @@ const ButtonContainer = styled.div`
   }
 `;
 
+const RightButtonContainer = styled(ButtonContainer)`
+  margin-left: auto;
+`;
+
 export default Object.assign(AppBar, {
-  Left: SideContainer,
-  Right: SideContainer,
+  Left: LeftContainer,
+  Right: RightContainer,
 });
