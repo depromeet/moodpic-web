@@ -15,7 +15,6 @@ import {
   CommonWritingButton,
 } from '@/components/Common';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
-import { useFoldersQuery } from '@/hooks/query/useFoldersQuery';
 
 const Home = () => {
   const router = useRouter();
@@ -25,7 +24,6 @@ const Home = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const { dialogVisible, toggleDialog } = useDialog();
   const { inputValue, onChangeInput } = useInput('');
-  const { data } = useFoldersQuery();
 
   const goToUndefinedFeelings = () => {
     router.push('/posts/undefined-feelings');
@@ -46,7 +44,7 @@ const Home = () => {
         setCurrentTab={handleCurrentTab}
         onClick={toggleDialog}
       />
-      {data && <FolderList isEditMode={isEditMode} folderList={data.folders} />}
+      <FolderList isEditMode={isEditMode} />
       <CommonWritingButton onClick={() => router.push('/write/pre-emotion')} />
       <FloatingContainer>
         <div>
