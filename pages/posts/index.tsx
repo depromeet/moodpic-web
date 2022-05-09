@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import PostItem from '@/components/Post/PostItem/PostItem';
+import PostList from '@/components/Post/PostList/PostList';
 import {
   CommonAppBar,
   CommonBottomSheetContainer,
+  CommonDialog,
   CommonIconButton,
 } from '@/components/Common';
 import styled from 'styled-components';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import theme from '@/styles/theme';
+import useDialog from '@/hooks/useDialog';
+import DialogWarning from '@/components/Dialog/DialogWarning';
+import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
+import useInput from '@/hooks/useInput';
 
 const postList = [
   {
@@ -55,11 +60,14 @@ const postList = [
   },
 ];
 
-const PostList = () => {
+const PostListPage = () => {
   const router = useRouter();
-  const goToWritePage = () => router.push('/write');
   const [isEditing, setIsEditing] = useState(false);
+  const [checkedItems, setCheckedItems] = useState<number[]>([]);
+  const [dialogType, setDialogType] = useState('');
+  const { inputValue, onChangeInput } = useInput('');
 
+  const { dialogVisible, toggleDialog } = useDialog();
   const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } =
     useBottomSheet();
 
@@ -73,13 +81,32 @@ const PostList = () => {
     },
     {
       label: '폴더명 변경하기',
-      onClick: () => console.log('edit'),
+      onClick: () => {
+        setDialogType('edit');
+        toggleDialog();
+        toggleSheet();
+      },
     },
     {
       label: '폴더 삭제하기',
-      onClick: () => console.log('delete'),
+      onClick: () => {
+        setDialogType('delete');
+        toggleDialog();
+        toggleSheet();
+      },
     },
   ];
+
+  const goToWritePage = () => router.push('/write');
+
+  const onDelete = () => {
+    console.log('폴더 삭제');
+  };
+
+  const handleSubmit = () => {
+    // TODO: post 삭제 API 연동 예정
+    console.log(checkedItems, '기록 삭제하기');
+  };
 
   return (
     <>
@@ -90,10 +117,11 @@ const PostList = () => {
             alt="이전"
             onClick={() => router.back()}
           />
+          <HeaderTitle>폴더명</HeaderTitle>
         </CommonAppBar.Left>
         <CommonAppBar.Right>
           {isEditing ? (
-            <TextButton>완료</TextButton>
+            <TextButton onClick={handleSubmit}>완료</TextButton>
           ) : (
             <CommonIconButton
               iconName="more"
@@ -103,17 +131,13 @@ const PostList = () => {
           )}
         </CommonAppBar.Right>
       </CommonAppBar>
-      <PostListContainer>
-        {postList.map((post) => (
-          <li key={post.id}>
-            <PostItem
-              {...{ post, isEditing }}
-              onClick={() => router.push(`/posts/${post.id}`)}
-            />
-          </li>
-        ))}
-        <WritingButon onClick={goToWritePage} />
-      </PostListContainer>
+      <PostList
+        postList={postList}
+        isEditing={isEditing}
+        checkedItems={checkedItems}
+        setCheckedItems={setCheckedItems}
+      />
+      <WritingButon onClick={goToWritePage} />
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
@@ -122,17 +146,26 @@ const PostList = () => {
           <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>
       )}
+      {dialogVisible && (
+        <CommonDialog
+          type={dialogType === 'delete' ? 'alert' : 'modal'}
+          onClose={toggleDialog}
+          onConfirm={onDelete}
+        >
+          {dialogType === 'delete' ? (
+            <DialogWarning>폴더를 삭제하시겠습니까?</DialogWarning>
+          ) : (
+            <DialogFolderForm
+              value={inputValue}
+              isEditMode
+              onChange={onChangeInput}
+            />
+          )}
+        </CommonDialog>
+      )}
     </>
   );
 };
-
-const PostListContainer = styled.ul`
-  margin-top: 2rem;
-
-  li ~ li {
-    margin-top: 1.8rem;
-  }
-`;
 
 const TextButton = styled.button`
   ${theme.fonts.h6};
@@ -143,4 +176,10 @@ const TextButton = styled.button`
   }
 `;
 
-export default PostList;
+const HeaderTitle = styled.h2`
+  margin-left: -0.2rem;
+  ${theme.fonts.h4};
+  color: ${theme.colors.white};
+`;
+
+export default PostListPage;
