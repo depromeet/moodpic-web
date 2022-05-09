@@ -103,6 +103,11 @@ const CurrentEmotion = () => {
     setDisclose((prev) => !prev);
   };
 
+  const calcDeduplicatedTagList = useCallback(() => {
+    const deduplicatedTagList = Array.from(new Set(tagList.concat(tagValue)));
+    return [...deduplicatedTagList];
+  }, [tagList, tagValue]);
+
   const onKeyPressEnter = useCallback(
     (event) => {
       if (
@@ -110,21 +115,19 @@ const CurrentEmotion = () => {
         !!tagValue.trim() &&
         tagList.length < MAX_TAG_LIST_LENGTH
       ) {
-        const deduplicatedTagList = new Set(tagList.concat(tagValue));
-        setTagList([...Array.from(deduplicatedTagList)]);
+        setTagList(calcDeduplicatedTagList);
         setTagValue('');
       }
     },
-    [tagValue, tagList, setTagValue],
+    [tagValue, tagList, setTagValue, calcDeduplicatedTagList],
   );
 
   const onClickRightSideIcon = useCallback(() => {
     if (tagList.length < MAX_TAG_LIST_LENGTH && !!tagValue.trim()) {
-      const deduplicatedTagList = new Set(tagList.concat(tagValue));
-      setTagList([...Array.from(deduplicatedTagList)]);
+      setTagList(calcDeduplicatedTagList);
       setTagValue('');
     }
-  }, [tagValue, tagList, setTagValue]);
+  }, [tagValue, tagList, setTagValue, calcDeduplicatedTagList]);
 
   const onDeleteTag = useCallback(
     (index: number) => () => {

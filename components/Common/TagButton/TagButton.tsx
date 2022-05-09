@@ -6,12 +6,14 @@ export interface TagButtonProps extends HtmlHTMLAttributes<HTMLDivElement> {
   canDelete?: boolean;
   children: React.ReactNode;
   exampleTagMode?: boolean;
+  onClick?: React.MouseEventHandler<HTMLImageElement>;
 }
 
 const TagButton = ({
   canDelete = false,
   exampleTagMode = false,
   children,
+  onClick,
   ...props
 }: TagButtonProps): React.ReactElement => {
   return (
@@ -20,7 +22,13 @@ const TagButton = ({
         {children}
       </Text>
       {canDelete && (
-        <CloseImage src={CloseIcon} alt="삭제" width={16} height={16} />
+        <CloseImage
+          src={CloseIcon}
+          alt="삭제"
+          width={16}
+          height={16}
+          onClick={onClick}
+        />
       )}
     </TagButtonContainer>
   );
