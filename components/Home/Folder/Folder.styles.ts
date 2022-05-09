@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
-export const FolderContainer = styled.div`
+export const FolderContainer = styled.figure`
   position: relative;
   width: 100%;
-  height: 16.5rem;
+  height: 100%;
 `;
 
 export const FolderName = styled.p`
@@ -18,14 +18,8 @@ export const FolderCount = styled.span`
   color: ${theme.colors.gray4};
 `;
 
-export const BoxContainer = styled.div`
+export const BoxContainer = styled.figure`
   display: flex;
-  width: 100%;
-  height: 100%;
-
-  span {
-    border-radius: 1.4rem;
-  }
 `;
 
 export const CaptionContainer = styled.figcaption`
