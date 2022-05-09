@@ -22,7 +22,7 @@ export interface PostItemProps {
 }
 
 const PostItem = ({
-  post: { tags, firstCategory, secondCategory, content, createdAt, hit },
+  post: { id, tags, firstCategory, secondCategory, content, createdAt, hit },
   supportsTag = false,
   canEdit = false,
   isMine = false,
@@ -35,7 +35,7 @@ const PostItem = ({
       {isEditing && (
         <>
           <CheckboxContainer>
-            <CommonCheckbox name="체크" value="체크" checked={checked} />
+            <CommonCheckbox name="checkbox" value={id} checked={checked} />
           </CheckboxContainer>
           <Dimmed checked={checked} />
         </>
