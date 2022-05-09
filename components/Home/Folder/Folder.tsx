@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HtmlHTMLAttributes } from 'react';
 import Image from 'next/image';
 import {
   FolderContainer,
@@ -14,7 +14,7 @@ import EmptyImage from 'public/images/empty.png';
 import TrashIcon from 'public/svgs/trash.svg';
 import EditFolderIcon from 'public/svgs/editfolder.svg';
 
-export interface FolderProps {
+export interface FolderProps extends HtmlHTMLAttributes<HTMLDivElement> {
   isEditMode?: boolean;
   supportsMultipleLayout?: boolean;
   folder: Folder;
@@ -23,6 +23,7 @@ export interface FolderProps {
 const Folder = ({
   folder: { postCount, folderName, coverImg },
   isEditMode = false,
+  ...rest
 }: FolderProps): React.ReactElement => {
   const renderDeleteButton = () => {
     return (
@@ -41,7 +42,7 @@ const Folder = ({
   };
 
   return (
-    <FolderContainer>
+    <FolderContainer {...rest}>
       <BoxContainer>
         {postCount === 0 ? (
           <Image
