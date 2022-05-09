@@ -16,9 +16,6 @@ module.exports = {
   compiler: {
     styledComponents: true,
   },
-  images: {
-    domains: ['firebasestorage.googleapis.com'],
-  },
   webpack(config) {
     return config;
   },
