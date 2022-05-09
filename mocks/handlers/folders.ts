@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-export const getFolders = [
+export const foldersHandlers = [
   rest.get('/folders', (req, res, ctx) => {
     return res(
       ctx.status(200),
