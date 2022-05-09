@@ -5,6 +5,7 @@ export const FolderContainer = styled.div`
   position: relative;
   width: 100%;
   height: 16.5rem;
+  cursor: pointer;
 `;
 
 export const FolderName = styled.p`

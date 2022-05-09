@@ -3,6 +3,7 @@ import theme from '@/styles/theme';
 
 export const CollectedFolderContainer = styled.figure`
   width: 100%;
+  cursor: pointer;
 `;
 
 export const Caption = styled.figcaption`

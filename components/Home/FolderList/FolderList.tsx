@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Folder } from '@/shared/type/folder';
 import HomeFolder from '@/components/Home/Folder/Folder';
 import HomeCollectedFolder from '@/components/Home/CollectedFolder/CollectedFolder';
+import { useRouter } from 'next/router';
 
 interface FolderListProps {
   isEditMode: boolean;
@@ -13,18 +14,30 @@ interface FolderListProps {
 const FolderList = ({
   isEditMode,
   folderList,
-  supportsCollectedFolder
+  supportsCollectedFolder,
 }: FolderListProps): React.ReactElement => {
+  const router = useRouter();
   const totalCount = folderList.reduce((acc, curr) => acc + curr.postCount, 0);
+
+  const goToPosts = () => {
+    router.push('/posts');
+  };
 
   return (
     <FolderListContainer>
-      {supportsCollectedFolder && <HomeCollectedFolder count={totalCount} items={folderList} />}
+      {supportsCollectedFolder && (
+        <HomeCollectedFolder
+          count={totalCount}
+          items={folderList}
+          onClick={goToPosts}
+        />
+      )}
       {folderList.map((folder: Folder) => (
         <HomeFolder
           key={folder.folderId}
           folder={folder}
           isEditMode={isEditMode}
+          onClick={() => router.push(`/posts?folderId=${folder.folderId}`)}
         />
       ))}
     </FolderListContainer>
