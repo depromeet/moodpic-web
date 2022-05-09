@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-export const getPosts = [
+export const postsHandlers = [
   rest.get('/posts/all', (req, res, ctx) => {
     return res(
       ctx.status(200),
