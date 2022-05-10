@@ -1,7 +1,7 @@
-import theme from '@/styles/theme';
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../Button/Button';
+import { a11y } from '@/styles/mixins';
+import theme from '@/styles/theme';
 
 interface SelectButtonProps {
   emotionList: string[];
@@ -14,16 +14,16 @@ const SelectButton = ({ emotionList, title, ...props }: SelectButtonProps) => {
       {title && <h3>{title}</h3>}
       <ButtonContainer>
         {emotionList.map((emotion) => (
-          <Button
-            color="gray"
-            size="medium"
-            onClick={() => {
-              console.log('asd');
-            }}
-            key={emotion}
-          >
-            {emotion}
-          </Button>
+          <label key={emotion}>
+            {/* TODO: emotion 을 전역으로 가지고 있다가 다음 누를때마다 전달해주기 */}
+            <RadioInput
+              name="emotion"
+              onChange={() => {
+                console.log(emotion);
+              }}
+            />
+            <ButtonWrapper>{emotion}</ButtonWrapper>
+          </label>
         ))}
       </ButtonContainer>
     </SelectContainer>
@@ -47,4 +47,28 @@ const ButtonContainer = styled.div`
   grid-template-rows: repeat(2, auto);
   column-gap: 12px;
   row-gap: 12px;
+`;
+
+const RadioInput = styled.input.attrs({ type: 'radio' })`
+  color: ${theme.colors.white};
+  background-color: ${theme.colors.gray3};
+  ${a11y}
+`;
+
+export const ButtonWrapper = styled.div`
+  min-width: 9.3rem;
+  padding: 0 2.2rem;
+  width: 100%;
+  padding-bottom: 88.58%;
+  border-radius: 1.4rem;
+  cursor: pointer;
+  ${theme.fonts.btn2};
+  ${RadioInput} ~ & {
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.gray3};
+  }
+  ${RadioInput}:checked ~ & {
+    color: ${theme.colors.black};
+    background-color: ${theme.colors.primary};
+  }
 `;

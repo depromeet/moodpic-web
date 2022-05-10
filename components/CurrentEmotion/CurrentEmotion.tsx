@@ -70,22 +70,18 @@ const mockResponse = [
   },
 ];
 
-const getBetterEmotionList = [
-  '기뻐요',
-  '뿌듯해요',
-  '안도돼요',
-  '홀가분해요',
-  '차분해요',
-];
-const stillEmotionList = [
-  '후회해요',
-  '슬퍼요',
-  '실망했어요',
-  '무기력해요',
-  '불안해요',
-  '짜증나요',
-];
-const noChangeEmotionList = ['모르겠어요'];
+const secondCategoryList = {
+  z1: [
+    { a1: '후회해요1' },
+    { a2: '슬퍼요1' },
+    { a3: '실망했어요1' },
+    { a5: '불안해요1' },
+    { a6: '짜증나요1' },
+    { a7: '모르겠어요1' },
+  ],
+  z2: [{ a8: '짜증나요2' }, { a9: '무기력해요1' }, { a10: '모르겠어요2' }],
+  z3: [{ a11: '모르겠어요3' }],
+};
 
 const MAX_TAG_LIST_LENGTH = 5;
 
@@ -144,12 +140,21 @@ const CurrentEmotion = () => {
       </MainTitle>
 
       <SelectButton
-        emotionList={getBetterEmotionList}
+        emotionList={secondCategoryList['z1']
+          .map((v) => Object.values(v))
+          .flat()}
         title="☺️ &nbsp; 한결 나아졌어요"
       />
-      <SelectButton emotionList={stillEmotionList} title="😞 &nbsp; 여전히" />
       <SelectButton
-        emotionList={noChangeEmotionList}
+        emotionList={secondCategoryList['z2']
+          .map((v) => Object.values(v))
+          .flat()}
+        title="😞 &nbsp; 여전히"
+      />
+      <SelectButton
+        emotionList={secondCategoryList['z3']
+          .map((v) => Object.values(v))
+          .flat()}
         title="🤔 &nbsp; 변화가 없었어요"
       />
       <Divider />
