@@ -7,7 +7,7 @@ import LeftIcon from 'public/svgs/left.svg';
 import { useRouter } from 'next/router';
 import { CommonIconButton } from '@/components/Common';
 
-interface HeaderProps {
+export interface HeaderProps {
   isScrollOnTop: boolean;
 }
 
