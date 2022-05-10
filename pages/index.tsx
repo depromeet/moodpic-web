@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
 import Image from 'next/image';
+import styled, { css } from 'styled-components';
 import { useSetRecoilState } from 'recoil';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
 import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
@@ -25,18 +25,31 @@ import RightIcon from 'public/svgs/right-small.svg';
 
 const Home = () => {
   const router = useRouter();
-  const [currentTab, setCurrentTab] = useState<CurrentTabType>(
-    HOME_TAB_TYPE.FOLDER,
-  );
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [isScrollOnTop, setIsScrollOnTop] = useState<boolean>(true);
   const { dialogVisible, toggleDialog } = useDialog();
   const { inputValue, onChangeInput } = useInput('');
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const { data } = useFoldersQuery();
+  const [currentTab, setCurrentTab] = useState<CurrentTabType>(
+    HOME_TAB_TYPE.FOLDER,
+  );
+
+  const handleScroll = () => {
+    setIsScrollOnTop(window.scrollY === 0);
+  };
 
   const goToUndefinedFeelings = () => {
     router.push('/posts/undefined-feelings');
   };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
 
   useEffect(() => {
     if (currentTab === HOME_TAB_TYPE.EMOTION) {
@@ -53,7 +66,7 @@ const Home = () => {
 
   return (
     <>
-      <HomeHeader />
+      <HomeHeader isScrollOnTop={isScrollOnTop} />
       <HomeBanner nickname="홍길동" />
       <HomeTabHeader
         currentTab={currentTab}
@@ -73,7 +86,7 @@ const Home = () => {
         />
       )}
       <CommonWritingButton onClick={goToWritePage} />
-      <FloatingContainer>
+      <FloatingContainer isHidden={!isScrollOnTop}>
         <div>
           <CommonButton color="gray" onClick={goToUndefinedFeelings}>
             <ButtonText>
@@ -85,6 +98,7 @@ const Home = () => {
           </CommonButton>
         </div>
       </FloatingContainer>
+      {!isScrollOnTop && <CommonWritingButton onClick={goToWritePage} />}
       {dialogVisible && (
         <CommonDialog
           type="modal"
@@ -99,13 +113,18 @@ const Home = () => {
   );
 };
 
-const FloatingContainer = styled.div`
+const FloatingContainer = styled.div<{ isHidden: boolean }>`
   ${transition()};
   position: fixed;
   left: 0;
   bottom: 5.6rem;
   width: 100%;
   z-index: 1001;
+  ${(props) =>
+    props.isHidden &&
+    css`
+      transform: translate3d(0, 200%, 0);
+    `};
 
   > div {
     width: 22.3rem;
