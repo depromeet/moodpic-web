@@ -11,6 +11,7 @@ export const CardContainer = styled.aside<
   height: 6.3rem;
   padding: 2.2rem 3.6rem;
   border-radius: 1.4rem;
+  text-align: center;
 
   ${(props) => {
     return css`
