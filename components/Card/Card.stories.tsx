@@ -14,4 +14,6 @@ export const Default = Template.bind({});
 
 Default.args = {
   children: '1차감정에서 2차감정으로 변하셨군요!',
+  firstColor: '#a7ddff',
+  secondColor: '#7bddc0',
 };
