@@ -1,8 +1,21 @@
-import React, { RefObject, useRef, useState } from 'react';
+/* eslint-disable max-lines */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, {
+  ChangeEvent,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Image from 'next/image';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { tooltipStateAtom } from '@/store/tooltip/atom';
+import useDialog from '@/hooks/useDialog';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
-import useInput from '@/hooks/useTypeInput';
 import Button from '@/components/Common/Button/Button';
+import DialogCancel from '@/components/Dialog/DialogCancel';
+import TextArea from '../Common/TextArea/TextArea';
 import { ButtonWrapper } from '@/pages/write';
 import BgClose from 'public/svgs/bgclose.svg';
 import {
@@ -19,9 +32,7 @@ import {
   TooltipWrapper,
   Triangle,
 } from './Question.styles';
-import TextArea from '../Common/TextArea/TextArea';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { tooltipStateAtom } from '@/store/tooltip/atom';
+import { CommonDialog } from '../Common';
 
 const questionList = [
   '왜 그렇게 생각했나요?',
@@ -33,20 +44,57 @@ const HEADER_HEIGHT = 50;
 
 const Question = () => {
   const [mode, setMode] = useState('providedQuestion');
-  const [firstTextAreaValue, onChangeFirstTextAreaValue] = useInput('');
-  const [secondTextAreaValue, onChangeSecondTextAreaValue] = useInput('');
-  const [thirdTextAreaValue, onChangeThirdTextAreaValue] = useInput('');
-  const [mySeltTextAreaValue, onChangeMySelfTextAreaValue] = useInput('');
+  // TODO: any 말고 current.value 타겟을 잡을수 있는? 타입을 알아내야함
+  const firstTextAreaValue = useRef<any>('');
+  const secondTextAreaValue = useRef<any>('');
+  const thirdTextAreaValue = useRef<any>('');
+  const mySeltTextAreaValue = useRef<any>('');
   const firstTextAreaRef = useRef<HTMLDivElement>(null);
   const secondTextAreaRef = useRef<HTMLDivElement>(null);
   const thirdTextAreaRef = useRef<HTMLDivElement>(null);
   const isTooltipOpen = useRecoilValue(tooltipStateAtom);
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const nextProgressStep = useNextProgressStep();
+  const { dialogVisible, toggleDialog } = useDialog();
 
-  const onChangeMode = (target: string) => () => {
-    if (target === 'providedQuestion') setMode('providedQuestion');
-    if (target === 'myselfQuestion') setMode('myselfQuestion');
+  const onChangeMode = (targetMode: string) => {
+    if (targetMode === 'providedQuestion') {
+      setMode('myselfQuestion');
+      firstTextAreaValue.current = '';
+      secondTextAreaValue.current = '';
+      thirdTextAreaValue.current = '';
+    }
+    if (targetMode === 'myselfQuestion') {
+      setMode('providedQuestion');
+      mySeltTextAreaValue.current = '';
+    }
+  };
+
+  const onClickTabButton = (targetMode: string) => () => {
+    if (targetMode === 'providedQuestion') {
+      if (
+        firstTextAreaValue.current ||
+        secondTextAreaValue.current ||
+        thirdTextAreaValue.current
+      ) {
+        toggleDialog();
+      } else {
+        setMode('myselfQuestion');
+      }
+    }
+
+    if (targetMode === 'myselfQuestion') {
+      if (mySeltTextAreaValue.current) {
+        toggleDialog();
+      } else {
+        setMode('providedQuestion');
+      }
+    }
+  };
+
+  const onClickConfirm = (mode: string) => () => {
+    onChangeMode(mode);
+    toggleDialog();
   };
 
   const scrollToTextAreaOffestTop =
@@ -65,6 +113,17 @@ const Question = () => {
     setTooltipState(false);
   };
 
+  const onChangeTextAreaValue = useCallback(
+    (target) => (e: ChangeEvent<HTMLTextAreaElement>) => {
+      const targetRef = target;
+      targetRef.current = e.target.value;
+      // console.log(
+      //   `${firstTextAreaValue.current}|${secondTextAreaValue.current}|${thirdTextAreaValue.current}`,
+      // );
+    },
+    [],
+  );
+
   return (
     <>
       <ButtonContainer>
@@ -72,14 +131,14 @@ const Question = () => {
           <Button
             color={mode === 'providedQuestion' ? 'primary' : 'gray'}
             size="medium"
-            onClick={onChangeMode('providedQuestion')}
+            onClick={onClickTabButton('myselfQuestion')}
           >
             질문에 맞춰 쓸래요
           </Button>
           <Button
             color={mode === 'providedQuestion' ? 'gray' : 'primary'}
             size="medium"
-            onClick={onChangeMode('myselfQuestion')}
+            onClick={onClickTabButton('providedQuestion')}
           >
             내맘대로 쓸래요
           </Button>
@@ -119,12 +178,12 @@ const Question = () => {
               어떤 일이 있었나요?
             </ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>
-              상황을 객관적으로 파악해보는 시간을 가져보세요
+              상황을 객관적으로 파악해보는 시간을 가져보세요.
             </ProvidedQuestionSubDescription>
             <TextArea
-              value={firstTextAreaValue}
+              value={firstTextAreaValue.current?.value}
               height="32.6rem"
-              onChange={onChangeFirstTextAreaValue}
+              onChange={onChangeTextAreaValue(firstTextAreaValue)}
               onFocus={scrollToTextAreaOffestTop(firstTextAreaRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
@@ -138,12 +197,12 @@ const Question = () => {
               그 때 어떤 감정이 들었나요?
             </ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>
-              너무 깊게 생각하지 않아도, 일목요연하게 쓰지 않아도 돼요 !
+              너무 깊게 생각하지 않아도 돼요!
             </ProvidedQuestionSubDescription>
             <TextArea
-              value={secondTextAreaValue}
+              value={secondTextAreaValue.current?.value}
               height="32.6rem"
-              onChange={onChangeSecondTextAreaValue}
+              onChange={onChangeTextAreaValue(secondTextAreaValue)}
               onFocus={scrollToTextAreaOffestTop(secondTextAreaRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
@@ -160,9 +219,9 @@ const Question = () => {
               지금의 나에게 해줄 수 있는 말은 무엇이 있을까요?
             </ProvidedQuestionSubDescription>
             <TextArea
-              value={thirdTextAreaValue}
+              value={thirdTextAreaValue.current?.value}
               height="32.6rem"
-              onChange={onChangeThirdTextAreaValue}
+              onChange={onChangeTextAreaValue(thirdTextAreaValue)}
               onFocus={scrollToTextAreaOffestTop(thirdTextAreaRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
@@ -174,10 +233,10 @@ const Question = () => {
             ✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.
           </MyselfQuestionTitle>
           <TextArea
-            value={mySeltTextAreaValue}
+            value={mySeltTextAreaValue.current?.value}
             height="32.6rem"
-            onChange={onChangeMySelfTextAreaValue}
-            placeholder="입력하기"
+            onChange={onChangeTextAreaValue(mySeltTextAreaValue)}
+            placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
           />
         </>
       )}
@@ -186,6 +245,15 @@ const Question = () => {
           다음
         </Button>
       </ButtonWrapper>
+      {dialogVisible ? (
+        <CommonDialog
+          type="alert"
+          onClose={toggleDialog}
+          onConfirm={onClickConfirm(mode)}
+        >
+          <DialogCancel />
+        </CommonDialog>
+      ) : null}
     </>
   );
 };

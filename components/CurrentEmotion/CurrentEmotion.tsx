@@ -204,7 +204,7 @@ const CurrentEmotion = () => {
       </OptionWrapper>
       <ButtonWrapper>
         <Button color="gray" onClick={nextProgressStep} size="large">
-          다음
+          감정기록 완료
         </Button>
       </ButtonWrapper>
       {dialogVisible && (
