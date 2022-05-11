@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import { ButtonWrapper } from '@/pages/write';
@@ -131,6 +131,10 @@ const CurrentEmotion = () => {
     },
     [tagList],
   );
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   return (
     <>
