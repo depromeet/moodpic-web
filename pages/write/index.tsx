@@ -52,6 +52,9 @@ const Write = () => {
         </CommonAppBar>
       );
     }
+    if (progressStep === 4) {
+      return <EmptyAppBar />;
+    }
     return (
       <CommonAppBar>
         <CommonAppBar.Left>
@@ -100,4 +103,9 @@ const CancelText = styled.div`
   line-height: 16.8px;
   color: ${theme.colors.white};
   cursor: pointer;
+`;
+
+const EmptyAppBar = styled.div`
+  width: 100%;
+  height: 46px;
 `;
