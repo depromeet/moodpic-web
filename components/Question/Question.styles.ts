@@ -74,14 +74,15 @@ export const ProvidedQuestionWrap = styled.div`
 export const ProvidedQuestionMainTitle = styled.div`
   ${theme.fonts.h3};
   color: ${theme.colors.white};
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 export const ProvidedQuestionSubDescription = styled.div`
   ${theme.fonts.h6};
   font-weight: 500;
   color: ${theme.colors.gray4};
-  margin-bottom: 1.6rem;
+  margin-top: -1rem;
+  margin-bottom: 2rem;
 `;
 
 export const MyselfQuestionTitle = styled.div`
