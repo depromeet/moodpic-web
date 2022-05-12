@@ -1,8 +1,11 @@
 import styled, { css } from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
+import { TagButtonProps } from './TagButton';
 
-export const TagButtonContainer = styled.div<{ exampleTagMode: boolean }>`
+export const TagButtonContainer = styled.div<
+  Pick<TagButtonProps, 'exampleTagMode'>
+>`
   display: inline-flex;
   padding: 6px 14px;
   border: 1px solid ${theme.colors.gray6};
