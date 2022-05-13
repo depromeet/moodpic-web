@@ -5,34 +5,28 @@ import { LOCAL_STORAGE_KEY } from '../../shared/constants/localStorageKey';
 
 const authService = {
   getAuth: async (kakaoCode: string) => {
-    try {
-      const {
-        data: { data },
-      } = await fetcher('get', '/signIn', {
-        params: {
-          code: kakaoCode,
-        },
-      });
+    const {
+      data: { data },
+    } = await fetcher('get', '/signIn', {
+      params: {
+        code: kakaoCode,
+      },
+    });
 
-      const { auth, refresh } = data;
+    const { auth, refresh } = data;
 
-      setLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN, auth);
+    setLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN, auth);
 
-      return { auth, refresh };
-    } catch (error) {
-      console.log(error);
-    }
+    return { auth, refresh };
   },
 
   login: async (AUTH_TOKEN: string) => {
-    try {
-      const headers = { AUTH_TOKEN };
-      const data = await axios.get('/users/me', { headers });
+    const headers = { AUTH_TOKEN };
+    const {
+      data: { data },
+    } = await axios.get('/users/me', { headers });
 
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
+    return data;
   },
 
   getUsers: async () => {
