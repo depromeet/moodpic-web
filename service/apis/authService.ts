@@ -1,23 +1,46 @@
 import axios from 'axios';
+import fetcher from '../../shared/utils/fetcher';
+import { setLocalStorageValue } from '../../shared/utils/localStorage';
+import { LOCAL_STORAGE_KEY } from '../../shared/constants/localStorageKey';
 
 const authService = {
-  // axios 관련 유틸 함수나 커스텀 인스턴스 필요
   getAuth: async (kakaoCode: string) => {
-    const {
-      data: { data },
-    } = await axios.get(`/signIn?code=${kakaoCode}`);
+    try {
+      const {
+        data: { data },
+      } = await fetcher('get', '/signIn', {
+        params: {
+          code: kakaoCode,
+        },
+      });
 
-    const { auth, refresh } = data;
-    return { auth, refresh };
+      const { auth, refresh } = data;
+
+      setLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN, auth);
+
+      return { auth, refresh };
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   login: async (AUTH_TOKEN: string) => {
-    const headers = { AUTH_TOKEN };
-    const data = await axios.get('/users/me', { headers });
+    try {
+      const headers = { AUTH_TOKEN };
+      const data = await axios.get('/users/me', { headers });
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   },
 
-  getRefresh: async () => {
-    const data = await axios.get('/refresh');
+  getUsers: async () => {
+    const {
+      data: { data },
+    } = await fetcher('get', '/users/me');
+
+    return data;
   },
 };
 
