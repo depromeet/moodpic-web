@@ -1,8 +1,4 @@
-type Colors = {
-  [index: string]: string;
-};
-
-export const EMOTION_COLOR_TYPE: Colors = {
+export const EMOTION_COLOR_TYPE: Dictionary = {
   JOY: '#ffc142',
   PROUD: '#f6f8a5',
   RELIEF: '#b5e76b',
