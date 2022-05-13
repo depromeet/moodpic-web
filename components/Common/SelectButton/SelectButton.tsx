@@ -22,7 +22,9 @@ const SelectButton = ({ emotionList, title, ...props }: SelectButtonProps) => {
                 console.log(emotion);
               }}
             />
-            <ButtonWrapper>{emotion}</ButtonWrapper>
+            <ButtonWrapper>
+              <span>{emotion}</span>
+            </ButtonWrapper>
           </label>
         ))}
       </ButtonContainer>
@@ -56,16 +58,23 @@ const RadioInput = styled.input.attrs({ type: 'radio' })`
 `;
 
 export const ButtonWrapper = styled.div`
+  position: relative;
   min-width: 9.3rem;
   padding: 0 2.2rem;
   width: 100%;
-  padding-bottom: 88.58%;
+  padding-bottom: 100%;
   border-radius: 1.4rem;
   cursor: pointer;
   ${theme.fonts.btn2};
   ${RadioInput} ~ & {
     color: ${theme.colors.white};
     background-color: ${theme.colors.gray3};
+  }
+  & > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   ${RadioInput}:checked ~ & {
     color: ${theme.colors.black};
