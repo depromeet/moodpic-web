@@ -1,5 +1,10 @@
 /* eslint-disable max-lines */
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import Image from 'next/image';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import { ButtonWrapper } from '@/pages/write';
@@ -90,6 +95,7 @@ const CurrentEmotion = () => {
   const [isDisclose, setDisclose] = useState(true);
   const [tagList, setTagList] = useState<string[]>([]);
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
+  const [secondCategoryValue, setSecondCategoryValue] = useState('');
   const { inputValue, onChangeInput } = useInput('');
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } =
@@ -144,21 +150,18 @@ const CurrentEmotion = () => {
       </MainTitle>
 
       <SelectButton
-        emotionList={secondCategoryList['z1']
-          .map((v) => Object.values(v))
-          .flat()}
+        categoryList={secondCategoryList['z1']}
+        setCategoryValue={setSecondCategoryValue}
         title="☺️ &nbsp; 한결 나아졌어요"
       />
       <SelectButton
-        emotionList={secondCategoryList['z2']
-          .map((v) => Object.values(v))
-          .flat()}
+        categoryList={secondCategoryList['z2']}
+        setCategoryValue={setSecondCategoryValue}
         title="😞 &nbsp; 여전히"
       />
       <SelectButton
-        emotionList={secondCategoryList['z3']
-          .map((v) => Object.values(v))
-          .flat()}
+        categoryList={secondCategoryList['z3']}
+        setCategoryValue={setSecondCategoryValue}
         title="🤔 &nbsp; 변화가 없었어요"
       />
       <Divider />
@@ -203,7 +206,12 @@ const CurrentEmotion = () => {
         </div>
       </OptionWrapper>
       <ButtonWrapper>
-        <Button color="gray" onClick={nextProgressStep} size="large">
+        <Button
+          color="primary"
+          onClick={nextProgressStep}
+          size="large"
+          disabled={secondCategoryValue === ''}
+        >
           감정기록 완료
         </Button>
       </ButtonWrapper>

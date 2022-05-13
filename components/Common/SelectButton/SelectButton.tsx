@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
+import { FirstCategoryResponse } from '@/hooks/query/useFirstCategoryQuery';
 
 interface SelectButtonProps {
-  emotionList: string[];
+  categoryList: FirstCategoryResponse[];
+  setCategoryValue: Dispatch<SetStateAction<string>>;
   title?: string;
 }
 
-const SelectButton = ({ emotionList, title, ...props }: SelectButtonProps) => {
+const SelectButton = ({
+  categoryList,
+  setCategoryValue,
+  title,
+  ...props
+}: SelectButtonProps) => {
+  const emotionList = categoryList.map((v) => Object.values(v)).flat();
+  const emotionKeyList = categoryList.map((v) => Object.keys(v)).flat();
+  const onChangeFirstCategoryValue = (i: number) => () => {
+    setCategoryValue(emotionKeyList[i]);
+  };
   return (
     <SelectContainer {...props}>
       {title && <h3>{title}</h3>}
       <ButtonContainer>
-        {emotionList.map((emotion) => (
+        {emotionList.map((emotion, i) => (
           <label key={emotion}>
             {/* TODO: emotion 을 전역으로 가지고 있다가 다음 누를때마다 전달해주기 */}
             <RadioInput
               name="emotion"
-              onChange={() => {
-                console.log(emotion);
-              }}
+              onChange={onChangeFirstCategoryValue(i)}
             />
             <ButtonWrapper>
               <span>{emotion}</span>

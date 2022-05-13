@@ -1,20 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ButtonWrapper } from '@/pages/write';
 import Button from '@/components/Common/Button/Button';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
+import { useFirstCategoryQuery } from '@/hooks/query/useFirstCategoryQuery';
 import theme from '@/styles/theme';
 import SelectButton from '../Common/SelectButton/SelectButton';
-
-// const emotionList = [
-//   '후회해요',
-//   '슬퍼요',
-//   '실망했어요',
-//   '무기력해요',
-//   '불안해요',
-//   '짜증나요',
-//   '모르겠어요',
-// ];
 
 const firstCategoryList = [
   { a1: '후회해요' },
@@ -28,6 +19,13 @@ const firstCategoryList = [
 
 const PreEmotion = () => {
   const nextProgressStep = useNextProgressStep();
+
+  const [firstCategoryValue, setFirstCategoryValue] = useState('');
+
+  const { data: firstCategory } = useFirstCategoryQuery();
+
+  if (firstCategory) console.log(firstCategory);
+
   return (
     <>
       <MainTitle>
@@ -35,10 +33,16 @@ const PreEmotion = () => {
         지금 감정은 어떠세요?
       </MainTitle>
       <SelectButton
-        emotionList={firstCategoryList.map((v) => Object.values(v)).flat()}
+        categoryList={firstCategoryList}
+        setCategoryValue={setFirstCategoryValue}
       />
       <ButtonWrapper>
-        <Button color="gray" onClick={nextProgressStep} size="large">
+        <Button
+          color="primary"
+          onClick={nextProgressStep}
+          size="large"
+          disabled={firstCategoryValue === ''}
+        >
           다음
         </Button>
       </ButtonWrapper>
