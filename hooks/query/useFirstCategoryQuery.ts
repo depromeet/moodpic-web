@@ -10,7 +10,7 @@ export interface FirstCategoryResponse {
   image: string;
 }
 const fetchFirstCategory = async (): Promise<FirstCategoryResponse> => {
-  const { data } = await fetcher('get', '/firstcategory');
+  const { data } = await fetcher('get', '/api/v1/firstcategory');
 
   return data;
 };
