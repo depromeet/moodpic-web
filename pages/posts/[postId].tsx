@@ -1,13 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
 import {
   CommonAppBar,
+  CommonBottomSheetContainer,
+  CommonDialog,
   CommonIconButton,
   CommonTagButton,
 } from '@/components/Common';
 import Card from '@/components/Card/Card';
-import theme from '@/styles/theme';
 import { EMOTION_COLOR_TYPE } from '@/shared/constants/emotion';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
 import {
@@ -16,10 +16,35 @@ import {
   ProvidedQuestionWrap,
 } from '@/components/Question/Question.styles';
 import { CommonTextArea } from '@/components/Common';
+import useBottomSheet from '@/hooks/useBottomSheet';
+import useDialog from '@/hooks/useDialog';
+import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
+import DialogWarning from '@/components/Dialog/DialogWarning';
+import { PostDetailContainer, TagContainer, Description, CardContainer, MultipleLineText, QuestionContainer } from '@/components/Post/PostDetail.style';
 
 const PostDetail = () => {
   const router = useRouter();
   const { postId } = router.query;
+  const { dialogVisible, toggleDialog } = useDialog();
+  const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } =
+    useBottomSheet();
+
+  const bottomSheetItems = [
+    {
+      label: '수정하기',
+      onClick: () => {
+        router.push(`/posts/${postId}/edit`);
+        toggleSheet();
+      },
+    },
+    {
+      label: '삭제하기',
+      onClick: () => {
+        toggleSheet();
+        toggleDialog();
+      },
+    },
+  ];
 
   const post = {
     id: 3,
@@ -35,15 +60,19 @@ const PostDetail = () => {
   const hasMultipleContent = post.content.includes(CONTENT_SEPARATOR);
   const contents = post.content.split(CONTENT_SEPARATOR);
 
+  const onDelete = () => {
+    console.log('폴더 삭제');
+  };
+
   return (
     <>
       <CommonAppBar>
         <CommonAppBar.Left>
-          <CommonIconButton iconName="left"></CommonIconButton>
+          <CommonIconButton iconName="left" onClick={() => router.back()} />
         </CommonAppBar.Left>
         <CommonAppBar.Right>
-          <CommonIconButton iconName="share"></CommonIconButton>
-          <CommonIconButton iconName="more"></CommonIconButton>
+          <CommonIconButton iconName="share" />
+          <CommonIconButton iconName="more" onClick={toggleSheet} />
         </CommonAppBar.Right>
       </CommonAppBar>
       <PostDetailContainer>
@@ -99,59 +128,24 @@ const PostDetail = () => {
         <Description>조회수 {post.hit}</Description>
         <Description>{post.createdAt}</Description>
       </PostDetailContainer>
+      {isVisibleSheet && (
+        <CommonBottomSheetContainer
+          onClose={() => toggleSheet()}
+          BottomSheetHeight={calcBottomSheetHeight(
+            bottomSheetItems.length,
+            false,
+          )}
+        >
+          <BottomSheetList items={bottomSheetItems} />
+        </CommonBottomSheetContainer>
+      )}
+      {dialogVisible && (
+        <CommonDialog type="alert" onClose={toggleDialog} onConfirm={onDelete}>
+          <DialogWarning>폴더를 삭제하시겠습니까?</DialogWarning>
+        </CommonDialog>
+      )}
     </>
   );
 };
-
-const PostDetailContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 8rem;
-`;
-
-const TagContainer = styled.div`
-  display: flex;
-  overflow-x: auto;
-  padding: 0 1.8rem;
-  margin: 2rem -1.8rem 2.4rem;
-
-  div {
-    flex: 1 0 auto;
-  }
-
-  div ~ div {
-    margin-left: 1.2rem;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const Description = styled.p`
-  ${theme.fonts.caption1};
-  color: ${theme.colors.gray4};
-  margin-left: auto;
-
-  div ~ & {
-    margin-top: 1.4rem;
-  }
-
-  & ~ & {
-    margin-top: 1rem;
-  }
-`;
-
-const CardContainer = styled.div`
-  margin-bottom: 2.4rem;
-`;
-
-const MultipleLineText = styled(ProvidedQuestionMainTitle)`
-  line-height: 160%;
-`;
-
-const QuestionContainer = styled.div`
-  margin-bottom: -2.6rem;
-`;
 
 export default PostDetail;
