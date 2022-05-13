@@ -50,7 +50,7 @@ const BottomSheetContainer = ({
   return createPortal(
     <BottomSheetWrapper>
       <BottomSheetDimmed style={opacityAnimation} onClick={closeModal} />
-      <BottomSheetWrap>
+      <BottomSheetWrap onClick={closeModal}>
         <BottomSheetInner style={heightAnimation}>
           {headerTitle ? (
             <BottomSheetHeader>
