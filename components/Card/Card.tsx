@@ -18,7 +18,7 @@ const Card = ({
   return (
     <CardContainer firstColor={firstColor} secondColor={secondColor}>
       <ImageContainer>
-        <Image src={MoodBoard} alt="" />
+        <Image src={MoodBoard} alt="" height={144} />
       </ImageContainer>
       {children}
     </CardContainer>
