@@ -1,3 +1,4 @@
-import { getPosts } from './posts';
+import { postsHandlers } from './posts';
+import { foldersHandlers } from './folders';
 
-export const handlers = [...getPosts];
+export const handlers = [...postsHandlers, ...foldersHandlers];

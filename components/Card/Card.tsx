@@ -1,12 +1,28 @@
 import React from 'react';
-import { CardContainer } from './Card.styles';
+import Image from 'next/image';
+import { CardContainer, ImageContainer } from './Card.styles';
+import MoodBoard from 'public/images/mood-board.png';
+import { EmotionColorType } from '@/shared/constants/emotion';
 
 export interface CardProps {
+  firstColor: EmotionColorType;
+  secondColor: EmotionColorType;
   children: React.ReactNode;
 }
 
-const Card = ({ children }: CardProps): React.ReactElement => {
-  return <CardContainer>{children}</CardContainer>;
+const Card = ({
+  firstColor,
+  secondColor,
+  children,
+}: CardProps): React.ReactElement => {
+  return (
+    <CardContainer firstColor={firstColor} secondColor={secondColor}>
+      <ImageContainer>
+        <Image src={MoodBoard} alt="" />
+      </ImageContainer>
+      {children}
+    </CardContainer>
+  );
 };
 
 export default Card;

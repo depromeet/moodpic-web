@@ -4,14 +4,21 @@ import theme from '@/styles/theme';
 import { CommonTextField } from '../Common';
 
 interface DialogFolderFormProps {
+  isEditMode?: boolean;
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-const DialogFolderForm = ({ value, onChange }: DialogFolderFormProps) => {
+const DialogFolderForm = ({
+  isEditMode = false,
+  value,
+  onChange,
+}: DialogFolderFormProps) => {
+  const dialogTitle = isEditMode ? '변경할 폴더를' : '새폴더의 이름을';
+
   return (
     <DialogContainer>
-      <Title>📁 새폴더의 이름을 입력해주세요.</Title>
+      <Title>📁 {dialogTitle} 입력해주세요.</Title>
       <CommonTextField
         placeholder="폴더명 입력"
         borderRadius="0.4rem"

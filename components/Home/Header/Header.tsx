@@ -7,7 +7,11 @@ import LeftIcon from 'public/svgs/left.svg';
 import { useRouter } from 'next/router';
 import { CommonIconButton } from '@/components/Common';
 
-const Header = () => {
+export interface HeaderProps {
+  isScrollOnTop: boolean;
+}
+
+const Header = ({ isScrollOnTop }: HeaderProps) => {
   const router = useRouter();
   const isDropdownOpen = useSetRecoilState<boolean>(dropdownStateAtom);
 
@@ -21,7 +25,7 @@ const Header = () => {
 
   return (
     <>
-      <HeaderWrapper>
+      <HeaderWrapper isScrollOnTop={isScrollOnTop}>
         <TitleWrapper onClick={handleLogoClick}>
           <Title>서비스명</Title>
           <Image src={LeftIcon} alt="메뉴" width={16} height={16} />

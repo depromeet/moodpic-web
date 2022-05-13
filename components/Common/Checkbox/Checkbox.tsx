@@ -5,7 +5,7 @@ import { ReactNode, ChangeEventHandler } from 'react';
 
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  value: string;
+  value: string | number;
   checked: boolean;
   children?: ReactNode;
   onChange?: ChangeEventHandler<HTMLInputElement>;

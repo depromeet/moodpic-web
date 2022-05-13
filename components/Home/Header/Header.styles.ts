@@ -1,17 +1,19 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
-export const HeaderWrapper = styled.header`
+export const HeaderWrapper = styled.header<{ isScrollOnTop: boolean }>`
   z-index: 101;
   position: sticky;
   top: 0;
   display: flex;
   justify-content: space-between;
   background-color: ${theme.colors.gray1};
-  height: 44px;
-  padding: 0 18px;
-  margin-right: -18px;
-  margin-left: -18px;
+  height: 4.4rem;
+  padding: 0 1.8rem;
+  margin-right: -1.8rem;
+  margin-left: -1.8rem;
+  background-color: ${(props) =>
+    props.isScrollOnTop ? theme.colors.gray1 : theme.colors.black};
 `;
 
 export const TitleWrapper = styled.button`
@@ -25,9 +27,9 @@ export const TitleWrapper = styled.button`
 
 export const Title = styled.h1`
   ${theme.fonts.h3};
-  margin-right: 5px;
+  margin-right: 0.5rem;
   color: ${theme.colors.white};
-  line-height: 18px;
+  line-height: 1.8rem;
 
   span {
     transform: rotate(-90deg);
@@ -35,5 +37,5 @@ export const Title = styled.h1`
 `;
 
 export const Button = styled.button`
-  height: 24px;
+  height: 2.4rem;
 `;

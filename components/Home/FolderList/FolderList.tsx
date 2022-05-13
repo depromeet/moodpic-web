@@ -1,71 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Folder } from '@/shared/type/folder';
 import HomeFolder from '@/components/Home/Folder/Folder';
 import HomeCollectedFolder from '@/components/Home/CollectedFolder/CollectedFolder';
+import { useRouter } from 'next/router';
 
 interface FolderListProps {
   isEditMode: boolean;
+  folderList: Folder[];
+  supportsCollectedFolder: boolean;
 }
 
-const FolderList = ({ isEditMode }: FolderListProps): React.ReactElement => {
-  const folderList = [
-    {
-      name: '폴더명1',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명2',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명3',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명4',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명5',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명6',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명7',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명8',
-      count: 3,
-      thumbnail: '',
-    },
-    {
-      name: '폴더명9',
-      count: 3,
-      thumbnail: '',
-    },
-  ];
+const FolderList = ({
+  isEditMode,
+  folderList,
+  supportsCollectedFolder,
+}: FolderListProps): React.ReactElement => {
+  const router = useRouter();
+  const totalCount = folderList.reduce((acc, curr) => acc + curr.postCount, 0);
+
+  const goToPosts = () => {
+    router.push('/posts');
+  };
 
   return (
     <FolderListContainer>
-      <HomeCollectedFolder count={3} items={folderList} />
-      {folderList.map((folder) => (
+      {supportsCollectedFolder && (
+        <HomeCollectedFolder
+          count={totalCount}
+          items={folderList}
+          onClick={goToPosts}
+        />
+      )}
+      {folderList.map((folder: Folder) => (
         <HomeFolder
-          key={folder.name}
-          name="폴더명"
-          count={folder.count}
-          thumbnail=""
+          key={folder.folderId}
+          folder={folder}
           isEditMode={isEditMode}
+          onClick={() => router.push(`/posts?folderId=${folder.folderId}`)}
         />
       ))}
     </FolderListContainer>

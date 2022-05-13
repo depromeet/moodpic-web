@@ -1,15 +1,17 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import Header from './Header';
+import Header, { HeaderProps } from './Header';
 
 export default {
   component: Header,
   title: 'Header',
 } as Meta;
 
-const Template: Story = (args) => <Header {...args} />;
+const Template: Story<HeaderProps> = (args) => <Header {...args} />;
 
 export const MainHeader = Template.bind({});
 
-MainHeader.args = {};
+MainHeader.args = {
+  isScrollOnTop: false,
+};

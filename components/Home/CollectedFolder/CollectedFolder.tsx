@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HtmlHTMLAttributes } from 'react';
 import {
   CollectedFolderContainer,
   Caption,
@@ -7,11 +7,12 @@ import {
   BoxContainer,
   FolderImage,
 } from './CollectedFolder.styles';
-import { Folder } from '../Folder/Folder';
+import { Folder } from '@/shared/type/folder';
 import { MAX_THUMBNAIL_SIZE } from '@/shared/constants/home';
 
 // TODO: 이후 mocking 추가하면서 알맞는 폴더에 위치할 예정
-export interface CollectedFolderProps {
+export interface CollectedFolderProps
+  extends HtmlHTMLAttributes<HTMLDivElement> {
   count: number;
   items: Folder[];
 }
@@ -19,12 +20,13 @@ export interface CollectedFolderProps {
 const CollectedFolder = ({
   count,
   items,
+  ...rest
 }: CollectedFolderProps): React.ReactElement => {
   return (
-    <CollectedFolderContainer>
+    <CollectedFolderContainer {...rest}>
       <BoxContainer>
         {items.slice(0, MAX_THUMBNAIL_SIZE).map((item) => (
-          <FolderImage key={item.name} thumbnail={item.thumbnail} />
+          <FolderImage key={item.folderId} thumbnail={item.coverImg} />
         ))}
       </BoxContainer>
       <Caption>
