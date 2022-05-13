@@ -1,6 +1,6 @@
 import { Dictionary } from '@/shared/type/common';
 
-export const EMOTION_COLOR_TYPE: Dictionary = {
+export const EMOTION_COLOR_TYPE: Dictionary<string> = {
   JOY: '#ffc142',
   PROUD: '#f6f8a5',
   RELIEF: '#b5e76b',
