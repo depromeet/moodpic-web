@@ -9,14 +9,20 @@ interface SpringAnimationProps {
 export const useAnimation = ({ onClose, fullHeight }: SpringAnimationProps) => {
   const [isPrevClose, setPrevClose] = useState(false);
 
+  const setOverflowStyle = () => {
+    document.body.style.overflow = isPrevClose ? 'unset' : 'hidden';
+  };
+
   const opacityAnimation = useSpring({
     to: { opacity: isPrevClose ? 0 : 1 },
     from: { opacity: isPrevClose ? 1 : 0.6 },
     onRest: () => {
       isPrevClose && onClose();
+
+      setOverflowStyle();
     },
     onStart: () => {
-      document.body.style.overflow = isPrevClose ? 'unset' : 'hidden';
+      setOverflowStyle();
     },
   });
 
