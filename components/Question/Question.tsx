@@ -4,7 +4,6 @@ import React, {
   ChangeEvent,
   RefObject,
   useCallback,
-  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -101,9 +100,13 @@ const Question = () => {
     (target: RefObject<HTMLDivElement>) => () => {
       const targetRef = target;
       if (typeof window !== undefined && targetRef.current) {
-        window.scrollTo({
-          top: targetRef.current.offsetTop - HEADER_HEIGHT,
-          left: 0,
+        //  window.scrollTo({
+        //    top: targetRef.current.offsetTop - HEADER_HEIGHT,
+        //    left: 0,
+        //    behavior: 'smooth',
+        //  });
+        targetRef.current.scrollIntoView({
+          block: 'start',
           behavior: 'smooth',
         });
       }
