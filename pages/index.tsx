@@ -9,7 +9,7 @@ import { transition } from '@/styles/mixins';
 import theme from '@/styles/theme';
 import useDialog from '@/hooks/useDialog';
 import useInput from '@/hooks/useInput';
-import { useFoldersQuery } from '@/hooks/query/useFoldersQuery';
+import { useFoldersQuery } from '@/hooks/apis';
 import HomeBanner from '@/components/Home/Banner/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
