@@ -6,15 +6,16 @@ import { ToastType } from '@/shared/type/global';
 export const CustomedToastContainer = styled(ToastContainer)<{
   type: ToastType;
 }>`
-  max-width: 480px;
+  max-width: 48rem;
   text-align: center;
   &.Toastify__toast-container--top-center {
-    margin-top: 94px;
+    margin-top: 9.4rem;
+    z-index: 10001;
   }
   & .Toastify__toast {
     display: inline-flex;
-    min-height: 40px;
-    width: 313px;
+    min-height: 4rem;
+    width: 31.3rem;
     ${theme.fonts.btn2};
   }
   & .Toastify__toast-theme--light {
@@ -30,7 +31,7 @@ export const CustomedToastContainer = styled(ToastContainer)<{
       if (type === 'warning') return theme.colors.black;
       if (type === 'confirm') return theme.colors.white;
     }};
-    padding: 0 12px;
+    padding: 0 1.2rem;
     & > div {
       display: inline-block;
       text-align: center;
