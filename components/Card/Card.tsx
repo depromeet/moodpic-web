@@ -10,11 +10,7 @@ export interface CardProps {
   children: React.ReactNode;
 }
 
-const Card = ({
-  firstColor,
-  secondColor,
-  children,
-}: CardProps): React.ReactElement => {
+const Card = ({ firstColor, secondColor, children }: CardProps): React.ReactElement => {
   return (
     <CardContainer firstColor={firstColor} secondColor={secondColor}>
       <ImageContainer>
