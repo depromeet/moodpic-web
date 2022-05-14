@@ -18,12 +18,13 @@ export interface FolderProps extends HtmlHTMLAttributes<HTMLDivElement> {
   isEditMode?: boolean;
   supportsMultipleLayout?: boolean;
   folder: Folder;
+  onClick: () => void;
 }
 
 const Folder = ({
   folder: { postCount, folderName, coverImg },
   isEditMode = false,
-  ...rest
+  onClick,
 }: FolderProps): React.ReactElement => {
   const renderDeleteButton = () => {
     return (
@@ -42,22 +43,12 @@ const Folder = ({
   };
 
   return (
-    <FolderContainer {...rest}>
-      <BoxContainer>
+    <FolderContainer>
+      <BoxContainer onClick={onClick}>
         {postCount === 0 ? (
-          <Image
-            src={EmptyImage}
-            alt="기록이 없어요"
-            layout="fill"
-            objectFit="cover"
-          />
+          <Image src={EmptyImage} alt="기록이 없어요" layout="fill" objectFit="cover" />
         ) : (
-          <Image
-            src={coverImg || EmptyImage}
-            alt={folderName}
-            layout="fill"
-            objectFit="cover"
-          />
+          <Image src={coverImg || EmptyImage} alt={folderName} layout="fill" objectFit="cover" />
         )}
         {isEditMode && renderDeleteButton()}
       </BoxContainer>
