@@ -32,9 +32,7 @@ export const Container = styled.div<
   flex: 0 1 auto;
 `;
 
-export const Input = styled.input<
-  Pick<TextFieldProps, 'borderRadius' | 'hasBorder' | 'height'>
->`
+export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'hasBorder' | 'height'>>`
   text-align: start;
   cursor: text;
   height: 100%;
@@ -67,7 +65,7 @@ export const RightSideIcon = styled.img<{ isFocused: boolean }>`
   ${(props) => IconStyle(props.isFocused)};
 `;
 
-export const Caption = styled.span`
+export const Caption = styled.p`
   margin: 0.4rem 0 0 auto;
   ${theme.fonts.caption1};
   color: ${theme.colors.gray4};
