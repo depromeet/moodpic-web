@@ -1,17 +1,16 @@
 import '@/styles/globals.css';
-import React, { useState } from 'react';
+import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 import theme from '@/styles/theme';
+import { queryClient } from '@/shared/utils/queryClient';
 import { CommonAppLayout } from '@/components/Common';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
     <>
       <Head>
