@@ -16,24 +16,22 @@ const SelectButton = ({
   title,
   ...props
 }: SelectButtonProps) => {
-  const emotionList = categoryList.map((v) => Object.values(v)).flat();
-  const emotionKeyList = categoryList.map((v) => Object.keys(v)).flat();
-  const onChangeFirstCategoryValue = (i: number) => () => {
-    setCategoryValue(emotionKeyList[i]);
+  const onChangeFirstCategoryValue = (categoryName: string) => () => {
+    setCategoryValue(categoryName);
   };
   return (
     <SelectContainer {...props}>
       {title && <h3>{title}</h3>}
       <ButtonContainer>
-        {emotionList.map((emotion, i) => (
-          <label key={emotion}>
+        {categoryList?.map(({ categoryId, categoryName, image, name }) => (
+          <label key={categoryId}>
             {/* TODO: emotion 을 전역으로 가지고 있다가 다음 누를때마다 전달해주기 */}
             <RadioInput
               name="emotion"
-              onChange={onChangeFirstCategoryValue(i)}
+              onChange={onChangeFirstCategoryValue(categoryName)}
             />
             <ButtonWrapper>
-              <span>{emotion}</span>
+              <span>{name}</span>
             </ButtonWrapper>
           </label>
         ))}

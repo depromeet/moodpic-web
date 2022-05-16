@@ -7,16 +7,6 @@ import { useFirstCategoryQuery } from '@/hooks/query/useFirstCategoryQuery';
 import theme from '@/styles/theme';
 import SelectButton from '../Common/SelectButton/SelectButton';
 
-const firstCategoryList = [
-  { a1: '후회해요' },
-  { a2: '슬퍼요' },
-  { a3: '실망했어요' },
-  { a4: '무기력해요' },
-  { a5: '불안해요' },
-  { a6: '짜증나요' },
-  { a7: '모르겠어요' },
-];
-
 const PreEmotion = () => {
   const nextProgressStep = useNextProgressStep();
 
@@ -24,7 +14,9 @@ const PreEmotion = () => {
 
   const { data: firstCategory } = useFirstCategoryQuery();
 
-  if (firstCategory) console.log(firstCategory);
+  console.log(firstCategory);
+
+  if (!firstCategory) return null;
 
   return (
     <>
@@ -33,7 +25,7 @@ const PreEmotion = () => {
         지금 감정은 어떠세요?
       </MainTitle>
       <SelectButton
-        categoryList={firstCategoryList}
+        categoryList={firstCategory}
         setCategoryValue={setFirstCategoryValue}
       />
       <ButtonWrapper>

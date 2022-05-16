@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    removeLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN);
+    // removeLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN);
     // push(ROUTES.LOGIN);
   },
 );
