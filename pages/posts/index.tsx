@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import PostList from '@/components/Post/PostList/PostList';
-import {
-  CommonAppBar,
-  CommonBottomSheetContainer,
-  CommonDialog,
-  CommonIconButton,
-} from '@/components/Common';
+import { CommonAppBar, CommonBottomSheetContainer, CommonDialog, CommonIconButton } from '@/components/Common';
 import styled from 'styled-components';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import theme from '@/styles/theme';
@@ -16,49 +11,7 @@ import useDialog from '@/hooks/useDialog';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import useInput from '@/hooks/useInput';
-
-const postList = [
-  {
-    id: 1,
-    tags: ['짜증나', '태그', '테스트'],
-    firstCategory: '모르겠어요',
-    secondCategory: '기쁨',
-    content:
-      '안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요',
-    hit: 11,
-    createdAt: '2022-05-04',
-  },
-  {
-    id: 2,
-    tags: ['짜증나', '태그', '테스트'],
-    firstCategory: '모르겠어요',
-    secondCategory: '기쁨',
-    content:
-      '안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요',
-    hit: 11,
-    createdAt: '2022-05-04',
-  },
-  {
-    id: 3,
-    tags: ['짜증나', '태그', '테스트'],
-    firstCategory: '모르겠어요',
-    secondCategory: '기쁨',
-    content:
-      '안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요',
-    hit: 11,
-    createdAt: '2022-05-04',
-  },
-  {
-    id: 4,
-    tags: ['짜증나', '태그', '테스트'],
-    firstCategory: '모르겠어요',
-    secondCategory: '기쁨',
-    content:
-      '안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요안녕하세요.안녕하세요',
-    hit: 11,
-    createdAt: '2022-05-04',
-  },
-];
+import { useDeleteFolderMutation, usePostsByFolderIdQuery, useUpdateFolderMutation } from '@/hooks/apis';
 
 const PostListPage = () => {
   const router = useRouter();
@@ -66,10 +19,14 @@ const PostListPage = () => {
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const [dialogType, setDialogType] = useState('');
   const { inputValue, onChangeInput } = useInput('');
+  const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
+  const updateFolderMutation = useUpdateFolderMutation();
+  const deleteFolderMutation = useDeleteFolderMutation();
+
+  const { data: postResponse } = usePostsByFolderIdQuery({ folderId });
 
   const { dialogVisible, toggleDialog } = useDialog();
-  const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } =
-    useBottomSheet();
+  const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } = useBottomSheet();
 
   const bottomSheetItems = [
     {
@@ -100,7 +57,11 @@ const PostListPage = () => {
   const goToWritePage = () => router.push('/write');
 
   const onDelete = () => {
-    console.log('폴더 삭제');
+    deleteFolderMutation.mutate(folderId);
+  };
+
+  const onEdit = () => {
+    updateFolderMutation.mutate({ id: folderId, folderName: inputValue });
   };
 
   const handleSubmit = () => {
@@ -108,35 +69,33 @@ const PostListPage = () => {
     console.log(checkedItems, '기록 삭제하기');
   };
 
+  if (!postResponse) return <div>404</div>;
+
   return (
     <>
       <CommonAppBar>
         <CommonAppBar.Left>
-          <CommonIconButton
-            iconName="left"
-            alt="이전"
-            onClick={() => router.back()}
-          />
-          <HeaderTitle>폴더명</HeaderTitle>
+          <CommonIconButton iconName="left" alt="이전" onClick={() => router.back()} />
+          <HeaderTitle>{postResponse.folderName}</HeaderTitle>
         </CommonAppBar.Left>
         <CommonAppBar.Right>
           {isEditing ? (
             <TextButton onClick={handleSubmit}>완료</TextButton>
           ) : (
-            <CommonIconButton
-              iconName="more"
-              alt="더보기"
-              onClick={() => toggleSheet()}
-            />
+            <CommonIconButton iconName="more" alt="더보기" onClick={() => toggleSheet()} />
           )}
         </CommonAppBar.Right>
       </CommonAppBar>
-      <PostList
-        postList={postList}
-        isEditing={isEditing}
-        checkedItems={checkedItems}
-        setCheckedItems={setCheckedItems}
-      />
+      {postResponse?.posts?.length ? (
+        <PostList
+          postList={postResponse.posts}
+          isEditing={isEditing}
+          checkedItems={checkedItems}
+          setCheckedItems={setCheckedItems}
+        />
+      ) : (
+        <GuideMessage>기록이 없어요.</GuideMessage>
+      )}
       <WritingButon onClick={goToWritePage} />
       {isVisibleSheet && (
         <CommonBottomSheetContainer
@@ -153,16 +112,12 @@ const PostListPage = () => {
         <CommonDialog
           type={dialogType === 'delete' ? 'alert' : 'modal'}
           onClose={toggleDialog}
-          onConfirm={onDelete}
+          onConfirm={dialogType === 'delete' ? onDelete : onEdit}
         >
           {dialogType === 'delete' ? (
             <DialogWarning>폴더를 삭제하시겠습니까?</DialogWarning>
           ) : (
-            <DialogFolderForm
-              value={inputValue}
-              isEditMode
-              onChange={onChangeInput}
-            />
+            <DialogFolderForm value={inputValue} isEditMode onChange={onChangeInput} />
           )}
         </CommonDialog>
       )}
@@ -183,6 +138,12 @@ const HeaderTitle = styled.h2`
   margin-left: -0.2rem;
   ${theme.fonts.h4};
   color: ${theme.colors.white};
+`;
+
+const GuideMessage = styled.p`
+  padding-top: 0.4rem;
+  ${theme.fonts.h6};
+  color: ${theme.colors.gray4};
 `;
 
 export default PostListPage;
