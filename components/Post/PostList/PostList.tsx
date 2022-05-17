@@ -7,19 +7,14 @@ import { Post } from '@/shared/type/post';
 interface PostListProps {
   postList: Post[];
   isEditing: boolean;
-  checkedItems: number[];
-  setCheckedItems: React.Dispatch<React.SetStateAction<number[]>>;
+  checkedItems: string[];
+  setCheckedItems: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const PostList = ({
-  postList,
-  isEditing,
-  checkedItems,
-  setCheckedItems,
-}: PostListProps) => {
+const PostList = ({ postList, isEditing, checkedItems, setCheckedItems }: PostListProps) => {
   const router = useRouter();
 
-  const changeCheckedItems = (postId: number) => {
+  const changeCheckedItems = (postId: string) => {
     if (checkedItems.includes(postId)) {
       setCheckedItems(checkedItems.filter((item) => item !== postId));
       return;
@@ -28,7 +23,7 @@ const PostList = ({
     return setCheckedItems([...checkedItems, postId]);
   };
 
-  const handlePostItemClick = (postId: number) => {
+  const handlePostItemClick = (postId: string) => {
     if (!isEditing) {
       return router.push(`/posts/${postId}`);
     }
@@ -36,7 +31,7 @@ const PostList = ({
     changeCheckedItems(postId);
   };
 
-  const isChecked = (checkedId: number) => checkedItems.includes(checkedId);
+  const isChecked = (checkedId: string) => checkedItems.includes(checkedId);
 
   return (
     <PostListContainer>

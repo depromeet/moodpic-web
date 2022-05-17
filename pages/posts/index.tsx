@@ -16,7 +16,7 @@ import { useDeleteFolderMutation, usePostsByFolderIdQuery, useUpdateFolderMutati
 const PostListPage = () => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<number[]>([]);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [dialogType, setDialogType] = useState('');
   const { inputValue, onChangeInput } = useInput('');
   const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
