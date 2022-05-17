@@ -7,8 +7,8 @@ export const TagButtonContainer = styled.div<
   Pick<TagButtonProps, 'exampleTagMode'>
 >`
   display: inline-flex;
-  padding: 6px 14px;
-  border: 1px solid ${theme.colors.gray6};
+  padding: 0.6rem 1.4rem;
+  border: 0.1rem solid ${theme.colors.gray6};
   border-radius: 14.5px;
   ${(props) =>
     props.exampleTagMode &&
@@ -26,7 +26,7 @@ export const Text = styled.span<{
   ${(props) =>
     props.canDelete &&
     css`
-      margin-right: 14px;
+      margin-right: 1.4rem;
     `}
   ${(props) =>
     props.exampleTagMode &&
