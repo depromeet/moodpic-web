@@ -14,12 +14,12 @@ export const Default = Template.bind({});
 
 Default.args = {
   post: {
-    id: 1,
+    id: '1',
     firstCategory: '모르겠어요',
     secondCategory: '기쁨',
     content:
       '안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.',
-    hit: 10,
+    views: 10,
     createdAt: '날짜',
     tags: ['5조', '작업하는 중..'],
   },
