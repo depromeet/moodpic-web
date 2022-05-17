@@ -8,3 +8,8 @@ export interface ServerResponse {
   msg: string;
   success: boolean;
 }
+
+export interface PageType {
+  page?: number;
+  size?: number;
+}
