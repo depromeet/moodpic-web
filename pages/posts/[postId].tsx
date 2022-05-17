@@ -10,11 +10,7 @@ import {
 import Card from '@/components/Card/Card';
 import { EMOTION_COLOR_TYPE } from '@/shared/constants/emotion';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import {
-  NumberTitle,
-  ProvidedQuestionMainTitle,
-  ProvidedQuestionWrap,
-} from '@/components/Question/Question.styles';
+import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
 import { CommonTextArea } from '@/components/Common';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
@@ -28,13 +24,15 @@ import {
   MultipleLineText,
   QuestionContainer,
 } from '@/components/Post/PostDetail.style';
+import { useDeleteFolderMutation, usePostByIdQuery } from '@/hooks/apis';
 
 const PostDetail = () => {
   const router = useRouter();
   const { postId } = router.query;
   const { dialogVisible, toggleDialog } = useDialog();
-  const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } =
-    useBottomSheet();
+  const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } = useBottomSheet();
+
+  const { data: post } = usePostByIdQuery(router.query.postId as string);
 
   const bottomSheetItems = [
     {
@@ -53,22 +51,14 @@ const PostDetail = () => {
     },
   ];
 
-  const post = {
-    id: 3,
-    tags: ['우울해', '대박피곤해', '이거모야', '이거모야', '이거모야'],
-    firstCategory: 'SADNESS',
-    secondCategory: 'DONTKNOW',
-    content:
-      '카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나',
-    hit: 3333,
-    createdAt: '2021년 02월 04일 16:45',
-  };
+  // TODO: 오류 페이지 이후 작업 요청해서 바꾸기..
+  if (!post) return <div>404</div>;
 
   const hasMultipleContent = post.content.includes(CONTENT_SEPARATOR);
   const contents = post.content.split(CONTENT_SEPARATOR);
 
   const onDelete = () => {
-    console.log('폴더 삭제');
+    useDeleteFolderMutation;
   };
 
   return (
@@ -113,9 +103,7 @@ const PostDetail = () => {
                 <span>2</span>
                 /3
               </NumberTitle>
-              <ProvidedQuestionMainTitle>
-                그 때 어떤 감정이 들었나요?
-              </ProvidedQuestionMainTitle>
+              <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
               <CommonTextArea value={contents[1]} height="32.6rem" readOnly />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
@@ -123,16 +111,14 @@ const PostDetail = () => {
                 <span>3</span>
                 /3
               </NumberTitle>
-              <ProvidedQuestionMainTitle>
-                고생했어요! 스스로에게 한마디를 쓴다면?
-              </ProvidedQuestionMainTitle>
+              <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
               <CommonTextArea value={contents[2]} height="32.6rem" readOnly />
             </ProvidedQuestionWrap>
           </QuestionContainer>
         ) : (
           <CommonTextArea value={post.content} height="42.2rem" readOnly />
         )}
-        <Description>조회수 {post.hit}</Description>
+        <Description>조회수 {post.views || 0}</Description>
         <Description>{post.createdAt}</Description>
       </PostDetailContainer>
       {isVisibleSheet && (
@@ -148,7 +134,7 @@ const PostDetail = () => {
       )}
       {dialogVisible && (
         <CommonDialog type="alert" onClose={toggleDialog} onConfirm={onDelete}>
-          <DialogWarning>폴더를 삭제하시겠습니까?</DialogWarning>
+          <DialogWarning>기록을 삭제하시겠습니까?</DialogWarning>
         </CommonDialog>
       )}
     </>
