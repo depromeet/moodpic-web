@@ -14,7 +14,7 @@ const Card = ({ firstColor, secondColor, children }: CardProps): React.ReactElem
   return (
     <CardContainer firstColor={firstColor} secondColor={secondColor}>
       <ImageContainer>
-        <Image src={MoodBoard} alt="" height={144} />
+        <Image src={MoodBoard} alt="" width="100%" height="100%" layout="fill" />
       </ImageContainer>
       {children}
     </CardContainer>
