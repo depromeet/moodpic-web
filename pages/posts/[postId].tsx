@@ -20,7 +20,14 @@ import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import DialogWarning from '@/components/Dialog/DialogWarning';
-import { PostDetailContainer, TagContainer, Description, CardContainer, MultipleLineText, QuestionContainer } from '@/components/Post/PostDetail.style';
+import {
+  PostDetailContainer,
+  TagContainer,
+  Description,
+  CardContainer,
+  MultipleLineText,
+  QuestionContainer,
+} from '@/components/Post/PostDetail.style';
 
 const PostDetail = () => {
   const router = useRouter();
@@ -131,10 +138,10 @@ const PostDetail = () => {
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
-          BottomSheetHeight={calcBottomSheetHeight(
-            bottomSheetItems.length,
-            false,
-          )}
+          BottomSheetHeight={calcBottomSheetHeight({
+            folderSize: bottomSheetItems.length,
+            hasHeader: false,
+          })}
         >
           <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>

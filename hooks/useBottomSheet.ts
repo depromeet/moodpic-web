@@ -8,14 +8,16 @@ const LIST_BOTTOM_HEIGHT = 58;
 export default function useBottomSheet() {
   const [isVisibleSheet, setVisibleSheet] = useState(false);
 
-  const calcBottomSheetHeight = (
-    folderDataLength: number,
-    hasHeader?: boolean,
-  ) => {
-    if (folderDataLength > MAX_SHOW_LIST_ITEM) return 530;
+  const calcBottomSheetHeight = ({
+    folderSize,
+    hasHeader,
+  }: {
+    folderSize: number;
+    hasHeader?: boolean;
+  }) => {
+    if (folderSize > MAX_SHOW_LIST_ITEM) return 530;
 
-    const contentHeight =
-      LIST_ITEM_HEIGHT * folderDataLength + LIST_BOTTOM_HEIGHT;
+    const contentHeight = LIST_ITEM_HEIGHT * folderSize + LIST_BOTTOM_HEIGHT;
     return hasHeader ? HEADER_HEIGHT + contentHeight : contentHeight;
   };
 
