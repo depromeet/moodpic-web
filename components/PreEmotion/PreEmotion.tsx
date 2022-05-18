@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { ButtonWrapper } from '@/pages/write';
 import Button from '@/components/Common/Button/Button';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
-import { useFirstCategoryQuery } from '@/hooks/query/useFirstCategoryQuery';
 import theme from '@/styles/theme';
-import SelectButton from '../Common/SelectButton/SelectButton';
+import FirstCategorySelect from '../Common/SelectButton/FirstCategorySelect';
+import { postResponseState } from '@/store/postResponse/atom';
+import { useRecoilValue } from 'recoil';
 
 const PreEmotion = () => {
   const nextProgressStep = useNextProgressStep();
-
-  const [firstCategoryValue, setFirstCategoryValue] = useState('');
-
-  const { data: firstCategory } = useFirstCategoryQuery();
-
-  console.log(firstCategory);
-
-  if (!firstCategory) return null;
+  const selectedState = useRecoilValue(postResponseState);
 
   return (
     <>
@@ -24,16 +18,13 @@ const PreEmotion = () => {
         홍길동님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
-      <SelectButton
-        categoryList={firstCategory}
-        setCategoryValue={setFirstCategoryValue}
-      />
+      <FirstCategorySelect />
       <ButtonWrapper>
         <Button
           color="primary"
           onClick={nextProgressStep}
           size="large"
-          disabled={firstCategoryValue === ''}
+          disabled={selectedState.firstCategory === ''}
         >
           다음
         </Button>

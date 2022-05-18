@@ -3,12 +3,18 @@ import { useQuery } from 'react-query';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import fetcher from '@/shared/utils/fetcher';
 
-export interface CategoryListResponse {
+type CategoryKeys = 'positive' | 'natural' | 'negative';
+
+export interface CategoryListItemResponse {
   categoryId: number;
   categoryName: string;
-  name: string;
+  description: string;
   image: string;
 }
+
+type CategoryListResponse = {
+  [key in CategoryKeys]: CategoryListItemResponse[];
+};
 const fetchCategoryList = async (): Promise<CategoryListResponse> => {
   const { data } = await fetcher('get', '/api/v1/category');
 

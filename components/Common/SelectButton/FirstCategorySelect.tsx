@@ -1,37 +1,38 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { postResponseState } from '@/store/postResponse/atom';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
-import { FirstCategoryResponse } from '@/hooks/query/useFirstCategoryQuery';
+import { useFirstCategoryQuery } from '@/hooks/query/useFirstCategoryQuery';
 
 interface SelectButtonProps {
-  categoryList: FirstCategoryResponse[];
-  setCategoryValue: Dispatch<SetStateAction<string>>;
   title?: string;
 }
 
-const SelectButton = ({
-  categoryList,
-  setCategoryValue,
-  title,
-  ...props
-}: SelectButtonProps) => {
+const FirstCategorySelect = ({ title }: SelectButtonProps) => {
+  const [selectedFirstCategory, setFirstCategory] =
+    useRecoilState(postResponseState);
+  const { data: firstCategory } = useFirstCategoryQuery();
+
   const onChangeFirstCategoryValue = (categoryName: string) => () => {
-    setCategoryValue(categoryName);
+    setFirstCategory({ ...selectedFirstCategory, firstCategory: categoryName });
   };
+
+  if (!firstCategory) return null;
+
   return (
-    <SelectContainer {...props}>
+    <SelectContainer>
       {title && <h3>{title}</h3>}
       <ButtonContainer>
-        {categoryList?.map(({ categoryId, categoryName, image, name }) => (
+        {firstCategory?.map(({ categoryId, categoryName, description }) => (
           <label key={categoryId}>
-            {/* TODO: emotion 을 전역으로 가지고 있다가 다음 누를때마다 전달해주기 */}
             <RadioInput
               name="emotion"
               onChange={onChangeFirstCategoryValue(categoryName)}
             />
             <ButtonWrapper>
-              <span>{name}</span>
+              <span>{description}</span>
             </ButtonWrapper>
           </label>
         ))}
@@ -40,7 +41,7 @@ const SelectButton = ({
   );
 };
 
-export default SelectButton;
+export default FirstCategorySelect;
 
 const SelectContainer = styled.div`
   margin-bottom: 36px;

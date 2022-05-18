@@ -2,11 +2,10 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
-import { useCategoryListQuery } from '@/hooks/query/useCategoryListQuery';
 import { ButtonWrapper } from '@/pages/write';
 import { MainTitle } from '@/components/PreEmotion/PreEmotion';
 import Button from '../Common/Button/Button';
-import SelectButton from '../Common/SelectButton/SelectButton';
+import SelectButton from '../Common/SelectButton/SecondCategorySelect';
 import Toggle from '../Common/Toggle/Toggle';
 import FolderButton from '../Common/Tag/FolderButton';
 import TextField from '../Common/TextField/TextField';
@@ -31,6 +30,8 @@ import {
   Divider,
   CustomImage,
 } from './CurrentEmotion.styles';
+import { useRecoilValue } from 'recoil';
+import { postResponseState } from '@/store/postResponse/atom';
 
 const mockResponse = [
   {
@@ -78,16 +79,15 @@ const CurrentEmotion = () => {
   const [isDisclose, setDisclose] = useState(true);
   const [tagList, setTagList] = useState<string[]>([]);
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
-  const [categoryListValue, setCategoryListValue] = useState('');
   const { inputValue, onChangeInput } = useInput('');
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } =
     useBottomSheet();
-  const { data: categoryList } = useCategoryListQuery();
+  const selectedState = useRecoilValue(postResponseState);
+
   const onChangeDisclose = () => {
     setDisclose((prev) => !prev);
   };
-  console.log(categoryList);
 
   const calcDeduplicatedTagList = useCallback(() => {
     const deduplicatedTagList = Array.from(new Set(tagList.concat(tagValue)));
@@ -126,29 +126,20 @@ const CurrentEmotion = () => {
     window.scrollTo({ top: 0 });
   }, []);
 
-  if (!categoryList) return null;
-
   return (
     <>
       <MainTitle>
         홍길동님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
-
       <SelectButton
-        categoryList={categoryList['positive']}
-        setCategoryValue={setCategoryListValue}
         title="☺️ &nbsp; 한결 나아졌어요"
+        secondaryCategorytype="positive"
       />
+      <SelectButton title="😞 &nbsp; 여전히" secondaryCategorytype="negative" />
       <SelectButton
-        categoryList={categoryList['natural']}
-        setCategoryValue={setCategoryListValue}
-        title="😞 &nbsp; 여전히"
-      />
-      <SelectButton
-        categoryList={categoryList['negative']}
-        setCategoryValue={setCategoryListValue}
         title="🤔 &nbsp; 변화가 없었어요"
+        secondaryCategorytype="natural"
       />
       <Divider />
       <OptionWrapper>
@@ -196,7 +187,7 @@ const CurrentEmotion = () => {
           color="primary"
           onClick={nextProgressStep}
           size="large"
-          disabled={categoryListValue === ''}
+          disabled={selectedState.secondCategory === ''}
         >
           감정기록 완료
         </Button>
