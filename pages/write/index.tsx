@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import useDialog from '@/hooks/useDialog';
 import { progressStepStateAtom } from '@/store/progressStep/atom';
 import {
@@ -16,12 +16,15 @@ import CurrentEmotion from '@/components/CurrentEmotion/CurrentEmotion';
 import Complete from '@/components/Complete/Complete';
 import theme from '@/styles/theme';
 import DialogCancel from '@/components/Dialog/DialogCancel';
+import { postRequestState } from '@/store/postResponse/atom';
 
 const Write = () => {
   const router = useRouter();
   const progressStep = useRecoilValue(progressStepStateAtom);
   const setPrevProgressStep = useSetRecoilState(progressStepStateAtom);
   const { dialogVisible, toggleDialog } = useDialog();
+  const resetPostRequestState = useResetRecoilState(postRequestState);
+  const resetProgressStepState = useResetRecoilState(progressStepStateAtom);
 
   const onClickGoBack = useCallback(() => {
     if (progressStep === 1) {
@@ -70,6 +73,14 @@ const Write = () => {
       </CommonAppBar>
     );
   }, [progressStep, onClickGoBack, toggleDialog]);
+
+  useEffect(() => {
+    return () => {
+      console.log('초기화');
+      resetProgressStepState();
+      resetPostRequestState();
+    };
+  }, [resetPostRequestState, resetProgressStepState]);
 
   return (
     <>
