@@ -31,7 +31,7 @@ import {
   CustomImage,
 } from './CurrentEmotion.styles';
 import { useRecoilValue } from 'recoil';
-import { postResponseState } from '@/store/postResponse/atom';
+import { postRequestState } from '@/store/postResponse/atom';
 
 const mockResponse = [
   {
@@ -83,7 +83,7 @@ const CurrentEmotion = () => {
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } =
     useBottomSheet();
-  const selectedState = useRecoilValue(postResponseState);
+  const selectedState = useRecoilValue(postRequestState);
 
   const onChangeDisclose = () => {
     setDisclose((prev) => !prev);

@@ -5,12 +5,12 @@ import Button from '@/components/Common/Button/Button';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import theme from '@/styles/theme';
 import FirstCategorySelect from '../Common/SelectButton/FirstCategorySelect';
-import { postResponseState } from '@/store/postResponse/atom';
+import { postRequestState } from '@/store/postResponse/atom';
 import { useRecoilValue } from 'recoil';
 
 const PreEmotion = () => {
   const nextProgressStep = useNextProgressStep();
-  const selectedState = useRecoilValue(postResponseState);
+  const selectedState = useRecoilValue(postRequestState);
 
   return (
     <>

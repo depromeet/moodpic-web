@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 import { PostResponseType } from '@/shared/type/postResponse';
 
-export const postResponseState = atom<PostResponseType>({
-  key: 'postResponseState',
+export const postRequestState = atom<PostResponseType>({
+  key: 'postRequestState',
   default: {
     firstCategory: '',
     secondCategory: '',
