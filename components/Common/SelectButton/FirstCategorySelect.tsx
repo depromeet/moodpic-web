@@ -1,21 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { postResponseState } from '@/store/postResponse/atom';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
+import { useFirstCategoryQuery } from '@/hooks/query/useFirstCategoryQuery';
 
 interface SelectButtonProps {
-  emotionList: string[];
   title?: string;
 }
 
-const SelectButton = ({ emotionList, title, ...props }: SelectButtonProps) => {
+const FirstCategorySelect = ({ title }: SelectButtonProps) => {
+  const [selectedFirstCategory, setFirstCategory] =
+    useRecoilState(postResponseState);
+  const { data: firstCategory } = useFirstCategoryQuery();
+
+  const onChangeFirstCategoryValue = (categoryName: string) => () => {
+    setFirstCategory({ ...selectedFirstCategory, firstCategory: categoryName });
+  };
+
+  if (!firstCategory) return null;
+
   return (
-    <SelectContainer {...props}>
+    <SelectContainer>
       {title && <h3>{title}</h3>}
       <ButtonContainer>
-        {emotionList.map((emotion) => (
-          <label key={emotion}>
-            {/* TODO: emotion 을 전역으로 가지고 있다가 다음 누를때마다 전달해주기 */}
+        {firstCategory?.map(({ categoryId, categoryName, description }) => (
+          <label key={categoryId}>
             <RadioInput
               name="emotion"
               onChange={() => {
@@ -23,7 +34,7 @@ const SelectButton = ({ emotionList, title, ...props }: SelectButtonProps) => {
               }}
             />
             <ButtonWrapper>
-              <span>{emotion}</span>
+              <span>{description}</span>
             </ButtonWrapper>
           </label>
         ))}
@@ -32,7 +43,7 @@ const SelectButton = ({ emotionList, title, ...props }: SelectButtonProps) => {
   );
 };
 
-export default SelectButton;
+export default FirstCategorySelect;
 
 const SelectContainer = styled.div`
   margin-bottom: 36px;

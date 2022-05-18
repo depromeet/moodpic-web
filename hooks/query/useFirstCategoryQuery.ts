@@ -6,17 +6,17 @@ import fetcher from '@/shared/utils/fetcher';
 export interface FirstCategoryResponse {
   categoryId: number;
   categoryName: string;
-  name: string;
+  description: string;
   image: string;
 }
-const fetchFirstCategory = async (): Promise<FirstCategoryResponse> => {
+const fetchFirstCategory = async (): Promise<FirstCategoryResponse[]> => {
   const { data } = await fetcher('get', '/api/v1/firstcategory');
 
   return data;
 };
 
 const useFirstCategoryQuery = () => {
-  return useQuery<FirstCategoryResponse, Error>(
+  return useQuery<FirstCategoryResponse[], Error>(
     QUERY_KEY.GET_FIRST_CATEGORY,
     fetchFirstCategory,
   );
