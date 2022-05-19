@@ -6,6 +6,6 @@ import { queryClient } from '@/shared/utils/queryClient';
 export const useDeletePostMutation = () =>
   useMutation((id: string) => postService.deletePostById([id]), {
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEY.GET_POSTS, QUERY_KEY.GET_POST_BY_ID]);
+      queryClient.resetQueries(QUERY_KEY.GET_POSTS_BY_FOLDER_ID);
     },
   });

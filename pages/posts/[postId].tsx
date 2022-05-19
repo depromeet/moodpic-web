@@ -88,7 +88,7 @@ const PostDetail = () => {
       </CommonAppBar>
       <PostDetailContainer>
         <TagContainer>
-          {post.tags.map((tag, index) => (
+          {post.tags.map((tag: string, index: number) => (
             <CommonTagButton key={index}>#{tag}</CommonTagButton>
           ))}
         </TagContainer>
