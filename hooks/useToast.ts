@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
-import { ToastType } from '@/shared/type/global';
+import { ToastType } from '@/shared/type/common';
 import { toastStateAtom } from '@/store/toast/atom';
 
 interface ToastProps {
