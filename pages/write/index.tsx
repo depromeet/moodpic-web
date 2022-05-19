@@ -74,9 +74,41 @@ const Write = () => {
     );
   }, [progressStep, onClickGoBack, toggleDialog]);
 
+  const browserTabcloseHandler = useCallback((e) => {
+    e.preventDefault(); // 새로고침 시, 뒤로가기 시에 브라우저단에서 물어봐줌
+    e.returnValue = ''; // 크롬에서 필수라고 하네요 (왜인지 모름)
+  }, []);
+
+  /**
+   * 뒤로가기 눌렀을때 나가기 전 물어보는 기능
+   */
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      router.beforePopState(() => {
+        const result = window.confirm(
+          '정말로 나가시겠습니까? 작성중인 기록은 삭제됩니다.',
+        );
+        if (!result) {
+          window.history.pushState('/write', '');
+          router.push('/write');
+        }
+        return result;
+      });
+      window.onbeforeunload = browserTabcloseHandler;
+    }
+
+    return () => {
+      if (typeof window !== undefined) {
+        window.onbeforeunload = null;
+      }
+      router.beforePopState(() => {
+        return true;
+      });
+    };
+  }, [router, browserTabcloseHandler]);
+
   useEffect(() => {
     return () => {
-      console.log('초기화');
       resetProgressStepState();
       resetPostRequestState();
     };
