@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import theme from '@/styles/theme';
-import { ToastType } from '@/shared/type/global';
+import { ToastType } from '@/shared/type/common';
 
 export const CustomedToastContainer = styled(ToastContainer)<{
   type: ToastType;

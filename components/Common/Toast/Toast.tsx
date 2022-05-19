@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
-import { ToastType } from '@/shared/type/global';
+import { ToastType } from '@/shared/type/common';
 import { CustomedToastContainer } from './Toast.styles';
 
 interface ToastProps {
@@ -8,15 +8,7 @@ interface ToastProps {
 }
 
 const Toast = ({ type }: ToastProps) => {
-  return (
-    <CustomedToastContainer
-      type={type}
-      position="top-center"
-      autoClose={2000}
-      hideProgressBar
-      closeOnClick
-    />
-  );
+  return <CustomedToastContainer type={type} position="top-center" autoClose={2000} hideProgressBar closeOnClick />;
 };
 
 export default Toast;
