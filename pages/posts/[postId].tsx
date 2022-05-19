@@ -11,9 +11,12 @@ import Card from '@/components/Card/Card';
 import { EMOTION_COLOR_TYPE } from '@/shared/constants/emotion';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
 import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
-import { CommonTextArea } from '@/components/Common';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
+import useToast from '@/hooks/useToast';
+import { useDeletePostMutation, usePostByIdQuery } from '@/hooks/apis';
+import { ToastType } from '@/shared/type/common';
+import { CommonTextArea } from '@/components/Common';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import {
@@ -24,15 +27,18 @@ import {
   MultipleLineText,
   QuestionContainer,
 } from '@/components/Post/PostDetail.style';
-import { useDeleteFolderMutation, usePostByIdQuery } from '@/hooks/apis';
 
 const PostDetail = () => {
   const router = useRouter();
   const { postId } = router.query;
   const { dialogVisible, toggleDialog } = useDialog();
   const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } = useBottomSheet();
+  const deletePostMutation = useDeletePostMutation();
+  const notify = useToast();
 
   const { data: post } = usePostByIdQuery(router.query.postId as string);
+
+  const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
 
   const bottomSheetItems = [
     {
@@ -52,13 +58,21 @@ const PostDetail = () => {
   ];
 
   // TODO: 오류 페이지 이후 작업 요청해서 바꾸기..
-  if (!post) return <div>404</div>;
+  if (!post || !postId) return <div>404</div>;
 
   const hasMultipleContent = post.content.includes(CONTENT_SEPARATOR);
   const contents = post.content.split(CONTENT_SEPARATOR);
 
   const onDelete = () => {
-    useDeleteFolderMutation;
+    deletePostMutation.mutate(postId as string, {
+      onSuccess: () => {
+        router.push(`/posts?folderId=${folderId}`);
+        notify({
+          type: ToastType.CONFIRM,
+          message: '기록이 삭제되었습니다.',
+        });
+      },
+    });
   };
 
   return (
