@@ -6,6 +6,7 @@ import { ellipsis } from '@/styles/mixins';
 import { CommonCheckbox, CommonChipButton, CommonTagButton } from '@/components/Common';
 import ArrowRightIcon from 'public/svgs/arrowright.svg';
 import { Post } from '@/shared/type/post';
+import { CONTENT_SEPARATOR } from '@/shared/constants/question';
 
 export interface PostItemProps {
   post: Post;
@@ -26,6 +27,8 @@ const PostItem = ({
   checked = false,
   onClick,
 }: PostItemProps): React.ReactElement => {
+  const firstContent = content.includes(CONTENT_SEPARATOR) ? content.split(CONTENT_SEPARATOR)[0] : content;
+
   return (
     <PostItemContainer isEditing={isEditing} onClick={onClick}>
       {isEditing && (
@@ -51,7 +54,7 @@ const PostItem = ({
         </Arrow>
         <CommonChipButton>{secondCategory}</CommonChipButton>
       </ChipContainer>
-      <Content>{content}</Content>
+      <Content>{firstContent}</Content>
       <CaptionContainer>
         <Caption>{createdAt}</Caption>
         <Caption>조회수 {views}</Caption>

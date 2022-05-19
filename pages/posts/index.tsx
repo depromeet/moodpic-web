@@ -88,6 +88,7 @@ const PostListPage = () => {
       </CommonAppBar>
       {postResponse?.posts?.length ? (
         <PostList
+          folderId={folderId}
           postList={postResponse.posts}
           isEditing={isEditing}
           checkedItems={checkedItems}
