@@ -28,8 +28,10 @@ const FirstCategorySelect = ({ title }: SelectButtonProps) => {
         {firstCategory?.map(({ categoryId, categoryName, description }) => (
           <label key={categoryId}>
             <RadioInput
+              type="radio"
               name="emotion"
               onChange={onChangeFirstCategoryValue(categoryName)}
+              checked={selectedFirstCategory.firstCategory === categoryName}
             />
             <ButtonWrapper>
               <span>{description}</span>
@@ -60,7 +62,7 @@ const ButtonContainer = styled.div`
   row-gap: 12px;
 `;
 
-const RadioInput = styled.input.attrs({ type: 'radio' })`
+const RadioInput = styled.input`
   color: ${theme.colors.white};
   background-color: ${theme.colors.gray3};
   ${a11y}
