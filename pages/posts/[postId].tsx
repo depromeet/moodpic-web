@@ -64,7 +64,7 @@ const PostDetail = () => {
   const contents = post.content.split(CONTENT_SEPARATOR);
 
   const onDelete = () => {
-    deletePostMutation.mutate(postId as string, {
+    deletePostMutation.mutate([postId as string], {
       onSuccess: () => {
         router.push(`/posts?folderId=${folderId}`);
         notify({
