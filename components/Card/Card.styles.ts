@@ -1,8 +1,7 @@
 import theme from '@/styles/theme';
 import styled, { css } from 'styled-components';
-import { CardProps } from './Card';
 
-export const CardContainer = styled.aside<Pick<CardProps, 'firstColor' | 'secondColor'>>`
+export const CardContainer = styled.aside<{ firstColor: string; secondColor: string }>`
   position: relative;
   ${theme.fonts.h4};
 
@@ -24,7 +23,14 @@ export const ImageContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+
+  span:first-child {
+    img {
+      transform: rotate(-180deg);
+    }
+  }
 
   img {
     mix-blend-mode: overlay;
