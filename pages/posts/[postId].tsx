@@ -8,7 +8,6 @@ import {
   CommonTagButton,
 } from '@/components/Common';
 import Card from '@/components/Card/Card';
-import { EMOTION_COLOR_TYPE } from '@/shared/constants/emotion';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
 import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
 import useBottomSheet from '@/hooks/useBottomSheet';
@@ -93,10 +92,7 @@ const PostDetail = () => {
           ))}
         </TagContainer>
         <CardContainer>
-          <Card
-            firstColor={EMOTION_COLOR_TYPE[post.firstCategory]}
-            secondColor={EMOTION_COLOR_TYPE[post.secondCategory]}
-          >
+          <Card firstEmotion={post.firstCategory} secondEmotion={post.secondCategory}>
             그땐 {post.firstCategory}, 지금은 {post.secondCategory}
           </Card>
         </CardContainer>
