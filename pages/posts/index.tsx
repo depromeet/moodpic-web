@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
 import useBottomSheet from '@/hooks/useBottomSheet';
@@ -11,7 +11,14 @@ import useDialog from '@/hooks/useDialog';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import useInput from '@/hooks/useInput';
-import { useDeleteFolderMutation, usePostsByFolderIdQuery, useUpdateFolderMutation } from '@/hooks/apis';
+import {
+  useDeleteFolderMutation,
+  useDeletePostMutation,
+  usePostsByFolderIdQuery,
+  useUpdateFolderMutation,
+} from '@/hooks/apis';
+import { ToastType } from '@/shared/type/common';
+import useToast from '@/hooks/useToast';
 
 const PostListPage = () => {
   const router = useRouter();
@@ -20,12 +27,14 @@ const PostListPage = () => {
   const [dialogType, setDialogType] = useState('');
   const { inputValue, onChangeInput } = useInput('');
   const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
-  const updateFolderMutation = useUpdateFolderMutation();
-  const deleteFolderMutation = useDeleteFolderMutation();
 
   const { data: postResponse } = usePostsByFolderIdQuery({ folderId });
+  const updateFolderMutation = useUpdateFolderMutation();
+  const deleteFolderMutation = useDeleteFolderMutation();
+  const deletePostMutation = useDeletePostMutation();
 
   const { dialogVisible, toggleDialog } = useDialog();
+  const notify = useToast();
   const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } = useBottomSheet();
 
   const bottomSheetItems = [
@@ -64,10 +73,20 @@ const PostListPage = () => {
     updateFolderMutation.mutate({ id: folderId, folderName: inputValue });
   };
 
-  const handleSubmit = () => {
-    // TODO: post 삭제 API 연동 예정
-    console.log(checkedItems, '기록 삭제하기');
+  const onDeletePosts = () => {
+    deletePostMutation.mutate(checkedItems, {
+      onSuccess: () => {
+        notify({
+          type: ToastType.CONFIRM,
+          message: '기록이 삭제되었습니다.',
+        });
+
+        setIsEditing(false);
+      },
+    });
   };
+
+  const handleSubmit = () => setIsEditing(false);
 
   if (!postResponse) return <div>404</div>;
 
@@ -97,7 +116,16 @@ const PostListPage = () => {
       ) : (
         <GuideMessage>기록이 없어요.</GuideMessage>
       )}
-      <WritingButon onClick={goToWritePage} />
+      {isEditing ? (
+        <BottomController>
+          <BottomButton disabled={postResponse?.posts?.length === 0}>전체 삭제</BottomButton>
+          <BottomButton disabled={!checkedItems.length} onClick={onDeletePosts}>
+            {checkedItems.length > 0 && `${checkedItems.length}개`} 삭제
+          </BottomButton>
+        </BottomController>
+      ) : (
+        <WritingButon onClick={goToWritePage} />
+      )}
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
@@ -145,6 +173,28 @@ const GuideMessage = styled.p`
   padding-top: 0.4rem;
   ${theme.fonts.h6};
   color: ${theme.colors.gray4};
+`;
+
+const BottomController = styled.div`
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 9rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: ${theme.colors.black};
+  z-index: 1;
+`;
+
+const BottomButton = styled.button<{ disabled: boolean }>`
+  ${theme.fonts.h6};
+  padding: 1.8rem 2rem;
+  color: ${theme.colors.white};
+
+  &:disabled {
+    color: ${theme.colors.gray3};
+  }
 `;
 
 export default PostListPage;
