@@ -1,20 +1,21 @@
 import React from 'react';
 import Image from 'next/image';
-import { CardContainer, ImageContainer } from './Card.styles';
-import MoodBoard from 'public/images/mood-board.png';
+import { EMOTION_COLOR_TYPE } from '@/shared/constants/emotion';
 import { EmotionColorType } from '@/shared/constants/emotion';
+import { CardContainer, ImageContainer } from './Card.styles';
 
 export interface CardProps {
-  firstColor: EmotionColorType;
-  secondColor: EmotionColorType;
+  firstEmotion: EmotionColorType;
+  secondEmotion: EmotionColorType;
   children: React.ReactNode;
 }
 
-const Card = ({ firstColor, secondColor, children }: CardProps): React.ReactElement => {
+const Card = ({ firstEmotion, secondEmotion, children }: CardProps): React.ReactElement => {
   return (
-    <CardContainer firstColor={firstColor} secondColor={secondColor}>
+    <CardContainer firstColor={EMOTION_COLOR_TYPE[firstEmotion]} secondColor={EMOTION_COLOR_TYPE[secondEmotion]}>
       <ImageContainer>
-        <Image src={MoodBoard} alt="" width="100%" height="100%" layout="fill" />
+        <Image src={`/svgs/mood-${firstEmotion.toLowerCase()}.svg`} alt="" width={95} height={63} />
+        <Image src={`/svgs/mood-${secondEmotion.toLowerCase()}.svg`} alt="" width={95} height={63} />
       </ImageContainer>
       {children}
     </CardContainer>
