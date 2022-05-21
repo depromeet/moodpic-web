@@ -9,6 +9,6 @@ export const postRequestState = atom<PostResponseType>({
     content: '',
     tags: [],
     disclosure: false,
-    folderId: 1,
+    folderId: undefined,
   },
 });

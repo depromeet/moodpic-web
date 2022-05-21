@@ -4,5 +4,5 @@ export interface PostResponseType {
   content: string;
   tags: string[];
   disclosure: boolean;
-  folderId: number;
+  folderId: number | undefined;
 }
