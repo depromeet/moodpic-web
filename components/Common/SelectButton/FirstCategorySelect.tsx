@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { postRequestState } from '@/store/postResponse/atom';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
-import { useFirstCategoryQuery } from '@/hooks/query/useFirstCategoryQuery';
+import { useFirstCategoryQuery } from '@/hooks/apis/post/useFirstCategoryQuery';
 
 interface SelectButtonProps {
   title?: string;
