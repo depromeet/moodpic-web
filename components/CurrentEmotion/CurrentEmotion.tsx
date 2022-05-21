@@ -32,6 +32,7 @@ import {
 } from './CurrentEmotion.styles';
 import { useRecoilValue } from 'recoil';
 import { postRequestState } from '@/store/postResponse/atom';
+import { useFoldersQuery } from '@/hooks/query/useFoldersQuery';
 
 const mockResponse = [
   {
@@ -97,6 +98,9 @@ const CurrentEmotion = () => {
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } =
     useBottomSheet();
   const selectedState = useRecoilValue(postRequestState);
+  const { data: folderListData } = useFoldersQuery();
+
+  console.log(folderListData);
 
   const onChangeDisclose = () => {
     setDisclose((prev) => !prev);
@@ -217,7 +221,7 @@ const CurrentEmotion = () => {
       )}
       {isVisibleSheet ? (
         <CommonBottomSheetContainer
-          onClose={() => toggleSheet()}
+          onClose={toggleSheet}
           BottomSheetHeight={calcBottomSheetHeight(mockResponse.length)}
           headerTitle={
             <>
@@ -226,7 +230,10 @@ const CurrentEmotion = () => {
             </>
           }
         >
-          <BottomSheetFolderList folderData={mockResponse} />
+          <BottomSheetFolderList
+            folderData={mockResponse}
+            onClose={toggleSheet}
+          />
         </CommonBottomSheetContainer>
       ) : null}
     </>

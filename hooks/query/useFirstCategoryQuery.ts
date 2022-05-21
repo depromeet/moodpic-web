@@ -15,11 +15,9 @@ const fetchFirstCategory = async (): Promise<FirstCategoryResponse[]> => {
   return data;
 };
 
-const useFirstCategoryQuery = () => {
+export const useFirstCategoryQuery = () => {
   return useQuery<FirstCategoryResponse[], Error>(
     QUERY_KEY.GET_FIRST_CATEGORY,
     fetchFirstCategory,
   );
 };
-
-export { useFirstCategoryQuery, fetchFirstCategory };

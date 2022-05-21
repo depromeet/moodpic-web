@@ -9,15 +9,11 @@ interface FolderResponse {
   postsThumbnail: string[];
 }
 const fetchFolders = async (): Promise<FolderResponse> => {
-  const {
-    data: { data },
-  } = await apiClient.get('/folders');
+  const { data } = await apiClient.get('/api/v1/folders');
 
   return data;
 };
 
-const useFoldersQuery = () => {
+export const useFoldersQuery = () => {
   return useQuery<FolderResponse, Error>(QUERY_KEY.GET_FOLDERS, fetchFolders);
 };
-
-export { useFoldersQuery, fetchFolders };
