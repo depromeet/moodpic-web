@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
+import { useCategoryListQuery } from '@/hooks/apis/post/useCategoryListQuery';
 import { postRequestState } from '@/store/postResponse/atom';
+import SecondCategorySelectSkeleton from './SecondCategorySelect.skeleton';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
-import { useCategoryListQuery } from '@/hooks/query/useCategoryListQuery';
 
 interface SelectButtonProps {
   title?: string;
@@ -26,24 +27,26 @@ const SecondCategorySelect = ({
     });
   };
 
-  if (!categoryList) return null;
-
   return (
     <SelectContainer>
       {title && <h3>{title}</h3>}
       <ButtonContainer>
-        {categoryList[secondaryCategorytype].map(
-          ({ categoryId, categoryName, description }) => (
-            <label key={categoryId}>
-              <RadioInput
-                name="emotion"
-                onChange={onChangeSecondaryCategoryValue(categoryName)}
-              />
-              <ButtonWrapper>
-                <span>{description}</span>
-              </ButtonWrapper>
-            </label>
-          ),
+        {categoryList ? (
+          categoryList[secondaryCategorytype].map(
+            ({ categoryId, categoryName, description }) => (
+              <label key={categoryId}>
+                <RadioInput
+                  name="emotion"
+                  onChange={onChangeSecondaryCategoryValue(categoryName)}
+                />
+                <ButtonWrapper>
+                  <span>{description}</span>
+                </ButtonWrapper>
+              </label>
+            ),
+          )
+        ) : (
+          <SecondCategorySelectSkeleton />
         )}
       </ButtonContainer>
     </SelectContainer>
@@ -69,7 +72,7 @@ const ButtonContainer = styled.div`
   row-gap: 12px;
 `;
 
-const RadioInput = styled.input.attrs({ type: 'radio' })`
+export const RadioInput = styled.input.attrs({ type: 'radio' })`
   color: ${theme.colors.white};
   background-color: ${theme.colors.gray3};
   ${a11y}
