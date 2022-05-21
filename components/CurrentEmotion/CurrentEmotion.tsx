@@ -1,22 +1,26 @@
 /* eslint-disable max-lines */
 import React, { useCallback, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRecoilValue } from 'recoil';
+import { postRequestState } from '@/store/postResponse/atom';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
+import useTypeInput from '@/hooks/useTypeInput';
+import useInput from '@/hooks/useInput';
+import useDialog from '@/hooks/useDialog';
+import useBottomSheet from '@/hooks/useBottomSheet';
+import { useCreateFolderMutation, useFoldersQuery } from '@/hooks/apis';
+
 import { ButtonWrapper } from '@/pages/write';
-import { MainTitle } from '@/components/PreEmotion/PreEmotion';
 import Button from '../Common/Button/Button';
 import SelectButton from '../Common/SelectButton/SecondCategorySelect';
 import Toggle from '../Common/Toggle/Toggle';
 import FolderButton from '../Common/Tag/FolderButton';
 import TextField from '../Common/TextField/TextField';
+import TagButton from '../Common/TagButton/TagButton';
+import { MainTitle } from '@/components/PreEmotion/PreEmotion';
 import { CommonBottomSheetContainer } from '@/components/Common';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
 import FolderPlus from 'public/svgs/folderplus.svg';
-import useTypeInput from '@/hooks/useTypeInput';
-import useInput from '@/hooks/useInput';
-import useDialog from '@/hooks/useDialog';
-import useBottomSheet from '@/hooks/useBottomSheet';
-import TagButton from '../Common/TagButton/TagButton';
 import { CommonDialog } from '@/components/Common';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import Whiteadd from 'public/svgs/whiteadd.svg';
@@ -30,48 +34,6 @@ import {
   Divider,
   CustomImage,
 } from './CurrentEmotion.styles';
-import { useRecoilValue } from 'recoil';
-import { postRequestState } from '@/store/postResponse/atom';
-import { useFoldersQuery } from '@/hooks/query/useFoldersQuery';
-
-const mockResponse = [
-  {
-    folderId: 1,
-    folderName: '폴더명1',
-  },
-  {
-    folderId: 2,
-    folderName: '폴더명2',
-  },
-  {
-    folderId: 3,
-    folderName: '폴더명3',
-  },
-  {
-    folderId: 4,
-    folderName: '폴더명4',
-  },
-  {
-    folderId: 5,
-    folderName: '폴더명5',
-  },
-  {
-    folderId: 6,
-    folderName: '폴더명6',
-  },
-  {
-    folderId: 7,
-    folderName: '폴더명7',
-  },
-  {
-    folderId: 8,
-    folderName: '폴더명8',
-  },
-  {
-    folderId: 9,
-    folderName: '폴더명9',
-  },
-];
 
 const secondCategoryList = {
   z1: [
@@ -99,8 +61,7 @@ const CurrentEmotion = () => {
     useBottomSheet();
   const selectedState = useRecoilValue(postRequestState);
   const { data: folderListData } = useFoldersQuery();
-
-  console.log(folderListData);
+  const { mutate: createFolder } = useCreateFolderMutation();
 
   const onChangeDisclose = () => {
     setDisclose((prev) => !prev);
@@ -139,9 +100,16 @@ const CurrentEmotion = () => {
     [tagList],
   );
 
+  const onCreateFolder = useCallback(() => {
+    createFolder(inputValue);
+    toggleDialog();
+  }, [createFolder, inputValue, toggleDialog]);
+
   useLayoutEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  if (!folderListData) return <></>;
 
   return (
     <>
@@ -214,7 +182,7 @@ const CurrentEmotion = () => {
           type="modal"
           onClose={toggleDialog}
           disabledConfirm={inputValue === ''}
-          onConfirm={toggleDialog}
+          onConfirm={onCreateFolder}
         >
           <DialogFolderForm value={inputValue} onChange={onChangeInput} />
         </CommonDialog>
@@ -222,7 +190,9 @@ const CurrentEmotion = () => {
       {isVisibleSheet ? (
         <CommonBottomSheetContainer
           onClose={toggleSheet}
-          BottomSheetHeight={calcBottomSheetHeight(mockResponse.length)}
+          BottomSheetHeight={calcBottomSheetHeight({
+            folderSize: folderListData?.folders.length,
+          })}
           headerTitle={
             <>
               <Image src={FolderIcon} alt="folderIcon" />
@@ -231,7 +201,7 @@ const CurrentEmotion = () => {
           }
         >
           <BottomSheetFolderList
-            folderData={mockResponse}
+            folderData={folderListData?.folders}
             onClose={toggleSheet}
           />
         </CommonBottomSheetContainer>
