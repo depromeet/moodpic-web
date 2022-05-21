@@ -61,7 +61,9 @@ const BottomSheetExample = () => {
       {isVisibleSheet ? (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
-          BottomSheetHeight={calcBottomSheetHeight(folderDataLength)}
+          BottomSheetHeight={calcBottomSheetHeight({
+            folderSize: folderDataLength,
+          })}
           headerTitle={
             <>
               <Image src={FolderIcon} alt="folderIcon" />
