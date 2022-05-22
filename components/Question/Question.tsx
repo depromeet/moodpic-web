@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent, RefObject, useCallback, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
@@ -27,45 +27,45 @@ import {
   TooltipWrapper,
   Triangle,
 } from './Question.styles';
+import { useTypeInput } from '@/hooks/useTypeInput';
+import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
 
 const questionList = ['왜 그렇게 생각했나요?', '두번째 질문 영역', '세번째 질문 영역'];
 
 const HEADER_HEIGHT = 50;
 
 const Question = () => {
-  const [mode, setMode] = useState('providedQuestion');
-  // 글을 썼을때 다음 버튼이 활성화되도록 하기 위한 트리거 용도 (기존에 ref로 만들어서 렌더링 트리거가 안됨 ㅠㅜ)
-  const [hasContent, setHasContent] = useState(false);
-  const [content, setContent] = useRecoilState(postRequestState);
-  // TODO: any 말고 current.value 타겟을 잡을수 있는? 타입을 알아내야함
-  const firstTextAreaValue = useRef<any>('');
-  const secondTextAreaValue = useRef<any>('');
-  const thirdTextAreaValue = useRef<any>('');
-  const mySeltTextAreaValue = useRef<any>('');
+  const [questionModeData, setQuestionModeData] = useRecoilState(questionModeState);
+  const [postRequestData, setPostRequestData] = useRecoilState(postRequestState);
+  const isTooltipOpen = useRecoilValue(tooltipStateAtom);
+  const setTooltipState = useSetRecoilState(tooltipStateAtom);
+  const [firstQuestionValue, onChangeFirstQuestionValue, setFirstQuestionValue] = useTypeInput('');
+  const [secondQuestionValue, onChangeSecondQuestionValue, setSecondQuestionValue] = useTypeInput('');
+  const [thirdQuestionValue, onChangeThirdQuestionValue, setThirdQuestionValue] = useTypeInput('');
+  const [myselfQuestionValue, onChangeMyselfQuestionValue, setMyselfQuestionValue] = useTypeInput('');
+  const [mode, setMode] = useState(questionModeData);
   const firstQuestionRef = useRef<HTMLDivElement>(null);
   const secondQuestionRef = useRef<HTMLDivElement>(null);
   const thirdQuestionRef = useRef<HTMLDivElement>(null);
-  const isTooltipOpen = useRecoilValue(tooltipStateAtom);
-  const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const nextProgressStep = useNextProgressStep();
   const { dialogVisible, toggleDialog } = useDialog();
 
   const onChangeMode = (targetMode: string) => {
     if (targetMode === 'providedQuestion') {
       setMode('myselfQuestion');
-      firstTextAreaValue.current = '';
-      secondTextAreaValue.current = '';
-      thirdTextAreaValue.current = '';
+      setFirstQuestionValue('');
+      setSecondQuestionValue('');
+      setThirdQuestionValue('');
     }
     if (targetMode === 'myselfQuestion') {
       setMode('providedQuestion');
-      mySeltTextAreaValue.current = '';
+      setMyselfQuestionValue('');
     }
   };
 
   const onClickTabButton = (targetMode: string) => () => {
     if (targetMode === 'providedQuestion') {
-      if (firstTextAreaValue.current || secondTextAreaValue.current || thirdTextAreaValue.current) {
+      if (firstQuestionValue || secondQuestionValue || thirdQuestionValue) {
         toggleDialog();
       } else {
         setMode('myselfQuestion');
@@ -73,7 +73,7 @@ const Question = () => {
     }
 
     if (targetMode === 'myselfQuestion') {
-      if (mySeltTextAreaValue.current) {
+      if (myselfQuestionValue) {
         toggleDialog();
       } else {
         setMode('providedQuestion');
@@ -105,33 +105,30 @@ const Question = () => {
     setTooltipState(false);
   };
 
-  const onChangeTextAreaValue = useCallback(
-    (target) => (e: ChangeEvent<HTMLTextAreaElement>) => {
-      const targetRef = target;
-      targetRef.current = e.target.value;
-      if (target === mySeltTextAreaValue && mySeltTextAreaValue.current) {
-        setHasContent(true);
-      } else if (
-        [firstTextAreaValue, secondTextAreaValue, thirdTextAreaValue].includes(target) &&
-        (firstTextAreaValue.current || secondTextAreaValue.current || thirdTextAreaValue.current)
-      ) {
-        setHasContent(true);
-      } else setHasContent(false);
-    },
-    [],
-  );
-
   const onClickNextButton = () => {
-    if (mySeltTextAreaValue.current) {
-      setContent((prev) => ({ ...prev, content: mySeltTextAreaValue.current }));
+    if (myselfQuestionValue) {
+      setPostRequestData((prev) => ({ ...prev, content: myselfQuestionValue }));
     } else {
-      setContent((prev) => ({
+      setPostRequestData((prev) => ({
         ...prev,
-        content: `${firstTextAreaValue.current}|${secondTextAreaValue.current}|${thirdTextAreaValue.current}`,
+        content: `${firstQuestionValue}|${secondQuestionValue}|${thirdQuestionValue}`,
       }));
     }
+    setQuestionModeData(mode as QuestionModeStateType);
     nextProgressStep();
   };
+
+  useEffect(() => {
+    if (postRequestData.content.includes('|')) {
+      const [postRequestFirstQuestionValue, postRequestSecondQuestionValue, postRequestThirdQuestionValue] =
+        postRequestData.content.split('|');
+      setFirstQuestionValue(postRequestFirstQuestionValue);
+      setSecondQuestionValue(postRequestSecondQuestionValue);
+      setThirdQuestionValue(postRequestThirdQuestionValue);
+    } else {
+      setMyselfQuestionValue(postRequestData.content);
+    }
+  }, []);
 
   return (
     <>
@@ -182,9 +179,9 @@ const Question = () => {
               상황을 객관적으로 파악해보는 시간을 가져보세요.
             </ProvidedQuestionSubDescription>
             <TextArea
-              value={firstTextAreaValue.current?.value}
+              value={firstQuestionValue}
               height="32.6rem"
-              onChange={onChangeTextAreaValue(firstTextAreaValue)}
+              onChange={onChangeFirstQuestionValue}
               onFocus={scrollToTextAreaOffestTop(firstQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
@@ -197,9 +194,9 @@ const Question = () => {
             <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>너무 깊게 생각하지 않아도 돼요!</ProvidedQuestionSubDescription>
             <TextArea
-              value={secondTextAreaValue.current?.value}
+              value={secondQuestionValue}
               height="32.6rem"
-              onChange={onChangeTextAreaValue(secondTextAreaValue)}
+              onChange={onChangeSecondQuestionValue}
               onFocus={scrollToTextAreaOffestTop(secondQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
@@ -214,9 +211,9 @@ const Question = () => {
               지금의 나에게 해줄 수 있는 말은 무엇이 있을까요?
             </ProvidedQuestionSubDescription>
             <TextArea
-              value={thirdTextAreaValue.current?.value}
+              value={thirdQuestionValue}
               height="32.6rem"
-              onChange={onChangeTextAreaValue(thirdTextAreaValue)}
+              onChange={onChangeThirdQuestionValue}
               onFocus={scrollToTextAreaOffestTop(thirdQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
@@ -226,15 +223,20 @@ const Question = () => {
         <>
           <MyselfQuestionTitle>✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.</MyselfQuestionTitle>
           <TextArea
-            value={mySeltTextAreaValue.current?.value}
+            value={myselfQuestionValue}
             height="32.6rem"
-            onChange={onChangeTextAreaValue(mySeltTextAreaValue)}
+            onChange={onChangeMyselfQuestionValue}
             placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
           />
         </>
       )}
       <ButtonWrapper>
-        <Button disabled={!hasContent} color="primary" onClick={onClickNextButton} size="large">
+        <Button
+          disabled={!(!!firstQuestionValue || !!secondQuestionValue || !!thirdQuestionValue) && !myselfQuestionValue}
+          color="primary"
+          onClick={onClickNextButton}
+          size="large"
+        >
           다음
         </Button>
       </ButtonWrapper>

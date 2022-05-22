@@ -3,7 +3,7 @@ import React, { useCallback, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { postRequestState } from '@/store/postResponse/atom';
-import useTypeInput from '@/hooks/useTypeInput';
+import { useTypeInput } from '@/hooks/useTypeInput';
 import useInput from '@/hooks/useInput';
 import useDialog from '@/hooks/useDialog';
 import useBottomSheet from '@/hooks/useBottomSheet';
