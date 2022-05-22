@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import postService from '@/service/apis/postService';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
-import { Post, PostListRequest, PostListResponse } from '@/shared/type/post';
+import { Post, PostListRequest, PostListResponse, CategoryFolder } from '@/shared/type/post';
 import { AxiosError } from 'axios';
 import { ServerResponse } from '@/shared/type/common';
 import { PAGE_SIZE } from '@/shared/constants/common';
@@ -28,11 +28,15 @@ const usePostsByFolderIdQuery = ({
 const usePostByIdQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id));
 
+const usePostsByCategoryQuery = (): UseQueryResult<CategoryFolder[], AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, postService.getPostsByCategories, { enabled: false });
+
 export {
   usePostsQuery,
   useIncompletePostsQuery,
   usePostQuery,
   useAllPostsQuery,
-  usePostsByFolderIdQuery,
+  usePostsByCategoryQuery,
   usePostByIdQuery,
+  usePostsByFolderIdQuery,
 };
