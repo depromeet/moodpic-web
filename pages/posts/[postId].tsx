@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next/types';
 import {
   CommonAppBar,
   CommonBottomSheetContainer,
@@ -149,6 +150,14 @@ const PostDetail = () => {
       )}
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { query } = context;
+  const { postId } = query;
+  return {
+    props: { postId },
+  };
 };
 
 export default PostDetail;
