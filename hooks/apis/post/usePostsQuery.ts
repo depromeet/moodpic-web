@@ -1,31 +1,38 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import postService from '@/service/apis/postService';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
-import { Post } from '@/shared/type/post';
+import { Post, PostListRequest, PostListResponse } from '@/shared/type/post';
 import { AxiosError } from 'axios';
 import { ServerResponse } from '@/shared/type/common';
+import { PAGE_SIZE } from '@/shared/constants/common';
 
 const usePostsQuery = (): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS, postService.getPosts);
 
-const useIncompletePostsQuery = (): UseQueryResult<
-  Post[],
-  AxiosError<ServerResponse>
-> => useQuery(QUERY_KEY.GET_POSTS, postService.getIncompletePosts);
+const useIncompletePostsQuery = (): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS, postService.getIncompletePosts);
 
-const usePostQuery = (
-  id: number,
-): UseQueryResult<Post, AxiosError<ServerResponse>> =>
+const usePostQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS, () => postService.getPostById(id));
 
-const useAllPostsQuery = (): UseQueryResult<
-  Post[],
-  AxiosError<ServerResponse>
-> => useQuery(QUERY_KEY.GET_POSTS, postService.getAllPosts);
+const useAllPostsQuery = (): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS, postService.getAllPosts);
+
+const usePostsByFolderIdQuery = ({
+  folderId,
+  page = 0,
+  size = PAGE_SIZE,
+}: PostListRequest): UseQueryResult<PostListResponse, AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS_BY_FOLDER_ID, () => postService.getPostsByFolderId({ folderId, page, size }));
+
+const usePostByIdQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id));
 
 export {
   usePostsQuery,
   useIncompletePostsQuery,
   usePostQuery,
   useAllPostsQuery,
+  usePostsByFolderIdQuery,
+  usePostByIdQuery,
 };

@@ -5,7 +5,7 @@ export const FolderContainer = styled.div`
   position: relative;
   width: 100%;
   height: 16.5rem;
-  cursor: pointer;
+  margin-bottom: 4.8rem;
 `;
 
 export const FolderName = styled.p`
@@ -23,6 +23,7 @@ export const BoxContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  cursor: pointer;
 
   span {
     border-radius: 1.4rem;

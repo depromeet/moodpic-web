@@ -3,13 +3,10 @@ import styled, { css } from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import { ellipsis } from '@/styles/mixins';
-import {
-  CommonCheckbox,
-  CommonChipButton,
-  CommonTagButton,
-} from '@/components/Common';
+import { CommonCheckbox, CommonChipButton, CommonTagButton } from '@/components/Common';
 import ArrowRightIcon from 'public/svgs/arrowright.svg';
 import { Post } from '@/shared/type/post';
+import { CONTENT_SEPARATOR } from '@/shared/constants/question';
 
 export interface PostItemProps {
   post: Post;
@@ -22,7 +19,7 @@ export interface PostItemProps {
 }
 
 const PostItem = ({
-  post: { id, tags, firstCategory, secondCategory, content, createdAt, hit },
+  post: { id, tags, firstCategory, secondCategory, content, createdAt, views },
   supportsTag = false,
   canEdit = false,
   isMine = false,
@@ -30,6 +27,8 @@ const PostItem = ({
   checked = false,
   onClick,
 }: PostItemProps): React.ReactElement => {
+  const firstContent = content.includes(CONTENT_SEPARATOR) ? content.split(CONTENT_SEPARATOR)[0] : content;
+
   return (
     <PostItemContainer isEditing={isEditing} onClick={onClick}>
       {isEditing && (
@@ -55,18 +54,16 @@ const PostItem = ({
         </Arrow>
         <CommonChipButton>{secondCategory}</CommonChipButton>
       </ChipContainer>
-      <Content>{content}</Content>
+      <Content>{firstContent}</Content>
       <CaptionContainer>
         <Caption>{createdAt}</Caption>
-        <Caption>조회수 {hit}</Caption>
+        <Caption>조회수 {views}</Caption>
       </CaptionContainer>
     </PostItemContainer>
   );
 };
 
-const PostItemContainer = styled.div<
-  Pick<PostItemProps, 'isEditing' | 'checked'>
->`
+const PostItemContainer = styled.div<Pick<PostItemProps, 'isEditing' | 'checked'>>`
   position: relative;
   display: flex;
   flex-direction: column;

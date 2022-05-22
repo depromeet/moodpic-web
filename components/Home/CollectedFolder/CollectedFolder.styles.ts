@@ -30,7 +30,7 @@ export const BoxContainer = styled.figure`
 `;
 
 export const FolderImage = styled.div<{ thumbnail: string }>`
-  max-height: 50%;
+  height: 8rem;
   border-radius: 1rem;
   background-image: url(${(props) => props.thumbnail});
   background-color: ${theme.colors.gray3};

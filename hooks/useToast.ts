@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useSetRecoilState } from 'recoil';
-import { ToastType } from '@/shared/type/global';
+import { useRecoilState } from 'recoil';
+import { ToastType } from '@/shared/type/common';
 import { toastStateAtom } from '@/store/toast/atom';
 
 interface ToastProps {
@@ -9,12 +9,15 @@ interface ToastProps {
   message: string;
 }
 
-export default function useToast({ type, message }: ToastProps) {
-  const setToastType = useSetRecoilState(toastStateAtom);
+export default function useToast() {
+  const [type, setToastType] = useRecoilState(toastStateAtom);
 
   useEffect(() => {
     setToastType(type);
   }, [type, setToastType]);
 
-  return () => toast(message);
+  return ({ type, message }: ToastProps) => {
+    setToastType(type);
+    toast(message);
+  };
 }

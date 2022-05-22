@@ -1,10 +1,7 @@
 import theme from '@/styles/theme';
 import styled, { css } from 'styled-components';
-import { CardProps } from './Card';
 
-export const CardContainer = styled.aside<
-  Pick<CardProps, 'firstColor' | 'secondColor'>
->`
+export const CardContainer = styled.aside<{ firstColor: string; secondColor: string }>`
   position: relative;
   ${theme.fonts.h4};
 
@@ -15,11 +12,7 @@ export const CardContainer = styled.aside<
 
   ${(props) => {
     return css`
-      background: linear-gradient(
-        90deg,
-        ${props.firstColor} 0%,
-        ${props.secondColor} 100.44%
-      );
+      background: linear-gradient(90deg, ${props.firstColor} 0%, ${props.secondColor} 100.44%);
     `;
   }}
 `;
@@ -28,7 +21,16 @@ export const ImageContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 1.4rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  span:first-child {
+    img {
+      transform: rotate(-180deg);
+    }
+  }
 
   img {
     mix-blend-mode: overlay;
