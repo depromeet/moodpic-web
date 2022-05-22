@@ -8,7 +8,7 @@ export const postRequestState = atom<PostResponseType>({
     secondCategory: '',
     content: '',
     tags: [],
-    disclosure: false,
+    disclosure: true,
     folderId: undefined,
   },
 });

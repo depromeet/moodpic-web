@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import CompleteImage from 'public/images/complete.png';
 import theme from '@/styles/theme';
+import { useResetRecoilState } from 'recoil';
+import { postRequestState } from '@/store/postResponse/atom';
+import { useRouter } from 'next/router';
 
 type RandomTextProps = { [x: number]: React.ReactElement | string };
 
@@ -33,10 +36,24 @@ const randomText: RandomTextProps = {
 };
 
 const Complete = () => {
+  const resetPostRequest = useResetRecoilState(postRequestState);
+  const router = useRouter();
+
   const pickRandomText = () => {
     const randomNumberZeroToFive = Math.floor(Math.random() * 5);
     return randomText[randomNumberZeroToFive];
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      //TODO : 내가쓴 글로 이동
+      router.push('/');
+    }, 3000);
+    return () => {
+      clearTimeout(timer);
+      resetPostRequest();
+    };
+  }, [resetPostRequest, router]);
   return (
     <>
       <ImageWrap>

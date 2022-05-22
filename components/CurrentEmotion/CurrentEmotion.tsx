@@ -1,9 +1,8 @@
 /* eslint-disable max-lines */
 import React, { useCallback, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { postRequestState } from '@/store/postResponse/atom';
-import useNextProgressStep from '@/hooks/useNextProgressStep';
 import useTypeInput from '@/hooks/useTypeInput';
 import useInput from '@/hooks/useInput';
 import useDialog from '@/hooks/useDialog';
@@ -34,11 +33,11 @@ import {
   Divider,
   CustomImage,
 } from './CurrentEmotion.styles';
+import { useCreatePostMutation } from '@/hooks/apis/post/usePostMutation';
 
 const MAX_TAG_LIST_LENGTH = 5;
 
 const CurrentEmotion = () => {
-  const nextProgressStep = useNextProgressStep();
   const [isDisclose, setDisclose] = useState(true);
   const [tagList, setTagList] = useState<string[]>([]);
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
@@ -46,11 +45,13 @@ const CurrentEmotion = () => {
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } =
     useBottomSheet();
-  const selectedState = useRecoilValue(postRequestState);
   const { data: folderListData } = useFoldersQuery();
   const { mutate: createFolder } = useCreateFolderMutation();
+  const { mutate: createPost } = useCreatePostMutation();
+  const [selectedState, setSelectState] = useRecoilState(postRequestState);
 
   const onChangeDisclose = () => {
+    setSelectState((prev) => ({ ...prev, disclosure: !isDisclose }));
     setDisclose((prev) => !prev);
   };
 
@@ -67,10 +68,20 @@ const CurrentEmotion = () => {
         tagList.length < MAX_TAG_LIST_LENGTH
       ) {
         setTagList(calcDeduplicatedTagList);
+        setSelectState((prev) => ({
+          ...prev,
+          tags: calcDeduplicatedTagList(),
+        }));
         setTagValue('');
       }
     },
-    [tagValue, tagList, setTagValue, calcDeduplicatedTagList],
+    [
+      tagValue,
+      tagList.length,
+      calcDeduplicatedTagList,
+      setSelectState,
+      setTagValue,
+    ],
   );
 
   const onClickRightSideIcon = useCallback(() => {
@@ -91,6 +102,10 @@ const CurrentEmotion = () => {
     createFolder(inputValue);
     toggleDialog();
   }, [createFolder, inputValue, toggleDialog]);
+
+  const onSubmit = () => {
+    createPost(selectedState);
+  };
 
   useLayoutEffect(() => {
     window.scrollTo({ top: 0 });
@@ -157,9 +172,11 @@ const CurrentEmotion = () => {
       <ButtonWrapper>
         <Button
           color="primary"
-          onClick={nextProgressStep}
+          onClick={onSubmit}
           size="large"
-          disabled={selectedState.secondCategory === ''}
+          disabled={
+            selectedState.secondCategory === '' || !selectedState.folderId
+          }
         >
           감정기록 완료
         </Button>
