@@ -35,19 +35,6 @@ import {
 } from './CurrentEmotion.styles';
 import { useCreatePostMutation } from '@/hooks/apis/post/usePostMutation';
 
-const secondCategoryList = {
-  z1: [
-    { a1: '후회해요1' },
-    { a2: '슬퍼요1' },
-    { a3: '실망했어요1' },
-    { a5: '불안해요1' },
-    { a6: '짜증나요1' },
-    { a7: '모르겠어요1' },
-  ],
-  z2: [{ a8: '짜증나요2' }, { a9: '무기력해요1' }, { a10: '모르겠어요2' }],
-  z3: [{ a11: '모르겠어요3' }],
-};
-
 const MAX_TAG_LIST_LENGTH = 5;
 
 const CurrentEmotion = () => {
@@ -56,8 +43,7 @@ const CurrentEmotion = () => {
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
   const { inputValue, onChangeInput } = useInput('');
   const { dialogVisible, toggleDialog } = useDialog();
-  const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } =
-    useBottomSheet();
+  const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const { data: folderListData } = useFoldersQuery();
   const { mutate: createFolder } = useCreateFolderMutation();
   const { mutate: createPost } = useCreatePostMutation();
@@ -75,11 +61,7 @@ const CurrentEmotion = () => {
 
   const onKeyPressEnter = useCallback(
     (event) => {
-      if (
-        event.key === 'Enter' &&
-        !!tagValue.trim() &&
-        tagList.length < MAX_TAG_LIST_LENGTH
-      ) {
+      if (event.key === 'Enter' && !!tagValue.trim() && tagList.length < MAX_TAG_LIST_LENGTH) {
         setTagList(calcDeduplicatedTagList);
         setSelectState((prev) => ({
           ...prev,
@@ -88,13 +70,7 @@ const CurrentEmotion = () => {
         setTagValue('');
       }
     },
-    [
-      tagValue,
-      tagList.length,
-      calcDeduplicatedTagList,
-      setSelectState,
-      setTagValue,
-    ],
+    [tagValue, tagList.length, calcDeduplicatedTagList, setSelectState, setTagValue],
   );
 
   const onClickRightSideIcon = useCallback(() => {
@@ -132,15 +108,9 @@ const CurrentEmotion = () => {
         홍길동님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
-      <SelectButton
-        title="☺️ &nbsp; 한결 나아졌어요"
-        secondaryCategorytype="positive"
-      />
+      <SelectButton title="☺️ &nbsp; 한결 나아졌어요" secondaryCategorytype="positive" />
       <SelectButton title="😞 &nbsp; 여전히" secondaryCategorytype="negative" />
-      <SelectButton
-        title="🤔 &nbsp; 변화가 없었어요"
-        secondaryCategorytype="natural"
-      />
+      <SelectButton title="🤔 &nbsp; 변화가 없었어요" secondaryCategorytype="natural" />
       <Divider />
       <OptionWrapper>
         <OptionTitle>태그</OptionTitle>
@@ -174,11 +144,7 @@ const CurrentEmotion = () => {
           <OptionTitle>폴더</OptionTitle>
           <FolderWrap>
             <FolderButton onClick={toggleSheet}>폴더선택</FolderButton>
-            <CustomImage
-              src={FolderPlus}
-              alt="FolderPlus"
-              onClick={toggleDialog}
-            />
+            <CustomImage src={FolderPlus} alt="FolderPlus" onClick={toggleDialog} />
           </FolderWrap>
         </div>
       </OptionWrapper>
@@ -187,9 +153,7 @@ const CurrentEmotion = () => {
           color="primary"
           onClick={onSubmit}
           size="large"
-          disabled={
-            selectedState.secondCategory === '' || !selectedState.folderId
-          }
+          disabled={selectedState.secondCategory === '' || !selectedState.folderId}
         >
           감정기록 완료
         </Button>
@@ -217,10 +181,7 @@ const CurrentEmotion = () => {
             </>
           }
         >
-          <BottomSheetFolderList
-            folderData={folderListData?.folders}
-            onClose={toggleSheet}
-          />
+          <BottomSheetFolderList folderData={folderListData?.folders} onClose={toggleSheet} />
         </CommonBottomSheetContainer>
       ) : null}
     </>

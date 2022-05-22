@@ -3,9 +3,7 @@ import Image from 'next/image';
 import theme from '@/styles/theme';
 import { TagButtonProps } from './TagButton';
 
-export const TagButtonContainer = styled.div<
-  Pick<TagButtonProps, 'exampleTagMode'>
->`
+export const TagButtonContainer = styled.div<Pick<TagButtonProps, 'exampleTagMode'>>`
   display: inline-flex;
   padding: 0.6rem 1.4rem;
   border: 0.1rem solid ${theme.colors.gray6};

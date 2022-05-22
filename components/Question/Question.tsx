@@ -1,12 +1,6 @@
 /* eslint-disable max-lines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {
-  ChangeEvent,
-  RefObject,
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, RefObject, useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
@@ -34,11 +28,7 @@ import {
   Triangle,
 } from './Question.styles';
 
-const questionList = [
-  '왜 그렇게 생각했나요?',
-  '두번째 질문 영역',
-  '세번째 질문 영역',
-];
+const questionList = ['왜 그렇게 생각했나요?', '두번째 질문 영역', '세번째 질문 영역'];
 
 const HEADER_HEIGHT = 50;
 
@@ -75,11 +65,7 @@ const Question = () => {
 
   const onClickTabButton = (targetMode: string) => () => {
     if (targetMode === 'providedQuestion') {
-      if (
-        firstTextAreaValue.current ||
-        secondTextAreaValue.current ||
-        thirdTextAreaValue.current
-      ) {
+      if (firstTextAreaValue.current || secondTextAreaValue.current || thirdTextAreaValue.current) {
         toggleDialog();
       } else {
         setMode('myselfQuestion');
@@ -100,21 +86,20 @@ const Question = () => {
     toggleDialog();
   };
 
-  const scrollToTextAreaOffestTop =
-    (target: RefObject<HTMLDivElement>) => () => {
-      const targetRef = target;
-      if (typeof window !== undefined && targetRef.current) {
-        //  window.scrollTo({
-        //    top: targetRef.current.offsetTop - HEADER_HEIGHT,
-        //    left: 0,
-        //    behavior: 'smooth',
-        //  });
-        targetRef.current.scrollIntoView({
-          block: 'start',
-          behavior: 'smooth',
-        });
-      }
-    };
+  const scrollToTextAreaOffestTop = (target: RefObject<HTMLDivElement>) => () => {
+    const targetRef = target;
+    if (typeof window !== undefined && targetRef.current) {
+      window.scrollTo({
+        top: targetRef.current.offsetTop - HEADER_HEIGHT,
+        left: 0,
+        behavior: 'smooth',
+      });
+      // targetRef.current.scrollIntoView({
+      //   block: 'start',
+      //   behavior: 'smooth',
+      // });
+    }
+  };
 
   const onCloseTooltip = () => {
     setTooltipState(false);
@@ -127,12 +112,8 @@ const Question = () => {
       if (target === mySeltTextAreaValue && mySeltTextAreaValue.current) {
         setHasContent(true);
       } else if (
-        [firstTextAreaValue, secondTextAreaValue, thirdTextAreaValue].includes(
-          target,
-        ) &&
-        (firstTextAreaValue.current ||
-          secondTextAreaValue.current ||
-          thirdTextAreaValue.current)
+        [firstTextAreaValue, secondTextAreaValue, thirdTextAreaValue].includes(target) &&
+        (firstTextAreaValue.current || secondTextAreaValue.current || thirdTextAreaValue.current)
       ) {
         setHasContent(true);
       } else setHasContent(false);
@@ -175,20 +156,12 @@ const Question = () => {
           <TooltipWrapper>
             <Triangle />
             <ImageWrap>
-              <Image
-                src={BgClose}
-                alt="bgClose"
-                width={24}
-                height={24}
-                onClick={onCloseTooltip}
-              />
+              <Image src={BgClose} alt="bgClose" width={24} height={24} onClick={onCloseTooltip} />
             </ImageWrap>
             <TooltipTitle>📝 &nbsp; 이런 질문에 답하게 될거에요</TooltipTitle>
             <TooltipDescriptionWrap>
               {questionList.map((question) => (
-                <TooltipDescription key={question}>
-                  {question}
-                </TooltipDescription>
+                <TooltipDescription key={question}>{question}</TooltipDescription>
               ))}
             </TooltipDescriptionWrap>
           </TooltipWrapper>
@@ -221,12 +194,8 @@ const Question = () => {
               <span className="highlight">2</span>
               /3
             </NumberTitle>
-            <ProvidedQuestionMainTitle>
-              그 때 어떤 감정이 들었나요?
-            </ProvidedQuestionMainTitle>
-            <ProvidedQuestionSubDescription>
-              너무 깊게 생각하지 않아도 돼요!
-            </ProvidedQuestionSubDescription>
+            <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
+            <ProvidedQuestionSubDescription>너무 깊게 생각하지 않아도 돼요!</ProvidedQuestionSubDescription>
             <TextArea
               value={secondTextAreaValue.current?.value}
               height="32.6rem"
@@ -240,9 +209,7 @@ const Question = () => {
               <span className="highlight">3</span>
               /3
             </NumberTitle>
-            <ProvidedQuestionMainTitle>
-              고생했어요! 스스로에게 한마디를 쓴다면?
-            </ProvidedQuestionMainTitle>
+            <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>
               지금의 나에게 해줄 수 있는 말은 무엇이 있을까요?
             </ProvidedQuestionSubDescription>
@@ -257,9 +224,7 @@ const Question = () => {
         </>
       ) : (
         <>
-          <MyselfQuestionTitle>
-            ✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.
-          </MyselfQuestionTitle>
+          <MyselfQuestionTitle>✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.</MyselfQuestionTitle>
           <TextArea
             value={mySeltTextAreaValue.current?.value}
             height="32.6rem"
@@ -269,21 +234,12 @@ const Question = () => {
         </>
       )}
       <ButtonWrapper>
-        <Button
-          disabled={!hasContent}
-          color="primary"
-          onClick={onClickNextButton}
-          size="large"
-        >
+        <Button disabled={!hasContent} color="primary" onClick={onClickNextButton} size="large">
           다음
         </Button>
       </ButtonWrapper>
       {dialogVisible ? (
-        <CommonDialog
-          type="alert"
-          onClose={toggleDialog}
-          onConfirm={onClickConfirm(mode)}
-        >
+        <CommonDialog type="alert" onClose={toggleDialog} onConfirm={onClickConfirm(mode)}>
           <DialogCancel />
         </CommonDialog>
       ) : null}

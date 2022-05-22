@@ -12,8 +12,6 @@ const PreEmotion = () => {
   const nextProgressStep = useNextProgressStep();
   const selectedState = useRecoilValue(postRequestState);
 
-const PreEmotion = () => {
-  const nextProgressStep = useNextProgressStep();
   return (
     <>
       <MainTitle>
@@ -22,12 +20,7 @@ const PreEmotion = () => {
       </MainTitle>
       <FirstCategorySelect />
       <ButtonWrapper>
-        <Button
-          color="primary"
-          onClick={nextProgressStep}
-          size="large"
-          disabled={selectedState.firstCategory === ''}
-        >
+        <Button color="primary" onClick={nextProgressStep} size="large" disabled={selectedState.firstCategory === ''}>
           다음
         </Button>
       </ButtonWrapper>
