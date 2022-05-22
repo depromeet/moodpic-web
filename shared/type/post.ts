@@ -19,3 +19,10 @@ export interface PostListResponse {
   folderName: string;
   totalCount: number;
 }
+
+export interface CategoryFolder {
+  categoryId: number;
+  description: string;
+  count: number;
+  image: string;
+}

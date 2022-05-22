@@ -1,4 +1,4 @@
-import { Post, PostListRequest, PostListResponse } from '@/shared/type/post';
+import { Post, PostListRequest, PostListResponse, CategoryFolder } from '@/shared/type/post';
 import { PostResponseType } from '@/shared/type/postResponse';
 import fetcher from '@/shared/utils/fetcher';
 
@@ -47,6 +47,11 @@ const postService = {
   deletePostById: async (ids: string[]): Promise<PostListResponse> => {
     const idsString = ids.join(',');
     const { data } = await fetcher('delete', `/api/v1/posts?postIds=${idsString}`);
+
+    return data;
+  },
+  getPostsByCategories: async (): Promise<CategoryFolder[]> => {
+    const { data } = await fetcher('get', '/api/v1/posts/categories');
 
     return data;
   },
