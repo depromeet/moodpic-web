@@ -4,9 +4,7 @@ import folderService, { FolderResponse } from '@/service/apis/folderService';
 import { AxiosError } from 'axios';
 import { ServerResponse } from '@/shared/type/common';
 
-const useFoldersQuery = (): UseQueryResult<
-  FolderResponse,
-  AxiosError<ServerResponse>
-> => useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
+const useFoldersQuery = (): UseQueryResult<FolderResponse, AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders, { enabled: false });
 
 export { useFoldersQuery };
