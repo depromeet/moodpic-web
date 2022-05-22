@@ -9,23 +9,20 @@ import {
   BoxContainer,
   CaptionContainer,
 } from './Folder.styles';
-import { Folder } from '@/shared/type/folder';
 import EmptyImage from 'public/images/empty.png';
 import TrashIcon from 'public/svgs/trash.svg';
 import EditFolderIcon from 'public/svgs/editfolder.svg';
 
 export interface FolderProps extends HtmlHTMLAttributes<HTMLDivElement> {
+  folderName: string;
+  count: number;
+  coverImage: string;
   isEditMode?: boolean;
   supportsMultipleLayout?: boolean;
-  folder: Folder;
   onClick: () => void;
 }
 
-const Folder = ({
-  folder: { postCount, folderName, coverImg },
-  isEditMode = false,
-  onClick,
-}: FolderProps): React.ReactElement => {
+const Folder = ({ count, folderName, coverImage, isEditMode = false, onClick }: FolderProps): React.ReactElement => {
   const renderDeleteButton = () => {
     return (
       <DeleteButton onClick={() => console.log('delete')}>
@@ -45,10 +42,10 @@ const Folder = ({
   return (
     <FolderContainer>
       <BoxContainer onClick={onClick}>
-        {postCount === 0 ? (
+        {count === 0 ? (
           <Image src={EmptyImage} alt="기록이 없어요" layout="fill" objectFit="cover" />
         ) : (
-          <Image src={coverImg || EmptyImage} alt={folderName} layout="fill" objectFit="cover" />
+          <Image src={coverImage || EmptyImage} alt={folderName} layout="fill" objectFit="cover" />
         )}
         {isEditMode && renderDeleteButton()}
       </BoxContainer>
@@ -56,7 +53,7 @@ const Folder = ({
         {isEditMode && renderEditButton()}
         <div>
           <FolderName>{folderName}</FolderName>
-          <FolderCount>{postCount}</FolderCount>
+          <FolderCount>{count}</FolderCount>
         </div>
       </CaptionContainer>
     </FolderContainer>
