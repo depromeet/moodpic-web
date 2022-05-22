@@ -8,13 +8,15 @@ import React, {
   useState,
 } from 'react';
 import Image from 'next/image';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
 import useDialog from '@/hooks/useDialog';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
+import { postRequestState } from '@/store/postResponse/atom';
 import Button from '@/components/Common/Button/Button';
 import DialogCancel from '@/components/Dialog/DialogCancel';
 import TextArea from '../Common/TextArea/TextArea';
+import { CommonDialog } from '../Common';
 import { ButtonWrapper } from '@/pages/write';
 import BgClose from 'public/svgs/bgclose.svg';
 import {
@@ -31,7 +33,6 @@ import {
   TooltipWrapper,
   Triangle,
 } from './Question.styles';
-import { CommonDialog } from '../Common';
 
 const questionList = [
   '왜 그렇게 생각했나요?',
@@ -43,14 +44,17 @@ const HEADER_HEIGHT = 50;
 
 const Question = () => {
   const [mode, setMode] = useState('providedQuestion');
+  // 글을 썼을때 다음 버튼이 활성화되도록 하기 위한 트리거 용도 (기존에 ref로 만들어서 렌더링 트리거가 안됨 ㅠㅜ)
+  const [hasContent, setHasContent] = useState(false);
+  const [content, setContent] = useRecoilState(postRequestState);
   // TODO: any 말고 current.value 타겟을 잡을수 있는? 타입을 알아내야함
   const firstTextAreaValue = useRef<any>('');
   const secondTextAreaValue = useRef<any>('');
   const thirdTextAreaValue = useRef<any>('');
   const mySeltTextAreaValue = useRef<any>('');
-  const firstTextAreaRef = useRef<HTMLDivElement>(null);
-  const secondTextAreaRef = useRef<HTMLDivElement>(null);
-  const thirdTextAreaRef = useRef<HTMLDivElement>(null);
+  const firstQuestionRef = useRef<HTMLDivElement>(null);
+  const secondQuestionRef = useRef<HTMLDivElement>(null);
+  const thirdQuestionRef = useRef<HTMLDivElement>(null);
   const isTooltipOpen = useRecoilValue(tooltipStateAtom);
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const nextProgressStep = useNextProgressStep();
@@ -120,12 +124,33 @@ const Question = () => {
     (target) => (e: ChangeEvent<HTMLTextAreaElement>) => {
       const targetRef = target;
       targetRef.current = e.target.value;
-      // console.log(
-      //   `${firstTextAreaValue.current}|${secondTextAreaValue.current}|${thirdTextAreaValue.current}`,
-      // );
+      if (target === mySeltTextAreaValue && mySeltTextAreaValue.current) {
+        setHasContent(true);
+      } else if (
+        [firstTextAreaValue, secondTextAreaValue, thirdTextAreaValue].includes(
+          target,
+        ) &&
+        (firstTextAreaValue.current ||
+          secondTextAreaValue.current ||
+          thirdTextAreaValue.current)
+      ) {
+        setHasContent(true);
+      } else setHasContent(false);
     },
     [],
   );
+
+  const onClickNextButton = () => {
+    if (mySeltTextAreaValue.current) {
+      setContent((prev) => ({ ...prev, content: mySeltTextAreaValue.current }));
+    } else {
+      setContent((prev) => ({
+        ...prev,
+        content: `${firstTextAreaValue.current}|${secondTextAreaValue.current}|${thirdTextAreaValue.current}`,
+      }));
+    }
+    nextProgressStep();
+  };
 
   return (
     <>
@@ -171,7 +196,7 @@ const Question = () => {
       </ButtonContainer>
       {mode === 'providedQuestion' ? (
         <>
-          <ProvidedQuestionWrap ref={firstTextAreaRef}>
+          <ProvidedQuestionWrap ref={firstQuestionRef}>
             <NumberTitle>
               <span className="highlight">1</span>
               /3
@@ -187,11 +212,11 @@ const Question = () => {
               value={firstTextAreaValue.current?.value}
               height="32.6rem"
               onChange={onChangeTextAreaValue(firstTextAreaValue)}
-              onFocus={scrollToTextAreaOffestTop(firstTextAreaRef)}
+              onFocus={scrollToTextAreaOffestTop(firstQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={secondTextAreaRef}>
+          <ProvidedQuestionWrap ref={secondQuestionRef}>
             <NumberTitle>
               <span className="highlight">2</span>
               /3
@@ -206,11 +231,11 @@ const Question = () => {
               value={secondTextAreaValue.current?.value}
               height="32.6rem"
               onChange={onChangeTextAreaValue(secondTextAreaValue)}
-              onFocus={scrollToTextAreaOffestTop(secondTextAreaRef)}
+              onFocus={scrollToTextAreaOffestTop(secondQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={thirdTextAreaRef}>
+          <ProvidedQuestionWrap ref={thirdQuestionRef}>
             <NumberTitle>
               <span className="highlight">3</span>
               /3
@@ -225,7 +250,7 @@ const Question = () => {
               value={thirdTextAreaValue.current?.value}
               height="32.6rem"
               onChange={onChangeTextAreaValue(thirdTextAreaValue)}
-              onFocus={scrollToTextAreaOffestTop(thirdTextAreaRef)}
+              onFocus={scrollToTextAreaOffestTop(thirdQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
@@ -244,7 +269,12 @@ const Question = () => {
         </>
       )}
       <ButtonWrapper>
-        <Button color="gray" onClick={nextProgressStep} size="large">
+        <Button
+          disabled={!hasContent}
+          color="primary"
+          onClick={onClickNextButton}
+          size="large"
+        >
           다음
         </Button>
       </ButtonWrapper>

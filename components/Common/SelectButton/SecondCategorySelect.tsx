@@ -36,8 +36,12 @@ const SecondCategorySelect = ({
             ({ categoryId, categoryName, description }) => (
               <label key={categoryId}>
                 <RadioInput
+                  type="radio"
                   name="emotion"
                   onChange={onChangeSecondaryCategoryValue(categoryName)}
+                  checked={
+                    selectedCurrentCategory.secondCategory === categoryName
+                  }
                 />
                 <ButtonWrapper>
                   <span>{description}</span>
@@ -72,7 +76,7 @@ const ButtonContainer = styled.div`
   row-gap: 12px;
 `;
 
-export const RadioInput = styled.input.attrs({ type: 'radio' })`
+export const RadioInput = styled.input`
   color: ${theme.colors.white};
   background-color: ${theme.colors.gray3};
   ${a11y}

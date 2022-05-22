@@ -12,6 +12,7 @@ export type TextAreaAttributes = Pick<
   | 'placeholder'
   | 'readOnly'
   | 'disabled'
+  | 'defaultValue'
 >;
 
 export type TextAreaProps = {
