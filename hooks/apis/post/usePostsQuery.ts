@@ -31,6 +31,9 @@ const usePostByIdQuery = (id: string): UseQueryResult<Post, AxiosError<ServerRes
 const usePostsByCategoryQuery = (): UseQueryResult<CategoryFolder[], AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, postService.getPostsByCategories, { enabled: false });
 
+const usePostsByCategoryQuery = (): UseQueryResult<CategoryFolder[], AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, postService.getPostsByCategories, { enabled: false });
+
 export {
   usePostsQuery,
   useIncompletePostsQuery,
