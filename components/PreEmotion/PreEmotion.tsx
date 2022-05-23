@@ -4,29 +4,23 @@ import { ButtonWrapper } from '@/pages/write';
 import Button from '@/components/Common/Button/Button';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import theme from '@/styles/theme';
-import SelectButton from '../Common/SelectButton/SelectButton';
-
-const emotionList = [
-  '후회해요',
-  '슬퍼요',
-  '실망했어요',
-  '무기력해요',
-  '불안해요',
-  '짜증나요',
-  '모르겠어요',
-];
+import FirstCategorySelect from '../Common/SelectButton/FirstCategorySelect';
+import { postRequestState } from '@/store/postResponse/atom';
+import { useRecoilValue } from 'recoil';
 
 const PreEmotion = () => {
   const nextProgressStep = useNextProgressStep();
+  const selectedState = useRecoilValue(postRequestState);
+
   return (
     <>
       <MainTitle>
         홍길동님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
-      <SelectButton emotionList={emotionList} />
+      <FirstCategorySelect />
       <ButtonWrapper>
-        <Button color="gray" onClick={nextProgressStep} size="large">
+        <Button color="primary" onClick={nextProgressStep} size="large" disabled={selectedState.firstCategory === ''}>
           다음
         </Button>
       </ButtonWrapper>

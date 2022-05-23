@@ -15,7 +15,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>11th 5team front-end</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no, maximum-sacle=1.0, mininum-scale=1.0"
+        />
       </Head>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>

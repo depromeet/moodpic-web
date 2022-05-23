@@ -27,6 +27,7 @@ const DialogFolderForm = ({
         value={value}
         hasBorder={true}
         onChange={onChange}
+        hasRightSideIcon
       />
     </DialogContainer>
   );

@@ -9,6 +9,7 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   hasBorder?: boolean;
   supportsMaxLength?: boolean;
   onClickRightSideIcon?: () => void;
+  hasRightSideIcon?: boolean;
 }
 
 const TextField = ({
@@ -22,13 +23,14 @@ const TextField = ({
   maxLength,
   supportsMaxLength = false,
   onClickRightSideIcon,
+  hasRightSideIcon = false,
   ...restTextFieldProps
 }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <>
-      <Container height={height}>
+      <Container height={height} hasRightSideIcon={hasRightSideIcon}>
         <Input
           value={value}
           borderRadius={borderRadius}
