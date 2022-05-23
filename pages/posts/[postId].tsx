@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { GetServerSideProps } from 'next/types';
 import {
   CommonAppBar,
   CommonBottomSheetContainer,
@@ -30,13 +29,13 @@ import {
 
 const PostDetail = () => {
   const router = useRouter();
-  const { postId } = router.query;
+  const postId = router.query.postId as string;
   const { dialogVisible, toggleDialog } = useDialog();
   const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } = useBottomSheet();
   const deletePostMutation = useDeletePostMutation();
   const notify = useToast();
 
-  const { data: post } = usePostByIdQuery(router.query.postId as string);
+  const { data: post, refetch: fetchPost } = usePostByIdQuery(postId);
 
   const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
 
@@ -56,6 +55,12 @@ const PostDetail = () => {
       },
     },
   ];
+
+  useEffect(() => {
+    if (postId) {
+      fetchPost();
+    }
+  }, [router.query, postId, fetchPost]);
 
   // TODO: 오류 페이지 이후 작업 요청해서 바꾸기..
   if (!post || !postId) return <div>404</div>;
@@ -150,14 +155,6 @@ const PostDetail = () => {
       )}
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { query } = context;
-  const { postId } = query;
-  return {
-    props: { postId },
-  };
 };
 
 export default PostDetail;
