@@ -26,7 +26,7 @@ const usePostsByFolderIdQuery = ({
   useQuery(QUERY_KEY.GET_POSTS_BY_FOLDER_ID, () => postService.getPostsByFolderId({ folderId, page, size }));
 
 const usePostByIdQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id));
+  useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id), { enabled: false });
 
 const usePostsByCategoryQuery = (): UseQueryResult<CategoryFolder[], AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, postService.getPostsByCategories, { enabled: false });
