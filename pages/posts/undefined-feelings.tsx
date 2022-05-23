@@ -15,11 +15,7 @@ const PostList = () => {
     <>
       <CommonAppBar>
         <CommonAppBar.Left>
-          <CommonIconButton
-            iconName="left"
-            alt="이전"
-            onClick={() => router.back()}
-          />
+          <CommonIconButton iconName="left" alt="이전" onClick={() => router.back()} />
         </CommonAppBar.Left>
       </CommonAppBar>
       <PostListContainer>
@@ -30,11 +26,7 @@ const PostList = () => {
         {postList.length ? (
           postList.map((post) => (
             <li key={post.id}>
-              <PostItem
-                post={post}
-                isMine={false}
-                onClick={() => router.push(`/posts/${post.id}`)}
-              />
+              <PostItem post={post} isMine={false} onClick={() => router.push(`/posts/${post.id}`)} />
             </li>
           ))
         ) : (

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
 import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
 import useDialog from '@/hooks/useDialog';
-import useInput from '@/hooks/useInput';
+import { useTypeInput } from '@/hooks/useTypeInput';
 import {
   useCreateFolderMutation,
   useFoldersQuery,
@@ -28,7 +28,7 @@ const Home = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isScrollOnTop, setIsScrollOnTop] = useState<boolean>(true);
   const { dialogVisible, toggleDialog } = useDialog();
-  const { inputValue, onChangeInput, resetInputValue } = useInput('');
+  const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const { data: folderResponse, refetch: fetchFolders } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
@@ -70,7 +70,7 @@ const Home = () => {
   const onAddFolder = () => {
     createFolderMutation.mutate(inputValue, {
       onSuccess: () => {
-        resetInputValue();
+        setInputValue('');
         toggleDialog();
         notify({ type: 'confirm', message: '폴더가 생성되었습니다.' });
         fetchFolders();
