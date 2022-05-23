@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { postRequestState } from '@/store/postResponse/atom';
 import { useTypeInput } from '@/hooks/useTypeInput';
-import useInput from '@/hooks/useInput';
 import useDialog from '@/hooks/useDialog';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import { useCreateFolderMutation, useFoldersQuery } from '@/hooks/apis';
@@ -41,7 +40,7 @@ const CurrentEmotion = () => {
   const [isDisclose, setDisclose] = useState(true);
   const [tagList, setTagList] = useState<string[]>([]);
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
-  const { inputValue, onChangeInput } = useInput('');
+  const [inputValue, onChangeInput] = useTypeInput('');
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const { data: folderListData } = useFoldersQuery();

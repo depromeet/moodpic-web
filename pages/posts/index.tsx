@@ -10,7 +10,7 @@ import theme from '@/styles/theme';
 import useDialog from '@/hooks/useDialog';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
-import useInput from '@/hooks/useInput';
+import { useTypeInput } from '@/hooks/useTypeInput';
 import {
   useDeleteFolderMutation,
   useDeletePostMutation,
@@ -25,7 +25,7 @@ const PostListPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [dialogType, setDialogType] = useState('');
-  const { inputValue, onChangeInput } = useInput('');
+  const [inputValue, onChangeInput] = useTypeInput('');
   const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
 
   const { data: postResponse } = usePostsByFolderIdQuery({ folderId });
