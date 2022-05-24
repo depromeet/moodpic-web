@@ -89,15 +89,10 @@ const Question = () => {
   const scrollToTextAreaOffestTop = (target: RefObject<HTMLDivElement>) => () => {
     const targetRef = target;
     if (typeof window !== undefined && targetRef.current) {
-      window.scrollTo({
+      window.scroll({
         top: targetRef.current.offsetTop - HEADER_HEIGHT,
-        left: 0,
         behavior: 'smooth',
       });
-      // targetRef.current.scrollIntoView({
-      //   block: 'start',
-      //   behavior: 'smooth',
-      // });
     }
   };
 
