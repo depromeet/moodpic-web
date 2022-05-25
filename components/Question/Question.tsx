@@ -32,8 +32,6 @@ import { questionModeState, QuestionModeStateType } from '@/store/questionMode/a
 
 const questionList = ['왜 그렇게 생각했나요?', '두번째 질문 영역', '세번째 질문 영역'];
 
-const HEADER_HEIGHT = 50;
-
 const Question = () => {
   const [questionModeData, setQuestionModeData] = useRecoilState(questionModeState);
   const [postRequestData, setPostRequestData] = useRecoilState(postRequestState);
@@ -47,6 +45,7 @@ const Question = () => {
   const firstQuestionRef = useRef<HTMLDivElement>(null);
   const secondQuestionRef = useRef<HTMLDivElement>(null);
   const thirdQuestionRef = useRef<HTMLDivElement>(null);
+  const timer = useRef<any>(null);
   const nextProgressStep = useNextProgressStep();
   const { dialogVisible, toggleDialog } = useDialog();
 
@@ -90,12 +89,12 @@ const Question = () => {
     const targetRef = target;
     // 참고: https://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome/15694294#15694294
     if (typeof window !== undefined && targetRef.current) {
-      setTimeout(() => {
+      timer.current = setTimeout(() => {
         targetRef.current?.scrollIntoView({
           block: 'start',
           behavior: 'smooth',
         });
-      }, 0);
+      }, 100);
     }
   };
 
@@ -126,6 +125,12 @@ const Question = () => {
     } else {
       setMyselfQuestionValue(postRequestData.content);
     }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
   }, []);
 
   return (
