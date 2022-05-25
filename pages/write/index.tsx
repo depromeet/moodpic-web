@@ -4,12 +4,7 @@ import styled from 'styled-components';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import useDialog from '@/hooks/useDialog';
 import { progressStepStateAtom } from '@/store/progressStep/atom';
-import {
-  CommonAppBar,
-  CommonDialog,
-  CommonIconButton,
-  CommonProgress,
-} from '@/components/Common';
+import { CommonAppBar, CommonDialog, CommonIconButton, CommonProgress } from '@/components/Common';
 import PreEmotion from '@/components/PreEmotion/PreEmotion';
 import Question from '@/components/Question/Question';
 import CurrentEmotion from '@/components/CurrentEmotion/CurrentEmotion';
@@ -46,11 +41,7 @@ const Write = () => {
       return (
         <CommonAppBar>
           <CommonAppBar.Left>
-            <CommonIconButton
-              iconName="left"
-              alt="이전"
-              onClick={onClickGoBack}
-            />
+            <CommonIconButton iconName="left" alt="이전" onClick={onClickGoBack} />
           </CommonAppBar.Left>
         </CommonAppBar>
       );
@@ -61,11 +52,7 @@ const Write = () => {
     return (
       <CommonAppBar>
         <CommonAppBar.Left>
-          <CommonIconButton
-            iconName="left"
-            alt="이전"
-            onClick={onClickGoBack}
-          />
+          <CommonIconButton iconName="left" alt="이전" onClick={onClickGoBack} />
         </CommonAppBar.Left>
         <CommonAppBar.Right>
           <CancelText onClick={toggleDialog}>취소</CancelText>
@@ -85,9 +72,7 @@ const Write = () => {
   useEffect(() => {
     if (typeof window !== undefined) {
       router.beforePopState(() => {
-        const result = window.confirm(
-          '정말로 나가시겠습니까? 작성중인 기록은 삭제됩니다.',
-        );
+        const result = window.confirm('정말로 나가시겠습니까? 작성중인 기록은 삭제됩니다.');
         if (!result) {
           window.history.pushState('/write', '');
           router.push('/write');
@@ -123,11 +108,7 @@ const Write = () => {
       {progressStep === 3 && <CurrentEmotion />}
       {progressStep === 4 && <Complete />}
       {dialogVisible ? (
-        <CommonDialog
-          type="alert"
-          onClose={toggleDialog}
-          onConfirm={onClickGoHome}
-        >
+        <CommonDialog type="alert" onClose={toggleDialog} onConfirm={onClickGoHome}>
           <DialogCancel />
         </CommonDialog>
       ) : null}
@@ -138,7 +119,7 @@ const Write = () => {
 export default Write;
 
 export const ButtonWrapper = styled.div`
-  margin: auto 0 80px;
+  margin-top: auto;
 `;
 
 const CancelText = styled.div`
