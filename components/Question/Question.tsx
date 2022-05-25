@@ -88,16 +88,14 @@ const Question = () => {
 
   const scrollToTextAreaOffestTop = (target: RefObject<HTMLDivElement>) => () => {
     const targetRef = target;
+    // 참고: https://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome/15694294#15694294
     if (typeof window !== undefined && targetRef.current) {
-      window.scrollTo({
-        top: targetRef.current.offsetTop - HEADER_HEIGHT,
-        left: 0,
-        behavior: 'smooth',
-      });
-      // targetRef.current.scrollIntoView({
-      //   block: 'start',
-      //   behavior: 'smooth',
-      // });
+      setTimeout(() => {
+        targetRef.current?.scrollIntoView({
+          block: 'start',
+          behavior: 'smooth',
+        });
+      }, 0);
     }
   };
 
