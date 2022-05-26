@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
 import useBottomSheet from '@/hooks/useBottomSheet';
@@ -14,7 +14,9 @@ import { useTypeInput } from '@/hooks/useTypeInput';
 import {
   useDeleteFolderMutation,
   useDeletePostMutation,
+  usePostsByCategoryIdQuery,
   usePostsByFolderIdQuery,
+  usePostsQuery,
   useUpdateFolderMutation,
 } from '@/hooks/apis';
 import { ToastType } from '@/shared/type/common';
@@ -26,9 +28,13 @@ const PostListPage = () => {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [dialogType, setDialogType] = useState('');
   const [inputValue, onChangeInput] = useTypeInput('');
-  const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
+  const folderId = Number(router.query.folderId);
+  const categoryId = Number(router.query.categoryId);
 
-  const { data: postResponse } = usePostsByFolderIdQuery({ folderId });
+  const { data: postsByFolderId, refetch: fetchPostsByFolderId } = usePostsByFolderIdQuery({ folderId });
+  const { data: postsByCategoryId, refetch: fetchPostsByCategoryId } = usePostsByCategoryIdQuery({ categoryId });
+  const { data: posts, refetch: fetchPosts } = usePostsQuery();
+
   const updateFolderMutation = useUpdateFolderMutation();
   const deleteFolderMutation = useDeleteFolderMutation();
   const deletePostMutation = useDeletePostMutation();
@@ -37,7 +43,7 @@ const PostListPage = () => {
   const notify = useToast();
   const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } = useBottomSheet();
 
-  const bottomSheetItems = [
+  const categoryBottomSheetItems = [
     {
       label: '기록 선택하기',
       onClick: () => {
@@ -45,6 +51,9 @@ const PostListPage = () => {
         toggleSheet();
       },
     },
+  ];
+  const folderBottomSheetItems = [
+    ...categoryBottomSheetItems,
     {
       label: '폴더명 변경하기',
       onClick: () => {
@@ -63,14 +72,48 @@ const PostListPage = () => {
     },
   ];
 
+  useEffect(() => {
+    if (folderId) {
+      fetchPostsByFolderId();
+      return;
+    }
+
+    if (categoryId) {
+      fetchPostsByCategoryId();
+      return;
+    }
+
+    fetchPosts();
+  }, [fetchPosts, folderId, categoryId, fetchPostsByFolderId, fetchPostsByCategoryId]);
+
   const goToWritePage = () => router.push('/write');
 
   const onDelete = () => {
-    deleteFolderMutation.mutate(folderId);
+    deleteFolderMutation.mutate(folderId, {
+      onSuccess: () => {
+        notify({
+          type: ToastType.CONFIRM,
+          message: '폴더가 삭제되었습니다.',
+        });
+        toggleDialog();
+        router.replace('/');
+      },
+    });
   };
 
   const onEdit = () => {
-    updateFolderMutation.mutate({ id: folderId, folderName: inputValue });
+    updateFolderMutation.mutate(
+      { id: folderId, folderName: inputValue },
+      {
+        onSuccess: () => {
+          notify({
+            type: ToastType.CONFIRM,
+            message: '폴더이름이 변경되었습니다.',
+          });
+          toggleDialog();
+        },
+      },
+    );
   };
 
   const onDeletePosts = () => {
@@ -87,6 +130,14 @@ const PostListPage = () => {
   };
 
   const handleSubmit = () => setIsEditing(false);
+
+  const postResponse = folderId ? postsByFolderId : categoryId ? postsByCategoryId : posts;
+
+  const getBottomSheetItems = () => {
+    return folderId && postResponse?.folderName !== '미분류' ? folderBottomSheetItems : categoryBottomSheetItems;
+  };
+
+  const bottomSheetItems = getBottomSheetItems();
 
   if (!postResponse) return <div>404</div>;
 
@@ -107,7 +158,6 @@ const PostListPage = () => {
       </CommonAppBar>
       {postResponse?.posts?.length ? (
         <PostList
-          folderId={folderId}
           postList={postResponse.posts}
           isEditing={isEditing}
           checkedItems={checkedItems}
