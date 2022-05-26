@@ -7,10 +7,13 @@ export interface PostSimple extends Omit<Post, 'id'> {
 }
 
 const postService = {
-  getPosts: async (): Promise<Post[]> => {
+  getPosts: async (): Promise<PostListResponse> => {
     const { data } = await fetcher('get', '/api/v1/posts');
 
-    return data;
+    return {
+      posts: data,
+      totalCount: data.length,
+    };
   },
   getPostById: async (id: string): Promise<Post> => {
     const { data } = await fetcher('get', `/api/v1/posts/${id}`);
@@ -54,6 +57,17 @@ const postService = {
     const { data } = await fetcher('get', '/api/v1/posts/categories');
 
     return data;
+  },
+  getPostsByCategoryId: async ({ categoryId, page, size }: PostListRequest): Promise<PostListResponse> => {
+    const { data } = await fetcher('get', `/api/v1/posts/categories/${categoryId}?page=${page}&size=${size}`);
+
+    return {
+      posts: data.posts.map((post: PostSimple) => ({
+        ...post,
+        id: post.postId,
+      })),
+      totalCount: data.totalCount,
+    };
   },
 };
 

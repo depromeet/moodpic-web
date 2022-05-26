@@ -11,12 +11,13 @@ export interface Post {
 }
 
 export interface PostListRequest extends PageType {
-  folderId: number;
+  folderId?: number;
+  categoryId?: number;
 }
 
 export interface PostListResponse {
   posts: Post[];
-  folderName: string;
+  folderName?: string;
   totalCount: number;
 }
 
