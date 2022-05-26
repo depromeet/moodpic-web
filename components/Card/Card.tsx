@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { EMOTION_COLOR_TYPE } from '@/shared/constants/emotion';
-import { EmotionColorType } from '@/shared/constants/emotion';
+import { EMOTION_COLOR_TYPE } from '@/shared/constants/category';
+import { EmotionColorType } from '@/shared/constants/category';
 import { CardContainer, ImageContainer } from './Card.styles';
 
 export interface CardProps {

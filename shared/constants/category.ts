@@ -15,5 +15,4 @@ export const EMOTION_COLOR_TYPE: Dictionary<string> = {
   DONTKNOW: '#a6a6a6',
 } as const;
 
-export type EmotionColorType =
-  typeof EMOTION_COLOR_TYPE[keyof typeof EMOTION_COLOR_TYPE];
+export type EmotionColorType = typeof EMOTION_COLOR_TYPE[keyof typeof EMOTION_COLOR_TYPE];
