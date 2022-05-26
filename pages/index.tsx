@@ -8,11 +8,12 @@ import useDialog from '@/hooks/useDialog';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import {
   useCreateFolderMutation,
+  useDeleteFolderMutation,
   useFoldersQuery,
   useIncompletePostsQuery,
   usePostsByCategoryQuery,
+  useUpdateFolderMutation,
 } from '@/hooks/apis';
-import useToast from '@/hooks/useToast';
 import HomeBanner from '@/components/Home/Banner/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
@@ -22,6 +23,9 @@ import HomeFloatingButton from '@/components/Home/FloatingButton/FloatingButton'
 import { CommonDialog, CommonWritingButton } from '@/components/Common';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import CategoryFolderList from '@/components/Home/CategoryFolderList/CategoryFolderList';
+import DialogWarning from '@/components/Dialog/DialogWarning';
+import useToast from '@/hooks/useToast';
+import { ToastType } from '@/shared/type/common';
 
 const Home = () => {
   const router = useRouter();
@@ -33,9 +37,13 @@ const Home = () => {
   const { data: folderResponse, refetch: fetchFolders } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
   const { data: incompletePosts } = useIncompletePostsQuery();
+  const [currentTab, setCurrentTab] = useState<CurrentTabType>(HOME_TAB_TYPE.FOLDER);
+  const [dialogType, setDialogType] = useState('');
+  const [selectedFolderId, setSelectedFolderId] = useState(0);
   const notify = useToast();
   const createFolderMutation = useCreateFolderMutation();
-  const [currentTab, setCurrentTab] = useState<CurrentTabType>(HOME_TAB_TYPE.FOLDER);
+  const updateFolderMutation = useUpdateFolderMutation();
+  const deleteFolderMutation = useDeleteFolderMutation();
 
   const handleScroll = () => {
     setIsScrollOnTop(window.scrollY === 0);
@@ -67,19 +75,107 @@ const Home = () => {
     setTooltipState(true);
   };
 
-  const onAddFolder = () => {
+  const onAddDialog = () => {
+    setDialogType('add');
+    toggleDialog();
+  };
+
+  const onEdit = (id: number) => {
+    setDialogType('edit');
+    toggleDialog();
+    setSelectedFolderId(id);
+  };
+
+  const onDelete = (id: number) => {
+    setDialogType('delete');
+    toggleDialog();
+    setSelectedFolderId(id);
+  };
+
+  const createFolder = () => {
     createFolderMutation.mutate(inputValue, {
       onSuccess: () => {
+        notify({
+          type: ToastType.CONFIRM,
+          message: '폴더가 추가되었습니다.',
+        });
         setInputValue('');
         toggleDialog();
-        notify({ type: 'confirm', message: '폴더가 생성되었습니다.' });
-        fetchFolders();
       },
       onError: () => {
-        // TODO: 하드코딩된 에러메세지 수정 필요함.
-        notify({ type: 'error', message: '이미 존재하는 폴더명이에요.' });
+        notify({
+          type: ToastType.ERROR,
+          message: '이미 중복된 폴더명이에요.',
+        });
       },
     });
+  };
+
+  const editFolder = (id: number) => {
+    updateFolderMutation.mutate(
+      { id, folderName: inputValue },
+      {
+        onSuccess: () => {
+          notify({
+            type: ToastType.CONFIRM,
+            message: '폴더명이 변경되었습니다.',
+          });
+          setInputValue('');
+          toggleDialog();
+        },
+        onError: () => {
+          notify({
+            type: ToastType.ERROR,
+            message: '이미 중복된 폴더명이에요.',
+          });
+        },
+      },
+    );
+  };
+
+  const deleteFolder = (id: number) => {
+    deleteFolderMutation.mutate(id, {
+      onSuccess: () => {
+        notify({
+          type: ToastType.CONFIRM,
+          message: '폴더가 삭제되었습니다.',
+        });
+        toggleDialog();
+      },
+    });
+  };
+
+  const renderDialog = () => {
+    switch (dialogType) {
+      case 'add':
+        return (
+          <CommonDialog
+            type="modal"
+            onClose={toggleDialog}
+            disabledConfirm={inputValue === ''}
+            onConfirm={createFolder}
+          >
+            <DialogFolderForm value={inputValue} onChange={onChangeInput} />
+          </CommonDialog>
+        );
+      case 'edit':
+        return (
+          <CommonDialog
+            type="modal"
+            onClose={toggleDialog}
+            disabledConfirm={inputValue === ''}
+            onConfirm={() => editFolder(selectedFolderId)}
+          >
+            <DialogFolderForm isEditMode={true} value={inputValue} onChange={onChangeInput} />
+          </CommonDialog>
+        );
+      case 'delete':
+        return (
+          <CommonDialog type="alert" onClose={toggleDialog} onConfirm={() => deleteFolder(selectedFolderId)}>
+            <DialogWarning>폴더를 삭제하시겠습니까?</DialogWarning>
+          </CommonDialog>
+        );
+    }
   };
 
   return (
@@ -91,13 +187,15 @@ const Home = () => {
         isEditMode={isEditMode}
         toggleEditMode={() => setIsEditMode(!isEditMode)}
       />
-      <HomeTabs currentTab={currentTab} setCurrentTab={handleCurrentTab} onClick={toggleDialog} />
+      <HomeTabs currentTab={currentTab} setCurrentTab={handleCurrentTab} onClick={onAddDialog} />
       {currentTab === HOME_TAB_TYPE.FOLDER && folderResponse?.folders.length && (
         <FolderListContainer>
           <FolderList
             isEditMode={isEditMode}
             folderList={folderResponse.folders}
             supportsCollectedFolder={currentTab === HOME_TAB_TYPE.FOLDER}
+            onEdit={onEdit}
+            onDelete={onDelete}
           />
         </FolderListContainer>
       )}
@@ -107,13 +205,9 @@ const Home = () => {
         </FolderListContainer>
       )}
       <CommonWritingButton onClick={goToWritePage} />
-      {incompletePosts?.length && <HomeFloatingButton isScrollOnTop={isScrollOnTop} />}
+      {incompletePosts?.length !== 0 && <HomeFloatingButton isScrollOnTop={isScrollOnTop} />}
       {!isScrollOnTop && <CommonWritingButton onClick={goToWritePage} />}
-      {dialogVisible && (
-        <CommonDialog type="modal" onClose={toggleDialog} disabledConfirm={inputValue === ''} onConfirm={onAddFolder}>
-          <DialogFolderForm value={inputValue} onChange={onChangeInput} />
-        </CommonDialog>
-      )}
+      {dialogVisible && renderDialog()}
     </>
   );
 };
