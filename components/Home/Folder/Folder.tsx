@@ -1,4 +1,4 @@
-import React, { HtmlHTMLAttributes } from 'react';
+import React, { HtmlHTMLAttributes, MouseEvent } from 'react';
 import Image from 'next/image';
 import {
   FolderContainer,
@@ -14,26 +14,56 @@ import TrashIcon from 'public/svgs/trash.svg';
 import EditFolderIcon from 'public/svgs/editfolder.svg';
 
 export interface FolderProps extends HtmlHTMLAttributes<HTMLDivElement> {
+  folderId: number;
   folderName: string;
   count: number;
   coverImage: string;
   isEditMode?: boolean;
   supportsMultipleLayout?: boolean;
   onClick: () => void;
+  onEdit?: (id: number) => void;
+  onDelete?: (id: number) => void;
 }
 
-const Folder = ({ count, folderName, coverImage, isEditMode = false, onClick }: FolderProps): React.ReactElement => {
+const Folder = ({
+  folderId,
+  count,
+  folderName,
+  coverImage,
+  isEditMode = false,
+  onClick,
+  onEdit,
+  onDelete,
+}: FolderProps): React.ReactElement => {
+  const handleDelete = (e: MouseEvent<HTMLSpanElement>) => {
+    if (!onDelete) return;
+    e.stopPropagation();
+
+    onDelete(folderId);
+  };
+
+  const handleEdit = (e: MouseEvent<HTMLSpanElement>) => {
+    if (!onEdit) return;
+
+    e.stopPropagation();
+    onEdit(folderId);
+  };
+
   const renderDeleteButton = () => {
+    if (!onDelete) return;
+
     return (
-      <DeleteButton onClick={() => console.log('delete')}>
-        <Image src={TrashIcon} alt="삭제" width={24} height={24} />
+      <DeleteButton onClick={handleDelete}>
+        <Image src={TrashIcon} alt="삭제" width={32} height={32} />
       </DeleteButton>
     );
   };
 
   const renderEditButton = () => {
+    if (!onEdit) return;
+
     return (
-      <EditButton onClick={() => console.log('edit')}>
+      <EditButton onClick={handleEdit}>
         <Image src={EditFolderIcon} alt="편집" width={24} height={24} />
       </EditButton>
     );
@@ -41,12 +71,7 @@ const Folder = ({ count, folderName, coverImage, isEditMode = false, onClick }: 
 
   return (
     <FolderContainer>
-      <BoxContainer onClick={onClick}>
-        {count === 0 ? (
-          <Image src={EmptyImage} alt="기록이 없어요" layout="fill" objectFit="cover" />
-        ) : (
-          <Image src={coverImage || EmptyImage} alt={folderName} layout="fill" objectFit="cover" />
-        )}
+      <BoxContainer onClick={onClick} backgroundImage={count !== 0 ? coverImage : ''}>
         {isEditMode && renderDeleteButton()}
       </BoxContainer>
       <CaptionContainer>
