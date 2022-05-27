@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
+import { AxiosError } from 'axios';
 import styled from 'styled-components';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
 import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
@@ -123,10 +124,11 @@ const Home = () => {
           setInputValue('');
           toggleDialog();
         },
-        onError: () => {
+        onError: (error) => {
+          // TODO: type assertion 제거 및 error 관련 type 정의 추가
           notify({
             type: ToastType.ERROR,
-            message: '이미 중복된 폴더명이에요.',
+            message: (error as AxiosError).response?.data.msg,
           });
         },
       },
