@@ -8,9 +8,11 @@ import theme from '@/styles/theme';
 
 export interface BannerProps {
   nickname: string;
+  title: string;
+  background: string;
 }
 
-const Banner = ({ nickname }: BannerProps): React.ReactElement => {
+const Banner = ({ nickname, title, background }: BannerProps): React.ReactElement => {
   const router = useRouter();
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
 
@@ -19,28 +21,60 @@ const Banner = ({ nickname }: BannerProps): React.ReactElement => {
     setTooltipState(true);
   };
 
+  const bannerTitleHTML = `${nickname}${title}`;
+
   return (
     <BannerContainer>
-      <BannerTitle>
-        {nickname}님, 오늘의 감정을 <br />
-        풀어보는 시간을 가져봐요.
-      </BannerTitle>
-      <CommonButton onClick={goToWritePage}>감정 기록하기 ✍🏻</CommonButton>
+      <BannerImage background={background} />
+      <BannerContents>
+        <BannerTitle dangerouslySetInnerHTML={{ __html: bannerTitleHTML }}></BannerTitle>
+        <CommonButton onClick={goToWritePage}>감정 기록하기 ✍🏻</CommonButton>
+      </BannerContents>
     </BannerContainer>
   );
 };
 
 const BannerContainer = styled.section`
-  margin: 0 -18px;
-  padding: 44px 18px 24px;
-  // TODO: 그래픽으로 변경될 예정
-  background-color: ${theme.colors.gray1};
+  position: relative;
+  height: 24.8rem;
+  margin-right: -1.8rem;
+  margin-left: -1.8rem;
+  padding: 4.4rem 1.8rem 2.4rem;
 `;
 
-const BannerTitle = styled.h2`
+const BannerImage = styled.div<{ background: string }>`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 33.6rem;
+  background-image: url(${(props) => props.background});
+  background-size: 100% 33.6rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #121212 42.71%, rgba(18, 18, 18, 0) 100%);
+  }
+`;
+
+const BannerContents = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 33.6rem;
+  padding: 13.2rem 1.8rem 2.4rem;
+`;
+
+const BannerTitle = styled.div`
   ${theme.fonts.subtitle1};
   color: ${theme.colors.white};
-  margin-bottom: 54px;
+  margin-bottom: 5.4rem;
+  white-space: pre-wrap;
 `;
 
 export default Banner;
