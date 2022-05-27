@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
 import { AxiosError } from 'axios';
 import styled from 'styled-components';
-import { tooltipStateAtom } from '@/store/tooltip/atom';
 import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
 import useDialog from '@/hooks/useDialog';
 import { useTypeInput } from '@/hooks/useTypeInput';
@@ -11,33 +8,34 @@ import {
   useCreateFolderMutation,
   useDeleteFolderMutation,
   useFoldersQuery,
-  useIncompletePostsQuery,
+  useIncompletedPostsQuery,
   usePostsByCategoryQuery,
   useUpdateFolderMutation,
 } from '@/hooks/apis';
+import { useRandomBanner } from '@/hooks/useRandomBanner';
 import HomeBanner from '@/components/Home/Banner/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
 import HomeHeader from '@/components/Home/Header/Header';
 import FolderList from '@/components/Home/FolderList/FolderList';
-import HomeFloatingButton from '@/components/Home/FloatingButton/FloatingButton';
-import { CommonDialog, CommonWritingButton } from '@/components/Common';
+import { CommonDialog } from '@/components/Common';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import CategoryFolderList from '@/components/Home/CategoryFolderList/CategoryFolderList';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import useToast from '@/hooks/useToast';
 import { ToastType } from '@/shared/type/common';
+import FloatingButtonGroup from '@/components/Home/FloatingButtonGroup/FloatingButtonGroup';
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 const Home = () => {
-  const router = useRouter();
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [isScrollOnTop, setIsScrollOnTop] = useState<boolean>(true);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const isMounted = useIsMounted();
   const { dialogVisible, toggleDialog } = useDialog();
   const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
-  const setTooltipState = useSetRecoilState(tooltipStateAtom);
+  const { randomTitle, randomImageSource } = useRandomBanner();
   const { data: folderResponse, refetch: fetchFolders } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
-  const { data: incompletePosts } = useIncompletePostsQuery();
+  const { data: incompletedPosts } = useIncompletedPostsQuery();
   const [currentTab, setCurrentTab] = useState<CurrentTabType>(HOME_TAB_TYPE.FOLDER);
   const [dialogType, setDialogType] = useState('');
   const [selectedFolderId, setSelectedFolderId] = useState(0);
@@ -45,18 +43,6 @@ const Home = () => {
   const createFolderMutation = useCreateFolderMutation();
   const updateFolderMutation = useUpdateFolderMutation();
   const deleteFolderMutation = useDeleteFolderMutation();
-
-  const handleScroll = () => {
-    setIsScrollOnTop(window.scrollY === 0);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  });
 
   useEffect(() => {
     if (currentTab === HOME_TAB_TYPE.EMOTION) {
@@ -70,11 +56,6 @@ const Home = () => {
   }, [currentTab, fetchPosts, fetchFolders]);
 
   const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
-
-  const goToWritePage = () => {
-    router.push('/write');
-    setTooltipState(true);
-  };
 
   const onAddDialog = () => {
     setDialogType('add');
@@ -182,8 +163,8 @@ const Home = () => {
 
   return (
     <>
-      <HomeHeader isScrollOnTop={isScrollOnTop} />
-      <HomeBanner nickname="홍길동" />
+      <HomeHeader />
+      {isMounted() && <HomeBanner nickname="홍길동" title={randomTitle} background={randomImageSource} />}
       <HomeTabHeader
         currentTab={currentTab}
         isEditMode={isEditMode}
@@ -206,10 +187,8 @@ const Home = () => {
           <CategoryFolderList list={postResponse} />
         </FolderListContainer>
       )}
-      <CommonWritingButton onClick={goToWritePage} />
-      {incompletePosts?.length !== 0 && <HomeFloatingButton isScrollOnTop={isScrollOnTop} />}
-      {!isScrollOnTop && <CommonWritingButton onClick={goToWritePage} />}
-      {dialogVisible && renderDialog()}
+      <FloatingButtonGroup hasIncompletedPosts={!!incompletedPosts?.length} />
+      {dialogVisible && renderDialog}
     </>
   );
 };
