@@ -9,8 +9,8 @@ import { PAGE_SIZE } from '@/shared/constants/common';
 const usePostsQuery = (): UseQueryResult<PostListResponse, AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS, postService.getPosts, { enabled: false });
 
-const useIncompletePostsQuery = (): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_POSTS, postService.getIncompletePosts);
+const useIncompletedPostsQuery = (): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS, postService.getIncompletedPosts);
 
 const usePostQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS, () => postService.getPostById(id));
@@ -44,7 +44,7 @@ const usePostsByCategoryIdQuery = ({
 
 export {
   usePostsQuery,
-  useIncompletePostsQuery,
+  useIncompletedPostsQuery,
   usePostQuery,
   useAllPostsQuery,
   usePostsByCategoryQuery,

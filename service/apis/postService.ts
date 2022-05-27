@@ -20,7 +20,7 @@ const postService = {
 
     return data;
   },
-  getIncompletePosts: async (): Promise<Post[]> => {
+  getIncompletedPosts: async (): Promise<Post[]> => {
     const { data } = await fetcher('get', '/api/v1/posts/temp');
 
     return data;
