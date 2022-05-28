@@ -98,10 +98,12 @@ const PostDetail = () => {
         <CommonAppBar.Left>
           <CommonIconButton iconName="left" onClick={() => router.back()} />
         </CommonAppBar.Left>
-        <CommonAppBar.Right>
-          <CommonIconButton iconName="share" />
-          <CommonIconButton iconName="more" onClick={toggleSheet} />
-        </CommonAppBar.Right>
+        {post.my && (
+          <CommonAppBar.Right>
+            <CommonIconButton iconName="share" />
+            <CommonIconButton iconName="more" onClick={toggleSheet} />
+          </CommonAppBar.Right>
+        )}
       </CommonAppBar>
       <PostDetailContainer>
         <TagContainer>

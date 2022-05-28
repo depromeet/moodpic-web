@@ -8,6 +8,7 @@ export interface Post {
   content: string;
   views: number;
   disclosure: boolean;
+  my: boolean;
   folderId?: number;
   createdAt: string;
 }
@@ -19,6 +20,7 @@ export interface PostListRequest extends PageType {
 
 export interface PostListResponse {
   posts: Post[];
+  categoryName?: string;
   folderName?: string;
   totalCount: number;
 }

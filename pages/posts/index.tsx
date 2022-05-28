@@ -146,7 +146,7 @@ const PostListPage = () => {
       <CommonAppBar>
         <CommonAppBar.Left>
           <CommonIconButton iconName="left" alt="이전" onClick={() => router.back()} />
-          <HeaderTitle>{postResponse.folderName}</HeaderTitle>
+          <HeaderTitle>{postResponse.folderName || postResponse.categoryName}</HeaderTitle>
         </CommonAppBar.Left>
         <CommonAppBar.Right>
           {isEditing ? (
@@ -156,7 +156,7 @@ const PostListPage = () => {
           )}
         </CommonAppBar.Right>
       </CommonAppBar>
-      {postResponse?.posts?.length ? (
+      {postResponse?.totalCount ? (
         <PostList
           postList={postResponse.posts}
           isEditing={isEditing}

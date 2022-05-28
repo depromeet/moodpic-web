@@ -10,10 +10,7 @@ const postService = {
   getPosts: async (): Promise<PostListResponse> => {
     const { data } = await fetcher('get', '/api/v1/posts');
 
-    return {
-      posts: data,
-      totalCount: data.length,
-    };
+    return data;
   },
   getPostById: async (id: string): Promise<Post> => {
     const { data } = await fetcher('get', `/api/v1/posts/${id}`);
@@ -51,12 +48,11 @@ const postService = {
     const { data } = await fetcher('get', `/api/v1/folders/posts/${folderId}?page=${page}&size=${size}`);
 
     return {
+      ...data,
       posts: data.posts.map((post: PostSimple) => ({
         ...post,
         id: post.postId,
       })),
-      totalCount: data.totalCount,
-      folderName: data.folderName,
     };
   },
   deletePostById: async (ids: string[]): Promise<PostListResponse> => {
@@ -74,11 +70,11 @@ const postService = {
     const { data } = await fetcher('get', `/api/v1/posts/categories/${categoryId}?page=${page}&size=${size}`);
 
     return {
+      ...data,
       posts: data.posts.map((post: PostSimple) => ({
         ...post,
         id: post.postId,
       })),
-      totalCount: data.totalCount,
     };
   },
 };
