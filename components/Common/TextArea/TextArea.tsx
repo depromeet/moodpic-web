@@ -1,39 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, ForwardedRef } from 'react';
 import { Textarea } from './TextArea.styles';
 
-export type TextAreaAttributes = Pick<
-  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-  | 'onChange'
-  | 'onBlur'
-  | 'onClick'
-  | 'onFocus'
-  | 'maxLength'
-  | 'minLength'
-  | 'placeholder'
-  | 'readOnly'
-  | 'disabled'
-  | 'defaultValue'
->;
-
-export type TextAreaProps = {
+export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   value: string;
   height?: string;
   borderRadius?: string;
-} & TextAreaAttributes;
+}
 
-const TextArea = ({
-  value,
-  onFocus,
-  onBlur,
-  height = '40rem',
-  borderRadius = '1.6rem',
-  ...restTextAreaProps
-}: TextAreaProps) => {
+const TextArea = (
+  { value, onFocus, onBlur, height = '40rem', borderRadius = '1.6rem', ...restTextAreaProps }: TextAreaProps,
+  ref: ForwardedRef<HTMLTextAreaElement>,
+) => {
   // 추후에 포커스 될 때를 위해 추가
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <Textarea
+      ref={ref}
       value={value}
       borderRadius={borderRadius}
       height={height}
@@ -50,4 +33,4 @@ const TextArea = ({
   );
 };
 
-export default TextArea;
+export default forwardRef(TextArea);

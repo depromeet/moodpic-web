@@ -119,6 +119,8 @@ const Write = () => {
 export default Write;
 
 export const ButtonWrapper = styled.div`
+  position: sticky;
+  bottom: 0;
   margin-top: auto;
 `;
 
