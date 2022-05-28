@@ -33,7 +33,7 @@ const Home = () => {
   const { dialogVisible, toggleDialog } = useDialog();
   const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
   const { randomImageSource } = useRandomBanner();
-  const { data: folderResponse, refetch: fetchFolders } = useFoldersQuery();
+  const { data: folderResponse } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
   const { data: incompletedPosts } = useIncompletedPostsQuery();
   const [currentTab, setCurrentTab] = useState<CurrentTabType>(HOME_TAB_TYPE.FOLDER);
@@ -69,11 +69,7 @@ const Home = () => {
       setIsEditMode(false);
       fetchPosts();
     }
-
-    if (currentTab === HOME_TAB_TYPE.FOLDER) {
-      fetchFolders();
-    }
-  }, [currentTab, fetchPosts, fetchFolders]);
+  }, [currentTab, fetchPosts]);
 
   const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
 
