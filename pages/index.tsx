@@ -29,6 +29,9 @@ import { useTypeInput } from '@/hooks/useTypeInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
 import TextArea from '@/components/Common/TextArea/TextArea';
 import { CommonDialog } from '@/components/Common';
+import Asd from 'public/svgs/Union-7.svg';
+import styled from 'styled-components';
+import SvgTest from '@/components/SvgTest';
 
 const questionList = ['왜 그렇게 생각했나요?', '두번째 질문 영역', '세번째 질문 영역'];
 
@@ -131,9 +134,13 @@ const Question = () => {
   }, []);
 
   const resizeHandler = () => {
-    const height = window.visualViewport.height;
+    // const height = window.visualViewport.height;
+    const height = window.document.body.clientHeight;
     const viewport = window.visualViewport;
+
     if (buttonRef.current) {
+      console.log('height', height);
+      console.log('viewport.height', viewport.height);
       buttonRef.current.style.bottom = `${height - viewport.height}px`;
     }
   };
@@ -168,6 +175,10 @@ const Question = () => {
 
   return (
     <>
+      <SvgTest />
+      {/* <Icon>
+        <Image src={Asd} />
+      </Icon> */}
       <ButtonContainer>
         <div>
           <Button
@@ -288,3 +299,9 @@ const Question = () => {
 };
 
 export default Question;
+
+const Icon = styled.div`
+  & > path {
+    filter: #ffec3e !important;
+  }
+`;
