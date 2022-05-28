@@ -1,6 +1,8 @@
 import { LocalStorageKey } from '../type/localStorage';
 
 export const getLocalStorageValue = (key: LocalStorageKey) => {
+  if (typeof window === 'undefined') return;
+
   const value = window.localStorage.getItem(key);
 
   if (!value) return null;
