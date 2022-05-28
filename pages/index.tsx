@@ -188,7 +188,7 @@ const Home = () => {
         </FolderListContainer>
       )}
       <FloatingButtonGroup hasIncompletedPosts={!!incompletedPosts?.length} />
-      {dialogVisible && renderDialog}
+      {dialogVisible && renderDialog()}
     </>
   );
 };
