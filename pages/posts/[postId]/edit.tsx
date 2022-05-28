@@ -115,8 +115,8 @@ const PostDetail = () => {
 
   useEffect(() => {
     if (post) {
-      const { firstCategory, secondCategory, content, tags, disclosure } = post;
-      setSelectedState({ firstCategory, secondCategory, content, tags, disclosure });
+      const { firstCategory, secondCategory, content, tags, disclosure, folderId } = post;
+      setSelectedState({ firstCategory, secondCategory, content, tags, disclosure, folderId });
       setTagList(post?.tags);
 
       const contents = post.content.split(CONTENT_SEPARATOR);
@@ -130,7 +130,7 @@ const PostDetail = () => {
 
       setFirstContent(post.content);
     }
-  }, [post, hasMultipleContent, setFirstContent, setSecondContent, setSelectedState, setThirdContent]);
+  }, [post, hasMultipleContent, setFirstContent, setSecondContent, setSelectedState, setThirdContent, setTagList]);
 
   // TODO: 오류 페이지 이후 작업 요청해서 바꾸기..
   if (!post || !postId) return <div>404</div>;
