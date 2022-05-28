@@ -23,5 +23,6 @@ Default.args = {
     disclosure: true,
     createdAt: '날짜',
     tags: ['5조', '작업하는 중..'],
+    my: false,
   },
 };
