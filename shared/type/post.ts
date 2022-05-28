@@ -8,6 +8,7 @@ export interface Post {
   content: string;
   views: number;
   disclosure: boolean;
+  folderId?: number;
   createdAt: string;
 }
 
