@@ -51,7 +51,7 @@ import FolderPlus from 'public/svgs/folderplus.svg';
 
 const PostDetail = () => {
   const router = useRouter();
-  const { postId } = router.query;
+  const postId = router.query.postId as string;
 
   const { tagList, tagValue, setTagList, onChangeTagValue, onDeleteTag, onKeyPressEnter, onClickRightSideIcon } =
     useTags();
@@ -65,7 +65,7 @@ const PostDetail = () => {
   const { dialogVisible, toggleDialog } = useDialog();
 
   const { data: folderListData } = useFoldersQuery();
-  const { data: post } = usePostByIdQuery(postId as string);
+  const { data: post, refetch: fetchPostById } = usePostByIdQuery(postId);
   const { data: categories } = useCategoryListQuery();
   const { mutate: createFolder } = useCreateFolderMutation();
   const { mutate: updatePost } = useUpdatePostMutation();
@@ -104,7 +104,7 @@ const PostDetail = () => {
     };
 
     updatePost(
-      { id: postId as string, postData: { ...updatedForm, folderId: selectedState.folderId || 0 } },
+      { id: postId, postData: { ...updatedForm, folderId: selectedState.folderId || 0 } },
       {
         onSuccess: () => {
           router.push(`/posts/${postId}`);
@@ -112,6 +112,12 @@ const PostDetail = () => {
       },
     );
   };
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    fetchPostById();
+  }, [router.isReady, postId, fetchPostById]);
 
   useEffect(() => {
     if (post) {
