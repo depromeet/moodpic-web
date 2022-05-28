@@ -179,10 +179,7 @@ const PostListPage = () => {
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
-          BottomSheetHeight={calcBottomSheetHeight({
-            folderSize: bottomSheetItems.length,
-            hasHeader: false,
-          })}
+          BottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
         >
           <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>
