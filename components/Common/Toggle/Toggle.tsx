@@ -1,11 +1,5 @@
 import React, { ChangeEventHandler } from 'react';
-import {
-  ToggleWrapper,
-  Trigger,
-  Icon,
-  IconWrapper,
-  ToggleText,
-} from './Toggle.styles';
+import { ToggleWrapper, Trigger, Icon, IconWrapper, ToggleText } from './Toggle.styles';
 
 export interface ToggleProps {
   checked: boolean;
