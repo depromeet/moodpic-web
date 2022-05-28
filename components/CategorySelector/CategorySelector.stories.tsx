@@ -5,7 +5,7 @@ import CategorySelectorComponent, { CategorySelectorProps } from './CategorySele
 
 export default {
   component: CategorySelectorComponent,
-  title: 'Card',
+  title: 'CategorySelector',
 } as Meta;
 
 const Template: Story<CategorySelectorProps> = (args) => <CategorySelectorComponent {...args} />;
