@@ -7,6 +7,7 @@ export interface Post {
   secondCategory: string;
   content: string;
   views: number;
+  disclosure: boolean;
   createdAt: string;
 }
 
