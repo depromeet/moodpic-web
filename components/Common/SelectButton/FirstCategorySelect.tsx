@@ -5,18 +5,45 @@ import { postRequestState } from '@/store/postResponse/atom';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
 import { useFirstCategoryQuery } from '@/hooks/apis/post/useFirstCategoryQuery';
+import ANXIOUS from '@/components/Figure/ANXIOUS';
+import LETHARGY from '@/components/Figure/LETHARGY';
+import DISAPPOINTMENT from '@/components/Figure/DISAPPOINTMENT';
+import SADNESS from '@/components/Figure/SADNESS';
+import REGRET from '@/components/Figure/REGRET';
+import IRRITATION from '@/components/Figure/IRRITATION';
+import DONTKNOW from '@/components/Figure/DONTKNOW';
 
 interface SelectButtonProps {
   title?: string;
 }
 
 const FirstCategorySelect = ({ title }: SelectButtonProps) => {
-  const [selectedFirstCategory, setFirstCategory] =
-    useRecoilState(postRequestState);
+  const [selectedFirstCategory, setFirstCategory] = useRecoilState(postRequestState);
   const { data: firstCategory } = useFirstCategoryQuery();
 
   const onChangeFirstCategoryValue = (categoryName: string) => () => {
     setFirstCategory({ ...selectedFirstCategory, firstCategory: categoryName });
+  };
+
+  const renderFirstCategoryFigure = (categoryName: string) => {
+    switch (categoryName) {
+      case 'LETHARGY':
+        return <LETHARGY checked={selectedFirstCategory.firstCategory === categoryName} />;
+      case 'DISAPPOINTMENT':
+        return <DISAPPOINTMENT checked={selectedFirstCategory.firstCategory === categoryName} />;
+      case 'SADNESS':
+        return <SADNESS checked={selectedFirstCategory.firstCategory === categoryName} />;
+      case 'REGRET':
+        return <REGRET checked={selectedFirstCategory.firstCategory === categoryName} />;
+      case 'IRRITATION':
+        return <IRRITATION checked={selectedFirstCategory.firstCategory === categoryName} />;
+      case 'ANXIOUS':
+        return <ANXIOUS checked={selectedFirstCategory.firstCategory === categoryName} />;
+      case 'DONTKNOW':
+        return <DONTKNOW checked={selectedFirstCategory.firstCategory === categoryName} />;
+      default:
+        return <LETHARGY checked={selectedFirstCategory.firstCategory === categoryName} />;
+    }
   };
 
   if (!firstCategory) return null;
@@ -34,6 +61,7 @@ const FirstCategorySelect = ({ title }: SelectButtonProps) => {
               checked={selectedFirstCategory.firstCategory === categoryName}
             />
             <ButtonWrapper>
+              {renderFirstCategoryFigure(categoryName)}
               <span>{description}</span>
             </ButtonWrapper>
           </label>
