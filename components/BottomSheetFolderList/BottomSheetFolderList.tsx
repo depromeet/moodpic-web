@@ -4,7 +4,7 @@ import CheckCirclePr from 'public/svgs/CheckCirclePr.svg';
 import { BottomSheetFolderListWrap } from './BottomSheetFolderList.styles';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { postRequestState } from '@/store/postResponse/atom';
+import { isDefaultFolderSelectedState, postRequestState } from '@/store/postResponse/atom';
 import { Folder } from '@/shared/type/folder';
 
 interface BottomSheetFolderListProps {
@@ -12,25 +12,32 @@ interface BottomSheetFolderListProps {
   onClose: () => void;
 }
 
-const BottomSheetFolderList = ({
-  folderData,
-  onClose,
-}: BottomSheetFolderListProps) => {
+const BottomSheetFolderList = ({ folderData, onClose }: BottomSheetFolderListProps) => {
   const [selectedFolder, setSelectFolder] = useRecoilState(postRequestState);
+  const [isDefaultFolderSelected, setIsDefaultFolderSelected] = useRecoilState(isDefaultFolderSelectedState);
+
   const closeFolerList = (selectedForderId: number) => () => {
-    setSelectFolder({ ...selectedFolder, folderId: selectedForderId });
+    setSelectFolder((prev) => ({ ...prev, folderId: selectedForderId }));
+    setIsDefaultFolderSelected(true);
     onClose();
+  };
+
+  const renderDefaultFolderOrSelectedFolder = (folderId: number, isDefaultFolder: boolean) => {
+    if (isDefaultFolder && !isDefaultFolderSelected) {
+      // 이 부분 지우면 warning 없어짐
+      if (!selectedFolder.folderId) {
+        setSelectFolder((prev) => ({ ...prev, folderId }));
+      }
+      return <Image src={CheckCirclePr} alt="CheckCirclePr" />;
+    } else if (folderId === selectedFolder.folderId && isDefaultFolderSelected)
+      return <Image src={CheckCirclePr} alt="CheckCirclePr" />;
   };
 
   return (
     <BottomSheetFolderListWrap>
-      {folderData.map(({ folderId, folderName }) => (
+      {folderData.map(({ folderId, folderName, default: isDefaultFolder }) => (
         <FolderListItemWrap key={folderId} onClick={closeFolerList(folderId)}>
-          <IconWrap>
-            {folderId === selectedFolder.folderId && (
-              <Image src={CheckCirclePr} alt="CheckCirclePr" />
-            )}
-          </IconWrap>
+          <IconWrap>{renderDefaultFolderOrSelectedFolder(folderId, isDefaultFolder)}</IconWrap>
           {folderName}
         </FolderListItemWrap>
       ))}

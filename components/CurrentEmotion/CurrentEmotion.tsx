@@ -2,11 +2,15 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
+import { useQuery } from 'react-query';
+import { useCreatePostMutation } from '@/hooks/apis/post/usePostMutation';
+import folderService from '@/service/apis/folderService';
 import { postRequestState } from '@/store/postResponse/atom';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import useDialog from '@/hooks/useDialog';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import { useCreateFolderMutation, useFoldersQuery } from '@/hooks/apis';
+import { useCreateFolderMutation } from '@/hooks/apis';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
 
 import { ButtonWrapper } from '@/pages/write';
 import Button from '../Common/Button/Button';
@@ -32,18 +36,17 @@ import {
   Divider,
   CustomImage,
 } from './CurrentEmotion.styles';
-import { useCreatePostMutation } from '@/hooks/apis/post/usePostMutation';
 
 const MAX_TAG_LIST_LENGTH = 5;
 
 const CurrentEmotion = () => {
-  const [isDisclose, setDisclose] = useState(true);
+  const [isDisclose, setDisclose] = useState(false);
   const [tagList, setTagList] = useState<string[]>([]);
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
   const [inputValue, onChangeInput] = useTypeInput('');
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
-  const { data: folderListData } = useFoldersQuery();
+  const { data: folderListData } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
   const { mutate: createFolder } = useCreateFolderMutation();
   const { mutate: createPost } = useCreatePostMutation();
   const [selectedState, setSelectState] = useRecoilState(postRequestState);
@@ -98,8 +101,6 @@ const CurrentEmotion = () => {
   useLayoutEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-
-  if (!folderListData) return <></>;
 
   return (
     <>
@@ -167,7 +168,7 @@ const CurrentEmotion = () => {
           <DialogFolderForm value={inputValue} onChange={onChangeInput} />
         </CommonDialog>
       )}
-      {isVisibleSheet ? (
+      {isVisibleSheet && folderListData ? (
         <CommonBottomSheetContainer
           onClose={toggleSheet}
           BottomSheetHeight={calcBottomSheetHeight({

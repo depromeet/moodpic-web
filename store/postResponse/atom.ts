@@ -12,3 +12,8 @@ export const postRequestState = atom<PostResponseType>({
     folderId: undefined,
   },
 });
+
+export const isDefaultFolderSelectedState = atom<boolean>({
+  key: 'isDefaultFolderSelected',
+  default: false,
+});
