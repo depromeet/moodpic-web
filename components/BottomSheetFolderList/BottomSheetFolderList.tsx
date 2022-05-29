@@ -24,10 +24,6 @@ const BottomSheetFolderList = ({ folderData, onClose }: BottomSheetFolderListPro
 
   const renderDefaultFolderOrSelectedFolder = (folderId: number, isDefaultFolder: boolean) => {
     if (isDefaultFolder && !isDefaultFolderSelected) {
-      // 이 부분 지우면 warning 없어짐
-      if (!selectedFolder.folderId) {
-        setSelectFolder((prev) => ({ ...prev, folderId }));
-      }
       return <Image src={CheckCirclePr} alt="CheckCirclePr" />;
     } else if (folderId === selectedFolder.folderId && isDefaultFolderSelected)
       return <Image src={CheckCirclePr} alt="CheckCirclePr" />;

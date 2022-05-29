@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
@@ -47,6 +47,9 @@ const CurrentEmotion = () => {
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const { data: folderListData } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
+  const { data: defaultFolder } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders, {
+    select: (data) => data.folders.filter(({ default: isDefaultFolder }) => isDefaultFolder)[0].folderId,
+  });
   const { mutate: createFolder } = useCreateFolderMutation();
   const { mutate: createPost } = useCreatePostMutation();
   const [selectedState, setSelectState] = useRecoilState(postRequestState);
@@ -101,6 +104,12 @@ const CurrentEmotion = () => {
   useLayoutEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  useEffect(() => {
+    if (defaultFolder && !isNaN(defaultFolder)) {
+      setSelectState((prev) => ({ ...prev, folderId: defaultFolder }));
+    }
+  }, [defaultFolder, setSelectState]);
 
   return (
     <>
