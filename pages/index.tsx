@@ -180,7 +180,7 @@ const Home = () => {
   return (
     <>
       <HomeHeader />
-      {isMounted() && <HomeBanner title={randomTitleCases[randomTitleIndex]} background={randomImageSource} />}
+      {isMounted && <HomeBanner title={randomTitleCases[randomTitleIndex]} background={randomImageSource} />}
       <HomeTabHeader
         currentTab={currentTab}
         isEditMode={isEditMode}
