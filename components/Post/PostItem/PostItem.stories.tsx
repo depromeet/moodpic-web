@@ -16,7 +16,9 @@ Default.args = {
   post: {
     id: '1',
     firstCategory: '모르겠어요',
+    firstCategoryName: 'JOY',
     secondCategory: '기쁨',
+    secondCategoryName: 'JOY',
     content:
       '안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.',
     views: 10,
