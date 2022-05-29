@@ -30,7 +30,7 @@ import {
 import { useTypeInput } from '@/hooks/useTypeInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
 
-const questionList = ['왜 그렇게 생각했나요?', '두번째 질문 영역', '세번째 질문 영역'];
+const questionList = ['어떤 일이 있었나요?', '그 때 어떤 감정이 들었나요?', '스스로에게 한마디를 쓴다면?'];
 
 const HEADER_HEIGHT = 50;
 
