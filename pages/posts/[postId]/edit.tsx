@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
 import Image from 'next/image';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { postRequestState } from '@/store/postResponse/atom';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import {
@@ -30,6 +28,7 @@ import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/
 import {} from '@/components/Common';
 import CategorySelector from '@/components/CategorySelector/CategorySelector';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
+import BottomSheetCategoryList from '@/components/BottomSheetCategoryList/BottomSheetCategoryList';
 import {
   PostDetailContainer,
   Description,
@@ -48,18 +47,21 @@ import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import Whiteadd from 'public/svgs/whiteadd.svg';
 import FolderIcon from 'public/svgs/folder.svg';
 import FolderPlus from 'public/svgs/folderplus.svg';
+import usePostEditForm from '@/hooks/post/usePostEditForm';
 
 const PostDetail = () => {
   const router = useRouter();
   const postId = router.query.postId as string;
+  const secondCategory = router.query.secondCategory as string;
 
+  const { selectedState, setSelectedState, hasMultipleContent, changePostForm, handleCategoryClick } =
+    usePostEditForm();
   const { tagList, tagValue, setTagList, onChangeTagValue, onDeleteTag, onKeyPressEnter, onClickRightSideIcon } =
     useTags();
   const [firstContent, onChangeFirstContent, setFirstContent] = useTypeInput('');
   const [secondContent, onChangeSecondContent, setSecondContent] = useTypeInput('');
   const [thirdContent, onChangeThirdContent, setThirdContent] = useTypeInput('');
   const [folderName, onChangeFolderName] = useTypeInput('');
-  const [selectedState, setSelectedState] = useRecoilState(postRequestState);
 
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const { dialogVisible, toggleDialog } = useDialog();
@@ -83,17 +85,9 @@ const PostDetail = () => {
         .flat()
         .map((category) => ({ id: category.categoryName, label: category.description }))
     : [];
-  const hasMultipleContent = selectedState.content.includes(CONTENT_SEPARATOR);
+
   const getFolderName = (folderId: number) => {
     return folderListData?.folders.find((folder) => folder.folderId === folderId)?.folderName;
-  };
-
-  const onChangePostForm = (key: string, value: boolean | string) => {
-    setSelectedState({ ...selectedState, [key]: value });
-  };
-
-  const onChangeCategory = (e: ChangeEvent<HTMLSelectElement>) => {
-    onChangePostForm('secondCategory', e.target.value);
   };
 
   const handleEdit = () => {
@@ -116,8 +110,12 @@ const PostDetail = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
+    if (secondCategory === 'DONTKNOW') {
+      toggleSheet();
+    }
+
     fetchPostById();
-  }, [router.isReady, postId, fetchPostById]);
+  }, [router.isReady, secondCategory, fetchPostById]);
 
   useEffect(() => {
     if (post) {
@@ -154,26 +152,34 @@ const PostDetail = () => {
     );
   };
 
+  const bottomSheetHeight =
+    secondCategory === 'DONTKNOW' ? calcBottomSheetHeight({ folderSize: 4, hasHeader: true }) : 364;
+  const headerTitle =
+    secondCategory === 'DONTKNOW' ? (
+      <div>시간이 지난 지금, 감정에 변화가 있었나요?</div>
+    ) : (
+      <>
+        <Image src={FolderIcon} alt="folderIcon" />
+        <div>폴더를 선택해주세요.</div>
+      </>
+    );
+
   const renderBottomSheet = () => {
     return (
-      <CommonBottomSheetContainer
-        onClose={toggleSheet}
-        BottomSheetHeight={calcBottomSheetHeight({
-          folderSize: folderListData?.folders.length || 0,
-          hasHeader: true,
-        })}
-        headerTitle={
-          <>
-            <Image src={FolderIcon} alt="folderIcon" />
-            <div>폴더를 선택해주세요.</div>
-          </>
-        }
-      >
-        <BottomSheetFolderList
-          folderData={folderListData?.folders || []}
-          onClose={toggleSheet}
-          toggleDialog={toggleDialog}
-        />
+      <CommonBottomSheetContainer onClose={toggleSheet} BottomSheetHeight={bottomSheetHeight} headerTitle={headerTitle}>
+        {secondCategory === 'DONTKNOW' ? (
+          <BottomSheetCategoryList
+            items={categoryOptions}
+            selectedItem={selectedState.secondCategory}
+            onClick={handleCategoryClick}
+          />
+        ) : (
+          <BottomSheetFolderList
+            folderData={folderListData?.folders || []}
+            onClose={toggleSheet}
+            toggleDialog={toggleDialog}
+          />
+        )}
       </CommonBottomSheetContainer>
     );
   };
@@ -216,7 +222,7 @@ const PostDetail = () => {
             title="기록 이후 감정"
             selectedValue={selectedState.secondCategory}
             options={categoryOptions}
-            onChange={onChangeCategory}
+            onChange={(e) => handleCategoryClick(e.target.value)}
           />
         </SelectContainer>
         {hasMultipleContent ? (
@@ -257,7 +263,7 @@ const PostDetail = () => {
           <OptionTitle>공개</OptionTitle>
           <CommonToggle
             checked={selectedState.disclosure}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onChangePostForm('disclosure', e.target.checked)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => changePostForm('disclosure', e.target.checked)}
           />
         </SpaceBetweenContainer>
         <SpaceBetweenContainer>
