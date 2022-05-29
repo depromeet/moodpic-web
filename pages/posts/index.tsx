@@ -224,10 +224,11 @@ const GuideMessage = styled.p`
 
 const BottomController = styled.div`
   position: fixed;
-  left: 0;
   bottom: 0;
   width: 100%;
+  max-width: 48rem;
   height: 9rem;
+  margin-left: -1.8rem;
   display: flex;
   justify-content: space-between;
   background-color: ${theme.colors.black};
