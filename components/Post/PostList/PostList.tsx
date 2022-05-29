@@ -36,13 +36,12 @@ const PostList = ({ postList, isEditing, checkedItems, setCheckedItems }: PostLi
   return (
     <PostListContainer>
       {postList.map((post) => (
-        <li key={post.id}>
-          <PostItem
-            {...{ post, isEditing }}
-            checked={isChecked(post.id)}
-            onClick={() => handlePostItemClick(post.id)}
-          />
-        </li>
+        <PostItem
+          {...{ post, isEditing }}
+          key={post.id}
+          checked={isChecked(post.id)}
+          onClick={() => handlePostItemClick(post.id)}
+        />
       ))}
     </PostListContainer>
   );
