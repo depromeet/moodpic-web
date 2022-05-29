@@ -3,6 +3,7 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
 import useDialog from '@/hooks/useDialog';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
@@ -11,7 +12,6 @@ import Button from '@/components/Common/Button/Button';
 import DialogCancel from '@/components/Dialog/DialogCancel';
 import TextArea from '../Common/TextArea/TextArea';
 import { CommonDialog } from '../Common';
-import { ButtonWrapper } from '@/pages/write';
 import BgClose from 'public/svgs/bgclose.svg';
 import {
   ButtonContainer,
@@ -31,6 +31,8 @@ import { useTypeInput } from '@/hooks/useTypeInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
 
 const questionList = ['왜 그렇게 생각했나요?', '두번째 질문 영역', '세번째 질문 영역'];
+
+const HEADER_HEIGHT = 50;
 
 const Question = () => {
   const [questionModeData, setQuestionModeData] = useRecoilState(questionModeState);
@@ -88,12 +90,14 @@ const Question = () => {
   const scrollToTextAreaOffestTop = (target: RefObject<HTMLDivElement>) => () => {
     const targetRef = target;
     // 참고: https://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome/15694294#15694294
-    if (typeof window !== undefined && targetRef.current) {
+    if (typeof window !== undefined) {
       timer.current = setTimeout(() => {
-        targetRef.current?.scrollIntoView({
-          block: 'start',
-          behavior: 'smooth',
-        });
+        if (targetRef.current)
+          window.scrollTo({
+            top: targetRef.current?.offsetTop - HEADER_HEIGHT,
+            left: 0,
+            behavior: 'smooth',
+          });
       }, 100);
     }
   };
@@ -235,7 +239,7 @@ const Question = () => {
       )}
       <ButtonWrapper>
         <Button
-          disabled={!(!!firstQuestionValue || !!secondQuestionValue || !!thirdQuestionValue) && !myselfQuestionValue}
+          disabled={!(!!firstQuestionValue && !!secondQuestionValue && !!thirdQuestionValue) && !myselfQuestionValue}
           color="primary"
           onClick={onClickNextButton}
           size="large"
@@ -253,3 +257,9 @@ const Question = () => {
 };
 
 export default Question;
+
+const ButtonWrapper = styled.div`
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+`;
