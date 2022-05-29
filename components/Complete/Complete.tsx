@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
-import CompleteImage from 'public/images/complete.png';
 import theme from '@/styles/theme';
-import { useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { postRequestState } from '@/store/postResponse/atom';
 import { useRouter } from 'next/router';
 
@@ -13,7 +12,7 @@ const randomText: RandomTextProps = {
   0: (
     <>
       부정적인 생각들은 <br />
-      서비스명이 처리했으니 안심하라구~
+      moodpic이 처리했으니 안심하라구~
     </>
   ),
   1: (
@@ -29,7 +28,7 @@ const randomText: RandomTextProps = {
   ),
   3: (
     <>
-      한결 나아졌어요 👍🏻 <br /> 서비스명아 고마워!
+      한결 나아졌어요 👍🏻 <br /> moodpic아 고마워!
     </>
   ),
   4: '기록된 감정은 홈화면에서 확인할 수 있어요.',
@@ -37,6 +36,7 @@ const randomText: RandomTextProps = {
 
 const Complete = () => {
   const resetPostRequest = useResetRecoilState(postRequestState);
+  const { secondCategory } = useRecoilValue(postRequestState);
   const router = useRouter();
 
   const pickRandomText = () => {
@@ -54,15 +54,15 @@ const Complete = () => {
       resetPostRequest();
     };
   }, [resetPostRequest, router]);
+
   return (
     <>
       <ImageWrap>
-        <Image
-          src={CompleteImage}
-          alt="CompleteImage"
-          width={232}
-          height={209}
-        />
+        {secondCategory ? (
+          <Image src={`/images/img_${secondCategory}.png`} alt={secondCategory} width={232} height={209} />
+        ) : (
+          <Image src={`/images/img_DONTKNOW.png`} alt="DONTKNOW" width={232} height={209} />
+        )}
       </ImageWrap>
       <Title>감정이 기록됐어요!</Title>
       <Description>{pickRandomText()}</Description>
