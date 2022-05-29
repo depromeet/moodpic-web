@@ -5,6 +5,8 @@ export interface Post {
   tags: string[];
   firstCategory: string;
   secondCategory: string;
+  firstCategoryName: string;
+  secondCategoryName: string;
   content: string;
   views: number;
   disclosure: boolean;
