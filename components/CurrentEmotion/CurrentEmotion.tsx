@@ -182,6 +182,7 @@ const CurrentEmotion = () => {
           onClose={toggleSheet}
           BottomSheetHeight={calcBottomSheetHeight({
             folderSize: folderListData?.folders.length,
+            hasHeader: true,
           })}
           headerTitle={
             <>
