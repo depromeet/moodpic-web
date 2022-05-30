@@ -4,10 +4,11 @@ import Image from 'next/image';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { animated } from 'react-spring';
-import LeftIcon from 'public/svgs/left.svg';
 import theme from '@/styles/theme';
 import { dropdownStateAtom } from '@/store/dropdown/atom';
 import { useAnimation } from '@/hooks/useAnimation';
+import LeftIcon from 'public/svgs/left.svg';
+import Logo from 'public/images/logo.png';
 
 const DropdownMenu = (): React.ReactElement => {
   const isDropdownOpen = useSetRecoilState(dropdownStateAtom);
@@ -19,8 +20,7 @@ const DropdownMenu = (): React.ReactElement => {
     isDropdownOpen(false);
   };
 
-  const dropdownRef =
-    typeof window !== 'undefined' && document.getElementById('dropdown-menu');
+  const dropdownRef = typeof window !== 'undefined' && document.getElementById('dropdown-menu');
 
   if (!dropdownRef) return <></>;
 
@@ -30,7 +30,7 @@ const DropdownMenu = (): React.ReactElement => {
       <DropdownWrapper>
         <DropdownInner style={fullMenuAnimation}>
           <Dropdown>
-            <LogoTitle>서비스명</LogoTitle>
+            <Image src={Logo} alt="moodpic" width={82} height={25} />
             <MenuList>
               <MenuItem>마이페이지</MenuItem>
               <MenuItem>피드백 / 문의사항 보내기</MenuItem>
@@ -68,12 +68,6 @@ const DropdownWrapper = styled.div`
   width: 100%;
 `;
 
-const LogoTitle = styled.h2`
-  margin-bottom: 1.2rem;
-  ${theme.fonts.h4};
-  color: ${theme.colors.primary};
-`;
-
 const DropdownInner = styled(animated.div)`
   max-width: 48rem;
   width: 100%;
@@ -85,10 +79,11 @@ const DropdownInner = styled(animated.div)`
 `;
 
 const Dropdown = styled.div`
-  padding: 3.3rem 3.6rem 2.2rem;
+  padding: 4rem 3.6rem 2.2rem;
 `;
 
 const MenuList = styled.ul`
+  margin-top: 1rem;
   list-style: none;
 `;
 
