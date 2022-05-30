@@ -1,16 +1,21 @@
 /* eslint-disable max-lines */
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
+import { AxiosError } from 'axios';
 import { useRecoilState } from 'recoil';
-import { useQuery } from 'react-query';
-import { useCreatePostMutation } from '@/hooks/apis/post/usePostMutation';
+import { useMutation, useQuery } from 'react-query';
 import folderService from '@/service/apis/folderService';
 import { postRequestState } from '@/store/postResponse/atom';
 import { useTypeInput } from '@/hooks/useTypeInput';
+import useNextProgressStep from '@/hooks/useNextProgressStep';
+import useToast from '@/hooks/useToast';
 import useDialog from '@/hooks/useDialog';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import { useCreateFolderMutation } from '@/hooks/apis';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
+import { queryClient } from '@/shared/utils/queryClient';
+import { ToastType } from '@/shared/type/common';
+import { PostResponseType } from '@/shared/type/postResponse';
+import postService from '@/service/apis/postService';
 
 import { ButtonWrapper } from '@/pages/write';
 import Button from '../Common/Button/Button';
@@ -40,19 +45,46 @@ import {
 const MAX_TAG_LIST_LENGTH = 5;
 
 const CurrentEmotion = () => {
+  const notify = useToast();
+  const nextProgressStep = useNextProgressStep();
   const [isDisclose, setDisclose] = useState(false);
   const [tagList, setTagList] = useState<string[]>([]);
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
-  const [inputValue, onChangeInput] = useTypeInput('');
+  const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
+  const [selectedState, setSelectState] = useRecoilState(postRequestState);
   const { data: folderListData } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
   const { data: defaultFolder } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders, {
     select: (data) => data.folders.filter(({ default: isDefaultFolder }) => isDefaultFolder)[0].folderId,
   });
-  const { mutate: createFolder } = useCreateFolderMutation();
-  const { mutate: createPost } = useCreatePostMutation();
-  const [selectedState, setSelectState] = useRecoilState(postRequestState);
+  const { mutate: createPost } = useMutation((postData: PostResponseType) => postService.createPost(postData), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(QUERY_KEY.CREATE_POST);
+      nextProgressStep();
+    },
+    onError: (error) => {
+      notify({
+        type: ToastType.ERROR,
+        message: (error as AxiosError).response?.data.msg,
+      });
+    },
+  });
+  const { mutate: createFolder } = useMutation((folderName: string) => folderService.createFolder(folderName), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(QUERY_KEY.GET_FOLDERS);
+      notify({
+        type: ToastType.CONFIRM,
+        message: '폴더가 추가되었습니다.',
+      });
+    },
+    onError: (error) => {
+      notify({
+        type: ToastType.ERROR,
+        message: (error as AxiosError).response?.data.msg,
+      });
+    },
+  });
 
   const onChangeDisclose = () => {
     setSelectState((prev) => ({ ...prev, disclosure: !isDisclose }));
@@ -94,8 +126,9 @@ const CurrentEmotion = () => {
 
   const onCreateFolder = useCallback(() => {
     createFolder(inputValue);
+    setInputValue('');
     toggleDialog();
-  }, [createFolder, inputValue, toggleDialog]);
+  }, [createFolder, inputValue, setInputValue, toggleDialog]);
 
   const onSubmit = () => {
     createPost(selectedState);
