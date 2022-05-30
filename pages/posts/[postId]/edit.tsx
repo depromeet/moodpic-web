@@ -110,6 +110,7 @@ const PostDetail = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
+    // TODO: DONTKNOW 상수로 분리 or API response 에 있는 것으로 변경해야 합니다.
     if (secondCategory === 'DONTKNOW') {
       toggleSheet();
     }
