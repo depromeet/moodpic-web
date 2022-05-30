@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { useSetRecoilState } from 'recoil';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
 import { CommonButton } from '@/components/Common';
 import theme from '@/styles/theme';
+import Image from 'next/image';
 
 export interface BannerProps {
-  nickname: string;
-  title: string;
+  title: ReactNode;
   background: string;
 }
 
-const Banner = ({ nickname, title, background }: BannerProps): React.ReactElement => {
+const Banner = ({ title, background }: BannerProps): React.ReactElement => {
   const router = useRouter();
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
 
@@ -21,13 +21,12 @@ const Banner = ({ nickname, title, background }: BannerProps): React.ReactElemen
     setTooltipState(true);
   };
 
-  const bannerTitleHTML = `${nickname}${title}`;
-
   return (
     <BannerContainer>
-      <BannerImage background={background} />
+      <BannerImage />
+      <Image src={background} alt="" layout="fill" priority={true} />
       <BannerContents>
-        <BannerTitle dangerouslySetInnerHTML={{ __html: bannerTitleHTML }}></BannerTitle>
+        <BannerTitle>닉네임{title}</BannerTitle>
         <CommonButton onClick={goToWritePage}>감정 기록하기 ✍🏻</CommonButton>
       </BannerContents>
     </BannerContainer>
@@ -42,14 +41,12 @@ const BannerContainer = styled.section`
   padding: 4.4rem 1.8rem 2.4rem;
 `;
 
-const BannerImage = styled.div<{ background: string }>`
+const BannerImage = styled.div`
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
   height: 33.6rem;
-  background-image: url(${(props) => props.background});
-  background-size: 100% 33.6rem;
 
   &::before {
     content: '';
@@ -58,6 +55,7 @@ const BannerImage = styled.div<{ background: string }>`
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, #121212 42.71%, rgba(18, 18, 18, 0) 100%);
+    z-index: 1;
   }
 `;
 
@@ -68,6 +66,7 @@ const BannerContents = styled.div`
   width: 100%;
   height: 33.6rem;
   padding: 13.2rem 1.8rem 2.4rem;
+  z-index: 2;
 `;
 
 const BannerTitle = styled.div`

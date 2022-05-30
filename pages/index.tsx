@@ -32,7 +32,7 @@ const Home = () => {
   const isMounted = useIsMounted();
   const { dialogVisible, toggleDialog } = useDialog();
   const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
-  const { randomTitle, randomImageSource } = useRandomBanner();
+  const { randomImageSource } = useRandomBanner();
   const { data: folderResponse, refetch: fetchFolders } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
   const { data: incompletedPosts } = useIncompletedPostsQuery();
@@ -43,6 +43,26 @@ const Home = () => {
   const createFolderMutation = useCreateFolderMutation();
   const updateFolderMutation = useUpdateFolderMutation();
   const deleteFolderMutation = useDeleteFolderMutation();
+
+  const randomTitleCases = [
+    <>
+      님의 <br />
+      모든 감정은 소중해잉 🥺
+    </>,
+    <>
+      님, 감정을 되짚어보면 <br />
+      기분이 나아질거예요!
+    </>,
+    <>
+      님, 오늘 어떤 일이 <br />
+      있었는지 들려주세요!
+    </>,
+    <>
+      님, 오늘의 감정을 <br />
+      풀어보는 시간을 가져볼까요?
+    </>,
+  ];
+  const randomTitleIndex = Math.floor(randomTitleCases.length * Math.random());
 
   useEffect(() => {
     if (currentTab === HOME_TAB_TYPE.EMOTION) {
@@ -164,7 +184,7 @@ const Home = () => {
   return (
     <>
       <HomeHeader />
-      {isMounted() && <HomeBanner nickname="홍길동" title={randomTitle} background={randomImageSource} />}
+      {isMounted() && <HomeBanner title={randomTitleCases[randomTitleIndex]} background={randomImageSource} />}
       <HomeTabHeader
         currentTab={currentTab}
         isEditMode={isEditMode}
