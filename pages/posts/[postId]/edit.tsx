@@ -7,6 +7,7 @@ import useBottomSheet from '@/hooks/useBottomSheet';
 import {
   useCategoryListQuery,
   useCreateFolderMutation,
+  useFolderByPostIdQuery,
   useFoldersQuery,
   usePostByIdQuery,
   useUpdatePostMutation,
@@ -25,7 +26,6 @@ import {
   CommonBottomSheetContainer,
 } from '@/components/Common';
 import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
-import {} from '@/components/Common';
 import CategorySelector from '@/components/CategorySelector/CategorySelector';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
 import BottomSheetCategoryList from '@/components/BottomSheetCategoryList/BottomSheetCategoryList';
@@ -69,6 +69,7 @@ const PostDetail = () => {
   const { data: folderListData } = useFoldersQuery();
   const { data: post, refetch: fetchPostById } = usePostByIdQuery(postId);
   const { data: categories } = useCategoryListQuery();
+  const { data: folder, refetch: fetchFolderByPostId } = useFolderByPostIdQuery(postId);
   const { mutate: createFolder } = useCreateFolderMutation();
   const { mutate: updatePost } = useUpdatePostMutation();
 
@@ -86,9 +87,7 @@ const PostDetail = () => {
         .map((category) => ({ id: category.categoryName, label: category.description }))
     : [];
 
-  const getFolderName = (folderId: number) => {
-    return folderListData?.folders.find((folder) => folder.folderId === folderId)?.folderName;
-  };
+  const getFolderName = (id: number) => folderListData?.folders.find((folder) => folder.folderId === id)?.folderName;
 
   const handleEdit = () => {
     const updatedForm = {
@@ -99,11 +98,7 @@ const PostDetail = () => {
 
     updatePost(
       { id: postId, postData: { ...updatedForm, folderId: selectedState.folderId || 0 } },
-      {
-        onSuccess: () => {
-          router.push(`/posts/${postId}`);
-        },
-      },
+      { onSuccess: () => router.push(`/posts/${postId}`) },
     );
   };
 
@@ -116,12 +111,13 @@ const PostDetail = () => {
     }
 
     fetchPostById();
+    fetchFolderByPostId();
   }, [router.isReady, secondCategory, fetchPostById]);
 
   useEffect(() => {
     if (post) {
-      const { firstCategory, secondCategory, content, tags, disclosure, folderId } = post;
-      setSelectedState({ firstCategory, secondCategory, content, tags, disclosure, folderId });
+      const { firstCategory, secondCategory, content, tags, disclosure } = post;
+      setSelectedState({ firstCategory, secondCategory, content, tags, disclosure, folderId: folder?.folderId });
       setTagList(post?.tags);
 
       const contents = post.content.split(CONTENT_SEPARATOR);
@@ -135,7 +131,16 @@ const PostDetail = () => {
 
       setFirstContent(post.content);
     }
-  }, [post, hasMultipleContent, setFirstContent, setSecondContent, setSelectedState, setThirdContent, setTagList]);
+  }, [
+    post,
+    hasMultipleContent,
+    setFirstContent,
+    setSecondContent,
+    setSelectedState,
+    setThirdContent,
+    setTagList,
+    folder,
+  ]);
 
   // TODO: 오류 페이지 이후 작업 요청해서 바꾸기..
   if (!post || !postId) return <div>404</div>;
