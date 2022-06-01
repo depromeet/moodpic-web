@@ -13,15 +13,17 @@ const folderService = {
 
     return data;
   },
+  getFolderByPostId: async (postId: string): Promise<Folder> => {
+    const { data } = await fetcher('get', `/api/v1/folders/posts/${postId}`);
+
+    return data;
+  },
   createFolder: async (folderName: string): Promise<ServerResponse> => {
     const { data } = await fetcher('post', '/api/v1/folders', { folderName });
 
     return data;
   },
-  updateFolder: async (
-    id: number,
-    folderName: string,
-  ): Promise<ServerResponse> => {
+  updateFolder: async (id: number, folderName: string): Promise<ServerResponse> => {
     const { data } = await fetcher('patch', `/api/v1/folders/${id}`, {
       folderName,
     });
