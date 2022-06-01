@@ -29,14 +29,14 @@ const FolderList = ({
   return (
     <>
       {supportsCollectedFolder && <HomeCollectedFolder count={totalCount} items={folderList} onClick={goToPosts} />}
-      {folderList.map((folder: Folder, index: number) => (
+      {folderList.map((folder: Folder) => (
         <HomeFolder
           key={folder.folderId}
           folderId={folder.folderId}
           folderName={folder.folderName}
           count={folder.postCount}
           coverImage={folder.coverImg}
-          isEditMode={isEditMode && index !== 0}
+          isEditMode={isEditMode && !folder.default}
           onClick={() => router.push(`/posts?folderId=${folder.folderId}`)}
           onEdit={onEdit}
           onDelete={onDelete}
