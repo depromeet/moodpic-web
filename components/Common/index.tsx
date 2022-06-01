@@ -14,3 +14,4 @@ export { default as CommonAppBar } from './AppBar/AppBar';
 export { default as CommonProgress } from './Progress/Progress';
 export { default as CommonIconButton } from './IconButton/IconButton';
 export { default as CommonCheckbox } from './Checkbox/Checkbox';
+export { default as CommonFolderButton } from './Tag/FolderButton';

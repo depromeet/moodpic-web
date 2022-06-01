@@ -6,6 +6,7 @@ export const FolderContainer = styled.div`
   width: 100%;
   height: 16.5rem;
   margin-bottom: 4.8rem;
+  padding-top: 100%;
 `;
 
 export const FolderName = styled.p`
@@ -19,15 +20,17 @@ export const FolderCount = styled.span`
   color: ${theme.colors.gray4};
 `;
 
-export const BoxContainer = styled.div`
+export const BoxContainer = styled.div<{ backgroundImage: string }>`
+  position: absolute;
+  inset: 0;
   display: flex;
   width: 100%;
   height: 100%;
   cursor: pointer;
-
-  span {
-    border-radius: 1.4rem;
-  }
+  background-image: url(${(props) => (props.backgroundImage ? props.backgroundImage : '/images/empty.png')});
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 1.4rem;
 `;
 
 export const CaptionContainer = styled.figcaption`

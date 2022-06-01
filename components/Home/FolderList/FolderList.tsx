@@ -8,27 +8,38 @@ interface FolderListProps {
   isEditMode: boolean;
   folderList: Folder[];
   supportsCollectedFolder: boolean;
+  onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-const FolderList = ({ isEditMode, folderList, supportsCollectedFolder }: FolderListProps): React.ReactElement => {
+const FolderList = ({
+  isEditMode,
+  folderList,
+  supportsCollectedFolder,
+  onEdit,
+  onDelete,
+}: FolderListProps): React.ReactElement => {
   const router = useRouter();
   const totalCount = folderList.reduce((acc, curr) => acc + curr.postCount, 0);
 
   const goToPosts = () => {
-    router.push('/posts?folderId=0');
+    router.push('/posts');
   };
 
   return (
     <>
       {supportsCollectedFolder && <HomeCollectedFolder count={totalCount} items={folderList} onClick={goToPosts} />}
-      {folderList.map((folder: Folder) => (
+      {folderList.map((folder: Folder, index: number) => (
         <HomeFolder
           key={folder.folderId}
+          folderId={folder.folderId}
           folderName={folder.folderName}
           count={folder.postCount}
           coverImage={folder.coverImg}
-          isEditMode={isEditMode}
+          isEditMode={isEditMode && index !== 0}
           onClick={() => router.push(`/posts?folderId=${folder.folderId}`)}
+          onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
     </>

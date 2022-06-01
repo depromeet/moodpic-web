@@ -15,6 +15,7 @@ const CategoryFolderList = ({ list }: CategoryFolderListProps): React.ReactEleme
       {list.map((folder: CategoryFolder) => (
         <HomeFolder
           key={folder.categoryId}
+          folderId={folder.categoryId}
           folderName={folder.description}
           count={folder.count}
           coverImage={folder.image}

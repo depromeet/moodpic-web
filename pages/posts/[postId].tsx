@@ -14,6 +14,7 @@ import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
 import useToast from '@/hooks/useToast';
 import { useDeletePostMutation, usePostByIdQuery } from '@/hooks/apis';
+import { useCategoryListQuery } from '@/hooks/apis/post/useCategoryListQuery';
 import { ToastType } from '@/shared/type/common';
 import { CommonTextArea } from '@/components/Common';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
@@ -36,6 +37,7 @@ const PostDetail = () => {
   const notify = useToast();
 
   const { data: post, refetch: fetchPost } = usePostByIdQuery(postId);
+  const { data: categories } = useCategoryListQuery();
 
   const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
 
@@ -55,6 +57,16 @@ const PostDetail = () => {
       },
     },
   ];
+
+  const getCategoryDescription = (categoryName: string) => {
+    if (categories) {
+      return Object.values(categories)
+        .flat()
+        .find((category) => category.categoryName === categoryName)?.description;
+    }
+
+    return '';
+  };
 
   useEffect(() => {
     if (postId) {
@@ -86,10 +98,12 @@ const PostDetail = () => {
         <CommonAppBar.Left>
           <CommonIconButton iconName="left" onClick={() => router.back()} />
         </CommonAppBar.Left>
-        <CommonAppBar.Right>
-          <CommonIconButton iconName="share" />
-          <CommonIconButton iconName="more" onClick={toggleSheet} />
-        </CommonAppBar.Right>
+        {post.my && (
+          <CommonAppBar.Right>
+            <CommonIconButton iconName="share" />
+            <CommonIconButton iconName="more" onClick={toggleSheet} />
+          </CommonAppBar.Right>
+        )}
       </CommonAppBar>
       <PostDetailContainer>
         <TagContainer>
@@ -99,7 +113,7 @@ const PostDetail = () => {
         </TagContainer>
         <CardContainer>
           <Card firstEmotion={post.firstCategory} secondEmotion={post.secondCategory}>
-            그땐 {post.firstCategory}, 지금은 {post.secondCategory}
+            그땐 {getCategoryDescription(post.firstCategory)}, 지금은 {getCategoryDescription(post.secondCategory)}
           </Card>
         </CardContainer>
         {hasMultipleContent ? (
@@ -140,10 +154,7 @@ const PostDetail = () => {
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
-          BottomSheetHeight={calcBottomSheetHeight({
-            folderSize: bottomSheetItems.length,
-            hasHeader: false,
-          })}
+          BottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
         >
           <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>

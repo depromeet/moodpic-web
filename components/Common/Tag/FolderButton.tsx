@@ -7,10 +7,7 @@ import { ellipsis } from '@/styles/mixins';
 
 export type FolderButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const FolderButton = ({
-  children,
-  ...rest
-}: FolderButtonProps): React.ReactElement => {
+const FolderButton = ({ children, ...rest }: FolderButtonProps): React.ReactElement => {
   return (
     <FolderButtonContainer {...rest}>
       <i>

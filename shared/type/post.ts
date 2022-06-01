@@ -5,18 +5,25 @@ export interface Post {
   tags: string[];
   firstCategory: string;
   secondCategory: string;
+  firstCategoryName: string;
+  secondCategoryName: string;
   content: string;
   views: number;
+  disclosure: boolean;
+  my: boolean;
+  folderId?: number;
   createdAt: string;
 }
 
 export interface PostListRequest extends PageType {
-  folderId: number;
+  folderId?: number;
+  categoryId?: number;
 }
 
 export interface PostListResponse {
   posts: Post[];
-  folderName: string;
+  categoryName?: string;
+  folderName?: string;
   totalCount: number;
 }
 

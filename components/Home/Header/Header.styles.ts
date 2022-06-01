@@ -1,7 +1,8 @@
-import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { a11y } from '@/styles/mixins';
+import theme from '@/styles/theme';
 
-export const HeaderWrapper = styled.header<{ isScrollOnTop: boolean }>`
+export const HeaderWrapper = styled.header`
   z-index: 101;
   position: sticky;
   top: 0;
@@ -12,28 +13,20 @@ export const HeaderWrapper = styled.header<{ isScrollOnTop: boolean }>`
   padding: 0 1.8rem;
   margin-right: -1.8rem;
   margin-left: -1.8rem;
-  background-color: ${(props) =>
-    props.isScrollOnTop ? theme.colors.gray1 : theme.colors.black};
+  background-color: ${theme.colors.black};
 `;
 
 export const TitleWrapper = styled.button`
   display: flex;
   align-items: center;
+`;
 
-  span {
-    transform: rotate(-90deg);
-  }
+export const LogoContainer = styled.div`
+  margin-right: 0.8rem;
 `;
 
 export const Title = styled.h1`
-  ${theme.fonts.h3};
-  margin-right: 0.5rem;
-  color: ${theme.colors.white};
-  line-height: 1.8rem;
-
-  span {
-    transform: rotate(-90deg);
-  }
+  ${a11y};
 `;
 
 export const Button = styled.button`
