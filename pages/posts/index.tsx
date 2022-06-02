@@ -156,16 +156,12 @@ const PostListPage = () => {
           )}
         </CommonAppBar.Right>
       </CommonAppBar>
-      {postResponse?.totalCount ? (
-        <PostList
-          postList={postResponse.posts}
-          isEditing={isEditing}
-          checkedItems={checkedItems}
-          setCheckedItems={setCheckedItems}
-        />
-      ) : (
-        <GuideMessage>기록이 없어요.</GuideMessage>
-      )}
+      <PostList
+        postList={postResponse.posts}
+        isEditing={isEditing}
+        checkedItems={checkedItems}
+        setCheckedItems={setCheckedItems}
+      />
       {isEditing ? (
         <BottomController>
           <BottomButton disabled={postResponse?.posts?.length === 0}>전체 삭제</BottomButton>
@@ -214,12 +210,6 @@ const HeaderTitle = styled.h2`
   margin-left: -0.2rem;
   ${theme.fonts.h4};
   color: ${theme.colors.white};
-`;
-
-const GuideMessage = styled.p`
-  padding-top: 0.4rem;
-  ${theme.fonts.h6};
-  color: ${theme.colors.gray4};
 `;
 
 const BottomController = styled.div`
