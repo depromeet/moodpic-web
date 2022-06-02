@@ -1,10 +1,12 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import Image from 'next/image';
 import theme from '@/styles/theme';
 import { Post } from '@/shared/type/post';
 import PostItem from '@/components/Post/PostItem/PostItem';
 import { CommonAppBar, CommonIconButton } from '@/components/Common';
+import ListEmpty from 'public/images/list-empty.png';
 
 const postList: Post[] = [];
 
@@ -20,7 +22,7 @@ const PostList = () => {
       </CommonAppBar>
       <PostListContainer>
         <Title>
-          몰라요를 선택한 기록들, <br />
+          모르겠어요를 선택한 기록들, <br />
           지금은 어떤 감정이 드세요?
         </Title>
         {postList.length ? (
@@ -30,7 +32,12 @@ const PostList = () => {
             </li>
           ))
         ) : (
-          <GuideMessage>기록이 없어요.</GuideMessage>
+          <EmptyContainer>
+            <ImageContainer>
+              <Image src={ListEmpty} alt="기록이 없어요." />
+            </ImageContainer>
+            <GuideMessage>기록이 없어요.</GuideMessage>
+          </EmptyContainer>
         )}
       </PostListContainer>
     </>
@@ -51,9 +58,22 @@ const Title = styled.h4`
   margin-bottom: 3.2rem;
 `;
 
+const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ImageContainer = styled.div`
+  width: 7.7rem;
+  height: 8.3rem;
+  margin: 12.6rem 0 0 0.4rem;
+`;
+
 const GuideMessage = styled.p`
-  padding-top: 0.4rem;
-  ${theme.fonts.h6};
+  ${theme.fonts.h4};
+  margin-top: 1.8rem;
+  opacity: 0.7;
   color: ${theme.colors.gray4};
 `;
 
