@@ -12,7 +12,7 @@ const Loading = () => {
       container: elementRef.current,
       renderer: 'svg',
       autoplay: true,
-      animationData: require('./9682-loading-wait.json'),
+      animationData: require('./loading.json'),
     });
   }, []);
 
