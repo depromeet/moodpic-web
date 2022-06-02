@@ -14,14 +14,14 @@ interface FloatingButtonProps {
 const FloatingButton = ({ isScrollOnTop }: FloatingButtonProps) => {
   const router = useRouter();
 
-  const goToUndefinedFeelings = () => {
-    router.push('/posts/undefined-feelings');
+  const goToDontknowFeelings = () => {
+    router.push('/posts/dontknow-feelings');
   };
 
   return (
     <FloatingContainer isHidden={!isScrollOnTop}>
       <div>
-        <CommonButton color="gray" onClick={goToUndefinedFeelings}>
+        <CommonButton color="gray" onClick={goToDontknowFeelings}>
           <ButtonText>
             &apos;모르겠어요&apos;를 선택한 기록들
             <ButtonIcon>
