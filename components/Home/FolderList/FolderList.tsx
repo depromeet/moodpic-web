@@ -29,7 +29,7 @@ const FolderList = ({
   return (
     <>
       {supportsCollectedFolder && <HomeCollectedFolder count={totalCount} items={folderList} onClick={goToPosts} />}
-      {folderList.map((folder: Folder) => (
+      {folderList.map((folder) => (
         <HomeFolder
           key={folder.folderId}
           folderId={folder.folderId}
