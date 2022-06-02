@@ -224,7 +224,11 @@ const CurrentEmotion = () => {
             </>
           }
         >
-          <BottomSheetFolderList folderData={folderListData?.folders} onClose={toggleSheet} />
+          <BottomSheetFolderList
+            folderData={folderListData?.folders}
+            onClose={toggleSheet}
+            toggleDialog={toggleDialog}
+          />
         </CommonBottomSheetContainer>
       ) : null}
     </>

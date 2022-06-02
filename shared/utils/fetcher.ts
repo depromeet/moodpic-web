@@ -7,8 +7,7 @@ axios.defaults.paramsSerializer = (params: object) => {
   return qs.stringify(params);
 };
 
-axios.defaults.baseURL =
-  process.env.NODE_ENV === 'development' ? 'http://3.35.50.139' : '';
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://3.39.97.206/' : '';
 
 axios.interceptors.request.use((config) => {
   const token = getLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN);
@@ -22,11 +21,7 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-const fetcher = async (
-  method: 'get' | 'post' | 'patch' | 'delete',
-  url: string,
-  ...rest: object[]
-) => {
+const fetcher = async (method: 'get' | 'post' | 'patch' | 'delete', url: string, ...rest: object[]) => {
   try {
     const { data } = await axios[method](url, ...rest);
     return data;
