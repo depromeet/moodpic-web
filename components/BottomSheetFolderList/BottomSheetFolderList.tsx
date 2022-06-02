@@ -26,9 +26,10 @@ const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomShee
   };
 
   const renderDefaultFolderOrSelectedFolder = (folderId: number, isDefaultFolder: boolean) => {
-    if (isDefaultFolder && !isDefaultFolderSelected) {
-      return <Image src={CheckCirclePr} alt="CheckCirclePr" />;
-    } else if (folderId === selectedFolder.folderId && isDefaultFolderSelected)
+    if (
+      (isDefaultFolder && !isDefaultFolderSelected) ||
+      (folderId === selectedFolder.folderId && isDefaultFolderSelected)
+    )
       return <Image src={CheckCirclePr} alt="CheckCirclePr" />;
   };
 
@@ -40,7 +41,7 @@ const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomShee
           <ButtonText>새로운 폴더 만들기</ButtonText>
         </FolderListItemWrap>
       )}
-      {folderData.reverse().map(({ folderId, folderName, default: isDefaultFolder }) => (
+      {folderData.map(({ folderId, folderName, default: isDefaultFolder }) => (
         <FolderListItemWrap key={folderId} onClick={closeFolerList(folderId)}>
           <IconWrap>{renderDefaultFolderOrSelectedFolder(folderId, isDefaultFolder)}</IconWrap>
           {folderName}
