@@ -11,14 +11,14 @@ import CurrentEmotion from '@/components/CurrentEmotion/CurrentEmotion';
 import Complete from '@/components/Complete/Complete';
 import theme from '@/styles/theme';
 import DialogCancel from '@/components/Dialog/DialogCancel';
-import { postRequestState } from '@/store/postResponse/atom';
+import { createPostRequestState } from '@/store/post/atom';
 
 const Write = () => {
   const router = useRouter();
   const progressStep = useRecoilValue(progressStepStateAtom);
   const setPrevProgressStep = useSetRecoilState(progressStepStateAtom);
   const { dialogVisible, toggleDialog } = useDialog();
-  const resetPostRequestState = useResetRecoilState(postRequestState);
+  const resetcreatePostRequestState = useResetRecoilState(createPostRequestState);
   const resetProgressStepState = useResetRecoilState(progressStepStateAtom);
 
   const onClickGoBack = useCallback(() => {
@@ -95,9 +95,9 @@ const Write = () => {
   useEffect(() => {
     return () => {
       resetProgressStepState();
-      resetPostRequestState();
+      resetcreatePostRequestState();
     };
-  }, [resetPostRequestState, resetProgressStepState]);
+  }, [resetcreatePostRequestState, resetProgressStepState]);
 
   return (
     <>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { useCategoryListQuery } from '@/hooks/apis/post/useCategoryListQuery';
-import { postRequestState } from '@/store/postResponse/atom';
+import { createPostRequestState } from '@/store/post/atom';
 import SecondCategorySelectSkeleton from './SecondCategorySelect.skeleton';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
@@ -25,7 +25,7 @@ interface SelectButtonProps {
 }
 
 const SecondCategorySelect = ({ title, secondaryCategorytype = 'positive' }: SelectButtonProps) => {
-  const [selectedCurrentCategory, setCurrentCategory] = useRecoilState(postRequestState);
+  const [selectedCurrentCategory, setCurrentCategory] = useRecoilState(createPostRequestState);
   const { data: categoryList } = useCategoryListQuery();
 
   const onChangeSecondaryCategoryValue = (categoryName: string) => () => {

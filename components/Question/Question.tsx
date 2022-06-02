@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
 import useDialog from '@/hooks/useDialog';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
-import { postRequestState } from '@/store/postResponse/atom';
+import { createPostRequestState } from '@/store/post/atom';
 import Button from '@/components/Common/Button/Button';
 import DialogCancel from '@/components/Dialog/DialogCancel';
 import TextArea from '../Common/TextArea/TextArea';
@@ -36,7 +36,7 @@ const HEADER_HEIGHT = 50;
 
 const Question = () => {
   const [questionModeData, setQuestionModeData] = useRecoilState(questionModeState);
-  const [postRequestData, setPostRequestData] = useRecoilState(postRequestState);
+  const [postRequestData, setPostRequestData] = useRecoilState(createPostRequestState);
   const isTooltipOpen = useRecoilValue(tooltipStateAtom);
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const [firstQuestionValue, onChangeFirstQuestionValue, setFirstQuestionValue] = useTypeInput('');

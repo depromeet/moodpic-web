@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { postRequestState } from '@/store/postResponse/atom';
+import { createPostRequestState } from '@/store/post/atom';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
 import { useFirstCategoryQuery } from '@/hooks/apis/post/useFirstCategoryQuery';
@@ -18,7 +18,7 @@ interface SelectButtonProps {
 }
 
 const FirstCategorySelect = ({ title }: SelectButtonProps) => {
-  const [selectedFirstCategory, setFirstCategory] = useRecoilState(postRequestState);
+  const [selectedFirstCategory, setFirstCategory] = useRecoilState(createPostRequestState);
   const { data: firstCategory } = useFirstCategoryQuery();
 
   const onChangeFirstCategoryValue = (categoryName: string) => () => {

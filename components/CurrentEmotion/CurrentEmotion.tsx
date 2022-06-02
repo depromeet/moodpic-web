@@ -2,10 +2,10 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import { AxiosError } from 'axios';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
 import folderService from '@/service/apis/folderService';
-import { postRequestState } from '@/store/postResponse/atom';
+import { createPostRequestState, createPostResponseState } from '@/store/post/atom';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import useToast from '@/hooks/useToast';
@@ -14,7 +14,7 @@ import useBottomSheet from '@/hooks/useBottomSheet';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { queryClient } from '@/shared/utils/queryClient';
 import { ToastType } from '@/shared/type/common';
-import { PostResponseType } from '@/shared/type/postResponse';
+import { PostRequestType, PostResponseType } from '@/shared/type/post';
 import postService from '@/service/apis/postService';
 
 import { ButtonWrapper } from '@/pages/write';
@@ -51,17 +51,19 @@ const CurrentEmotion = () => {
   const [tagList, setTagList] = useState<string[]>([]);
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
   const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
+  const setPostId = useSetRecoilState(createPostResponseState);
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
-  const [selectedState, setSelectState] = useRecoilState(postRequestState);
+  const [selectedState, setSelectState] = useRecoilState(createPostRequestState);
   const { data: folderListData } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
   const { data: defaultFolder } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders, {
     select: (data) => data.folders.filter(({ default: isDefaultFolder }) => isDefaultFolder)[0].folderId,
   });
-  const { mutate: createPost } = useMutation((postData: PostResponseType) => postService.createPost(postData), {
-    onSuccess: () => {
+  const { mutate: createPost } = useMutation((postData: PostRequestType) => postService.createPost(postData), {
+    onSuccess: (data) => {
       queryClient.invalidateQueries(QUERY_KEY.CREATE_POST);
       nextProgressStep();
+      setPostId(data as unknown as PostResponseType);
     },
     onError: (error) => {
       notify({

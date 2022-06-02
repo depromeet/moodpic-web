@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { postRequestState } from '@/store/postResponse/atom';
+import { createPostRequestState, createPostResponseState } from '@/store/post/atom';
 import { useRouter } from 'next/router';
 
 type RandomTextProps = { [x: number]: React.ReactElement | string };
@@ -35,8 +35,9 @@ const randomText: RandomTextProps = {
 };
 
 const Complete = () => {
-  const resetPostRequest = useResetRecoilState(postRequestState);
-  const { secondCategory } = useRecoilValue(postRequestState);
+  const resetPostRequest = useResetRecoilState(createPostRequestState);
+  const { secondCategory } = useRecoilValue(createPostRequestState);
+  const { postId } = useRecoilValue(createPostResponseState);
   const router = useRouter();
 
   const pickRandomText = () => {
@@ -46,14 +47,14 @@ const Complete = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      //TODO : 내가쓴 글로 이동
-      router.push('/');
+      if (postId) router.replace(`/posts/${postId}`);
+      else router.replace('/');
     }, 3000);
     return () => {
       clearTimeout(timer);
       resetPostRequest();
     };
-  }, [resetPostRequest, router]);
+  }, [resetPostRequest, router, postId]);
 
   return (
     <>

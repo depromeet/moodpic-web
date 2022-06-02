@@ -5,7 +5,7 @@ import FolderPlus from 'public/svgs/folderplus.svg';
 import { BottomSheetFolderListWrap } from './BottomSheetFolderList.styles';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { isDefaultFolderSelectedState, postRequestState } from '@/store/postResponse/atom';
+import { isDefaultFolderSelectedState, createPostRequestState } from '@/store/post/atom';
 import { Folder } from '@/shared/type/folder';
 import theme from '@/styles/theme';
 
@@ -16,7 +16,7 @@ interface BottomSheetFolderListProps {
 }
 
 const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomSheetFolderListProps) => {
-  const [selectedFolder, setSelectFolder] = useRecoilState(postRequestState);
+  const [selectedFolder, setSelectFolder] = useRecoilState(createPostRequestState);
   const [isDefaultFolderSelected, setIsDefaultFolderSelected] = useRecoilState(isDefaultFolderSelectedState);
 
   const closeFolerList = (selectedForderId: number) => () => {

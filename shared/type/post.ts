@@ -26,3 +26,16 @@ export interface CategoryFolder {
   count: number;
   image: string;
 }
+
+export interface PostRequestType {
+  firstCategory: string;
+  secondCategory: string;
+  content: string;
+  tags: string[];
+  disclosure: boolean;
+  folderId: number | undefined;
+}
+
+export interface PostResponseType {
+  postId: string;
+}
