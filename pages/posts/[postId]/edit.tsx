@@ -87,7 +87,7 @@ const PostDetail = () => {
         .map((category) => ({ id: category.categoryName, label: category.description }))
     : [];
 
-  const getFolderName = (id: number) => folderListData?.folders.find((folder) => folder.folderId === id)?.folderName;
+  const getFolderName = (id: number) => folderListData?.folders.find(({ folderId }) => folderId === id)?.folderName;
 
   const handleEdit = () => {
     const updatedForm = {
