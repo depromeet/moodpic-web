@@ -41,12 +41,14 @@ const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomShee
           <ButtonText>새로운 폴더 만들기</ButtonText>
         </FolderListItemWrap>
       )}
-      {folderData.map(({ folderId, folderName, default: isDefaultFolder }) => (
-        <FolderListItemWrap key={folderId} onClick={closeFolerList(folderId)}>
-          <IconWrap>{renderDefaultFolderOrSelectedFolder(folderId, isDefaultFolder)}</IconWrap>
-          {folderName}
-        </FolderListItemWrap>
-      ))}
+      {folderData
+        .map(({ folderId, folderName, default: isDefaultFolder }) => (
+          <FolderListItemWrap key={folderId} onClick={closeFolerList(folderId)}>
+            <IconWrap>{renderDefaultFolderOrSelectedFolder(folderId, isDefaultFolder)}</IconWrap>
+            {folderName}
+          </FolderListItemWrap>
+        ))
+        .reverse()}
     </BottomSheetFolderListWrap>
   );
 };

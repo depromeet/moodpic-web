@@ -7,7 +7,7 @@ axios.defaults.paramsSerializer = (params: object) => {
   return qs.stringify(params);
 };
 
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://3.39.97.206/' : '';
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'https://api.moodpic.kr/' : '';
 
 axios.interceptors.request.use((config) => {
   const token = getLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN);
