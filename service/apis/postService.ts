@@ -32,7 +32,7 @@ const postService = {
 
     return data;
   },
-  updatePost: async ({ id, postData }: { id: string; postData: PostResponseType }): Promise<PostResponseType> => {
+  updatePost: async ({ id, postData }: { id: string; postData: PostRequestType }): Promise<PostRequestType> => {
     const { secondCategory, content, tags, disclosure, folderId } = postData;
     const { data } = await fetcher('patch', `/api/v1/posts/${id}`, {
       secondCategory,
