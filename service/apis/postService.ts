@@ -45,7 +45,7 @@ const postService = {
     return data;
   },
   getPostsByFolderId: async ({ folderId, page, size }: PostListRequest): Promise<PostListResponse> => {
-    const { data } = await fetcher('get', `/api/v1/folders/posts/${folderId}?page=${page}&size=${size}`);
+    const { data } = await fetcher('get', `/api/v1/folders/${folderId}/posts?page=${page}&size=${size}`);
 
     return {
       ...data,

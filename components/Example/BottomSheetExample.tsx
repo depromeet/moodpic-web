@@ -12,7 +12,7 @@ const mockResponse = [
     folderName: '폴더명1',
     coverImg: '',
     postCount: 0,
-    default: true,
+    default: false,
   },
   {
     folderId: 2,
