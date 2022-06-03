@@ -5,14 +5,13 @@ import PostItem from '@/components/Post/PostItem/PostItem';
 import { Post } from '@/shared/type/post';
 
 interface PostListProps {
-  folderId: number;
   postList: Post[];
   isEditing: boolean;
   checkedItems: string[];
   setCheckedItems: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const PostList = ({ folderId, postList, isEditing, checkedItems, setCheckedItems }: PostListProps) => {
+const PostList = ({ postList, isEditing, checkedItems, setCheckedItems }: PostListProps) => {
   const router = useRouter();
 
   const changeCheckedItems = (postId: string) => {
@@ -26,7 +25,7 @@ const PostList = ({ folderId, postList, isEditing, checkedItems, setCheckedItems
 
   const handlePostItemClick = (postId: string) => {
     if (!isEditing) {
-      return router.push(`/posts/${postId}?folderId=${folderId}`);
+      return router.push(`/posts/${postId}`);
     }
 
     changeCheckedItems(postId);
@@ -37,13 +36,12 @@ const PostList = ({ folderId, postList, isEditing, checkedItems, setCheckedItems
   return (
     <PostListContainer>
       {postList.map((post) => (
-        <li key={post.id}>
-          <PostItem
-            {...{ post, isEditing }}
-            checked={isChecked(post.id)}
-            onClick={() => handlePostItemClick(post.id)}
-          />
-        </li>
+        <PostItem
+          {...{ post, isEditing }}
+          key={post.id}
+          checked={isChecked(post.id)}
+          onClick={() => handlePostItemClick(post.id)}
+        />
       ))}
     </PostListContainer>
   );

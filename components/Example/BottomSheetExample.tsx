@@ -87,9 +87,8 @@ const BottomSheetExample = () => {
         >
           <BottomSheetFolderList
             folderData={mockResponse}
-            onClose={() => {
-              console.log('asd');
-            }}
+            onClose={() => console.log('asd')}
+            toggleDialog={() => console.log('toggleDialog')}
           />
         </CommonBottomSheetContainer>
       ) : null}

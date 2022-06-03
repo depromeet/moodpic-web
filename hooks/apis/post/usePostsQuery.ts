@@ -6,11 +6,11 @@ import { AxiosError } from 'axios';
 import { ServerResponse } from '@/shared/type/common';
 import { PAGE_SIZE } from '@/shared/constants/common';
 
-const usePostsQuery = (): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_POSTS, postService.getPosts);
+const usePostsQuery = (): UseQueryResult<PostListResponse, AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS, postService.getPosts, { enabled: false });
 
-const useIncompletePostsQuery = (): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_POSTS, postService.getIncompletePosts);
+const useIncompletedPostsQuery = (): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS, postService.getIncompletedPosts);
 
 const usePostQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS, () => postService.getPostById(id));
@@ -23,7 +23,9 @@ const usePostsByFolderIdQuery = ({
   page = 0,
   size = PAGE_SIZE,
 }: PostListRequest): UseQueryResult<PostListResponse, AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_POSTS_BY_FOLDER_ID, () => postService.getPostsByFolderId({ folderId, page, size }));
+  useQuery(QUERY_KEY.GET_POSTS_BY_FOLDER_ID, () => postService.getPostsByFolderId({ folderId, page, size }), {
+    enabled: false,
+  });
 
 const usePostByIdQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id), { enabled: false });
@@ -31,12 +33,22 @@ const usePostByIdQuery = (id: string): UseQueryResult<Post, AxiosError<ServerRes
 const usePostsByCategoryQuery = (): UseQueryResult<CategoryFolder[], AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, postService.getPostsByCategories, { enabled: false });
 
+const usePostsByCategoryIdQuery = ({
+  categoryId,
+  page = 0,
+  size = PAGE_SIZE,
+}: PostListRequest): UseQueryResult<PostListResponse, AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, () => postService.getPostsByCategoryId({ categoryId, page, size }), {
+    enabled: false,
+  });
+
 export {
   usePostsQuery,
-  useIncompletePostsQuery,
+  useIncompletedPostsQuery,
   usePostQuery,
   useAllPostsQuery,
   usePostsByCategoryQuery,
   usePostByIdQuery,
   usePostsByFolderIdQuery,
+  usePostsByCategoryIdQuery,
 };

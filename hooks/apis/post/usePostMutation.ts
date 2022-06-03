@@ -20,6 +20,17 @@ export const useCreatePostMutation = () => {
   });
 };
 
+export const useUpdatePostMutation = () => {
+  return useMutation(
+    ({ id, postData }: { id: string; postData: PostResponseType }) => postService.updatePost({ id, postData }),
+    {
+      onSuccess: () => {
+        queryClient.resetQueries(QUERY_KEY.GET_POST_BY_ID);
+      },
+    },
+  );
+};
+
 export const useDeletePostMutation = () =>
   useMutation((ids: string[]) => postService.deletePostById(ids), {
     onSuccess: () => {

@@ -7,7 +7,7 @@ export interface PostSimple extends Omit<Post, 'id'> {
 }
 
 const postService = {
-  getPosts: async (): Promise<Post[]> => {
+  getPosts: async (): Promise<PostListResponse> => {
     const { data } = await fetcher('get', '/api/v1/posts');
 
     return data;
@@ -17,7 +17,7 @@ const postService = {
 
     return data;
   },
-  getIncompletePosts: async (): Promise<Post[]> => {
+  getIncompletedPosts: async (): Promise<Post[]> => {
     const { data } = await fetcher('get', '/api/v1/posts/temp');
 
     return data;
@@ -32,16 +32,27 @@ const postService = {
 
     return data;
   },
+  updatePost: async ({ id, postData }: { id: string; postData: PostResponseType }): Promise<PostResponseType> => {
+    const { secondCategory, content, tags, disclosure, folderId } = postData;
+    const { data } = await fetcher('patch', `/api/v1/posts/${id}`, {
+      secondCategory,
+      content,
+      tags,
+      disclosure,
+      folderId,
+    });
+
+    return data;
+  },
   getPostsByFolderId: async ({ folderId, page, size }: PostListRequest): Promise<PostListResponse> => {
     const { data } = await fetcher('get', `/api/v1/folders/posts/${folderId}?page=${page}&size=${size}`);
 
     return {
+      ...data,
       posts: data.posts.map((post: PostSimple) => ({
         ...post,
         id: post.postId,
       })),
-      totalCount: data.totalCount,
-      folderName: data.folderName,
     };
   },
   deletePostById: async (ids: string[]): Promise<PostListResponse> => {
@@ -54,6 +65,17 @@ const postService = {
     const { data } = await fetcher('get', '/api/v1/posts/categories');
 
     return data;
+  },
+  getPostsByCategoryId: async ({ categoryId, page, size }: PostListRequest): Promise<PostListResponse> => {
+    const { data } = await fetcher('get', `/api/v1/posts/categories/${categoryId}?page=${page}&size=${size}`);
+
+    return {
+      ...data,
+      posts: data.posts.map((post: PostSimple) => ({
+        ...post,
+        id: post.postId,
+      })),
+    };
   },
 };
 

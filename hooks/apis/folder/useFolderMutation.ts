@@ -6,7 +6,7 @@ import { queryClient } from '@/shared/utils/queryClient';
 export const useCreateFolderMutation = () =>
   useMutation((folderName: string) => folderService.createFolder(folderName), {
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY.GET_FOLDERS);
+      queryClient.resetQueries(QUERY_KEY.GET_FOLDERS);
     },
     onError: (error) => {
       // TODO: toast로 에러메시지 띄워주기, 문제 : 현재는 toast가 hook이라서 분기문 안에서 호출 불가, toast를 간소화 해야됨
@@ -16,19 +16,15 @@ export const useCreateFolderMutation = () =>
   });
 
 export const useUpdateFolderMutation = () =>
-  useMutation(
-    ({ id, folderName }: { id: number; folderName: string }) =>
-      folderService.updateFolder(id, folderName),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(QUERY_KEY.GET_FOLDERS);
-      },
+  useMutation(({ id, folderName }: { id: number; folderName: string }) => folderService.updateFolder(id, folderName), {
+    onSuccess: () => {
+      queryClient.resetQueries(QUERY_KEY.GET_FOLDERS);
     },
-  );
+  });
 
 export const useDeleteFolderMutation = () =>
   useMutation((id: number) => folderService.deleteFolder(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY.GET_FOLDERS);
+      queryClient.resetQueries(QUERY_KEY.GET_FOLDERS);
     },
   });

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import theme from '@/styles/theme';
 import CheckCirclePr from 'public/svgs/CheckCirclePr.svg';
 import FolderPlus from 'public/svgs/folderplus.svg';
 import { BottomSheetFolderListWrap } from './BottomSheetFolderList.styles';
@@ -7,7 +8,6 @@ import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { isDefaultFolderSelectedState, createPostRequestState } from '@/store/post/atom';
 import { Folder } from '@/shared/type/folder';
-import theme from '@/styles/theme';
 
 interface BottomSheetFolderListProps {
   folderData: Folder[];

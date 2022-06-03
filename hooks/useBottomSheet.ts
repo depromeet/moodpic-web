@@ -9,7 +9,7 @@ const NEW_CREATE_FOLDER = 47;
 export default function useBottomSheet() {
   const [isVisibleSheet, setVisibleSheet] = useState(false);
 
-  const calcBottomSheetHeight = ({ folderSize, hasHeader }: { folderSize: number; hasHeader?: boolean }) => {
+  const calcBottomSheetHeight = ({ folderSize, hasHeader = false }: { folderSize: number; hasHeader?: boolean }) => {
     if (folderSize === 1)
       return hasHeader
         ? HEADER_HEIGHT + NEW_CREATE_FOLDER + LIST_ITEM_HEIGHT + LIST_BOTTOM_HEIGHT
