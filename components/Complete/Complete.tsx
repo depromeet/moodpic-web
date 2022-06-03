@@ -52,9 +52,14 @@ const Complete = () => {
     }, 3000);
     return () => {
       clearTimeout(timer);
+    };
+  }, [router, postId]);
+
+  useEffect(() => {
+    return () => {
       resetPostRequest();
     };
-  }, [resetPostRequest, router, postId]);
+  }, [resetPostRequest]);
 
   return (
     <>
