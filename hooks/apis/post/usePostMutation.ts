@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { queryClient } from '@/shared/utils/queryClient';
-import { PostRequestType } from '@/shared/type/post';
+import { PostRequestType, PostResponseType } from '@/shared/type/post';
 import postService from '@/service/apis/postService';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 
