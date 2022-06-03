@@ -29,6 +29,7 @@ import {
 } from './Question.styles';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
+import theme from '@/styles/theme';
 
 const questionList = ['어떤 일이 있었나요?', '그 때 어떤 감정이 들었나요?', '스스로에게 한마디를 쓴다면?'];
 
@@ -208,7 +209,7 @@ const Question = () => {
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={thirdQuestionRef}>
+          <ProvidedQuestionWrap ref={thirdQuestionRef} className="last-child">
             <NumberTitle>
               <span className="highlight">3</span>
               /3
@@ -261,5 +262,6 @@ export default Question;
 const ButtonWrapper = styled.div`
   position: sticky;
   bottom: 0;
-  margin-top: auto;
+  padding: 40px 0 calc(env(safe-area-inset-bottom) + 46px);
+  background-color: ${theme.colors.black};
 `;

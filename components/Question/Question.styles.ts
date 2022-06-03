@@ -69,6 +69,9 @@ export const NumberTitle = styled.div`
 
 export const ProvidedQuestionWrap = styled.div`
   margin-bottom: 40px;
+  &.last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export const ProvidedQuestionMainTitle = styled.div`
