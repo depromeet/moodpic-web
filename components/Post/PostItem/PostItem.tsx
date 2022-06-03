@@ -96,6 +96,7 @@ const TagList = styled.div`
 const Content = styled.p`
   ${ellipsis(2)};
   ${theme.fonts.body};
+  height: 4.8rem;
   margin: 1.8rem 0 2rem;
   color: ${theme.colors.white};
 `;
