@@ -186,6 +186,7 @@ const PostListPage = () => {
         return (
           <PostList
             key={index}
+            isMine={false}
             postList={item.posts}
             isEditing={isEditing}
             checkedItems={checkedItems}
