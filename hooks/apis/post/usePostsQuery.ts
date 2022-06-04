@@ -27,8 +27,11 @@ const usePostsByFolderIdQuery = ({
     enabled: false,
   });
 
-const usePostByIdQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id), { enabled: false });
+// TODO: options 타입 지정
+const usePostByIdQuery = (id: string, options?: never): UseQueryResult<Post, AxiosError<ServerResponse>> => {
+  const queryOptions = options || { enabled: false };
+  return useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id), queryOptions);
+};
 
 const usePostsByCategoryQuery = (): UseQueryResult<CategoryFolder[], AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, postService.getPostsByCategories, { enabled: false });
