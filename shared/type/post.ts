@@ -1,4 +1,4 @@
-import { PageType } from './common';
+import { Pagination, PaginationParam } from './common';
 
 export interface Post {
   id: string;
@@ -15,12 +15,12 @@ export interface Post {
   createdAt: string;
 }
 
-export interface PostListRequest extends PageType {
+export interface PostListRequest extends PaginationParam {
   folderId?: number;
   categoryId?: number;
 }
 
-export interface PostListResponse {
+export interface PostListResponse extends Pagination {
   posts: Post[];
   categoryName?: string;
   folderName?: string;
