@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from '@/styles/theme';
 
 export const CollectedFolderContainer = styled.figure`
@@ -30,8 +30,13 @@ export const BoxContainer = styled.figure`
 `;
 
 export const FolderImage = styled.div<{ thumbnail: string }>`
-  height: 8rem;
   border-radius: 1rem;
-  background-image: url(${(props) => props.thumbnail});
+  padding-top: 100%;
+  background-size: cover;
   background-color: ${theme.colors.gray3};
+  ${(props) =>
+    props.thumbnail &&
+    css`
+      background-image: url(${props.thumbnail});
+    `};
 `;

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 interface FolderListProps {
   isEditMode: boolean;
   folderList: Folder[];
+  thumbnailList?: string[];
   supportsCollectedFolder: boolean;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
@@ -15,6 +16,7 @@ interface FolderListProps {
 const FolderList = ({
   isEditMode,
   folderList,
+  thumbnailList,
   supportsCollectedFolder,
   onEdit,
   onDelete,
@@ -28,7 +30,9 @@ const FolderList = ({
 
   return (
     <>
-      {supportsCollectedFolder && <HomeCollectedFolder count={totalCount} items={folderList} onClick={goToPosts} />}
+      {supportsCollectedFolder && (
+        <HomeCollectedFolder count={totalCount} items={thumbnailList || []} onClick={goToPosts} />
+      )}
       {folderList.map((folder) => (
         <HomeFolder
           key={folder.folderId}
