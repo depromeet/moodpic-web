@@ -9,6 +9,6 @@ const useFoldersQuery = (): UseQueryResult<FolderResponse, AxiosError<ServerResp
   useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
 
 const useFolderByPostIdQuery = (postId: string): UseQueryResult<Folder, AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_FOLDER_BY_POST_ID, () => folderService.getFolderByPostId(postId));
+  useQuery(QUERY_KEY.GET_FOLDER_BY_POST_ID, () => folderService.getFolderByPostId(postId), { enabled: !!postId });
 
 export { useFoldersQuery, useFolderByPostIdQuery };
