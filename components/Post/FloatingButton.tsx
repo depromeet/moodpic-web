@@ -1,40 +1,26 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import Image from 'next/image';
-import theme from '@/styles/theme';
-import ArrowRightPrimary from '@/public/svgs/arrow-right-primary.svg';
+import { CommonButtonWithIcon } from '../Common';
 
-const Button = ({ ...rest }: ButtonHTMLAttributes<HTMLButtonElement>): React.ReactElement => {
+const PostFloatingButton = (): React.ReactElement => {
+  const router = useRouter();
   return (
-    <ButtonContainer {...rest}>
-      <Text>홈으로 돌아가기</Text>
-      <Image src={ArrowRightPrimary} alt="" />
+    <ButtonContainer>
+      <CommonButtonWithIcon onClick={() => router.push('/')}>홈으로 돌아가기</CommonButtonWithIcon>
     </ButtonContainer>
   );
 };
 
-export default Button;
+export default PostFloatingButton;
 
-const ButtonContainer = styled.button`
+const ButtonContainer = styled.div`
   position: fixed;
-  bottom: 8rem;
+  bottom: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
   width: calc(100% - 3.6rem);
+  height: 22.4rem;
   max-width: 44.4rem;
-  height: 4.6rem;
-  padding: 1.5rem 0;
-  background-color: ${theme.colors.gray2};
-  border: 0.1rem solid ${theme.colors.primary};
-  border-radius: 1rem;
-
-  span {
-    ${theme.fonts.btn2};
-    color: ${theme.colors.primary};
-  }
-`;
-
-const Text = styled.span`
-  margin-right: 1rem;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 100%);
 `;
