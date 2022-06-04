@@ -2,6 +2,7 @@ export { default as CommonAlert } from './Alert/Alert';
 export { default as CommonAppLayout } from './AppLayout/AppLayout';
 export { default as CommonBottomSheetContainer } from './BottomSheetContainer/BottomSheetContainer';
 export { default as CommonButton } from './Button/Button';
+export { default as CommonButtonWithIcon } from './ButtonWithIcon/ButtonWithIcon';
 export { default as CommonDialog } from './Dialog/Dialog';
 export { default as CommonChipButton } from './ChipButton/ChipButton';
 export { default as CommonToast } from './Toast/Toast';
