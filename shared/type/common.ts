@@ -9,9 +9,14 @@ export interface ServerResponse {
   success: boolean;
 }
 
-export interface PageType {
+export interface PaginationParam {
   page?: number;
   size?: number;
+}
+
+export interface Pagination {
+  nextPage?: number;
+  hasNext?: boolean;
 }
 
 export const ToastType = {
