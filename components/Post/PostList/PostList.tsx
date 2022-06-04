@@ -62,7 +62,7 @@ const PostList = ({ postList = [], isEditing, checkedItems, setCheckedItems, isM
 };
 
 const PostListContainer = styled.ul`
-  margin-top: 2rem;
+  margin: 2rem 0;
 
   li ~ li {
     margin-top: 1.8rem;
