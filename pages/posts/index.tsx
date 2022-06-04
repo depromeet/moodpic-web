@@ -3,7 +3,13 @@ import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import PostList from '@/components/Post/PostList/PostList';
-import { CommonAppBar, CommonBottomSheetContainer, CommonDialog, CommonIconButton } from '@/components/Common';
+import {
+  CommonAppBar,
+  CommonBottomSheetContainer,
+  CommonDialog,
+  CommonIconButton,
+  CommonLoading,
+} from '@/components/Common';
 import styled from 'styled-components';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import theme from '@/styles/theme';
@@ -11,6 +17,8 @@ import useDialog from '@/hooks/useDialog';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import { useTypeInput } from '@/hooks/useTypeInput';
+import useToast from '@/hooks/useToast';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import {
   useDeleteFolderMutation,
   useDeletePostMutation,
@@ -20,7 +28,6 @@ import {
   useUpdateFolderMutation,
 } from '@/hooks/apis';
 import { ToastType } from '@/shared/type/common';
-import useToast from '@/hooks/useToast';
 
 const PostListPage = () => {
   const router = useRouter();
@@ -31,9 +38,27 @@ const PostListPage = () => {
   const folderId = Number(router.query.folderId);
   const categoryId = Number(router.query.categoryId);
 
-  const { data: postsByFolderId, refetch: fetchPostsByFolderId } = usePostsByFolderIdQuery({ folderId });
-  const { data: postsByCategoryId, refetch: fetchPostsByCategoryId } = usePostsByCategoryIdQuery({ categoryId });
-  const { data: posts, refetch: fetchPosts } = usePostsQuery();
+  const {
+    data: postsByFolderId,
+    refetch: fetchPostsByFolderId,
+    fetchNextPage: fetchFolderNextPage,
+    hasNextPage: hasFolderNextPage,
+  } = usePostsByFolderIdQuery({ folderId });
+  const {
+    data: postsByCategoryId,
+    refetch: fetchPostsByCategoryId,
+    fetchNextPage: fetchCategoryNextPage,
+    hasNextPage: hasCategoryNextPage,
+  } = usePostsByCategoryIdQuery({ categoryId });
+  const {
+    data: posts,
+    refetch: fetchPosts,
+    fetchNextPage: fetchPostsNextPage,
+    hasNextPage: hasPostsNextPage,
+  } = usePostsQuery();
+  const fetchNextPage = folderId ? fetchFolderNextPage : categoryId ? fetchCategoryNextPage : fetchPostsNextPage;
+  const fetch = folderId ? fetchPostsByFolderId : categoryId ? fetchPostsByCategoryId : fetchPosts;
+  const hasNextPage = folderId ? hasFolderNextPage : categoryId ? hasCategoryNextPage : hasPostsNextPage;
 
   const updateFolderMutation = useUpdateFolderMutation();
   const deleteFolderMutation = useDeleteFolderMutation();
@@ -42,6 +67,12 @@ const PostListPage = () => {
   const { dialogVisible, toggleDialog } = useDialog();
   const notify = useToast();
   const { calcBottomSheetHeight, toggleSheet, isVisibleSheet } = useBottomSheet();
+
+  const { setEntry } = useIntersectionObserver({
+    onIntersect: ([{ isIntersecting }]) => {
+      if (isIntersecting && hasNextPage) fetchNextPage();
+    },
+  });
 
   const categoryBottomSheetItems = [
     {
@@ -73,18 +104,10 @@ const PostListPage = () => {
   ];
 
   useEffect(() => {
-    if (folderId) {
-      fetchPostsByFolderId();
-      return;
+    if (router.isReady) {
+      fetch();
     }
-
-    if (categoryId) {
-      fetchPostsByCategoryId();
-      return;
-    }
-
-    fetchPosts();
-  }, [fetchPosts, folderId, categoryId, fetchPostsByFolderId, fetchPostsByCategoryId]);
+  }, [router.isReady, fetch]);
 
   const goToWritePage = () => router.push('/write');
 
@@ -125,6 +148,7 @@ const PostListPage = () => {
         });
 
         setIsEditing(false);
+        setCheckedItems([]);
       },
     });
   };
@@ -132,21 +156,23 @@ const PostListPage = () => {
   const handleSubmit = () => setIsEditing(false);
 
   const postResponse = folderId ? postsByFolderId : categoryId ? postsByCategoryId : posts;
+  const postData = postResponse?.pages || [{ posts: [], folderName: '', totalCount: 0 }];
+  const { folderName, totalCount } = postData[0];
 
   const getBottomSheetItems = () => {
-    return folderId && postResponse?.folderName !== '미분류' ? folderBottomSheetItems : categoryBottomSheetItems;
+    return folderId && folderName !== '미분류' ? folderBottomSheetItems : categoryBottomSheetItems;
   };
 
   const bottomSheetItems = getBottomSheetItems();
 
-  if (!postResponse) return <div>404</div>;
+  if (!postData.length) return <div>404</div>;
 
   return (
     <>
       <CommonAppBar>
         <CommonAppBar.Left>
           <CommonIconButton iconName="left" alt="이전" onClick={() => router.back()} />
-          <HeaderTitle>{postResponse.folderName || postResponse.categoryName}</HeaderTitle>
+          <HeaderTitle>{folderName}</HeaderTitle>
         </CommonAppBar.Left>
         <CommonAppBar.Right>
           {isEditing ? (
@@ -156,15 +182,25 @@ const PostListPage = () => {
           )}
         </CommonAppBar.Right>
       </CommonAppBar>
-      <PostList
-        postList={postResponse.posts}
-        isEditing={isEditing}
-        checkedItems={checkedItems}
-        setCheckedItems={setCheckedItems}
-      />
+      {postData.map((item, index) => {
+        return (
+          <PostList
+            key={index}
+            postList={item.posts}
+            isEditing={isEditing}
+            checkedItems={checkedItems}
+            setCheckedItems={setCheckedItems}
+          />
+        );
+      })}
+      {hasNextPage && (
+        <LoadingContainer ref={setEntry}>
+          <CommonLoading />
+        </LoadingContainer>
+      )}
       {isEditing ? (
         <BottomController>
-          <BottomButton disabled={postResponse?.posts?.length === 0}>전체 삭제</BottomButton>
+          <BottomButton disabled={totalCount === 0}>전체 삭제</BottomButton>
           <BottomButton disabled={!checkedItems.length} onClick={onDeletePosts}>
             {checkedItems.length > 0 && `${checkedItems.length}개`} 삭제
           </BottomButton>
@@ -233,6 +269,10 @@ const BottomButton = styled.button<{ disabled: boolean }>`
   &:disabled {
     color: ${theme.colors.gray3};
   }
+`;
+
+const LoadingContainer = styled.div`
+  margin: 2rem auto;
 `;
 
 export default PostListPage;

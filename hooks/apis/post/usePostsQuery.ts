@@ -3,23 +3,15 @@ import postService from '@/service/apis/postService';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { Post, PostListRequest, PostListResponse, CategoryFolder } from '@/shared/type/post';
 import { AxiosError } from 'axios';
-import { PaginationParam, ServerResponse } from '@/shared/type/common';
-import { PAGE_SIZE } from '@/shared/constants/common';
+import { ServerResponse } from '@/shared/type/common';
 
 const usePostsQuery = (): UseInfiniteQueryResult<PostListResponse, AxiosError<ServerResponse>> =>
-  useInfiniteQuery(
-    QUERY_KEY.GET_POSTS,
-    ({ pageParam = 0 }) => postService.getPosts({ page: pageParam, size: PAGE_SIZE }),
-    {
-      getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.nextPage : undefined),
-    },
-  );
+  useInfiniteQuery(QUERY_KEY.GET_POSTS, ({ pageParam = 0 }) => postService.getPosts(pageParam), {
+    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.nextPage : undefined),
+  });
 
-const useIncompletedPostsQuery = ({
-  page,
-  size = PAGE_SIZE,
-}: PaginationParam): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_POSTS, () => postService.getIncompletedPosts({ page, size }));
+const useIncompletedPostsQuery = (page = 0): UseQueryResult<Post[], AxiosError<ServerResponse>> =>
+  useQuery(QUERY_KEY.GET_POSTS, () => postService.getIncompletedPosts(page));
 
 const usePostQuery = (id: string): UseQueryResult<Post, AxiosError<ServerResponse>> =>
   useQuery(QUERY_KEY.GET_POSTS, () => postService.getPostById(id));
@@ -29,7 +21,7 @@ const usePostsByFolderIdQuery = ({
 }: PostListRequest): UseInfiniteQueryResult<PostListResponse, AxiosError<ServerResponse>> =>
   useInfiniteQuery(
     QUERY_KEY.GET_POSTS_BY_FOLDER_ID,
-    ({ pageParam = 0 }) => postService.getPostsByFolderId({ folderId, page: pageParam, size: PAGE_SIZE }),
+    ({ pageParam = 0 }) => postService.getPostsByFolderId({ folderId, page: pageParam }),
     {
       getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.nextPage : undefined),
       enabled: !!folderId,
@@ -47,7 +39,7 @@ const usePostsByCategoryIdQuery = ({
 }: PostListRequest): UseInfiniteQueryResult<PostListResponse, AxiosError<ServerResponse>> =>
   useInfiniteQuery(
     QUERY_KEY.GET_POSTS_BY_CATEGORIES,
-    ({ pageParam = 0 }) => postService.getPostsByCategoryId({ categoryId, page: pageParam, size: PAGE_SIZE }),
+    ({ pageParam = 0 }) => postService.getPostsByCategoryId({ categoryId, page: pageParam }),
     {
       getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.nextPage : undefined),
       enabled: !!categoryId,
