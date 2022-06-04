@@ -7,7 +7,9 @@ axios.defaults.paramsSerializer = (params: object) => {
   return qs.stringify(params);
 };
 
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'https://api.moodpic.kr/' : '';
+// TODO: 환경이 분리가 되면 호출하는 URL 변경
+axios.defaults.baseURL = 'https://api.moodpic.kr/';
+// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'https://api.moodpic.kr/' : '';
 
 axios.interceptors.request.use((config) => {
   const token = getLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN);
