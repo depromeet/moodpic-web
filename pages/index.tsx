@@ -32,7 +32,6 @@ const Home = () => {
   const isMounted = useIsMounted();
   const { dialogVisible, toggleDialog } = useDialog();
   const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
-  const { randomImageSource } = useRandomBanner();
   const { data: folderResponse } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
   const { data: incompletedPosts } = useIncompletedPostsQuery();
@@ -62,7 +61,7 @@ const Home = () => {
       풀어보는 시간을 가져볼까요?
     </>,
   ];
-  const randomTitleIndex = Math.floor(randomTitleCases.length * Math.random());
+  const { randomImageSource, randomTitle } = useRandomBanner(randomTitleCases);
 
   useEffect(() => {
     if (currentTab === HOME_TAB_TYPE.EMOTION) {
@@ -180,7 +179,7 @@ const Home = () => {
   return (
     <>
       <HomeHeader />
-      {isMounted && <HomeBanner title={randomTitleCases[randomTitleIndex]} background={randomImageSource} />}
+      {isMounted && <HomeBanner title={randomTitle} background={randomImageSource} />}
       <HomeTabHeader
         currentTab={currentTab}
         isEditMode={isEditMode}
@@ -192,6 +191,7 @@ const Home = () => {
           <FolderList
             isEditMode={isEditMode}
             folderList={folderResponse.folders}
+            thumbnailList={folderResponse.postsThumbnail}
             supportsCollectedFolder={currentTab === HOME_TAB_TYPE.FOLDER}
             onEdit={onEdit}
             onDelete={onDelete}
