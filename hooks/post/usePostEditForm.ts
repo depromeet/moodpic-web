@@ -1,9 +1,9 @@
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { postRequestState } from '@/store/postResponse/atom';
+import { createPostRequestState } from '@/store/post/atom';
 import { useRecoilState } from 'recoil';
 
 const usePostEditForm = () => {
-  const [selectedState, setSelectedState] = useRecoilState(postRequestState);
+  const [selectedState, setSelectedState] = useRecoilState(createPostRequestState);
   const hasMultipleContent = selectedState.content.includes(CONTENT_SEPARATOR);
 
   const changePostForm = (key: string, value: boolean | string) => {

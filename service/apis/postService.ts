@@ -1,5 +1,5 @@
 import { Post, PostListRequest, PostListResponse, CategoryFolder } from '@/shared/type/post';
-import { PostResponseType } from '@/shared/type/postResponse';
+import { PostRequestType } from '@/shared/type/post';
 import fetcher from '@/shared/utils/fetcher';
 
 export interface PostSimple extends Omit<Post, 'id'> {
@@ -27,12 +27,12 @@ const postService = {
 
     return data;
   },
-  createPost: async (postData: PostResponseType): Promise<PostResponseType> => {
+  createPost: async (postData: PostRequestType): Promise<PostRequestType> => {
     const { data } = await fetcher('post', `/api/v1/posts`, postData);
 
     return data;
   },
-  updatePost: async ({ id, postData }: { id: string; postData: PostResponseType }): Promise<PostResponseType> => {
+  updatePost: async ({ id, postData }: { id: string; postData: PostRequestType }): Promise<PostRequestType> => {
     const { secondCategory, content, tags, disclosure, folderId } = postData;
     const { data } = await fetcher('patch', `/api/v1/posts/${id}`, {
       secondCategory,

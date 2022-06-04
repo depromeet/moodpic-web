@@ -7,11 +7,7 @@ axios.defaults.paramsSerializer = (params: object) => {
   return qs.stringify(params);
 };
 
-axios.defaults.baseURL = 'http://3.35.50.139';
-
-// TODO: 이후 환경별로 baseURL 이 변경되어야 합니다.
-// axios.defaults.baseURL =
-//   process.env.NODE_ENV === 'development' ? 'http://3.35.50.139' : '';
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'https://api.moodpic.kr/' : '';
 
 axios.interceptors.request.use((config) => {
   const token = getLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN);

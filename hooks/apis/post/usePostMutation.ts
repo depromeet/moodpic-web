@@ -1,13 +1,13 @@
 import { useMutation } from 'react-query';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { queryClient } from '@/shared/utils/queryClient';
-import { PostResponseType } from '@/shared/type/postResponse';
+import { PostRequestType } from '@/shared/type/post';
 import postService from '@/service/apis/postService';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 
 export const useCreatePostMutation = () => {
   const nextProgressStep = useNextProgressStep();
-  return useMutation((postData: PostResponseType) => postService.createPost(postData), {
+  return useMutation((postData: PostRequestType) => postService.createPost(postData), {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY.CREATE_POST);
       nextProgressStep();
@@ -22,7 +22,7 @@ export const useCreatePostMutation = () => {
 
 export const useUpdatePostMutation = () => {
   return useMutation(
-    ({ id, postData }: { id: string; postData: PostResponseType }) => postService.updatePost({ id, postData }),
+    ({ id, postData }: { id: string; postData: PostRequestType }) => postService.updatePost({ id, postData }),
     {
       onSuccess: () => {
         queryClient.resetQueries(QUERY_KEY.GET_POST_BY_ID);

@@ -3,15 +3,15 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
 import { tooltipStateAtom } from '@/store/tooltip/atom';
 import useDialog from '@/hooks/useDialog';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
-import { postRequestState } from '@/store/postResponse/atom';
+import { createPostRequestState } from '@/store/post/atom';
 import Button from '@/components/Common/Button/Button';
 import DialogCancel from '@/components/Dialog/DialogCancel';
 import TextArea from '../Common/TextArea/TextArea';
 import { CommonDialog } from '../Common';
-import { ButtonWrapper } from '@/pages/write';
 import BgClose from 'public/svgs/bgclose.svg';
 import {
   ButtonContainer,
@@ -29,14 +29,15 @@ import {
 } from './Question.styles';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
+import theme from '@/styles/theme';
 
-const questionList = ['왜 그렇게 생각했나요?', '두번째 질문 영역', '세번째 질문 영역'];
+const questionList = ['어떤 일이 있었나요?', '그 때 어떤 감정이 들었나요?', '스스로에게 한마디를 쓴다면?'];
 
 const HEADER_HEIGHT = 50;
 
 const Question = () => {
   const [questionModeData, setQuestionModeData] = useRecoilState(questionModeState);
-  const [postRequestData, setPostRequestData] = useRecoilState(postRequestState);
+  const [postRequestData, setPostRequestData] = useRecoilState(createPostRequestState);
   const isTooltipOpen = useRecoilValue(tooltipStateAtom);
   const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const [firstQuestionValue, onChangeFirstQuestionValue, setFirstQuestionValue] = useTypeInput('');
@@ -47,6 +48,7 @@ const Question = () => {
   const firstQuestionRef = useRef<HTMLDivElement>(null);
   const secondQuestionRef = useRef<HTMLDivElement>(null);
   const thirdQuestionRef = useRef<HTMLDivElement>(null);
+  const timer = useRef<any>(null);
   const nextProgressStep = useNextProgressStep();
   const { dialogVisible, toggleDialog } = useDialog();
 
@@ -88,16 +90,16 @@ const Question = () => {
 
   const scrollToTextAreaOffestTop = (target: RefObject<HTMLDivElement>) => () => {
     const targetRef = target;
-    if (typeof window !== undefined && targetRef.current) {
-      window.scrollTo({
-        top: targetRef.current.offsetTop - HEADER_HEIGHT,
-        left: 0,
-        behavior: 'smooth',
-      });
-      // targetRef.current.scrollIntoView({
-      //   block: 'start',
-      //   behavior: 'smooth',
-      // });
+    // 참고: https://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome/15694294#15694294
+    if (typeof window !== undefined) {
+      timer.current = setTimeout(() => {
+        if (targetRef.current)
+          window.scrollTo({
+            top: targetRef.current?.offsetTop - HEADER_HEIGHT,
+            left: 0,
+            behavior: 'smooth',
+          });
+      }, 100);
     }
   };
 
@@ -128,6 +130,12 @@ const Question = () => {
     } else {
       setMyselfQuestionValue(postRequestData.content);
     }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
   }, []);
 
   return (
@@ -201,7 +209,7 @@ const Question = () => {
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={thirdQuestionRef}>
+          <ProvidedQuestionWrap ref={thirdQuestionRef} className="last-child">
             <NumberTitle>
               <span className="highlight">3</span>
               /3
@@ -232,7 +240,7 @@ const Question = () => {
       )}
       <ButtonWrapper>
         <Button
-          disabled={!(!!firstQuestionValue || !!secondQuestionValue || !!thirdQuestionValue) && !myselfQuestionValue}
+          disabled={!(!!firstQuestionValue && !!secondQuestionValue && !!thirdQuestionValue) && !myselfQuestionValue}
           color="primary"
           onClick={onClickNextButton}
           size="large"
@@ -250,3 +258,10 @@ const Question = () => {
 };
 
 export default Question;
+
+const ButtonWrapper = styled.div`
+  position: sticky;
+  bottom: 0;
+  padding: 40px 0 calc(env(safe-area-inset-bottom) + 46px);
+  background-color: ${theme.colors.black};
+`;
