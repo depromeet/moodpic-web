@@ -98,26 +98,29 @@ const CurrentEmotion = () => {
     return [...deduplicatedTagList];
   }, [tagList, tagValue]);
 
+  const setValidTagLogic = useCallback(() => {
+    setTagList(calcDeduplicatedTagList);
+    setSelectState((prev) => ({
+      ...prev,
+      tags: calcDeduplicatedTagList(),
+    }));
+    setTagValue('');
+  }, [calcDeduplicatedTagList, setSelectState, setTagValue]);
+
   const onKeyPressEnter = useCallback(
     (event) => {
       if (event.key === 'Enter' && !!tagValue.trim() && tagList.length < MAX_TAG_LIST_LENGTH) {
-        setTagList(calcDeduplicatedTagList);
-        setSelectState((prev) => ({
-          ...prev,
-          tags: calcDeduplicatedTagList(),
-        }));
-        setTagValue('');
+        setValidTagLogic();
       }
     },
-    [tagValue, tagList.length, calcDeduplicatedTagList, setSelectState, setTagValue],
+    [setValidTagLogic, tagList.length, tagValue],
   );
 
   const onClickRightSideIcon = useCallback(() => {
     if (tagList.length < MAX_TAG_LIST_LENGTH && !!tagValue.trim()) {
-      setTagList(calcDeduplicatedTagList);
-      setTagValue('');
+      setValidTagLogic();
     }
-  }, [tagValue, tagList, setTagValue, calcDeduplicatedTagList]);
+  }, [setValidTagLogic, tagList.length, tagValue]);
 
   const onDeleteTag = useCallback(
     (index: number) => () => {
