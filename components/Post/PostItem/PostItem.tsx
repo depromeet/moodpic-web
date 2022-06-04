@@ -86,6 +86,9 @@ const PostItemContainer = styled.li<Pick<PostItemProps, 'isEditing' | 'checked'>
 
 const TagList = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  overflow-y: hidden;
+  height: 3rem;
   margin-bottom: 2.4rem;
 
   div ~ div {
