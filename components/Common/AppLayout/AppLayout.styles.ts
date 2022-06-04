@@ -14,7 +14,4 @@ export const ContainerInner = styled.div`
   min-height: 100vh;
   margin: 0 auto;
   padding: 0 1.8rem 8rem;
-  &.question-page-container {
-    padding: 0 1.8rem 3.4rem;
-  }
 `;

@@ -209,7 +209,7 @@ const Question = () => {
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
           </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={thirdQuestionRef} className="last-child">
+          <ProvidedQuestionWrap ref={thirdQuestionRef}>
             <NumberTitle>
               <span className="highlight">3</span>
               /3
@@ -260,8 +260,5 @@ const Question = () => {
 export default Question;
 
 const ButtonWrapper = styled.div`
-  position: sticky;
-  bottom: 0;
-  padding: 40px 0 calc(env(safe-area-inset-bottom) + 46px);
-  background-color: ${theme.colors.black};
+  margin-top: auto;
 `;
