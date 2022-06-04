@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const MAX_SHOW_LIST_ITEM = 7;
 const HEADER_HEIGHT = 88;
@@ -22,6 +22,10 @@ export default function useBottomSheet() {
   const toggleSheet = () => {
     setVisibleSheet(!isVisibleSheet);
   };
+
+  useEffect(() => {
+    document.body.style.overflow = isVisibleSheet ? 'hidden' : 'unset';
+  }, [isVisibleSheet]);
 
   return {
     calcBottomSheetHeight,
