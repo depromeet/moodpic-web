@@ -15,7 +15,7 @@ export const TagContainer = styled.div`
   margin: 2rem -1.8rem 2.4rem;
 
   div {
-    flex: 0 1 auto;
+    flex: 0 0 auto;
   }
 
   div ~ div {
