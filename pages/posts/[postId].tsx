@@ -100,7 +100,7 @@ const PostDetail = () => {
         </CommonAppBar.Left>
         {post.my && (
           <CommonAppBar.Right>
-            <CommonIconButton iconName="share" />
+            <CommonIconButton iconName="share" onClick={() => router.push(`/api/share?postId=${postId})`)} />
             <CommonIconButton iconName="more" onClick={toggleSheet} />
           </CommonAppBar.Right>
         )}
