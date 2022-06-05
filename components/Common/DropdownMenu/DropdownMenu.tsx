@@ -1,8 +1,9 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import Image from 'next/image';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { animated } from 'react-spring';
 import theme from '@/styles/theme';
 import { dropdownStateAtom } from '@/store/dropdown/atom';
@@ -11,6 +12,7 @@ import LeftIcon from 'public/svgs/left.svg';
 import Logo from 'public/images/logo.png';
 
 const DropdownMenu = (): React.ReactElement => {
+  const router = useRouter();
   const isDropdownOpen = useSetRecoilState(dropdownStateAtom);
   const { opacityAnimation, fullMenuAnimation } = useAnimation({
     onClose: () => isDropdownOpen(false),
@@ -18,6 +20,11 @@ const DropdownMenu = (): React.ReactElement => {
 
   const closeDropdown = () => {
     isDropdownOpen(false);
+  };
+
+  const goToMypage = () => {
+    closeDropdown();
+    router.push('/mypage');
   };
 
   const dropdownRef = typeof window !== 'undefined' && document.getElementById('dropdown-menu');
@@ -32,7 +39,7 @@ const DropdownMenu = (): React.ReactElement => {
           <Dropdown>
             <Image src={Logo} alt="moodpic" width={82} height={25} />
             <MenuList>
-              <MenuItem>마이페이지</MenuItem>
+              <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
               <MenuItem>피드백 / 문의사항 보내기</MenuItem>
               <MenuItem>개발자 소개</MenuItem>
               <MenuItem>SNS 계정</MenuItem>
@@ -88,6 +95,7 @@ const MenuList = styled.ul`
 `;
 
 const MenuItem = styled.li`
+  cursor: pointer;
   padding: 2.2rem 0;
   ${theme.fonts.h6};
   color: ${theme.colors.white};
