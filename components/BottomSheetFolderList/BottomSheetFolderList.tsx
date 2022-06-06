@@ -6,7 +6,7 @@ import FolderPlus from 'public/svgs/folderplus.svg';
 import { BottomSheetFolderListWrap } from './BottomSheetFolderList.styles';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { postRequestState } from '@/store/postResponse/atom';
+import { isDefaultFolderSelectedState, createPostRequestState } from '@/store/post/atom';
 import { Folder } from '@/shared/type/folder';
 
 interface BottomSheetFolderListProps {
@@ -16,29 +16,39 @@ interface BottomSheetFolderListProps {
 }
 
 const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomSheetFolderListProps) => {
-  const [selectedFolder, setSelectFolder] = useRecoilState(postRequestState);
+  const [selectedFolder, setSelectFolder] = useRecoilState(createPostRequestState);
+  const [isDefaultFolderSelected, setIsDefaultFolderSelected] = useRecoilState(isDefaultFolderSelectedState);
+
   const closeFolerList = (selectedForderId: number) => () => {
-    setSelectFolder({ ...selectedFolder, folderId: selectedForderId });
+    setSelectFolder((prev) => ({ ...prev, folderId: selectedForderId }));
+    setIsDefaultFolderSelected(true);
     onClose();
+  };
+
+  const renderDefaultFolderOrSelectedFolder = (folderId: number, isDefaultFolder: boolean) => {
+    if (
+      (isDefaultFolder && !isDefaultFolderSelected) ||
+      (folderId === selectedFolder.folderId && isDefaultFolderSelected)
+    )
+      return <Image src={CheckCirclePr} alt="CheckCirclePr" />;
   };
 
   return (
     <BottomSheetFolderListWrap>
-      {folderData.length > 1 ? (
-        folderData.slice(1, folderData.length).map(({ folderId, folderName }) => (
-          <FolderListItemWrap key={folderId} onClick={closeFolerList(folderId)}>
-            <IconWrap>
-              {folderId === selectedFolder.folderId && <Image src={CheckCirclePr} alt="CheckCirclePr" />}
-            </IconWrap>
-            {folderName}
-          </FolderListItemWrap>
-        ))
-      ) : (
+      {folderData.length === 1 && ( // 미분류만 있을때
         <FolderListItemWrap onClick={toggleDialog}>
           <CustomImage src={FolderPlus} alt="추가" />
           <ButtonText>새로운 폴더 만들기</ButtonText>
         </FolderListItemWrap>
       )}
+      {folderData
+        .map(({ folderId, folderName, default: isDefaultFolder }) => (
+          <FolderListItemWrap key={folderId} onClick={closeFolerList(folderId)}>
+            <IconWrap>{renderDefaultFolderOrSelectedFolder(folderId, isDefaultFolder)}</IconWrap>
+            {folderName}
+          </FolderListItemWrap>
+        ))
+        .reverse()}
     </BottomSheetFolderListWrap>
   );
 };

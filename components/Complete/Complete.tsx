@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
-import CompleteImage from 'public/images/complete.png';
 import theme from '@/styles/theme';
-import { useResetRecoilState } from 'recoil';
-import { postRequestState } from '@/store/postResponse/atom';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { createPostRequestState, createPostResponseState } from '@/store/post/atom';
 import { useRouter } from 'next/router';
 
 type RandomTextProps = { [x: number]: React.ReactElement | string };
@@ -13,7 +12,7 @@ const randomText: RandomTextProps = {
   0: (
     <>
       부정적인 생각들은 <br />
-      서비스명이 처리했으니 안심하라구~
+      moodpic이 처리했으니 안심하라구~
     </>
   ),
   1: (
@@ -29,14 +28,16 @@ const randomText: RandomTextProps = {
   ),
   3: (
     <>
-      한결 나아졌어요 👍🏻 <br /> 서비스명아 고마워!
+      한결 나아졌어요 👍🏻 <br /> moodpic아 고마워!
     </>
   ),
   4: '기록된 감정은 홈화면에서 확인할 수 있어요.',
 };
 
 const Complete = () => {
-  const resetPostRequest = useResetRecoilState(postRequestState);
+  const resetPostRequest = useResetRecoilState(createPostRequestState);
+  const { secondCategory } = useRecoilValue(createPostRequestState);
+  const { postId } = useRecoilValue(createPostResponseState);
   const router = useRouter();
 
   const pickRandomText = () => {
@@ -46,23 +47,28 @@ const Complete = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      //TODO : 내가쓴 글로 이동
-      router.push('/');
+      if (postId) router.replace(`/posts/${postId}`);
+      else router.replace('/');
     }, 3000);
     return () => {
       clearTimeout(timer);
+    };
+  }, [router, postId]);
+
+  useEffect(() => {
+    return () => {
       resetPostRequest();
     };
-  }, [resetPostRequest, router]);
+  }, [resetPostRequest]);
+
   return (
     <>
       <ImageWrap>
-        <Image
-          src={CompleteImage}
-          alt="CompleteImage"
-          width={232}
-          height={209}
-        />
+        {secondCategory ? (
+          <Image src={`/images/img_${secondCategory}.png`} alt={secondCategory} width={232} height={209} />
+        ) : (
+          <Image src={`/images/img_DONTKNOW.png`} alt="DONTKNOW" width={232} height={209} />
+        )}
       </ImageWrap>
       <Title>감정이 기록됐어요!</Title>
       <Description>{pickRandomText()}</Description>

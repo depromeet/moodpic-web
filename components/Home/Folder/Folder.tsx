@@ -9,7 +9,6 @@ import {
   BoxContainer,
   CaptionContainer,
 } from './Folder.styles';
-import EmptyImage from 'public/images/empty.png';
 import TrashIcon from 'public/svgs/trash.svg';
 import EditFolderIcon from 'public/svgs/editfolder.svg';
 

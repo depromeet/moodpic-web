@@ -19,9 +19,8 @@ export interface PostItemProps {
 }
 
 const PostItem = ({
-  post: { id, tags, firstCategory, secondCategory, content, createdAt, views },
+  post: { id, tags, firstCategoryName, secondCategoryName, content, createdAt, views },
   supportsTag = false,
-  canEdit = false,
   isMine = false,
   isEditing = false,
   checked = false,
@@ -48,11 +47,11 @@ const PostItem = ({
       )}
       <ChipContainer>
         {isMine && <HighlightButton>MY</HighlightButton>}
-        <CommonChipButton>{firstCategory}</CommonChipButton>
+        <CommonChipButton>{firstCategoryName}</CommonChipButton>
         <Arrow>
           <Image src={ArrowRightIcon} alt="" width={16} height={16} />
         </Arrow>
-        <CommonChipButton>{secondCategory}</CommonChipButton>
+        <CommonChipButton>{secondCategoryName}</CommonChipButton>
       </ChipContainer>
       <Content>{firstContent}</Content>
       <CaptionContainer>
@@ -63,7 +62,7 @@ const PostItem = ({
   );
 };
 
-const PostItemContainer = styled.div<Pick<PostItemProps, 'isEditing' | 'checked'>>`
+const PostItemContainer = styled.li<Pick<PostItemProps, 'isEditing' | 'checked'>>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -87,6 +86,9 @@ const PostItemContainer = styled.div<Pick<PostItemProps, 'isEditing' | 'checked'
 
 const TagList = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  overflow-y: hidden;
+  height: 3rem;
   margin-bottom: 2.4rem;
 
   div ~ div {
@@ -97,6 +99,7 @@ const TagList = styled.div`
 const Content = styled.p`
   ${ellipsis(2)};
   ${theme.fonts.body};
+  height: 4.8rem;
   margin: 1.8rem 0 2rem;
   color: ${theme.colors.white};
 `;

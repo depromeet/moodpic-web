@@ -26,20 +26,13 @@ interface BottomSheetProps {
  * - padding은 자연스러운 애니메이션을 위해 콘텐츠들에서 패딩을 확보해줘야함
  */
 
-const BottomSheetContainer = ({
-  children,
-  onClose,
-  BottomSheetHeight,
-  headerTitle,
-}: BottomSheetProps) => {
+const BottomSheetContainer = ({ children, onClose, BottomSheetHeight, headerTitle }: BottomSheetProps) => {
   const { opacityAnimation, heightAnimation, setPrevClose } = useAnimation({
     onClose,
     fullHeight: BottomSheetHeight,
   });
 
-  const bottomSheetRef =
-    typeof window !== 'undefined' &&
-    document.getElementById('root-bottomsheet');
+  const bottomSheetRef = typeof window !== 'undefined' && document.getElementById('root-bottomsheet');
 
   const closeModal = () => {
     setPrevClose(true);
@@ -50,16 +43,12 @@ const BottomSheetContainer = ({
   return createPortal(
     <BottomSheetWrapper>
       <BottomSheetDimmed style={opacityAnimation} onClick={closeModal} />
-      <BottomSheetWrap onClick={closeModal}>
+      <BottomSheetWrap>
         <BottomSheetInner style={heightAnimation}>
           {headerTitle ? (
             <BottomSheetHeader>
               <div>{headerTitle}</div>
-              <CustomImage
-                src={CloseIcon}
-                alt="closeIcon"
-                onClick={closeModal}
-              />
+              <CustomImage src={CloseIcon} alt="closeIcon" onClick={closeModal} />
             </BottomSheetHeader>
           ) : null}
           {children}

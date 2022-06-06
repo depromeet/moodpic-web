@@ -1,12 +1,21 @@
 /* eslint-disable max-lines */
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
-import { postRequestState } from '@/store/postResponse/atom';
+import { AxiosError } from 'axios';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useMutation, useQuery } from 'react-query';
+import folderService from '@/service/apis/folderService';
+import { createPostRequestState, createPostResponseState } from '@/store/post/atom';
 import { useTypeInput } from '@/hooks/useTypeInput';
+import useNextProgressStep from '@/hooks/useNextProgressStep';
+import useToast from '@/hooks/useToast';
 import useDialog from '@/hooks/useDialog';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import { useCreateFolderMutation, useFoldersQuery } from '@/hooks/apis';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
+import { queryClient } from '@/shared/utils/queryClient';
+import { ToastType } from '@/shared/type/common';
+import { PostRequestType, PostResponseType } from '@/shared/type/post';
+import postService from '@/service/apis/postService';
 
 import { ButtonWrapper } from '@/pages/write';
 import Button from '../Common/Button/Button';
@@ -32,21 +41,52 @@ import {
   Divider,
   CustomImage,
 } from './CurrentEmotion.styles';
-import { useCreatePostMutation } from '@/hooks/apis/post/usePostMutation';
 
 const MAX_TAG_LIST_LENGTH = 5;
 
 const CurrentEmotion = () => {
-  const [isDisclose, setDisclose] = useState(true);
+  const notify = useToast();
+  const nextProgressStep = useNextProgressStep();
+  const [isDisclose, setDisclose] = useState(false);
   const [tagList, setTagList] = useState<string[]>([]);
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
-  const [inputValue, onChangeInput] = useTypeInput('');
+  const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
+  const setPostId = useSetRecoilState(createPostResponseState);
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
-  const { data: folderListData } = useFoldersQuery();
-  const { mutate: createFolder } = useCreateFolderMutation();
-  const { mutate: createPost } = useCreatePostMutation();
-  const [selectedState, setSelectState] = useRecoilState(postRequestState);
+  const [selectedState, setSelectState] = useRecoilState(createPostRequestState);
+  const { data: folderListData } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
+  const { data: defaultFolder } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders, {
+    select: (data) => data.folders.filter(({ default: isDefaultFolder }) => isDefaultFolder)[0].folderId,
+  });
+  const { mutate: createPost } = useMutation((postData: PostRequestType) => postService.createPost(postData), {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(QUERY_KEY.CREATE_POST);
+      nextProgressStep();
+      setPostId(data as unknown as PostResponseType);
+    },
+    onError: (error) => {
+      notify({
+        type: ToastType.ERROR,
+        message: (error as AxiosError).response?.data.msg,
+      });
+    },
+  });
+  const { mutate: createFolder } = useMutation((folderName: string) => folderService.createFolder(folderName), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(QUERY_KEY.GET_FOLDERS);
+      notify({
+        type: ToastType.CONFIRM,
+        message: '폴더가 추가되었습니다.',
+      });
+    },
+    onError: (error) => {
+      notify({
+        type: ToastType.ERROR,
+        message: (error as AxiosError).response?.data.msg,
+      });
+    },
+  });
 
   const onChangeDisclose = () => {
     setSelectState((prev) => ({ ...prev, disclosure: !isDisclose }));
@@ -58,26 +98,29 @@ const CurrentEmotion = () => {
     return [...deduplicatedTagList];
   }, [tagList, tagValue]);
 
+  const setValidTagLogic = useCallback(() => {
+    setTagList(calcDeduplicatedTagList);
+    setSelectState((prev) => ({
+      ...prev,
+      tags: calcDeduplicatedTagList(),
+    }));
+    setTagValue('');
+  }, [calcDeduplicatedTagList, setSelectState, setTagValue]);
+
   const onKeyPressEnter = useCallback(
     (event) => {
       if (event.key === 'Enter' && !!tagValue.trim() && tagList.length < MAX_TAG_LIST_LENGTH) {
-        setTagList(calcDeduplicatedTagList);
-        setSelectState((prev) => ({
-          ...prev,
-          tags: calcDeduplicatedTagList(),
-        }));
-        setTagValue('');
+        setValidTagLogic();
       }
     },
-    [tagValue, tagList.length, calcDeduplicatedTagList, setSelectState, setTagValue],
+    [setValidTagLogic, tagList.length, tagValue],
   );
 
   const onClickRightSideIcon = useCallback(() => {
     if (tagList.length < MAX_TAG_LIST_LENGTH && !!tagValue.trim()) {
-      setTagList(calcDeduplicatedTagList);
-      setTagValue('');
+      setValidTagLogic();
     }
-  }, [tagValue, tagList, setTagValue, calcDeduplicatedTagList]);
+  }, [setValidTagLogic, tagList.length, tagValue]);
 
   const onDeleteTag = useCallback(
     (index: number) => () => {
@@ -88,8 +131,9 @@ const CurrentEmotion = () => {
 
   const onCreateFolder = useCallback(() => {
     createFolder(inputValue);
+    setInputValue('');
     toggleDialog();
-  }, [createFolder, inputValue, toggleDialog]);
+  }, [createFolder, inputValue, setInputValue, toggleDialog]);
 
   const onSubmit = () => {
     createPost(selectedState);
@@ -99,7 +143,11 @@ const CurrentEmotion = () => {
     window.scrollTo({ top: 0 });
   }, []);
 
-  if (!folderListData) return <></>;
+  useEffect(() => {
+    if (defaultFolder && !isNaN(defaultFolder)) {
+      setSelectState((prev) => ({ ...prev, folderId: defaultFolder }));
+    }
+  }, [defaultFolder, setSelectState]);
 
   return (
     <>
@@ -167,11 +215,12 @@ const CurrentEmotion = () => {
           <DialogFolderForm value={inputValue} onChange={onChangeInput} />
         </CommonDialog>
       )}
-      {isVisibleSheet ? (
+      {isVisibleSheet && folderListData ? (
         <CommonBottomSheetContainer
           onClose={toggleSheet}
           BottomSheetHeight={calcBottomSheetHeight({
             folderSize: folderListData?.folders.length,
+            hasHeader: true,
           })}
           headerTitle={
             <>
