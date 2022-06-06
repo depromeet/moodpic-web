@@ -47,7 +47,7 @@ const Share = () => {
 
   const createSharedPostLink = (ldm: string) => {
     const SHARED_POST_PAGE = '/share/post';
-    return getClientBaseUrl() + SHARED_POST_PAGE + '/' + ldm;
+    return window.location.origin + SHARED_POST_PAGE + '/' + ldm;
   };
 
   const getSharedPostLink = async () => {
@@ -161,9 +161,9 @@ const BodyContainer = styled.div`
 
 const IconWrap = styled.div`
   display: flex;
-  margin-right: 8px;
-  width: 18px;
-  height: 18px;
+  margin-right: 0.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
 `;
 
 const Message = styled.span`

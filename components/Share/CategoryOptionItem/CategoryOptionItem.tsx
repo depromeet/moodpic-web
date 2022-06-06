@@ -37,7 +37,7 @@ const Container = styled.div<{ bgColor: string }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${(p) => p.bgColor};
+  background-color: ${(props) => props.bgColor};
   width: 14rem;
   height: 14rem;
   border-radius: 1rem;
