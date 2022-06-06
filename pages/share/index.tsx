@@ -10,13 +10,18 @@ import CategoryOptionItem from '../../components/Share/CategoryOptionItem/Catego
 import { useRouter } from 'next/router';
 import { copyClipboard } from '../../shared/utils/copyClipboard';
 import DialogWarning from '../../components/Dialog/DialogWarning';
-import { CommonDialog } from '../../components/Common';
+import { CommonAppBar, CommonDialog, CommonIconButton } from '../../components/Common';
 import useModal from '../../hooks/useDialog';
 import useToast from '../../hooks/useToast';
 import { ToastType } from '../../shared/type/common';
-import { usePostByIdQuery } from '../../hooks/apis';
+import { useMemberQuery, usePostByIdQuery } from '../../hooks/apis';
 import Header from '../../components/Home/Header/Header';
 import shareService from '../../service/apis/shareService';
+import { getClientBaseUrl } from '../../shared/utils/getBaseUrl';
+
+type SharePageQuery = {
+  postId: string;
+};
 
 const Share = () => {
   const [receiverName, setReceiverName] = useState<string>('');
@@ -25,9 +30,10 @@ const Share = () => {
   const notify = useToast();
 
   const router = useRouter();
-  const { postId, senderName } = router.query as { postId: string; senderName: string };
+  const { postId } = router.query as SharePageQuery;
 
-  const { data: post, isLoading: isLoadingPost } = usePostByIdQuery(postId as string);
+  const { data: post, isLoading: isLoadingPost, refetch: refetchPost } = usePostByIdQuery(postId as string);
+  const { data: me, isLoading: isLoadingMe } = useMemberQuery();
 
   const changeReceiverName = (event: ChangeEvent<HTMLInputElement>) => {
     setReceiverName(event.target.value);
@@ -37,33 +43,36 @@ const Share = () => {
     setSelectedCategory(category);
   };
 
+  const createSharedPostLink = (ldm: string) => {
+    const SHARED_POST_PAGE = '/share/post';
+    return getClientBaseUrl() + SHARED_POST_PAGE + '/' + ldm;
+  };
+
   const getSharedPostLink = async () => {
     try {
       if (!selectedCategory) return alert('선택해주셔요');
-      const { data } = await shareService.sharePost({ receiverName, category: selectedCategory, postId });
-      return 'mockTmpLink';
+      return await shareService.sharePost({ receiverName, category: selectedCategory, postId });
     } catch (error) {
-      // TODO: 404로 보내기
-      console.log(error);
+      alert('404');
     }
   };
 
-  const onShareConfirm = async () => {
-    const sharedPostLink = await getSharedPostLink();
+  const copySharedPostLink = async () => {
+    const sharedPostLdm = await getSharedPostLink();
 
+    // TODO: validate관련 부분 분리 필요
     if (!receiverName) {
       notify({
         type: ToastType.ERROR,
-        message: '보내는 사람 이름을 적어주세요(수정 필요)',
+        message: '보내는 사람 이름을 적어주세요.',
       });
-
       return;
     }
 
-    if (!sharedPostLink) return alert('go to 404');
+    if (!sharedPostLdm) return alert('404');
 
     await copyClipboard({
-      text: sharedPostLink,
+      text: createSharedPostLink(sharedPostLdm),
       onSuccess: () =>
         notify({
           type: ToastType.WARNING,
@@ -72,26 +81,36 @@ const Share = () => {
     });
   };
 
-  if (isLoadingPost) return <div>로딩중</div>;
-  if (!post || !senderName) return <div>404</div>;
+  useEffect(() => {
+    if (postId) {
+      refetchPost();
+    }
+  }, [postId]);
+
+  if (isLoadingPost || isLoadingMe) return <div>로딩중</div>;
+  if (!post || !me) return <div>404</div>;
 
   return (
     <>
       <Header hasOnlyTitle={true} />
-
-      <Container>
+      <CommonAppBar>
+        <CommonAppBar.Left>
+          <CommonIconButton iconName="close" alt="취소" onClick={toggleConfirmDialog} />
+        </CommonAppBar.Left>
+      </CommonAppBar>
+      <BodyContainer>
         <GuideMessage>
           <IconWrap>
             <Image src={Letter} alt="CheckCirclePr" />
           </IconWrap>
-          <Message>{'senderName'}님의 감정을 전해보세요.</Message>
+          <Message>{me.nickname}님의 감정을 전해보세요.</Message>
         </GuideMessage>
         <SenderInformation>
           <To>To.</To>
           <SenderInput value={receiverName} onChange={changeReceiverName} />
         </SenderInformation>
         <PostContentContainer>
-          <TextArea value={post?.content || 'undefined contents'} readOnly={true} height={'8rem'} />
+          <TextArea value={post.content} readOnly={true} height={'8rem'} />
         </PostContentContainer>
         <CategorySelectContainer>
           {Object.keys(CATEGORY_OPTIONS_INFO).map((key, index) => {
@@ -107,28 +126,36 @@ const Share = () => {
             );
           })}
         </CategorySelectContainer>
-
         <SenderInformation>
-          <From>From. {senderName}</From>
+          <From>From. {me.nickname}</From>
         </SenderInformation>
         {selectedCategory && (
           <ButtonWrapper>
-            <Button color="primary" onClick={onShareConfirm}>
+            <Button color="primary" onClick={copySharedPostLink}>
               링크로 감정 공유하기
             </Button>
           </ButtonWrapper>
         )}
         {isOpenConfirmDialog && (
-          <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
-            <DialogWarning>폴더를 삭제하시겠습니까?</DialogWarning>
+          <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.push('/')}>
+            <DialogWarning description={'작성중인 내용은 삭제됩니다.'}>공유를 취소하시겠어요?</DialogWarning>
           </CommonDialog>
         )}
-      </Container>
+      </BodyContainer>
     </>
   );
 };
 
-const Container = styled.div`
+const TMP = styled.div`
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+`;
+
+const BodyContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
@@ -149,10 +176,13 @@ const Message = styled.span`
 
 const GuideMessage = styled.div`
   display: flex;
+  margin-top: 2rem;
 `;
 
 const SenderInformation = styled.div`
   display: flex;
+  margin-top: 2rem;
+  margin-bottom: 1.8rem;
 `;
 
 const PostContentContainer = styled.div`
@@ -160,14 +190,16 @@ const PostContentContainer = styled.div`
 `;
 
 const CategorySelectContainer = styled.div`
+  position: relative;
   display: flex;
-  flex-direction: column;
   gap: 1rem;
+  flex-flow: row nowrap;
+  overflow: auto;
 `;
 
 export const To = styled.p`
   ${theme.fonts.h3}
-  color: ${theme.colors.white}
+  color: ${theme.colors.white};
 `;
 
 export const From = styled.p`
@@ -179,15 +211,23 @@ const SenderInput = styled.input`
   margin-left: 0.8rem;
   background: ${theme.colors.gray3};
   border: none;
-  border-bottom: 0.1rem solid ${theme.colors.primary};
   background-color: ${theme.colors.black};
   ${theme.fonts.h5}
   color: ${theme.colors.white};
   width: 12rem;
+  outline: none;
+  border-bottom: 0.1rem solid ${theme.colors.white};
+
+  &:focus {
+    border-bottom: 0.1rem solid ${theme.colors.primary};
+  }
 `;
 
 const ButtonWrapper = styled.div`
   margin: auto 0 80px;
+  position: fixed;
+  bottom: 8rem;
+  width: 100%;
 `;
 
 export default Share;
