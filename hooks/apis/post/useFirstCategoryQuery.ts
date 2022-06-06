@@ -9,6 +9,7 @@ export interface FirstCategoryResponse {
   description: string;
   image: string;
 }
+
 const fetchFirstCategory = async (): Promise<FirstCategoryResponse[]> => {
   const { data } = await fetcher('get', '/api/v1/firstcategory');
 
@@ -16,8 +17,5 @@ const fetchFirstCategory = async (): Promise<FirstCategoryResponse[]> => {
 };
 
 export const useFirstCategoryQuery = () => {
-  return useQuery<FirstCategoryResponse[], Error>(
-    QUERY_KEY.GET_FIRST_CATEGORY,
-    fetchFirstCategory,
-  );
+  return useQuery<FirstCategoryResponse[], Error>(QUERY_KEY.GET_FIRST_CATEGORY, fetchFirstCategory);
 };
