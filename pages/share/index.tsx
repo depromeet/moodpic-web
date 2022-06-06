@@ -107,7 +107,7 @@ const Share = () => {
         </GuideMessage>
         <SenderInformation>
           <To>To.</To>
-          <SenderInput value={receiverName} onChange={changeReceiverName} />
+          <SenderInput value={receiverName} onChange={changeReceiverName} placeholder={'받는이'} />
         </SenderInformation>
         <PostContentContainer>
           <TextArea value={post.content} readOnly={true} height={'8rem'} />
@@ -129,13 +129,13 @@ const Share = () => {
         <SenderInformation>
           <From>From. {me.nickname}</From>
         </SenderInformation>
-        {selectedCategory && (
+        {
           <ButtonWrapper>
-            <Button color="primary" onClick={copySharedPostLink}>
+            <Button color={selectedCategory && receiverName ? 'primary' : 'gray'} onClick={copySharedPostLink}>
               링크로 감정 공유하기
             </Button>
           </ButtonWrapper>
-        )}
+        }
         {isOpenConfirmDialog && (
           <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.push('/')}>
             <DialogWarning description={'작성중인 내용은 삭제됩니다.'}>공유를 취소하시겠어요?</DialogWarning>
@@ -145,14 +145,6 @@ const Share = () => {
     </>
   );
 };
-
-const TMP = styled.div`
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-`;
 
 const BodyContainer = styled.div`
   position: relative;
@@ -226,8 +218,9 @@ const SenderInput = styled.input`
 const ButtonWrapper = styled.div`
   margin: auto 0 80px;
   position: fixed;
-  bottom: 8rem;
-  width: 100%;
+  max-width: 44.4rem;
+  width: calc(100% - 3.6rem);
+  bottom: 0;
 `;
 
 export default Share;
