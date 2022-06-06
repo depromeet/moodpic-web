@@ -35,6 +35,8 @@ const Share = () => {
   const { data: post, isLoading: isLoadingPost, refetch: refetchPost } = usePostByIdQuery(postId as string);
   const { data: me, isLoading: isLoadingMe } = useMemberQuery();
 
+  const canShare = selectedCategory && receiverName;
+
   const changeReceiverName = (event: ChangeEvent<HTMLInputElement>) => {
     setReceiverName(event.target.value);
   };
@@ -131,7 +133,11 @@ const Share = () => {
         </SenderInformation>
         {
           <ButtonWrapper>
-            <Button color={selectedCategory && receiverName ? 'primary' : 'gray'} onClick={copySharedPostLink}>
+            <Button
+              color={canShare ? 'primary' : 'gray'}
+              onClick={copySharedPostLink}
+              disabled={canShare ? false : true}
+            >
               링크로 감정 공유하기
             </Button>
           </ButtonWrapper>
@@ -151,7 +157,6 @@ const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
-  gap: 1.2rem;
 `;
 
 const IconWrap = styled.div`
@@ -187,6 +192,7 @@ const CategorySelectContainer = styled.div`
   gap: 1rem;
   flex-flow: row nowrap;
   overflow: auto;
+  margin-top: 2.4rem;
 `;
 
 export const To = styled.p`

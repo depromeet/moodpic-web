@@ -50,8 +50,8 @@ const CheckIconContainer = styled.div<{ isSelect: boolean }>`
   position: absolute;
   width: 2.4rem;
   height: 2.4rem;
-  top: 0;
-  right: 0;
+  top: 0.5rem;
+  right: 0.5rem;
 `;
 
 const CategoryIconContainer = styled.div`
