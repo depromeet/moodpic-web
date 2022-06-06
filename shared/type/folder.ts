@@ -3,4 +3,5 @@ export interface Folder {
   folderName: string;
   coverImg: string;
   postCount: number;
+  default: boolean;
 }

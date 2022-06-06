@@ -7,26 +7,20 @@ import {
   BoxContainer,
   FolderImage,
 } from './CollectedFolder.styles';
-import { Folder } from '@/shared/type/folder';
-import { MAX_THUMBNAIL_SIZE } from '@/shared/constants/home';
 
-// TODO: 이후 mocking 추가하면서 알맞는 폴더에 위치할 예정
-export interface CollectedFolderProps
-  extends HtmlHTMLAttributes<HTMLDivElement> {
+export interface CollectedFolderProps extends HtmlHTMLAttributes<HTMLDivElement> {
   count: number;
-  items: Folder[];
+  items: string[];
 }
 
-const CollectedFolder = ({
-  count,
-  items,
-  ...rest
-}: CollectedFolderProps): React.ReactElement => {
+const CollectedFolder = ({ count, items, ...rest }: CollectedFolderProps): React.ReactElement => {
+  const validThumbnails = items.map((item, index) => (index < count ? item : ''));
+
   return (
     <CollectedFolderContainer {...rest}>
       <BoxContainer>
-        {items.slice(0, MAX_THUMBNAIL_SIZE).map((item) => (
-          <FolderImage key={item.folderId} thumbnail={item.coverImg} />
+        {validThumbnails.map((item, index) => (
+          <FolderImage key={index} thumbnail={item} />
         ))}
       </BoxContainer>
       <Caption>

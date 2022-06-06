@@ -7,7 +7,6 @@ axios.defaults.paramsSerializer = (params: object) => {
   return qs.stringify(params);
 };
 
-// TODO: 어떻게 관리할지 고민 필요
 axios.defaults.baseURL = 'https://api.moodpic.kr';
 
 axios.interceptors.request.use((config) => {

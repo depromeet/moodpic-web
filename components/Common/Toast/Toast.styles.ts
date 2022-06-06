@@ -22,14 +22,14 @@ export const CustomedToastContainer = styled(ToastContainer)<{
     background-color: ${({ type }) => {
       if (type === 'error') return theme.colors.red;
       if (type === 'warning') return theme.colors.primary;
-      if (type === 'confirm') return theme.colors.gray3;
+      if (type === 'confirm') return theme.colors.primary;
     }};
   }
   & .Toastify__toast-body {
     color: ${({ type }) => {
       if (type === 'error') return theme.colors.white;
       if (type === 'warning') return theme.colors.black;
-      if (type === 'confirm') return theme.colors.white;
+      if (type === 'confirm') return '#000';
     }};
     padding: 0 1.2rem;
     & > div {

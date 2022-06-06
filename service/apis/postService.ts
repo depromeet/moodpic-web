@@ -1,5 +1,6 @@
+import { PAGE_SIZE } from '@/shared/constants/common';
 import { Post, PostListRequest, PostListResponse, CategoryFolder } from '@/shared/type/post';
-import { PostResponseType } from '@/shared/type/postResponse';
+import { PostRequestType } from '@/shared/type/post';
 import fetcher from '@/shared/utils/fetcher';
 
 export interface PostSimple extends Omit<Post, 'id'> {
@@ -7,12 +8,13 @@ export interface PostSimple extends Omit<Post, 'id'> {
 }
 
 const postService = {
-  getPosts: async (): Promise<PostListResponse> => {
-    const { data } = await fetcher('get', '/api/v1/posts');
+  getPosts: async (page = 0): Promise<PostListResponse> => {
+    const { data } = await fetcher('get', `/api/v1/posts?page=${page}&size=${PAGE_SIZE}`);
 
     return {
-      posts: data,
-      totalCount: data.length,
+      ...data,
+      nextPage: page + 1,
+      hasNext: data.totalCount - (page + 1) * PAGE_SIZE > 0,
     };
   },
   getPostById: async (id: string): Promise<Post> => {
@@ -20,22 +22,17 @@ const postService = {
 
     return data;
   },
-  getIncompletedPosts: async (): Promise<Post[]> => {
-    const { data } = await fetcher('get', '/api/v1/posts/temp');
+  getIncompletedPosts: async (page = 0): Promise<Post[]> => {
+    const { data } = await fetcher('get', `/api/v1/posts/temp?page=${page}&size=${PAGE_SIZE}`);
 
     return data;
   },
-  getAllPosts: async (): Promise<Post[]> => {
-    const { data } = await fetcher('get', '/api/v1/posts/all');
-
-    return data;
-  },
-  createPost: async (postData: PostResponseType): Promise<PostResponseType> => {
+  createPost: async (postData: PostRequestType): Promise<PostRequestType> => {
     const { data } = await fetcher('post', `/api/v1/posts`, postData);
 
     return data;
   },
-  updatePost: async ({ id, postData }: { id: string; postData: PostResponseType }): Promise<PostResponseType> => {
+  updatePost: async ({ id, postData }: { id: string; postData: PostRequestType }): Promise<PostRequestType> => {
     const { secondCategory, content, tags, disclosure, folderId } = postData;
     const { data } = await fetcher('patch', `/api/v1/posts/${id}`, {
       secondCategory,
@@ -47,16 +44,18 @@ const postService = {
 
     return data;
   },
-  getPostsByFolderId: async ({ folderId, page, size }: PostListRequest): Promise<PostListResponse> => {
-    const { data } = await fetcher('get', `/api/v1/folders/posts/${folderId}?page=${page}&size=${size}`);
+  getPostsByFolderId: async ({ folderId, page = 0 }: PostListRequest): Promise<PostListResponse> => {
+    const { data } = await fetcher('get', `/api/v1/folders/${folderId}/posts?page=${page}&size=${PAGE_SIZE}`);
 
+    // TODO: 중복로직 리팩터링 예정입니다. 또는 API Response 예정..
     return {
+      ...data,
+      nextPage: page + 1,
+      hasNext: data.totalCount - (page + 1) * PAGE_SIZE > 0,
       posts: data.posts.map((post: PostSimple) => ({
         ...post,
         id: post.postId,
       })),
-      totalCount: data.totalCount,
-      folderName: data.folderName,
     };
   },
   deletePostById: async (ids: string[]): Promise<PostListResponse> => {
@@ -70,15 +69,17 @@ const postService = {
 
     return data;
   },
-  getPostsByCategoryId: async ({ categoryId, page, size }: PostListRequest): Promise<PostListResponse> => {
-    const { data } = await fetcher('get', `/api/v1/posts/categories/${categoryId}?page=${page}&size=${size}`);
+  getPostsByCategoryId: async ({ categoryId, page = 0 }: PostListRequest): Promise<PostListResponse> => {
+    const { data } = await fetcher('get', `/api/v1/posts/categories/${categoryId}?page=${page}&size=${PAGE_SIZE}`);
 
     return {
+      ...data,
+      nextPage: page + 1,
+      hasNext: data.totalCount - (page + 1) * PAGE_SIZE > 0,
       posts: data.posts.map((post: PostSimple) => ({
         ...post,
         id: post.postId,
       })),
-      totalCount: data.totalCount,
     };
   },
 };

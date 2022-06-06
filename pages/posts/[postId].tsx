@@ -72,7 +72,7 @@ const PostDetail = () => {
     if (postId) {
       fetchPost();
     }
-  }, [router.query, postId, fetchPost]);
+  }, [fetchPost, postId]);
 
   // TODO: 오류 페이지 이후 작업 요청해서 바꾸기..
   if (!post || !postId) return <div>404</div>;
@@ -81,7 +81,7 @@ const PostDetail = () => {
   const contents = post.content.split(CONTENT_SEPARATOR);
 
   const onDelete = () => {
-    deletePostMutation.mutate([postId as string], {
+    deletePostMutation.mutate([postId], {
       onSuccess: () => {
         router.push(`/posts?folderId=${folderId}`);
         notify({
@@ -98,10 +98,12 @@ const PostDetail = () => {
         <CommonAppBar.Left>
           <CommonIconButton iconName="left" onClick={() => router.back()} />
         </CommonAppBar.Left>
-        <CommonAppBar.Right>
-          <CommonIconButton iconName="share" onClick={() => router.push({ pathname: '/share', query: { postId } })} />
-          <CommonIconButton iconName="more" onClick={toggleSheet} />
-        </CommonAppBar.Right>
+        {post.my && (
+          <CommonAppBar.Right>
+            <CommonIconButton iconName="share" onClick={() => router.push({ pathname: '/share', query: { postId } })} />
+            <CommonIconButton iconName="more" onClick={toggleSheet} />
+          </CommonAppBar.Right>
+        )}
       </CommonAppBar>
       <PostDetailContainer>
         <TagContainer>

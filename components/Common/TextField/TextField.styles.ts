@@ -56,7 +56,7 @@ export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'hasBord
 `;
 
 export const RightSideIcon = styled.img<{ isFocused: boolean }>`
-  position: relative;
+  position: absolute;
   right: 3.5rem;
   cursor: pointer;
 
