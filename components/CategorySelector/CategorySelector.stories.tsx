@@ -17,8 +17,10 @@ Default.args = {
   title: '기록 이전 감정',
   options: [
     {
-      id: 'JOY',
-      label: '기뻐요',
+      categoryId: 1,
+      categoryName: 'JOY',
+      description: '기뻐요',
+      image: '',
     },
   ],
   disabled: false,
