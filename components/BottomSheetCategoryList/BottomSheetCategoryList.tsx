@@ -1,14 +1,10 @@
+import { CategoryListItemResponse } from '@/hooks/apis';
 import React from 'react';
 import styled from 'styled-components';
 import { CommonButton } from '../Common';
 
-interface CategoryItem {
-  id: string;
-  label: string;
-}
-
 interface BottomSheetCategoryListProps {
-  items: CategoryItem[];
+  items: CategoryListItemResponse[];
   selectedItem: string;
   onClick: (id: string) => void;
 }
@@ -16,14 +12,14 @@ interface BottomSheetCategoryListProps {
 const BottomSheetCategoryList = ({ items, selectedItem, onClick }: BottomSheetCategoryListProps) => {
   return (
     <BottomSheetListContainer>
-      {items.map((item: CategoryItem) => (
+      {items.map((item: CategoryListItemResponse) => (
         <CommonButton
-          key={item.id}
+          key={item.categoryId}
           size="medium"
-          color={selectedItem === item.id ? 'primary' : 'gray'}
-          onClick={() => onClick(item.id)}
+          color={selectedItem === item.categoryName ? 'primary' : 'gray'}
+          onClick={() => onClick(item.categoryName)}
         >
-          {item.label}
+          {item.description}
         </CommonButton>
       ))}
     </BottomSheetListContainer>
