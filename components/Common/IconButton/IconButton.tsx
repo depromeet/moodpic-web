@@ -16,7 +16,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | 'share'
     | 'trash'
     | 'warning'
-    | 'caretCircleDown'
+    | 'circleDown'
     | 'whiteadd';
   alt?: string;
 }
