@@ -82,6 +82,9 @@ const postService = {
       })),
     };
   },
+  increasePostViewCounts: async (postId: string) => {
+    await fetcher('patch', `/api/v1/posts/${postId}/views`);
+  },
 };
 
 export default postService;
