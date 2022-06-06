@@ -7,6 +7,7 @@ import { CommonCheckbox, CommonChipButton, CommonTagButton } from '@/components/
 import ArrowRightIcon from 'public/svgs/arrowright.svg';
 import { Post } from '@/shared/type/post';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
+import { commaNumber } from '@/shared/utils/formatter';
 
 export interface PostItemProps {
   post: Post;
@@ -56,7 +57,7 @@ const PostItem = ({
       <Content>{firstContent}</Content>
       <CaptionContainer>
         <Caption>{createdAt}</Caption>
-        <Caption>조회수 {views}</Caption>
+        <Caption>조회수 {commaNumber(views)}</Caption>
       </CaptionContainer>
     </PostItemContainer>
   );
