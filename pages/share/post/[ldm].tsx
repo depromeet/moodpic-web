@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSharedPostQuery } from '../../../hooks/apis';
 import { To } from '../index';
@@ -10,11 +10,18 @@ import Header from '../../../components/Home/Header/Header';
 
 const SharedPost = () => {
   const router = useRouter();
-  const link = router.query.link as string;
-  const { data: sharedPost, isLoading: isLoadingSharedPost } = useSharedPostQuery(link);
+  const ldm = router.query.ldm as string;
+
+  const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
+
+  useEffect(() => {
+    if (ldm) {
+      refetchSharedPost();
+    }
+  }, [ldm]);
 
   if (isLoadingSharedPost) return <div>로딩중</div>;
-  if (!sharedPost || !link) return <div>404</div>;
+  if (!sharedPost || !ldm) return <div>404</div>;
 
   const { receiverName, category, content, senderName } = sharedPost;
 
