@@ -8,24 +8,24 @@ import thanks from '/public/svgs/thanks.svg';
 import theme from '../../styles/theme';
 
 export const CATEGORY: { [key in keyof typeof CATEGORY_OPTIONS_INFO]: string } = {
-  NOT_SELECT: 'notSelect',
+  UNSELECT: 'unselect',
   SORRY: 'sorry',
-  THANK: 'thank',
-  EMPATHIZE: 'empathize',
-  RECONCILE: 'reconcile',
-  DISAPPOINTED: 'disappointed',
+  THANKS: 'thanks',
+  UNDERSTAND: 'understand',
+  RECONCILED: 'reconciled',
+  SAD: 'sad',
   TIRED: 'tired',
 } as const;
 
 export type Category = typeof CATEGORY[keyof typeof CATEGORY];
 
 export const CATEGORY_OPTIONS_INFO = {
-  NOT_SELECT: { categoryIcon: union, text: '선택안함', color: theme.colors.gray3 },
+  UNSELECT: { categoryIcon: union, text: '선택안함', color: theme.colors.gray3 },
   SORRY: { categoryIcon: sorryFace, text: '미안해요', color: '#ffa8ec' },
-  THANK: { categoryIcon: thanks, text: '고마워요', color: '#ffc24d' },
-  EMPATHIZE: { categoryIcon: empathizeFace, text: '이해해요', color: '#ffc24d' },
-  RECONCILE: { categoryIcon: reconcile, text: '화해해요', color: '#96f18e' },
-  DISAPPOINTED: { categoryIcon: disappointedFace, text: '서운해요', color: '#b899ff' },
+  THANKS: { categoryIcon: thanks, text: '고마워요', color: '#ffc24d' },
+  UNDERSTAND: { categoryIcon: empathizeFace, text: '이해해요', color: '#ffc24d' },
+  RECONCILED: { categoryIcon: reconcile, text: '화해해요', color: '#96f18e' },
+  SAD: { categoryIcon: disappointedFace, text: '서운해요', color: '#b899ff' },
   TIRED: { categoryIcon: tiredFace, text: '지쳤어요', color: '#a1dbf4' },
 };
 
