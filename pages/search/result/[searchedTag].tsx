@@ -1,7 +1,6 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSearchedPostsByNewest, useSearchedPostsByPopularity } from '../../../hooks/apis';
-import SearchedPostItem from '../../../components/TagSearch/SearchedPostItem/SearchedPostItem';
+import { useSearchedPostsQuery } from '../../../hooks/apis';
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
 import NavHeader from '../../../components/TagSearch/NavHeader/NavHeader';
@@ -11,19 +10,21 @@ import { CommonBottomSheetContainer, CommonIconButton } from '../../../component
 import useBottomSheet from '../../../hooks/useBottomSheet';
 import OrderTypeSelectSheet from '@/components/TagSearch/OrderTypeSelectSheet/OrderTypeSelectSheet';
 import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '../../../shared/constants/tagSearch';
+import PostItem from '../../../components/Post/PostItem/PostItem';
+import postService from '../../../service/apis/postService';
+import { Post } from '../../../shared/type/post';
 
 const SearchedResultByTag = () => {
   const router = useRouter();
-  const { searchedTag } = router.query;
-  const { data: searchedPostsByNewest, isLoading: isSearchedPostsByNewestLoading } = useSearchedPostsByNewest(
-    String(searchedTag),
-  );
-  const { data: searchedPostsByPopularity, isLoading: isPopularityPostsByNewestLoading } = useSearchedPostsByPopularity(
-    String(searchedTag),
-  );
+  const searchedTag = router.query.searchedTag as string;
   const { searchResult, submitSearchResult, changeSearchResult, addSearchedRecentTags } = useSearchForm();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const [orderType, setOrderType] = useState<TagSearchOrderType>(TAG_SEARCH_ORDER_TYPE.NEWEST);
+  const {
+    data: searchedPosts,
+    isLoading: isLoadingSearchedPosts,
+    refetch: refetchSearchedPosts,
+  } = useSearchedPostsQuery({ orderType, searchedTag });
 
   const ORDER_TYPE_OPTIONS_LENGTH = 2;
 
@@ -32,13 +33,14 @@ const SearchedResultByTag = () => {
     toggleSheet();
   };
 
-  if (
-    isSearchedPostsByNewestLoading ||
-    isPopularityPostsByNewestLoading ||
-    !searchedPostsByNewest ||
-    !searchedPostsByPopularity
-  )
-    return <div>로딩중</div>;
+  useEffect(() => {
+    if (searchedTag) {
+      refetchSearchedPosts();
+    }
+  }, [orderType]);
+
+  // TODO
+  if (!searchedPosts) return <div>404</div>;
 
   return (
     <>
@@ -54,20 +56,31 @@ const SearchedResultByTag = () => {
         />
       </SearchFieldContainer>
       <Header>
-        <SearchedPostsLengthInformation>총 {searchedPostsByNewest.length}개</SearchedPostsLengthInformation>
+        <SearchedPostsLengthInformation>총 {searchedPosts.length}개</SearchedPostsLengthInformation>
         <SelectOrderTypeButtonContainer onClick={toggleSheet}>
           <SelectOrderTypeButton>
             {orderType === TAG_SEARCH_ORDER_TYPE.NEWEST ? '최신순' : '인기순'}
           </SelectOrderTypeButton>
-          <CommonIconButton iconName="caretCircleDown" />
+          <CommonIconButton iconName="circleDown" />
         </SelectOrderTypeButtonContainer>
       </Header>
       <SearchedPostsContainer>
-        {(orderType === TAG_SEARCH_ORDER_TYPE.POPULARITY ? searchedPostsByPopularity : searchedPostsByNewest).map(
-          (searchedPost) => (
-            <SearchedPostItem key={searchedPost.id} searchedPost={searchedPost} />
-          ),
-        )}
+        {searchedPosts.map((searchedPost) => (
+          <PostItem
+            key={searchedPost.id}
+            post={searchedPost}
+            onClick={async () => {
+              try {
+                await postService.increasePostViewCounts(searchedPost.id);
+              } catch (error) {
+                // TODO
+                alert('go 404');
+              }
+
+              router.push(`/posts/${searchedPost.id}`);
+            }}
+          />
+        ))}
       </SearchedPostsContainer>
       {isVisibleSheet && (
         <CommonBottomSheetContainer
