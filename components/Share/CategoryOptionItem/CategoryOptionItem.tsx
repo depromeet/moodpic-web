@@ -48,8 +48,8 @@ const Container = styled.div<{ bgColor: string }>`
 // TODO: 타입 재활용 하기. Pick<CategoryOptionItemProps, 'isSelect'>으로 타입이 잡히지 않는 문제
 const CheckIconContainer = styled.div<{ isSelect: boolean }>`
   position: absolute;
-  width: 4rem;
-  height: 4rem;
+  width: 2.4rem;
+  height: 2.4rem;
   top: 0;
   right: 0;
 `;
