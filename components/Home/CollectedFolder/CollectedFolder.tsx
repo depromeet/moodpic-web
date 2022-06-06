@@ -1,3 +1,4 @@
+import { MAX_THUMBNAIL_SIZE } from '@/shared/constants/home';
 import React, { HtmlHTMLAttributes } from 'react';
 import {
   CollectedFolderContainer,
@@ -14,13 +15,16 @@ export interface CollectedFolderProps extends HtmlHTMLAttributes<HTMLDivElement>
 }
 
 const CollectedFolder = ({ count, items, ...rest }: CollectedFolderProps): React.ReactElement => {
-  const validThumbnails = items.map((item, index) => (index < count ? item : ''));
+  const invalidThumbnails = Array(MAX_THUMBNAIL_SIZE - items.length).fill('');
 
   return (
     <CollectedFolderContainer {...rest}>
       <BoxContainer>
-        {validThumbnails.map((item, index) => (
+        {items.map((item, index) => (
           <FolderImage key={index} thumbnail={item} />
+        ))}
+        {invalidThumbnails.map((_, index) => (
+          <FolderImage key={index} />
         ))}
       </BoxContainer>
       <Caption>
