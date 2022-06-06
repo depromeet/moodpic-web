@@ -1,18 +1,18 @@
 import React from 'react';
-import { SearchedPost } from '../../../shared/type/post';
+import { Post } from '../../../shared/type/post';
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
 import { CommonIconButton, CommonTagButton } from '../../Common';
 
 interface SearchedPostItemProps {
-  searchedPost: SearchedPost;
+  searchedPost: Post;
 }
 const SearchedPostItem = ({ searchedPost }: SearchedPostItemProps) => {
   const { tags, firstCategory, secondCategory, content, views, my, createdAt } = searchedPost;
 
   const MAX_TAG_COUNTS = 3;
 
-  const processContents = (contents: SearchedPost['content']) => {
+  const processContents = (contents: Post['content']) => {
     const MAX_CONTENTS_LENGTH = 30;
     const REMAIN_CONTENTS_FLAG = '...';
 
