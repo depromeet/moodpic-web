@@ -53,7 +53,6 @@ import { commaNumber } from '@/shared/utils/formatter';
 const PostDetail = () => {
   const router = useRouter();
   const postId = router.query.postId as string;
-  const secondCategory = router.query.secondCategory as string;
 
   const { selectedState, setSelectedState, hasMultipleContent, changePostForm, handleCategoryClick } =
     usePostEditForm();
