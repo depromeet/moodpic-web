@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import {
   CommonAppBar,
@@ -16,6 +16,7 @@ import useToast from '@/hooks/useToast';
 import { useDeletePostMutation, usePostByIdQuery } from '@/hooks/apis';
 import { useCategoryListQuery } from '@/hooks/apis/post/useCategoryListQuery';
 import { ToastType } from '@/shared/type/common';
+import { getPrevPath } from '@/shared/utils/storePathValues';
 import { CommonTextArea } from '@/components/Common';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import DialogWarning from '@/components/Dialog/DialogWarning';
@@ -27,6 +28,8 @@ import {
   MultipleLineText,
   QuestionContainer,
 } from '@/components/Post/PostDetail.style';
+import PostFloatingButton from '@/components/Post/FloatingButton';
+import { commaNumber } from '@/shared/utils/formatter';
 
 const PostDetail = () => {
   const router = useRouter();
@@ -36,7 +39,7 @@ const PostDetail = () => {
   const deletePostMutation = useDeletePostMutation();
   const notify = useToast();
 
-  const { data: post, refetch: fetchPost } = usePostByIdQuery(postId);
+  const { data: post } = usePostByIdQuery(postId);
   const { data: categories } = useCategoryListQuery();
 
   const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
@@ -68,17 +71,12 @@ const PostDetail = () => {
     return '';
   };
 
-  useEffect(() => {
-    if (postId) {
-      fetchPost();
-    }
-  }, [fetchPost, postId]);
-
   // TODO: 오류 페이지 이후 작업 요청해서 바꾸기..
   if (!post || !postId) return <div>404</div>;
 
   const hasMultipleContent = post.content.includes(CONTENT_SEPARATOR);
   const contents = post.content.split(CONTENT_SEPARATOR);
+  const isFromWritePage = getPrevPath() === '/write';
 
   const onDelete = () => {
     deletePostMutation.mutate([postId], {
@@ -148,9 +146,10 @@ const PostDetail = () => {
         ) : (
           <CommonTextArea value={post.content} height="42.2rem" readOnly />
         )}
-        <Description>조회수 {post.views || 0}</Description>
+        <Description>조회수 {commaNumber(post.views)}</Description>
         <Description>{post.createdAt}</Description>
       </PostDetailContainer>
+      {isFromWritePage && <PostFloatingButton />}
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
