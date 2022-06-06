@@ -29,8 +29,7 @@ const usePostsByFolderIdQuery = ({
 
 // TODO: options 타입 지정
 const usePostByIdQuery = (id: string, options?: never): UseQueryResult<Post, AxiosError<ServerResponse>> => {
-  const queryOptions = options || { enabled: false };
-  return useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id), queryOptions);
+  return useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id), { enabled: false });
 };
 
 const usePostsByCategoryQuery = (): UseQueryResult<CategoryFolder[], AxiosError<ServerResponse>> =>
