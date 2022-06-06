@@ -16,19 +16,9 @@ const postService = {
     };
   },
   getPostById: async (id: string): Promise<Post> => {
-    // const { data } = await fetcher('get', `/api/v1/posts/${id}`);
+    const { data } = await fetcher('get', `/api/v1/posts/${id}`);
 
-    // TODO: mockData 제거
-    return {
-      id: '1',
-      tags: ['tag1', 'tag2'],
-      firstCategory: 'UPSET',
-      secondCategory: 'ANGRY',
-      content: 'content1',
-      views: 0,
-      disclosure: true,
-      createdAt: '2022-05-07 10:35:57',
-    };
+    return data;
   },
   getIncompletedPosts: async (): Promise<Post[]> => {
     const { data } = await fetcher('get', '/api/v1/posts/temp');

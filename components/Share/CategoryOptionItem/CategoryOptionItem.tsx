@@ -24,7 +24,7 @@ const CategoryOptionItem = ({ isSelect, category, onClick }: CategoryOptionItemP
       <CategoryIconContainer>
         <Image src={categoryIcon} alt={'categoryIcon'} />
       </CategoryIconContainer>
-      <CategoryText isNotSelect={CATEGORY_OPTIONS_INFO[category] === CATEGORY_OPTIONS_INFO.NOT_SELECT}>
+      <CategoryText isNotSelect={CATEGORY_OPTIONS_INFO[category] === CATEGORY_OPTIONS_INFO.UNSELECT}>
         {text}
       </CategoryText>
     </Container>
@@ -41,8 +41,8 @@ const Container = styled.div<{ bgColor: string }>`
   width: 14rem;
   height: 14rem;
   border-radius: 1rem;
-  flex-basis: auto;
   min-width: auto;
+  flex-shrink: 0;
 `;
 
 // TODO: 타입 재활용 하기. Pick<CategoryOptionItemProps, 'isSelect'>으로 타입이 잡히지 않는 문제

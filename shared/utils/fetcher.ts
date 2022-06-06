@@ -9,8 +9,6 @@ axios.defaults.paramsSerializer = (params: object) => {
 
 // TODO: 어떻게 관리할지 고민 필요
 axios.defaults.baseURL = 'https://api.moodpic.kr';
-// axios.defaults.baseURL =
-//   process.env.NODE_ENV === 'development' ? 'http://3.35.50.139' : '';
 
 axios.interceptors.request.use((config) => {
   const token = getLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN);
