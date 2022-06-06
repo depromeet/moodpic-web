@@ -99,7 +99,7 @@ const PostDetail = () => {
           <CommonIconButton iconName="left" onClick={() => router.back()} />
         </CommonAppBar.Left>
         <CommonAppBar.Right>
-          <CommonIconButton iconName="share" />
+          <CommonIconButton iconName="share" onClick={() => router.push({ pathname: '/share', query: { postId } })} />
           <CommonIconButton iconName="more" onClick={toggleSheet} />
         </CommonAppBar.Right>
       </CommonAppBar>
