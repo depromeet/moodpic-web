@@ -14,7 +14,7 @@ export const SelectContainer = styled.div`
   display: flex;
   margin: -2.6rem 0 2.4rem;
 
-  div ~ div {
+  button ~ button {
     margin-left: 1.6rem;
   }
 `;
