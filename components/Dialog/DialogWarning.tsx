@@ -6,13 +6,15 @@ import theme from '@/styles/theme';
 
 export interface DialogWarningProps {
   children: ReactNode;
+  description?: string;
 }
 
-const DialogWarning = ({ children }: DialogWarningProps) => {
+const DialogWarning = ({ children, description }: DialogWarningProps) => {
   return (
     <DialogContainer>
       <Image src={Warning} alt="Warning" />
       <Title>{children}</Title>
+      {description && <Description>{description}</Description>}
     </DialogContainer>
   );
 };
@@ -29,6 +31,13 @@ const Title = styled.p`
   text-align: center;
   ${theme.fonts.h4};
   color: ${theme.colors.white};
+`;
+
+const Description = styled.p`
+  margin-top: 1rem;
+  color: ${theme.colors.gray5};
+  text-align: center;
+  ${theme.fonts.btn2}
 `;
 
 export default DialogWarning;
