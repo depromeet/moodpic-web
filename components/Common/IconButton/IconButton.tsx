@@ -11,21 +11,18 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | 'folder'
     | 'folderplus'
     | 'left'
+    | 'right'
     | 'magnifyingglass'
     | 'more'
     | 'share'
+    | 'sorryFace'
     | 'trash'
     | 'warning'
     | 'whiteadd';
   alt?: string;
 }
 
-const Button = ({
-  iconName,
-  alt = '',
-  children,
-  ...rest
-}: ButtonProps): React.ReactElement => {
+const Button = ({ iconName, alt = '', children, ...rest }: ButtonProps): React.ReactElement => {
   return (
     <ButtonContainer {...rest}>
       <Image src={`/svgs/${iconName}.svg`} alt={alt} width={24} height={24} />

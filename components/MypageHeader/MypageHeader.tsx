@@ -46,7 +46,8 @@ export const Nickname = styled.div`
   color: ${theme.colors.white};
 `;
 export const Divider = styled.div`
-  width: 100%;
+  width: calc(100% + 36px);
   height: 5px;
   background-color: ${theme.colors.gray3};
+  transform: translateX(-18px);
 `;
