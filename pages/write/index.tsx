@@ -56,7 +56,7 @@ const Write = () => {
           <CommonIconButton iconName="left" alt="이전" onClick={onClickGoBack} />
         </CommonAppBar.Left>
         <CommonAppBar.Right>
-          <CancelText onClick={toggleDialog}>취소</CancelText>
+          <CancelText onClick={() => router.back()}>취소</CancelText>
         </CommonAppBar.Right>
       </CommonAppBar>
     );
