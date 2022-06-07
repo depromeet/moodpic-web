@@ -1,5 +1,6 @@
 import React, { HtmlHTMLAttributes, MouseEvent } from 'react';
 import Image from 'next/image';
+import { commaNumber } from '@/shared/utils/formatter';
 import {
   FolderContainer,
   FolderName,
@@ -77,7 +78,7 @@ const Folder = ({
         {isEditMode && renderEditButton()}
         <div>
           <FolderName>{folderName}</FolderName>
-          <FolderCount>{count}</FolderCount>
+          <FolderCount>{commaNumber(count)}</FolderCount>
         </div>
       </CaptionContainer>
     </FolderContainer>

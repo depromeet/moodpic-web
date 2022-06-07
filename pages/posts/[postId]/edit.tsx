@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, ChangeEvent } from 'react';
+import React, { useCallback, useEffect, ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
@@ -48,11 +48,11 @@ import Whiteadd from 'public/svgs/whiteadd.svg';
 import FolderIcon from 'public/svgs/folder.svg';
 import FolderPlus from 'public/svgs/folderplus.svg';
 import usePostEditForm from '@/hooks/post/usePostEditForm';
+import { commaNumber } from '@/shared/utils/formatter';
 
 const PostDetail = () => {
   const router = useRouter();
   const postId = router.query.postId as string;
-  const secondCategory = router.query.secondCategory as string;
 
   const { selectedState, setSelectedState, hasMultipleContent, changePostForm, handleCategoryClick } =
     usePostEditForm();
@@ -64,6 +64,7 @@ const PostDetail = () => {
   const [folderName, onChangeFolderName] = useTypeInput('');
 
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
+  const [bottomSheetType, setBottomSheetType] = useState('');
   const { dialogVisible, toggleDialog } = useDialog();
 
   const { data: folderListData } = useFoldersQuery();
@@ -81,11 +82,7 @@ const PostDetail = () => {
     });
   }, [createFolder, folderName, toggleDialog]);
 
-  const categoryOptions = categories
-    ? Object.values(categories)
-        .flat()
-        .map((category) => ({ id: category.categoryName, label: category.description }))
-    : [];
+  const categoryOptions = categories ? Object.values(categories).flat() : [];
 
   const getFolderName = (id: number) => folderListData?.folders.find(({ folderId }) => folderId === id)?.folderName;
 
@@ -105,14 +102,13 @@ const PostDetail = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
-    // TODO: DONTKNOW 상수로 분리 or API response 에 있는 것으로 변경해야 합니다.
-    if (secondCategory === 'DONTKNOW') {
-      toggleSheet();
+    if (selectedState.secondCategory === 'DONTKNOW') {
+      !isVisibleSheet && showCategoryBottomSheet();
     }
 
     fetchPostById();
     fetchFolderByPostId();
-  }, [router.isReady, secondCategory, fetchPostById]);
+  }, [router.isReady, selectedState]);
 
   useEffect(() => {
     if (post) {
@@ -121,14 +117,12 @@ const PostDetail = () => {
       setTagList(post?.tags);
 
       const contents = post.content.split(CONTENT_SEPARATOR);
-
       if (hasMultipleContent) {
         setFirstContent(contents[0]);
         setSecondContent(contents[1]);
         setThirdContent(contents[2]);
         return;
       }
-
       setFirstContent(post.content);
     }
   }, [
@@ -158,22 +152,26 @@ const PostDetail = () => {
     );
   };
 
-  const bottomSheetHeight =
-    secondCategory === 'DONTKNOW' ? calcBottomSheetHeight({ folderSize: 4, hasHeader: true }) : 364;
-  const headerTitle =
-    secondCategory === 'DONTKNOW' ? (
-      <div>시간이 지난 지금, 감정에 변화가 있었나요?</div>
-    ) : (
-      <>
-        <Image src={FolderIcon} alt="folderIcon" />
-        <div>폴더를 선택해주세요.</div>
-      </>
-    );
+  const isCategoryBottomSheet = bottomSheetType === 'category';
+  const bottomSheetHeight = isCategoryBottomSheet ? calcBottomSheetHeight({ folderSize: 4, hasHeader: true }) : 364;
+  const headerTitle = isCategoryBottomSheet ? (
+    <div>글을 기록한 이후 어떤 감정을 느꼈나요?</div>
+  ) : (
+    <>
+      <Image src={FolderIcon} alt="folderIcon" />
+      <div>폴더를 선택해주세요.</div>
+    </>
+  );
+
+  const showCategoryBottomSheet = () => {
+    setBottomSheetType('category');
+    toggleSheet();
+  };
 
   const renderBottomSheet = () => {
     return (
       <CommonBottomSheetContainer onClose={toggleSheet} BottomSheetHeight={bottomSheetHeight} headerTitle={headerTitle}>
-        {secondCategory === 'DONTKNOW' ? (
+        {isCategoryBottomSheet ? (
           <BottomSheetCategoryList
             items={categoryOptions}
             selectedItem={selectedState.secondCategory}
@@ -228,7 +226,7 @@ const PostDetail = () => {
             title="기록 이후 감정"
             selectedValue={selectedState.secondCategory}
             options={categoryOptions}
-            onChange={(e) => handleCategoryClick(e.target.value)}
+            onClick={showCategoryBottomSheet}
           />
         </SelectContainer>
         {hasMultipleContent ? (
@@ -263,7 +261,7 @@ const PostDetail = () => {
         ) : (
           <CommonTextArea value={firstContent} height="42.2rem" onChange={onChangeFirstContent} />
         )}
-        <Description>조회수 {post.views || 0}</Description>
+        <Description>조회수 {commaNumber(post.views)}</Description>
         <Description>{post.createdAt}</Description>
         <SpaceBetweenContainer>
           <OptionTitle>공개</OptionTitle>

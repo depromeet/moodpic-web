@@ -62,6 +62,8 @@ const CurrentEmotion = () => {
   const { mutate: createPost } = useMutation((postData: PostRequestType) => postService.createPost(postData), {
     onSuccess: (data) => {
       queryClient.invalidateQueries(QUERY_KEY.CREATE_POST);
+      queryClient.invalidateQueries(QUERY_KEY.GET_POST_BY_ID);
+      queryClient.invalidateQueries(QUERY_KEY.GET_FOLDERS);
       nextProgressStep();
       setPostId(data as unknown as PostResponseType);
     },

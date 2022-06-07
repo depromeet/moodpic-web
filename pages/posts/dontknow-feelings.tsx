@@ -3,15 +3,14 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
-import { Post } from '@/shared/type/post';
 import PostItem from '@/components/Post/PostItem/PostItem';
 import { CommonAppBar, CommonIconButton } from '@/components/Common';
 import ListEmpty from 'public/images/list-empty.png';
-
-const postList: Post[] = [];
+import { useIncompletedPostsQuery } from '@/hooks/apis';
 
 const PostList = () => {
   const router = useRouter();
+  const { data: postList = [] } = useIncompletedPostsQuery();
 
   return (
     <>
@@ -27,9 +26,7 @@ const PostList = () => {
         </Title>
         {postList.length ? (
           postList.map((post) => (
-            <li key={post.id}>
-              <PostItem post={post} isMine={false} onClick={() => router.push(`/posts/${post.id}`)} />
-            </li>
+            <PostItem key={post.id} post={post} isMine={false} onClick={() => router.push(`/posts/${post.id}`)} />
           ))
         ) : (
           <EmptyContainer>

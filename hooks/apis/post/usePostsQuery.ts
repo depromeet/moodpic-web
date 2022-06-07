@@ -32,7 +32,7 @@ const usePostByIdQuery = (id: string): UseQueryResult<Post, AxiosError<ServerRes
   useQuery(QUERY_KEY.GET_POST_BY_ID, () => postService.getPostById(id), { enabled: !!id });
 
 const usePostsByCategoryQuery = (): UseQueryResult<CategoryFolder[], AxiosError<ServerResponse>> =>
-  useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, postService.getPostsByCategories, { enabled: false });
+  useQuery(QUERY_KEY.GET_POSTS_BY_CATEGORIES, postService.getPostsByCategories);
 
 const usePostsByCategoryIdQuery = ({
   categoryId,

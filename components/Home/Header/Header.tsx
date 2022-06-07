@@ -8,7 +8,11 @@ import { useRouter } from 'next/router';
 import { CommonIconButton } from '@/components/Common';
 import Logo from 'public/images/logo.png';
 
-const Header = () => {
+interface HeaderProps {
+  hasOnlyTitle?: boolean;
+}
+
+const Header = ({ hasOnlyTitle = false }: HeaderProps) => {
   const router = useRouter();
   const isDropdownOpen = useSetRecoilState<boolean>(dropdownStateAtom);
 
@@ -30,7 +34,7 @@ const Header = () => {
           </LogoContainer>
           <Image src={CaretDownPrimary} alt="메뉴" width={16} height={16} />
         </TitleWrapper>
-        <CommonIconButton iconName="magnifyingglass" onClick={handleButtonClick} />
+        {!hasOnlyTitle && <CommonIconButton iconName="magnifyingglass" onClick={handleButtonClick} />}
       </HeaderWrapper>
     </>
   );

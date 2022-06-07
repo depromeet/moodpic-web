@@ -29,7 +29,7 @@ export const BoxContainer = styled.figure`
   min-height: 16.5rem;
 `;
 
-export const FolderImage = styled.div<{ thumbnail: string }>`
+export const FolderImage = styled.div<{ thumbnail?: string }>`
   border-radius: 1rem;
   padding-top: 100%;
   background-size: cover;

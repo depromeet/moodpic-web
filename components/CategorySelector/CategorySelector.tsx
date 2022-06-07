@@ -1,20 +1,15 @@
+import React, { ButtonHTMLAttributes } from 'react';
 import theme from '@/styles/theme';
-import React, { ChangeEventHandler } from 'react';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 import { EMOTION_COLOR_TYPE } from '@/shared/constants/category';
+import { CategoryListItemResponse } from '@/hooks/apis';
 
-interface SelectOption {
-  id: string;
-  label: string;
-}
-
-export interface CategorySelectorProps {
+export interface CategorySelectorProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   selectedValue: string;
   title: string;
-  options: SelectOption[];
   disabled?: boolean;
-  onChange?: ChangeEventHandler<HTMLSelectElement>;
+  options: CategoryListItemResponse[];
 }
 
 const CategorySelector = ({
@@ -22,47 +17,31 @@ const CategorySelector = ({
   title,
   options,
   disabled = false,
-  onChange,
+  ...rest
 }: CategorySelectorProps): React.ReactElement => {
+  const selectedCategoryDescription = options
+    ? options.find((option) => option.categoryName === selectedValue)?.description
+    : '';
+
   return (
-    <CategorySelectorContainer backgroundColor={EMOTION_COLOR_TYPE[selectedValue]} disabled={disabled}>
+    <CategorySelectorContainer backgroundColor={EMOTION_COLOR_TYPE[selectedValue]} disabled={disabled} {...rest}>
       <Title>{title}</Title>
-      <SelectContainer
-        backgroundColor={EMOTION_COLOR_TYPE[selectedValue]}
-        disabled={disabled}
-        value={selectedValue}
-        onChange={onChange}
-      >
-        {options.map(({ id, label }, index) => {
-          return (
-            <Option key={index} value={id}>
-              {label}
-            </Option>
-          );
-        })}
-      </SelectContainer>
+      <Description backgroundColor={EMOTION_COLOR_TYPE[selectedValue]}>{selectedCategoryDescription}</Description>
       <ImageContainer>
         <Image src={`/svgs/mood-${selectedValue.toLowerCase()}.svg`} alt="" width={64} height={64} />
       </ImageContainer>
-      <ArrowIcon width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M14.5967 5.98584L8.59668 11.9858L2.59668 5.98584"
-          stroke="#121212"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </ArrowIcon>
     </CategorySelectorContainer>
   );
 };
 
-const CategorySelectorContainer = styled.div<{ backgroundColor: string; disabled: boolean }>`
+const CategorySelectorContainer = styled.button<{ backgroundColor: string; disabled: boolean }>`
   display: inline-flex;
   position: relative;
   width: 100%;
   border-radius: 1.4rem;
   background-color: ${(props) => props.backgroundColor};
+  text-align: left;
+  color: ${theme.colors.black};
 
   ${(props) =>
     props.disabled &&
@@ -76,20 +55,13 @@ const Title = styled.span`
   top: 1.2rem;
   left: 2.4rem;
   ${theme.fonts.caption1};
-  color: ${theme.colors.black};
 `;
 
-const SelectContainer = styled.select<{ backgroundColor: string }>`
-  width: 100%;
+const Description = styled.span<{ backgroundColor: string }>`
   padding: 3.2rem 2.4rem 1.2rem;
   font-size: 1.6rem;
   font-weight: bold;
   line-height: 1.9rem;
-  border-radius: 1.4rem;
-  color: ${theme.colors.black};
-  background-color: ${(props) => props.backgroundColor};
-  border: none;
-  appearance: none;
 `;
 
 const ImageContainer = styled.div`
@@ -100,14 +72,6 @@ const ImageContainer = styled.div`
   img {
     mix-blend-mode: overlay;
   }
-`;
-
-const Option = styled.option``;
-
-const ArrowIcon = styled.svg`
-  position: absolute;
-  right: 3.85rem;
-  top: 3rem;
 `;
 
 export default CategorySelector;
