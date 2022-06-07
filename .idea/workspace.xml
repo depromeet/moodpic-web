@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee6a3a79-12dc-4c9d-b36f-794046616dc5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/constants/queryKey.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/constants/queryKey.ts" afterDir="false" />
-    </list>
+    <list default="true" id="ee6a3a79-12dc-4c9d-b36f-794046616dc5" name="Changes" comment="chore" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +68,7 @@
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "/Users/joel/git/dpm/11th_5team_fe/node_modules/prettier",
     "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "/Users/joel/git/dpm/0507/11th_5team_fe/node_modules/typescript/lib"
+    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -89,6 +85,21 @@
       <workItem from="1654531445530" duration="329000" />
       <workItem from="1654531777198" duration="466000" />
     </task>
+    <task id="LOCAL-00001" summary="chore">
+      <created>1654611705291</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1654611705291</updated>
+    </task>
+    <task id="LOCAL-00002" summary="chore">
+      <created>1654611779067</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1654611779067</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,9 +117,9 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore" />
     <MESSAGE value="style: CheckIconContainer 조금 떨어지게 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="style: CheckIconContainer 조금 떨어지게 수정" />
+    <MESSAGE value="chore" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
