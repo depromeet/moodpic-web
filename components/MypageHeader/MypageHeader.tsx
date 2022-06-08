@@ -4,12 +4,16 @@ import { CommonAppBar, CommonIconButton } from '../Common';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import Image from 'next/image';
+import { useMemberQuery } from '@/hooks/apis';
 
 const MypageHeader = () => {
   const router = useRouter();
+  const { data: me } = useMemberQuery();
+
   const onClickGoBack = () => {
     router.back();
   };
+
   return (
     <>
       <CommonAppBar>
@@ -18,11 +22,16 @@ const MypageHeader = () => {
         </CommonAppBar.Left>
       </CommonAppBar>
       <ProfileWrap>
-        <ProfileImageWrap>
-          {/* <Image src={} alt="profile-image" layout="fill" objectFit="cover" /> */}
-        </ProfileImageWrap>
-        {/* <ProfileImageSkeleton /> */}
-        <Nickname>박상범</Nickname>
+        {me ? (
+          <>
+            <ProfileImageWrap>
+              <Image src={me.profileImg} alt="profile-image" layout="fill" objectFit="cover" />
+            </ProfileImageWrap>
+            <Nickname>{me.nickname}</Nickname>
+          </>
+        ) : (
+          <ProfileImageSkeleton />
+        )}
       </ProfileWrap>
       <Divider />
     </>
