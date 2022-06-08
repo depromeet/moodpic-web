@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { CommonAppBar, CommonIconButton } from '../Common';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import Image from 'next/image';
 
 const MypageHeader = () => {
   const router = useRouter();
@@ -17,7 +18,10 @@ const MypageHeader = () => {
         </CommonAppBar.Left>
       </CommonAppBar>
       <ProfileWrap>
-        <ProfileImage />
+        <ProfileImageWrap>
+          {/* <Image src={} alt="profile-image" layout="fill" objectFit="cover" /> */}
+        </ProfileImageWrap>
+        {/* <ProfileImageSkeleton /> */}
         <Nickname>박상범</Nickname>
       </ProfileWrap>
       <Divider />
@@ -33,7 +37,15 @@ export const ProfileWrap = styled.div`
   align-items: center;
   margin-bottom: 46px;
 `;
-export const ProfileImage = styled.div`
+const ProfileImageWrap = styled.div`
+  position: relative;
+  overflow: hidden;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  margin: 6px 0 7px;
+`;
+export const ProfileImageSkeleton = styled.div`
   width: 56px;
   height: 56px;
   border-radius: 50%;

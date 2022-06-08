@@ -117,7 +117,7 @@ const ContentWrapper = styled.span`
   }
 `;
 
-const DialogContent = styled.span`
+export const DialogContent = styled.span`
   display: flex;
   align-items: center;
   & > span {
