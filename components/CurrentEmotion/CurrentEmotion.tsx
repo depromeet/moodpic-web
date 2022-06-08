@@ -173,7 +173,7 @@ const CurrentEmotion = () => {
             onChange={onChangeValue}
             onKeyPress={onKeyPressEnter}
             onClickRightSideIcon={onClickRightSideIcon}
-            placeholder="태그를 추가헤주세요."
+            placeholder="태그를 추가해주세요."
           />
         </TextFieldWrap>
         <TagButtonWrap>
