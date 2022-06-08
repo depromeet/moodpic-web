@@ -11,6 +11,7 @@ import useNextProgressStep from '@/hooks/useNextProgressStep';
 import useToast from '@/hooks/useToast';
 import useDialog from '@/hooks/useDialog';
 import useBottomSheet from '@/hooks/useBottomSheet';
+import { useMemberQuery } from '@/hooks/apis';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { queryClient } from '@/shared/utils/queryClient';
 import { ToastType } from '@/shared/type/common';
@@ -55,6 +56,7 @@ const CurrentEmotion = () => {
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const [selectedState, setSelectState] = useRecoilState(createPostRequestState);
+  const { data: me } = useMemberQuery();
   const { data: folderListData } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
   const { data: defaultFolder } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders, {
     select: (data) => data.folders.filter(({ default: isDefaultFolder }) => isDefaultFolder)[0].folderId,
@@ -154,7 +156,7 @@ const CurrentEmotion = () => {
   return (
     <>
       <MainTitle>
-        홍길동님의 <br />
+        {me?.nickname ?? '유저'}님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
       <SelectButton title="☺️ &nbsp; 한결 나아졌어요" secondaryCategorytype="positive" />

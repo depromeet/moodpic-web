@@ -11,10 +11,12 @@ import SorryFace from 'public/svgs/sorryFace.svg';
 import { CommonAppBarTitle } from './posts';
 import { ButtonWrapper } from '../write';
 import { DialogContent } from '@/components/MypageContentList/MypageContentList';
+import { useMemberQuery } from '@/hooks/apis';
 
 const MyPageWithdraw = () => {
   const router = useRouter();
   const { dialogVisible, toggleDialog } = useDialog();
+  const { data: me } = useMemberQuery();
 
   const onClickGoBack = () => {
     router.back();
@@ -33,7 +35,7 @@ const MyPageWithdraw = () => {
         </CommonAppBar.Left>
       </CommonAppBar>
       <Title>
-        카톡아이디님,
+        {me?.nickname ?? '유저'}님,
         <br /> 정말 탈퇴하시겠어요?
       </Title>
       <Description>탈퇴 시 기록해왔던 모든 정보가 삭제되고 복구할 수 없어요.</Description>
