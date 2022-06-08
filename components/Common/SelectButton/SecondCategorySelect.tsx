@@ -136,6 +136,7 @@ export const ButtonWrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: fit-content;
   }
   ${RadioInput}:checked ~ & {
     color: ${theme.colors.black};
