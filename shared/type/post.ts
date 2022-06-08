@@ -15,6 +15,11 @@ export interface Post {
   createdAt: string;
 }
 
+export interface TagFrequencies {
+  tag: string;
+  frequency: number;
+}
+
 export interface PostListRequest extends PaginationParam {
   folderId?: number;
   categoryId?: number;
