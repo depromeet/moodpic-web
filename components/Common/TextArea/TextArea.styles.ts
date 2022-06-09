@@ -2,9 +2,7 @@ import styled from 'styled-components';
 import { TextAreaProps } from '@/components/Common/TextArea/TextArea';
 import theme from '@/styles/theme';
 
-export const Textarea = styled.textarea<
-  Pick<TextAreaProps, 'height' | 'borderRadius'>
->`
+export const Textarea = styled.textarea<Pick<TextAreaProps, 'height' | 'borderRadius'>>`
   width: 100%;
   padding: 1.6rem 1.8rem 1.8rem 1.8rem;
   display: inline-block;
@@ -12,7 +10,7 @@ export const Textarea = styled.textarea<
   cursor: text;
   height: ${({ height }) => height};
   border-radius: ${({ borderRadius }) => borderRadius};
-  background: ${theme.colors.gray3};
+  background: ${theme.colors.gray2};
   border: none;
   right: 0;
   ${theme.fonts.body}
