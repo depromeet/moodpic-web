@@ -77,9 +77,10 @@ const Home = () => {
     toggleDialog();
   };
 
-  const onEdit = (id: number) => {
+  const onEdit = (id: number, name: string) => {
     setDialogType('edit');
     toggleDialog();
+    setInputValue(name);
     setSelectedFolderId(id);
   };
 
@@ -87,6 +88,11 @@ const Home = () => {
     setDialogType('delete');
     toggleDialog();
     setSelectedFolderId(id);
+  };
+
+  const onCloseDialog = () => {
+    toggleDialog();
+    setInputValue('');
   };
 
   const createFolder = () => {
@@ -99,10 +105,10 @@ const Home = () => {
         setInputValue('');
         toggleDialog();
       },
-      onError: () => {
+      onError: (error) => {
         notify({
           type: ToastType.ERROR,
-          message: '이미 중복된 폴더명이에요.',
+          message: (error as AxiosError).response?.data.msg,
         });
       },
     });
@@ -149,7 +155,7 @@ const Home = () => {
         return (
           <CommonDialog
             type="modal"
-            onClose={toggleDialog}
+            onClose={onCloseDialog}
             disabledConfirm={inputValue === ''}
             onConfirm={createFolder}
           >
@@ -160,7 +166,7 @@ const Home = () => {
         return (
           <CommonDialog
             type="modal"
-            onClose={toggleDialog}
+            onClose={onCloseDialog}
             disabledConfirm={inputValue === ''}
             onConfirm={() => editFolder(selectedFolderId)}
           >

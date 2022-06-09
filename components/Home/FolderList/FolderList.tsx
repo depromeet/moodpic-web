@@ -9,7 +9,7 @@ interface FolderListProps {
   folderList: Folder[];
   thumbnailList?: string[];
   supportsCollectedFolder: boolean;
-  onEdit: (id: number) => void;
+  onEdit: (id: number, name: string) => void;
   onDelete: (id: number) => void;
 }
 
@@ -28,6 +28,10 @@ const FolderList = ({
     router.push('/posts');
   };
 
+  const onClick = (folderId: number) => {
+    router.push(`/posts?folderId=${folderId}`);
+  };
+
   return (
     <>
       {supportsCollectedFolder && (
@@ -35,13 +39,14 @@ const FolderList = ({
       )}
       {folderList.map((folder) => (
         <HomeFolder
+          supportsEmptyImg={supportsCollectedFolder}
           key={folder.folderId}
           folderId={folder.folderId}
           folderName={folder.folderName}
           count={folder.postCount}
           coverImage={folder.coverImg}
           isEditMode={isEditMode && !folder.default}
-          onClick={() => router.push(`/posts?folderId=${folder.folderId}`)}
+          onClick={() => onClick(folder.folderId)}
           onEdit={onEdit}
           onDelete={onDelete}
         />

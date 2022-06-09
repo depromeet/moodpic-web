@@ -19,9 +19,9 @@ export interface FolderProps extends HtmlHTMLAttributes<HTMLDivElement> {
   count: number;
   coverImage: string;
   isEditMode?: boolean;
-  supportsMultipleLayout?: boolean;
-  onClick: () => void;
-  onEdit?: (id: number) => void;
+  supportsEmptyImg?: boolean;
+  onClick: (id: number) => void;
+  onEdit?: (id: number, name: string) => void;
   onDelete?: (id: number) => void;
 }
 
@@ -31,6 +31,7 @@ const Folder = ({
   folderName,
   coverImage,
   isEditMode = false,
+  supportsEmptyImg = false,
   onClick,
   onEdit,
   onDelete,
@@ -46,7 +47,16 @@ const Folder = ({
     if (!onEdit) return;
 
     e.stopPropagation();
-    onEdit(folderId);
+    onEdit(folderId, folderName);
+  };
+
+  const handleClick = (e: MouseEvent<HTMLSpanElement>) => {
+    if (isEditMode) {
+      e.stopPropagation();
+      return;
+    }
+
+    onClick(folderId);
   };
 
   const renderDeleteButton = () => {
@@ -71,7 +81,7 @@ const Folder = ({
 
   return (
     <FolderContainer>
-      <BoxContainer onClick={onClick} backgroundImage={count !== 0 ? coverImage : ''}>
+      <BoxContainer onClick={handleClick} backgroundImage={!supportsEmptyImg || count !== 0 ? coverImage : ''}>
         {isEditMode && renderDeleteButton()}
       </BoxContainer>
       <CaptionContainer>
