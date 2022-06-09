@@ -46,7 +46,7 @@ const FolderList = ({
           count={folder.postCount}
           coverImage={folder.coverImg}
           isEditMode={isEditMode && !folder.default}
-          onClick={() => onClick(folder.folderId)}
+          onClick={onClick}
           onEdit={onEdit}
           onDelete={onDelete}
         />

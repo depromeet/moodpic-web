@@ -1,4 +1,4 @@
-import React, { HtmlHTMLAttributes, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import Image from 'next/image';
 import { commaNumber } from '@/shared/utils/formatter';
 import {
@@ -13,7 +13,7 @@ import {
 import TrashIcon from 'public/svgs/trash.svg';
 import EditFolderIcon from 'public/svgs/editfolder.svg';
 
-export interface FolderProps extends HtmlHTMLAttributes<HTMLDivElement> {
+export interface FolderProps {
   folderId: number;
   folderName: string;
   count: number;
@@ -50,7 +50,7 @@ const Folder = ({
     onEdit(folderId, folderName);
   };
 
-  const handleClick = (e: MouseEvent<HTMLSpanElement>) => {
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (isEditMode) {
       e.stopPropagation();
       return;
