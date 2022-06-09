@@ -34,7 +34,7 @@ const PostListPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [dialogType, setDialogType] = useState('');
-  const [inputValue, onChangeInput] = useTypeInput('');
+  const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
   const folderId = Number(router.query.folderId);
   const categoryId = Number(router.query.categoryId);
 
@@ -74,35 +74,6 @@ const PostListPage = () => {
     },
   });
 
-  const categoryBottomSheetItems = [
-    {
-      label: '기록 선택하기',
-      onClick: () => {
-        setIsEditing(true);
-        toggleSheet();
-      },
-    },
-  ];
-  const folderBottomSheetItems = [
-    ...categoryBottomSheetItems,
-    {
-      label: '폴더명 변경하기',
-      onClick: () => {
-        setDialogType('edit');
-        toggleDialog();
-        toggleSheet();
-      },
-    },
-    {
-      label: '폴더 삭제하기',
-      onClick: () => {
-        setDialogType('delete');
-        toggleDialog();
-        toggleSheet();
-      },
-    },
-  ];
-
   useEffect(() => {
     if (router.isReady) {
       fetch();
@@ -134,6 +105,7 @@ const PostListPage = () => {
             message: '폴더이름이 변경되었습니다.',
           });
           toggleDialog();
+          fetch();
         },
       },
     );
@@ -159,6 +131,37 @@ const PostListPage = () => {
   const postData = postResponse?.pages || [{ posts: [], folderName: '', totalCount: 0 }];
   const { folderName, totalCount } = postData[0];
 
+  const categoryBottomSheetItems = [
+    {
+      label: '기록 선택하기',
+      onClick: () => {
+        setIsEditing(true);
+        toggleSheet();
+      },
+    },
+  ];
+
+  const folderBottomSheetItems = [
+    ...categoryBottomSheetItems,
+    {
+      label: '폴더명 변경하기',
+      onClick: () => {
+        setDialogType('edit');
+        setInputValue(folderName as string);
+        toggleDialog();
+        toggleSheet();
+      },
+    },
+    {
+      label: '폴더 삭제하기',
+      onClick: () => {
+        setDialogType('delete');
+        toggleDialog();
+        toggleSheet();
+      },
+    },
+  ];
+
   const getBottomSheetItems = () => {
     return folderId && folderName !== '미분류' ? folderBottomSheetItems : categoryBottomSheetItems;
   };
@@ -172,7 +175,7 @@ const PostListPage = () => {
       <CommonAppBar>
         <CommonAppBar.Left>
           <CommonIconButton iconName="left" alt="이전" onClick={() => router.back()} />
-          <HeaderTitle>{folderName}</HeaderTitle>
+          <HeaderTitle>{folderName || '모든 기록'}</HeaderTitle>
         </CommonAppBar.Left>
         <CommonAppBar.Right>
           {isEditing ? (
