@@ -9,11 +9,7 @@ interface DialogFolderFormProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-const DialogFolderForm = ({
-  isEditMode = false,
-  value,
-  onChange,
-}: DialogFolderFormProps) => {
+const DialogFolderForm = ({ isEditMode = false, value, onChange }: DialogFolderFormProps) => {
   const dialogTitle = isEditMode ? '변경할 폴더를' : '새폴더의 이름을';
 
   return (
@@ -27,6 +23,7 @@ const DialogFolderForm = ({
         value={value}
         hasBorder={true}
         onChange={onChange}
+        autoFocus
         hasRightSideIcon
       />
     </DialogContainer>
