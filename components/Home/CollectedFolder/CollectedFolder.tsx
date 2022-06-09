@@ -28,7 +28,7 @@ const CollectedFolder = ({ count, items, ...rest }: CollectedFolderProps): React
         ))}
       </BoxContainer>
       <Caption>
-        <FolderName>모든 폴더</FolderName>
+        <FolderName>모든 기록</FolderName>
         <FolderCount>{count}</FolderCount>
       </Caption>
     </CollectedFolderContainer>
