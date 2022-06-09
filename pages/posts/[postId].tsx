@@ -124,7 +124,7 @@ const PostDetail = () => {
               <MultipleLineText>
                 카톡이름님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
-              <CommonTextArea value={contents[0]} height="32.6rem" readOnly />
+              <CommonTextArea value={contents[0]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
               <NumberTitle>
@@ -132,7 +132,7 @@ const PostDetail = () => {
                 /3
               </NumberTitle>
               <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
-              <CommonTextArea value={contents[1]} height="32.6rem" readOnly />
+              <CommonTextArea value={contents[1]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
               <NumberTitle>
@@ -140,11 +140,11 @@ const PostDetail = () => {
                 /3
               </NumberTitle>
               <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
-              <CommonTextArea value={contents[2]} height="32.6rem" readOnly />
+              <CommonTextArea value={contents[2]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
           </QuestionContainer>
         ) : (
-          <CommonTextArea value={post.content} height="42.2rem" readOnly />
+          <CommonTextArea value={post.content} height="42.2rem" disabled />
         )}
         <Description>조회수 {commaNumber(post.views)}</Description>
         <Description>{post.createdAt}</Description>
