@@ -21,4 +21,10 @@ export const Textarea = styled.textarea<Pick<TextAreaProps, 'height' | 'borderRa
   :focus {
     border: 0.1rem solid ${theme.colors.gray4};
   }
+
+  :disabled {
+    color: ${theme.colors.white};
+    -webkit-text-fill-color: ${theme.colors.white};
+    opacity: 1;
+  }
 `;
