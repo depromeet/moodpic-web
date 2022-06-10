@@ -93,9 +93,11 @@ const PostDetail = () => {
   return (
     <>
       <CommonAppBar>
-        <CommonAppBar.Left>
-          <CommonIconButton iconName="left" onClick={() => router.back()} />
-        </CommonAppBar.Left>
+        {!isFromWritePage && (
+          <CommonAppBar.Left>
+            <CommonIconButton iconName="left" onClick={() => router.back()} />
+          </CommonAppBar.Left>
+        )}
         {post.my && (
           <CommonAppBar.Right>
             <CommonIconButton iconName="share" onClick={() => router.push({ pathname: '/share', query: { postId } })} />
