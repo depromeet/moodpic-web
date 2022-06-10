@@ -85,12 +85,13 @@ const PostDetail = () => {
   const categoryOptions = categories ? Object.values(categories).flat() : [];
 
   const getFolderName = (id: number) => folderListData?.folders.find(({ folderId }) => folderId === id)?.folderName;
+  const isValidForm = hasMultipleContent ? firstContent && secondContent && thirdContent : firstContent;
 
   const handleEdit = () => {
     const updatedForm = {
       ...selectedState,
       tags: tagList,
-      content: [firstContent, secondContent, thirdContent].join(CONTENT_SEPARATOR),
+      content: hasMultipleContent ? [firstContent, secondContent, thirdContent].join(CONTENT_SEPARATOR) : firstContent,
     };
 
     updatePost(
@@ -146,7 +147,9 @@ const PostDetail = () => {
           <CommonIconButton iconName="close" onClick={() => router.back()} />
         </CommonAppBar.Left>
         <CommonAppBar.Right>
-          <TextButton onClick={handleEdit}>완료</TextButton>
+          <TextButton disabled={!isValidForm} onClick={handleEdit}>
+            완료
+          </TextButton>
         </CommonAppBar.Right>
       </CommonAppBar>
     );
