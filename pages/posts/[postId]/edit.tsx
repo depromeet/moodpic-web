@@ -76,9 +76,7 @@ const PostDetail = () => {
 
   const onCreateFolder = useCallback(() => {
     createFolder(folderName, {
-      onSuccess: () => {
-        toggleDialog();
-      },
+      onSuccess: () => toggleDialog(),
     });
   }, [createFolder, folderName, toggleDialog]);
 
