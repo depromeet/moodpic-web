@@ -29,7 +29,7 @@ import {
 } from './Question.styles';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
-import theme from '@/styles/theme';
+import { useMemberQuery } from '@/hooks/apis';
 
 const questionList = ['어떤 일이 있었나요?', '그 때 어떤 감정이 들었나요?', '스스로에게 한마디를 쓴다면?'];
 
@@ -51,6 +51,7 @@ const Question = () => {
   const timer = useRef<any>(null);
   const nextProgressStep = useNextProgressStep();
   const { dialogVisible, toggleDialog } = useDialog();
+  const { data: me } = useMemberQuery();
 
   const onChangeMode = (targetMode: string) => {
     if (targetMode === 'providedQuestion') {
@@ -180,7 +181,7 @@ const Question = () => {
               /3
             </NumberTitle>
             <ProvidedQuestionMainTitle>
-              가나다라마바사가나다님에게 <br />
+              {me?.nickname ?? '유저'}님에게 <br />
               어떤 일이 있었나요?
             </ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>

@@ -3,11 +3,7 @@ import styled, { css } from 'styled-components';
 import Image from 'next/image';
 import theme from '@/styles/theme';
 import FolderIcon from 'public/svgs/folderplus.svg';
-import {
-  HOME_TAB_TYPE,
-  HOME_TAB_LABEL,
-  CurrentTabType,
-} from '@/shared/constants/home';
+import { HOME_TAB_TYPE, HOME_TAB_LABEL, CurrentTabType } from '@/shared/constants/home';
 
 interface Tab {
   key: CurrentTabType;
@@ -20,11 +16,7 @@ export interface TabsProps {
   onClick: () => void;
 }
 
-const Tabs = ({
-  currentTab,
-  setCurrentTab,
-  onClick,
-}: TabsProps): React.ReactElement => {
+const Tabs = ({ currentTab, setCurrentTab, onClick }: TabsProps): React.ReactElement => {
   const tabList = [
     {
       key: HOME_TAB_TYPE.FOLDER,
@@ -41,11 +33,7 @@ const Tabs = ({
       <TabList>
         {tabList.map((tab: Tab) => {
           return (
-            <TabButton
-              key={tab.key}
-              activate={currentTab === tab.key}
-              onClick={() => setCurrentTab(tab.key)}
-            >
+            <TabButton key={tab.key} activate={currentTab === tab.key} onClick={() => setCurrentTab(tab.key)}>
               {tab.label}
             </TabButton>
           );
@@ -62,11 +50,11 @@ const Tabs = ({
 
 const TabContainer = styled.div`
   position: sticky;
-  top: 44px;
-  margin-right: -18px;
-  margin-left: -18px;
-  padding: 0 18px;
-  border-bottom: 1px solid ${theme.colors.gray3};
+  top: 4.4rem;
+  margin-right: -1.8rem;
+  margin-left: -1.8rem;
+  padding: 0 1.8rem;
+  border-bottom: 0.1rem solid ${theme.colors.gray3};
   z-index: 1;
 `;
 
@@ -81,18 +69,17 @@ const FolderImage = styled.button`
 `;
 
 const TabButton = styled.button<{ activate: boolean }>`
-  padding: 11px 0;
+  padding: 1.1rem 0;
   ${theme.fonts.h4};
-  color: ${(props) =>
-    props.activate ? theme.colors.white : theme.colors.gray4};
+  color: ${(props) => (props.activate ? theme.colors.white : theme.colors.gray4)};
   border-bottom: ${(props) =>
     props.activate &&
     css`
-    1px solid ${theme.colors.primary}
+    0.1rem solid ${theme.colors.primary}
   `};
 
   & ~ & {
-    margin-left: 16px;
+    margin-left: 1.6rem;
   }
 `;
 

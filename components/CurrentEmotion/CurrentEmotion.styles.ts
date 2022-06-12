@@ -8,13 +8,13 @@ export const OptionWrapper = styled.div`
   & > div.space-between {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 36px;
+    margin-bottom: 3.6rem;
     & > span {
       ${theme.fonts.caption1};
     }
   }
   & > div:last-child {
-    margin-bottom: 40px;
+    margin-bottom: 4rem;
   }
 `;
 
@@ -28,28 +28,28 @@ export const OptionTitle = styled.div`
 export const FolderWrap = styled.div`
   display: flex;
   & > button {
-    margin-right: 28px;
+    margin-right: 2.8rem;
   }
 `;
 
 export const TextFieldWrap = styled.div`
-  margin: 13px 0 24px;
+  margin: 1.3rem 0 2.4rem;
 `;
 
 export const TagButtonWrap = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 1.2rem;
   flex-wrap: wrap;
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 5rem;
 `;
 
 export const Divider = styled.div`
-  width: calc(100% + 36px);
-  height: 6px;
+  width: calc(100% + 3.6rem);
+  height: 0.6rem;
   background-color: ${theme.colors.gray1};
-  margin-bottom: 40px;
-  transform: translateX(-18px);
+  margin-bottom: 4rem;
+  transform: translateX(-1.8rem);
 `;
 
 export const CustomImage = styled(Image)`

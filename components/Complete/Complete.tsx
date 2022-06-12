@@ -79,16 +79,16 @@ const Complete = () => {
 export default Complete;
 
 const ImageWrap = styled.div`
-  margin: 95px 0 40px;
+  margin: 9.5rem 0 4rem;
   text-align: center;
 `;
 
 const Title = styled.div`
   ${theme.fonts.h2}
-  line-height: 24px;
+  line-height: 2.4rem;
   text-align: center;
   color: ${theme.colors.white};
-  margin-bottom: 12px;
+  margin-bottom: 1.2rem;
 `;
 const Description = styled.div`
   ${theme.fonts.body};

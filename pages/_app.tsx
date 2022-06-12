@@ -14,6 +14,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no, maximum-sacle=1.0, mininum-scale=1.0"
+        />
         <title>11th 5team front-end</title>
       </Head>
       <QueryClientProvider client={queryClient}>

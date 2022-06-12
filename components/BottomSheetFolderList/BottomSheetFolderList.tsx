@@ -62,7 +62,7 @@ const FolderListItemWrap = styled.div`
 
 const IconWrap = styled.div`
   display: flex;
-  margin-right: 8px;
+  margin-right: 0.8rem;
 `;
 
 const CustomImage = styled(Image)`

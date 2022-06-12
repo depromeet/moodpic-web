@@ -124,12 +124,12 @@ export const ButtonWrapper = styled.div`
 
 const CancelText = styled.div`
   ${theme.fonts.h6}
-  line-height: 16.8px;
+  line-height: 1.68rem;
   color: ${theme.colors.white};
   cursor: pointer;
 `;
 
 const EmptyAppBar = styled.div`
   width: 100%;
-  height: 46px;
+  height: 4.6rem;
 `;

@@ -7,11 +7,11 @@ export const TagButtonContainer = styled.div<Pick<TagButtonProps, 'exampleTagMod
   display: inline-flex;
   padding: 0.6rem 1.4rem;
   border: 0.1rem solid ${theme.colors.gray6};
-  border-radius: 14.5px;
+  border-radius: 1.45rem;
   ${(props) =>
     props.exampleTagMode &&
     css`
-      border: 1px solid ${theme.colors.gray3};
+      border: 0.1rem solid ${theme.colors.gray3};
     `}
 `;
 

@@ -17,7 +17,7 @@ module.exports = {
     styledComponents: true,
   },
   images: {
-    domains: ['firebasestorage.googleapis.com', '5gzoo.s3.ap-northeast-2.amazonaws.com'],
+    domains: ['firebasestorage.googleapis.com', 'k.kakaocdn.net', '5gzoo.s3.ap-northeast-2.amazonaws.com'],
   },
   webpack(config) {
     return config;

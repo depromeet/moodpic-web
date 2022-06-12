@@ -7,11 +7,11 @@ export const CollectedFolderContainer = styled.figure`
 `;
 
 export const Caption = styled.figcaption`
-  padding-top: 8px;
+  padding-top: 0.8rem;
 `;
 
 export const FolderName = styled.p`
-  margin-bottom: 4px;
+  margin-bottom: 0.4rem;
   ${theme.fonts.btn2};
   color: ${theme.colors.white};
 `;

@@ -31,7 +31,7 @@ const borderRadiusStyle = (size: string) => {
       `;
     case 'medium':
       return css`
-        border-radius: 0.4rem;
+        border-radius: 1rem;
 
         &:disabled {
           background-color: ${theme.colors.gray3};
@@ -75,8 +75,7 @@ const buttonSizeStyle = (size: string) => {
 };
 
 export const ButtonContainer = styled.button<ButtonProps>`
-  ${(props) =>
-    props.hasBorderRadius && borderRadiusStyle(props.size || 'large')};
+  ${(props) => props.hasBorderRadius && borderRadiusStyle(props.size || 'large')};
   ${(props) => buttonSizeStyle(props.size || 'large')};
   ${(props) => buttonColorStyle(props.color || 'primary')};
   ${(props) =>
