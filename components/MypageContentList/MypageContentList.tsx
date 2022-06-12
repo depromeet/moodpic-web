@@ -11,8 +11,8 @@ import Image from 'next/image';
 
 const Version = styled.span`
   font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
   color: ${theme.colors.gray5};
 `;
 
@@ -121,7 +121,7 @@ export const DialogContent = styled.span`
   display: flex;
   align-items: center;
   & > span {
-    margin-right: 2px;
+    margin-right: 0.2rem;
   }
 `;
 
@@ -130,7 +130,7 @@ const ContentWrap = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 48px;
+  margin-top: 4.8rem;
   & > span {
     ${theme.fonts.h4}
     color: ${theme.colors.white};

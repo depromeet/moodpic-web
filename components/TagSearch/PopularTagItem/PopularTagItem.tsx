@@ -27,7 +27,7 @@ const Container = styled.div`
   padding-top: 1.6rem;
   padding-bottom: 1.6rem;
   align-items: center;
-  border-bottom: 1px solid ${theme.colors.gray2};
+  border-bottom: 0.1rem solid ${theme.colors.gray2};
 `;
 
 const Rank = styled.h4`

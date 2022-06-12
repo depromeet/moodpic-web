@@ -222,7 +222,7 @@ const SenderInput = styled.input`
 `;
 
 const ButtonWrapper = styled.div`
-  margin: auto 0 80px;
+  margin: auto 0 8rem;
   position: fixed;
   max-width: 44.4rem;
   width: calc(100% - 3.6rem);

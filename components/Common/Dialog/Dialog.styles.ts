@@ -24,8 +24,8 @@ export const DialogWrap = styled.div`
 `;
 
 export const DialogInner = styled.div`
-  width: 313px;
-  border-radius: 14px;
+  width: 31.3rem;
+  border-radius: 1.4rem;
   background-color: ${theme.colors.gray2};
 `;
 
@@ -34,14 +34,14 @@ export const DialogContent = styled.div`
 `;
 
 export const DialogBottom = styled.div`
-  border-top: 1px solid ${theme.colors.gray3};
+  border-top: 0.1rem solid ${theme.colors.gray3};
 `;
 
 export const CancelBtn = styled.button`
   display: inline-block;
-  border-right: 1px solid ${theme.colors.gray3};
+  border-right: 0.1rem solid ${theme.colors.gray3};
   ${theme.fonts.h4}
-  padding: 20px 0;
+  padding: 2rem 0;
   width: 50%;
   text-align: center;
   color: ${theme.colors.white};
@@ -51,11 +51,11 @@ export const CancelBtn = styled.button`
 export const ActionBtn = styled.button<{ dialogType: 'alert' | 'modal' }>`
   display: inline-block;
   ${theme.fonts.h4}
-  padding: 19px 0;
+  padding: 1.9rem 0;
   width: 50%;
   text-align: center;
   color: ${theme.colors.black};
-  border-bottom-right-radius: 14px;
+  border-bottom-right-radius: 1.4rem;
   background-color: #ffed47;
   cursor: pointer;
   :disabled {

@@ -96,9 +96,9 @@ const SecondCategorySelect = ({ title, secondaryCategorytype = 'positive' }: Sel
 export default SecondCategorySelect;
 
 const SelectContainer = styled.div`
-  margin-bottom: 36px;
+  margin-bottom: 3.6rem;
   & > h3 {
-    margin-bottom: 12px;
+    margin-bottom: 1.2rem;
     ${theme.fonts.h4};
     color: ${theme.colors.gray6};
   }
@@ -108,8 +108,8 @@ const ButtonContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, auto);
-  column-gap: 12px;
-  row-gap: 12px;
+  column-gap: 1.2rem;
+  row-gap: 1.2rem;
 `;
 
 export const RadioInput = styled.input`

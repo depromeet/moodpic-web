@@ -22,8 +22,8 @@ const ReadyForOpenWrapper = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translateX(-50px);
-  max-width: 444px;
+  transform: translateX(-5rem);
+  max-width: 44.4rem;
   width: 100%;
   height: 100vh;
   & > span {

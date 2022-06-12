@@ -6,9 +6,9 @@ export const ToggleWrapper = styled.label`
   display: inline-flex;
   overflow: hidden;
 
-  width: 58px;
-  height: 28px;
-  border-radius: 14px;
+  width: 5.8rem;
+  height: 2.8rem;
+  border-radius: 1.4rem;
   cursor: pointer;
 `;
 
@@ -18,14 +18,14 @@ export const Trigger = styled.input`
 
 export const ToggleText = styled.span<{ checked: boolean }>`
   position: absolute;
-  top: 8px;
-  right: 12px;
+  top: 0.8rem;
+  right: 1.2rem;
   ${theme.fonts.caption2};
   color: ${theme.colors.black};
   ${(props) =>
     props.checked &&
     css`
-      left: 12px;
+      left: 1.2rem;
     `};
 `;
 
@@ -37,19 +37,19 @@ export const IconWrapper = styled.i`
   position: relative;
   flex: 1;
 
-  padding: 4px;
+  padding: 0.4rem;
   background-color: ${theme.colors.gray4};
 
   &::after {
     content: '';
     display: block;
 
-    width: 20px;
-    height: 20px;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
 
     background-color: ${theme.colors.white};
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0rem 0.1rem 0.4rem rgba(0, 0, 0, 0.25);
 
     transform: translate3d(0, 0, 0);
     ${transition()};

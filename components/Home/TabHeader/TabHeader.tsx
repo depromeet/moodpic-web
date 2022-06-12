@@ -9,11 +9,7 @@ export interface TabHeaderProps {
   toggleEditMode: () => void;
 }
 
-const TabHeader = ({
-  currentTab,
-  isEditMode,
-  toggleEditMode,
-}: TabHeaderProps): React.ReactElement => {
+const TabHeader = ({ currentTab, isEditMode, toggleEditMode }: TabHeaderProps): React.ReactElement => {
   const EditButton = (): React.ReactElement => {
     const buttonLabel = isEditMode ? '편집종료' : '편집';
     return (
@@ -40,14 +36,13 @@ const TabHeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 52px;
-  margin-top: 33px;
+  height: 5.2rem;
+  margin-top: 3.3rem;
 `;
 
 const Button = styled.button<{ highlight: boolean }>`
   ${theme.fonts.h6};
-  color: ${(props) =>
-    props.highlight ? theme.colors.primary : theme.colors.gray6};
+  color: ${(props) => (props.highlight ? theme.colors.primary : theme.colors.gray6)};
 `;
 
 export default TabHeader;

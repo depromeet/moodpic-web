@@ -126,7 +126,7 @@ const RemoveSearchedResultButton = styled.button`
 const TagButtonWrap = styled.div`
   padding: 0 1.6rem;
   display: flex;
-  gap: 12px;
+  gap: 1.2rem;
   flex-wrap: wrap;
   width: 100%;
   margin-top: 1rem;

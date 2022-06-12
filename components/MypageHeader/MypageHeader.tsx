@@ -44,31 +44,31 @@ export const ProfileWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 46px;
+  margin-bottom: 4.6rem;
 `;
 const ProfileImageWrap = styled.div`
   position: relative;
   overflow: hidden;
-  width: 56px;
-  height: 56px;
+  width: 5.6rem;
+  height: 5.6rem;
   border-radius: 50%;
-  margin: 6px 0 7px;
+  margin: 0.6rem 0 0.7rem;
 `;
 export const ProfileImageSkeleton = styled.div`
-  width: 56px;
-  height: 56px;
+  width: 5.6rem;
+  height: 5.6rem;
   border-radius: 50%;
-  margin: 6px 0 7px;
+  margin: 0.6rem 0 0.7rem;
   background-color: white;
 `;
 export const Nickname = styled.div`
   ${theme.fonts.h3};
-  line-height: 22px;
+  line-height: 2.2rem;
   color: ${theme.colors.white};
 `;
 export const Divider = styled.div`
-  width: calc(100% + 36px);
-  height: 5px;
+  width: calc(100% + 3.6rem);
+  height: 0.5rem;
   background-color: ${theme.colors.gray3};
-  transform: translateX(-18px);
+  transform: translateX(-1.8rem);
 `;

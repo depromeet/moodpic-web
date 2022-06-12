@@ -35,7 +35,7 @@ export default PreEmotion;
 export const MainTitle = styled.div`
   ${theme.fonts.subtitle1}
   font-weight: 500;
-  margin: 54px 0 40px;
+  margin: 5.4rem 0 4rem;
   color: ${theme.colors.white};
 `;
 
@@ -43,6 +43,6 @@ export const ButtonContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, auto);
-  column-gap: 12px;
-  row-gap: 12px;
+  column-gap: 1.2rem;
+  row-gap: 1.2rem;
 `;

@@ -2,35 +2,35 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 
 export const ButtonContainer = styled.div`
-  margin: 24px 0;
+  margin: 2.4rem 0;
   & > div > button:not(:last-child) {
-    margin-right: 12px;
+    margin-right: 1.2rem;
   }
 `;
 
 export const TooltipWrapper = styled.div`
   position: absolute;
-  left: 18px;
-  top: 150px;
+  left: 1.8rem;
+  top: 15rem;
   display: inline-flex;
   flex-direction: column;
-  max-width: 339px;
+  max-width: 33.9rem;
   width: 100%;
-  padding: 18px;
+  padding: 1.8rem;
   background-color: ${theme.colors.white};
-  border-radius: 14px;
+  border-radius: 1.4rem;
   z-index: 100;
 `;
 
 export const Triangle = styled.div`
   position: absolute;
-  top: -11px;
-  left: 18px;
+  top: -1.1rem;
+  left: 1.8rem;
   width: 0;
   height: 0;
-  border-bottom: 15px solid ${theme.colors.white};
-  border-left: 13px solid transparent;
-  border-right: 13px solid transparent;
+  border-bottom: 1.5rem solid ${theme.colors.white};
+  border-left: 1.3rem solid transparent;
+  border-right: 1.3rem solid transparent;
 `;
 
 export const ImageWrap = styled.div`
@@ -42,7 +42,7 @@ export const ImageWrap = styled.div`
 
 export const TooltipTitle = styled.div`
   ${theme.fonts.h5}
-  margin-bottom: 12px;
+  margin-bottom: 1.2rem;
 `;
 
 export const TooltipDescriptionWrap = styled.ol`
@@ -61,14 +61,14 @@ export const NumberTitle = styled.div`
   ${theme.fonts.h5};
   color: ${theme.colors.gray4};
   letter-spacing: -0.01em;
-  margin-bottom: 6px;
+  margin-bottom: 0.6rem;
   & > .highlight {
     color: ${theme.colors.primary};
   }
 `;
 
 export const ProvidedQuestionWrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 4rem;
 `;
 
 export const ProvidedQuestionMainTitle = styled.div`
@@ -88,5 +88,5 @@ export const ProvidedQuestionSubDescription = styled.div`
 export const MyselfQuestionTitle = styled.div`
   ${theme.fonts.btn1};
   color: ${theme.colors.gray6};
-  margin: 6px 0 20px;
+  margin: 0.6rem 0 2rem;
 `;

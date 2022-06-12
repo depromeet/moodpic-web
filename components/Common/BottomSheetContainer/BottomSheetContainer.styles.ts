@@ -25,13 +25,13 @@ export const BottomSheetWrap = styled.div`
 `;
 
 export const BottomSheetInner = styled(animated.div)`
-  max-width: 480px;
+  max-width: 48rem;
   width: 100%;
-  max-height: 530px;
+  max-height: 53rem;
   height: 100%;
   margin: 0 auto;
-  border-top-right-radius: 35px;
-  border-top-left-radius: 35px;
+  border-top-right-radius: 3.5rem;
+  border-top-left-radius: 3.5rem;
   background-color: ${theme.colors.gray2};
 `;
 
@@ -40,10 +40,10 @@ export const BottomSheetHeader = styled.div`
   top: 0;
   display: flex;
   justify-content: space-between;
-  border-top-right-radius: 35px;
-  border-top-left-radius: 35px;
+  border-top-right-radius: 3.5rem;
+  border-top-left-radius: 3.5rem;
   background-color: ${theme.colors.gray2};
-  padding: 32px 36px;
+  padding: 3.2rem 3.6rem;
   & > div {
     display: flex;
     align-items: center;
@@ -52,7 +52,7 @@ export const BottomSheetHeader = styled.div`
     display: inline-block;
     ${theme.fonts.h4};
     color: ${theme.colors.white};
-    margin-left: 5px;
+    margin-left: 0.5rem;
   }
 `;
 

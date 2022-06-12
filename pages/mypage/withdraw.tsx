@@ -63,10 +63,10 @@ export default MyPageWithdraw;
 const Title = styled.div`
   ${theme.fonts.subtitle1};
   color: ${theme.colors.white};
-  margin-top: 54px;
+  margin-top: 5.4rem;
 `;
 const Description = styled.div`
   ${theme.fonts.body};
   color: ${theme.colors.white};
-  margin-top: 10px;
+  margin-top: 1rem;
 `;

@@ -35,9 +35,9 @@ const Container = styled.div<{ bgColor: string }>`
 
 const IconWrap = styled.div`
   display: flex;
-  margin-right: 8px;
-  width: 18px;
-  height: 18px;
+  margin-right: 0.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
 `;
 
 const CategoryText = styled.p`
