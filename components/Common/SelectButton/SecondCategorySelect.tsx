@@ -19,7 +19,7 @@ import IRRITATION from '@/components/Figure/IRRITATION';
 import ANXIOUS from '@/components/Figure/ANXIOUS';
 import DONTKNOW from '@/components/Figure/DONTKNOW';
 
-interface SelectButtonProps {
+export interface SelectButtonProps {
   title?: string;
   secondaryCategorytype: 'positive' | 'negative' | 'natural';
 }
@@ -86,7 +86,7 @@ const SecondCategorySelect = ({ title, secondaryCategorytype = 'positive' }: Sel
             </label>
           ))
         ) : (
-          <SecondCategorySelectSkeleton />
+          <SecondCategorySelectSkeleton secondaryCategorytype={secondaryCategorytype} />
         )}
       </ButtonContainer>
     </SelectContainer>
