@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useDialog from '@/hooks/useDialog';
-import { CommonAppBar, CommonDialog, CommonIconButton } from '@/components/Common';
-import Button from '@/components/Common/Button/Button';
+import { CommonAppBar, CommonDialog, CommonIconButton, CommonButton } from '@/components/Common';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import theme from '@/styles/theme';
 import SorryFace from 'public/svgs/sorryFace.svg';
@@ -40,9 +39,9 @@ const MyPageWithdraw = () => {
       </Title>
       <Description>탈퇴 시 기록해왔던 모든 정보가 삭제되고 복구할 수 없어요.</Description>
       <ButtonWrapper>
-        <Button color="primary" onClick={toggleDialog} size="large">
+        <CommonButton color="primary" onClick={toggleDialog} size="large">
           탈퇴하기
-        </Button>
+        </CommonButton>
       </ButtonWrapper>
       {dialogVisible && (
         <CommonDialog type="alert" customConfirm="확인" onClose={toggleDialog} onConfirm={withdrawal}>
