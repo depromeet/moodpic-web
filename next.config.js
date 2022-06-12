@@ -18,6 +18,7 @@ module.exports = {
   },
   images: {
     domains: ['firebasestorage.googleapis.com', 'k.kakaocdn.net', '5gzoo.s3.ap-northeast-2.amazonaws.com'],
+    minimumCacheTTL: 31536000,
   },
   webpack(config) {
     return config;
