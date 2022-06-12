@@ -14,7 +14,7 @@ import {
 
 export interface DialogProps {
   type: 'modal' | 'alert';
-  customConfirm?: string;
+  confirmText?: string;
   children: ReactNode;
   disabledConfirm?: boolean;
   onConfirm: () => void;
@@ -23,7 +23,7 @@ export interface DialogProps {
 
 const Dialog = ({
   type = 'modal',
-  customConfirm,
+  confirmText,
   disabledConfirm = false,
   onConfirm,
   onClose,
@@ -34,8 +34,8 @@ const Dialog = ({
   if (!DialogRef) return null;
 
   const renderDialogActionText = () => {
-    if (type === 'alert') return customConfirm || '삭제';
-    if (type === 'modal') return customConfirm || '저장';
+    if (type === 'alert') return confirmText || '삭제';
+    if (type === 'modal') return confirmText || '저장';
   };
 
   return createPortal(

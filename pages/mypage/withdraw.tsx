@@ -44,7 +44,7 @@ const MyPageWithdraw = () => {
         </CommonButton>
       </ButtonWrapper>
       {dialogVisible && (
-        <CommonDialog type="alert" customConfirm="확인" onClose={toggleDialog} onConfirm={withdrawal}>
+        <CommonDialog type="alert" confirmText="확인" onClose={toggleDialog} onConfirm={withdrawal}>
           <DialogWarning>
             <DialogContent>
               <span>정말 탈퇴하실거에요?</span>

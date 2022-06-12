@@ -93,7 +93,7 @@ const MypageContentList = () => {
         ))}
       </ContentWrapper>
       {dialogVisible && (
-        <CommonDialog type="alert" customConfirm="로그아웃" onClose={toggleDialog} onConfirm={logout}>
+        <CommonDialog type="alert" confirmText="로그아웃" onClose={toggleDialog} onConfirm={logout}>
           <DialogWarning>
             <DialogContent>
               <span>정말 나가실거에요?</span>
