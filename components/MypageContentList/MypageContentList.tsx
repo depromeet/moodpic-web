@@ -24,6 +24,7 @@ const MypageContents = [
         <CommonIconButton iconName="right" />
       </>
     ),
+    path: `${ROUTES.MYPOSTS}`,
   },
   {
     leftContent: '공지사항',
@@ -32,14 +33,17 @@ const MypageContents = [
         <CommonIconButton iconName="right" />
       </>
     ),
+    path: `${ROUTES.NOTICE}`,
   },
   {
     leftContent: '버전정보',
     rightContent: <Version>v0.0.1</Version>,
+    path: '',
   },
   {
     leftContent: '로그아웃',
     rightContent: '',
+    path: '',
   },
   {
     leftContent: '회원탈퇴',
@@ -48,6 +52,7 @@ const MypageContents = [
         <CommonIconButton iconName="right" />
       </>
     ),
+    path: `${ROUTES.WITHDRAW}`,
   },
 ];
 
@@ -56,22 +61,11 @@ const MypageContentList = () => {
   const { dialogVisible, toggleDialog } = useDialog();
 
   const onClickContent = useCallback(
-    (content: string) => () => {
-      switch (content) {
-        case '나의 기록':
-          router.push(`${ROUTES.MYPOSTS}`);
-          break;
-        case '공지사항':
-          router.push(`${ROUTES.NOTICE}`);
-          break;
-        case '로그아웃':
-          toggleDialog();
-          break;
-        case '회원탈퇴':
-          router.push(`${ROUTES.WITHDRAW}`);
-          break;
-        default:
-          break;
+    (content: string, path: string) => () => {
+      if (!['로그아웃', '버전정보'].includes(content)) {
+        router.push(path);
+      } else if (content === '로그아웃') {
+        toggleDialog();
       }
     },
     [router, toggleDialog],
@@ -85,8 +79,8 @@ const MypageContentList = () => {
   return (
     <>
       <ContentWrapper>
-        {MypageContents.map(({ leftContent, rightContent }, i) => (
-          <ContentWrap key={i} onClick={onClickContent(leftContent)}>
+        {MypageContents.map(({ leftContent, rightContent, path }, i) => (
+          <ContentWrap key={i} onClick={onClickContent(leftContent, path)}>
             <span>{leftContent}</span>
             <div>{rightContent}</div>
           </ContentWrap>
