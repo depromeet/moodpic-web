@@ -36,7 +36,7 @@ const SharedPost = () => {
             <TextArea value={content || 'undefined contents'} readOnly={true} height={'42.2rem'} />
           </PostContentContainer>
         </BodyContainer>
-        <UserName>To. {senderName}</UserName>
+        <UserName>From. {senderName}</UserName>
         <ButtonWrapper>
           <Button color="primary" onClick={() => alert('TODO: 준비중입니다.')}>
             나도 서비스명에서 감정보내기
