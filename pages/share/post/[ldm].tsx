@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSharedPostQuery } from '../../../hooks/apis';
-import { To } from '../index';
+import { UserName } from '../index';
 import styled from 'styled-components';
 import TextArea from '../../../components/Common/TextArea/TextArea';
 import Button from '../../../components/Common/Button/Button';
@@ -29,14 +29,14 @@ const SharedPost = () => {
     <>
       <Header hasOnlyTitle={true} />
       <Container>
-        <To>To. {receiverName}</To>
+        <UserName>To. {receiverName}</UserName>
         <BodyContainer>
           <CategoryBox category={category} />
           <PostContentContainer>
             <TextArea value={content || 'undefined contents'} readOnly={true} height={'42.2rem'} />
           </PostContentContainer>
         </BodyContainer>
-        <To>To. {senderName}</To>
+        <UserName>To. {senderName}</UserName>
         <ButtonWrapper>
           <Button color="primary" onClick={() => alert('TODO: 준비중입니다.')}>
             나도 서비스명에서 감정보내기
