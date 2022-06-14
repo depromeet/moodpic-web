@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { ButtonWrapper } from '@/pages/write';
 import Button from '@/components/Common/Button/Button';
 import { useMemberQuery } from '@/hooks/apis';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
@@ -17,7 +16,7 @@ const PreEmotion = () => {
   return (
     <>
       <MainTitle>
-        {me?.nickname ?? '유저'}님의 <br />
+        {me?.nickname}님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
       <FirstCategorySelect />
@@ -31,6 +30,22 @@ const PreEmotion = () => {
 };
 
 export default PreEmotion;
+
+const ButtonWrapper = styled.div`
+  position: sticky;
+  bottom: 28px;
+  margin-top: auto;
+  &::after {
+    position: absolute;
+    bottom: -28px;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    content: '';
+    background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 52.6%);
+    z-index: -1;
+  }
+`;
 
 export const MainTitle = styled.div`
   ${theme.fonts.subtitle1}
