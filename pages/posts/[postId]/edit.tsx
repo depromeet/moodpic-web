@@ -75,7 +75,10 @@ const PostDetail = () => {
   const { data: folder, refetch: fetchFolderByPostId } = useFolderByPostIdQuery(postId);
   const { mutate: createFolder } = useCreateFolderMutation();
   const { mutate: updatePost } = useUpdatePostMutation();
-  const { confirmSystemDialog, cancelSystemDialog, removeRouteChangeEvent } = useSystemDialog(toggleDialog);
+  const { confirmSystemDialog, cancelSystemDialog, removeRouteChangeEvent } = useSystemDialog(() => {
+    toggleDialog();
+    setDialogType('cancel');
+  });
 
   const onCreateFolder = useCallback(() => {
     createFolder(folderName, {
@@ -84,8 +87,9 @@ const PostDetail = () => {
   }, [createFolder, folderName, toggleDialog]);
 
   const categoryOptions = categories ? Object.values(categories).flat() : [];
-
-  const selectedFolderName = folderListData?.folders.find(({ folderId }) => folderId === selectedState.folderId)?.folderName;
+  const selectedFolderName = folderListData?.folders.find(
+    ({ folderId }) => folderId === selectedState.folderId,
+  )?.folderName;
 
   const handleEdit = () => {
     const updatedForm = {
@@ -111,7 +115,7 @@ const PostDetail = () => {
     if (!router.isReady) return;
 
     if (selectedState.secondCategory === 'DONTKNOW') {
-      !isVisibleSheet && showCategoryBottomSheet();
+      !isVisibleSheet && showBottomSheetByType('category');
     }
 
     fetchPostById();
@@ -157,8 +161,8 @@ const PostDetail = () => {
     </>
   );
 
-  const showCategoryBottomSheet = () => {
-    setBottomSheetType('category');
+  const showBottomSheetByType = (type: string) => {
+    setBottomSheetType(type);
     toggleSheet();
   };
 
@@ -236,7 +240,7 @@ const PostDetail = () => {
             title="기록 이후 감정"
             selectedValue={selectedState.secondCategory}
             options={categoryOptions}
-            onClick={showCategoryBottomSheet}
+            onClick={() => showBottomSheetByType('category')}
           />
         </SelectContainer>
         {hasMultipleContent ? (
