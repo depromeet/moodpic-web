@@ -1,8 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
-import { tooltipStateAtom } from '@/store/tooltip/atom';
 import { CommonButton } from '@/components/Common';
 import theme from '@/styles/theme';
 import Image from 'next/image';
@@ -14,11 +12,9 @@ export interface BannerProps {
 
 const Banner = ({ title, background }: BannerProps): React.ReactElement => {
   const router = useRouter();
-  const setTooltipState = useSetRecoilState(tooltipStateAtom);
 
   const goToWritePage = () => {
     router.push('/write');
-    setTooltipState(true);
   };
 
   return (
