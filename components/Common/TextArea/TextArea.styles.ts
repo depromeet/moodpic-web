@@ -21,4 +21,7 @@ export const Textarea = styled.textarea<Pick<TextAreaProps, 'height' | 'borderRa
   :focus {
     border: 0.1rem solid ${theme.colors.gray4};
   }
+  ::placeholder {
+    color: ${theme.colors.gray4};
+  }
 `;
