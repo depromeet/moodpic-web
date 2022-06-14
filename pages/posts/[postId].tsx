@@ -121,7 +121,7 @@ const PostDetail = () => {
           <QuestionContainer>
             <ProvidedQuestionWrap>
               <MultipleLineText>
-                {me?.nickname}님에게 <br /> 어떤 일이 있었나요?
+                {post.my ? me?.nickname : '유저'}님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
               <CommonTextArea value={contents[0]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
