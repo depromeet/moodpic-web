@@ -16,7 +16,7 @@ import {
   NumberTitle,
   ProvidedQuestionMainTitle,
   ProvidedQuestionSubDescription,
-  ProvidedQuestionWrap,
+  QuestionWrap,
 } from './Question.styles';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
@@ -144,7 +144,7 @@ const Question = () => {
       </ButtonContainer>
       {mode === 'providedQuestion' ? (
         <>
-          <ProvidedQuestionWrap ref={firstQuestionRef}>
+          <QuestionWrap ref={firstQuestionRef}>
             <NumberTitle>
               <span className="highlight">1</span>
               /3
@@ -163,8 +163,8 @@ const Question = () => {
               onFocus={scrollToTextAreaOffestTop(firstQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
-          </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={secondQuestionRef}>
+          </QuestionWrap>
+          <QuestionWrap ref={secondQuestionRef}>
             <NumberTitle>
               <span className="highlight">2</span>
               /3
@@ -178,8 +178,8 @@ const Question = () => {
               onFocus={scrollToTextAreaOffestTop(secondQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
-          </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={thirdQuestionRef}>
+          </QuestionWrap>
+          <QuestionWrap ref={thirdQuestionRef}>
             <NumberTitle>
               <span className="highlight">3</span>
               /3
@@ -195,10 +195,10 @@ const Question = () => {
               onFocus={scrollToTextAreaOffestTop(thirdQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
-          </ProvidedQuestionWrap>
+          </QuestionWrap>
         </>
       ) : (
-        <>
+        <QuestionWrap>
           <MyselfQuestionTitle>✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.</MyselfQuestionTitle>
           <TextArea
             value={myselfQuestionValue}
@@ -206,7 +206,7 @@ const Question = () => {
             onChange={onChangeMyselfQuestionValue}
             placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
           />
-        </>
+        </QuestionWrap>
       )}
       <ButtonWrapper>
         <Button
