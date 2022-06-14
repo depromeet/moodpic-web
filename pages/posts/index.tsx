@@ -173,13 +173,15 @@ const PostListPage = () => {
   return (
     <>
       <CommonAppBar>
-        <CommonAppBar.Left>
-          <CommonIconButton iconName="left" alt="이전" onClick={() => router.back()} />
-          <HeaderTitle>{folderName || '모든 기록'}</HeaderTitle>
-        </CommonAppBar.Left>
+        {!isEditing && (
+          <CommonAppBar.Left>
+            <CommonIconButton iconName="left" alt="이전" onClick={() => router.back()} />
+            <HeaderTitle>{folderName || '모든 기록'}</HeaderTitle>
+          </CommonAppBar.Left>
+        )}
         <CommonAppBar.Right>
           {isEditing ? (
-            <TextButton onClick={handleSubmit}>완료</TextButton>
+            <CommonIconButton iconName="close" onClick={() => setIsEditing(false)} />
           ) : (
             <CommonIconButton iconName="more" alt="더보기" onClick={() => toggleSheet()} />
           )}
