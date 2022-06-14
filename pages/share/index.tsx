@@ -108,7 +108,7 @@ const Share = () => {
           <Message>{me.nickname}님의 감정을 전해보세요.</Message>
         </GuideMessage>
         <SenderInformation>
-          <To>To.</To>
+          <UserName>To.</UserName>
           <SenderInput value={receiverName} onChange={changeReceiverName} placeholder={'받는이'} />
         </SenderInformation>
         <PostContentContainer>
@@ -129,7 +129,7 @@ const Share = () => {
           })}
         </CategorySelectContainer>
         <SenderInformation>
-          <From>From. {me.nickname}</From>
+          <UserName>From. {me.nickname}</UserName>
         </SenderInformation>
         {
           <ButtonWrapper>
@@ -195,7 +195,7 @@ const CategorySelectContainer = styled.div`
   margin-top: 2.4rem;
 `;
 
-export const To = styled.p`
+export const UserName = styled.p`
   ${theme.fonts.h3}
   color: ${theme.colors.white};
 `;

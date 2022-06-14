@@ -52,7 +52,7 @@ const Search = () => {
           {searchedRecentTags.length === 0 ? (
             <NoneTagMessage>최근 검색 태그 기록이 없어요.</NoneTagMessage>
           ) : (
-            searchedRecentTags.map((tagTitle, index) => (
+            searchedRecentTags.reverse().map((tagTitle, index) => (
               <TagButtonContainer
                 key={`tag-button-${index}`}
                 onClick={(event: FormEvent) => submitSearchResult(event, tagTitle)}

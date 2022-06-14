@@ -50,6 +50,10 @@ const FloatingContainer = styled.div<{ isHidden: boolean }>`
   > div {
     width: 22.3rem;
     margin: 0 auto;
+
+    button {
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
+    }
   }
 `;
 

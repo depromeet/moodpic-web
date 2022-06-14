@@ -24,4 +24,9 @@ export const Textarea = styled.textarea<Pick<TextAreaProps, 'height' | 'borderRa
   ::placeholder {
     color: ${theme.colors.gray4};
   }
+  :disabled {
+    color: ${theme.colors.white};
+    -webkit-text-fill-color: ${theme.colors.white};
+    opacity: 1;
+  }
 `;

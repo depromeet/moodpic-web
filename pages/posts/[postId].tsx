@@ -9,11 +9,11 @@ import {
 } from '@/components/Common';
 import Card from '@/components/Card/Card';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
+import { ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
 import useToast from '@/hooks/useToast';
-import { useDeletePostMutation, usePostByIdQuery } from '@/hooks/apis';
+import { useDeletePostMutation, useMemberQuery, usePostByIdQuery } from '@/hooks/apis';
 import { useCategoryListQuery } from '@/hooks/apis/post/useCategoryListQuery';
 import { ToastType } from '@/shared/type/common';
 import { getPrevPath } from '@/shared/utils/storePathValues';
@@ -41,6 +41,7 @@ const PostDetail = () => {
 
   const { data: post } = usePostByIdQuery(postId);
   const { data: categories } = useCategoryListQuery();
+  const { data: me } = useMemberQuery();
 
   const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
 
@@ -93,9 +94,11 @@ const PostDetail = () => {
   return (
     <>
       <CommonAppBar>
-        <CommonAppBar.Left>
-          <CommonIconButton iconName="left" onClick={() => router.back()} />
-        </CommonAppBar.Left>
+        {!isFromWritePage && (
+          <CommonAppBar.Left>
+            <CommonIconButton iconName="left" onClick={() => router.back()} />
+          </CommonAppBar.Left>
+        )}
         {post.my && (
           <CommonAppBar.Right>
             <CommonIconButton iconName="share" onClick={() => router.push({ pathname: '/share', query: { postId } })} />
@@ -117,28 +120,16 @@ const PostDetail = () => {
         {hasMultipleContent ? (
           <QuestionContainer>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>1</span>
-                /3
-              </NumberTitle>
               <MultipleLineText>
-                카톡이름님에게 <br /> 어떤 일이 있었나요?
+                {post.my ? me?.nickname : '유저'}님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
               <CommonTextArea value={contents[0]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>2</span>
-                /3
-              </NumberTitle>
               <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
               <CommonTextArea value={contents[1]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>3</span>
-                /3
-              </NumberTitle>
               <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
               <CommonTextArea value={contents[2]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
