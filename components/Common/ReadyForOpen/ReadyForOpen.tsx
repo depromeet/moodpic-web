@@ -11,7 +11,7 @@ const ReadyForOpen = () => {
         오픈 준비 중입니다 <Image src={PersonRunning} alt="PersonRunning" />
         <br />
       </span>
-      <span>얼른 달려갈게요 !</span>
+      <span>&nbsp;&nbsp;얼른 달려갈게요 !</span>
     </ReadyForOpenWrapper>
   );
 };
