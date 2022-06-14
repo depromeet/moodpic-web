@@ -1,6 +1,7 @@
 import React, { MouseEvent } from 'react';
 import Image from 'next/image';
 import { commaNumber } from '@/shared/utils/formatter';
+import { Folder } from '@/shared/type/folder';
 import {
   FolderContainer,
   FolderName,
@@ -14,10 +15,7 @@ import TrashIcon from 'public/svgs/trash.svg';
 import EditFolderIcon from 'public/svgs/editfolder.svg';
 
 export interface FolderProps {
-  folderId: number;
-  folderName: string;
-  count: number;
-  coverImage: string;
+  folder: Folder;
   isEditMode?: boolean;
   supportsEmptyImg?: boolean;
   onClick: (id: number) => void;
@@ -26,16 +24,15 @@ export interface FolderProps {
 }
 
 const Folder = ({
-  folderId,
-  count,
-  folderName,
-  coverImage,
+  folder,
   isEditMode = false,
   supportsEmptyImg = false,
   onClick,
   onEdit,
   onDelete,
 }: FolderProps): React.ReactElement => {
+  const { folderId, folderName, postCount, coverImg, default: isDefaultFolder } = folder;
+
   const handleDelete = (e: MouseEvent<HTMLSpanElement>) => {
     if (!onDelete) return;
     e.stopPropagation();
@@ -81,14 +78,14 @@ const Folder = ({
 
   return (
     <FolderContainer>
-      <BoxContainer onClick={handleClick} backgroundImage={!supportsEmptyImg || count !== 0 ? coverImage : ''}>
-        {isEditMode && renderDeleteButton()}
+      <BoxContainer onClick={handleClick} backgroundImage={!supportsEmptyImg || postCount !== 0 ? coverImg : ''}>
+        {!isDefaultFolder && isEditMode && renderDeleteButton()}
       </BoxContainer>
       <CaptionContainer>
-        {isEditMode && renderEditButton()}
+        {!isDefaultFolder && isEditMode && renderEditButton()}
         <div>
           <FolderName>{folderName}</FolderName>
-          <FolderCount>{commaNumber(count)}</FolderCount>
+          <FolderCount>{commaNumber(postCount)}</FolderCount>
         </div>
       </CaptionContainer>
     </FolderContainer>
