@@ -54,7 +54,7 @@ const TabContainer = styled.div`
   margin-right: -1.8rem;
   margin-left: -1.8rem;
   padding: 0 1.8rem;
-  border-bottom: 0.1rem solid ${theme.colors.gray3};
+  border-bottom: 0.1rem solid ${theme.colors.gray1};
   z-index: 1;
 `;
 
