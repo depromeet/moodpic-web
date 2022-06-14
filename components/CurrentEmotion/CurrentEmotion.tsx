@@ -12,6 +12,7 @@ import useToast from '@/hooks/useToast';
 import useDialog from '@/hooks/useDialog';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import { useMemberQuery } from '@/hooks/apis';
+import useUpdateEffect from '@/hooks/useUpdateEffect';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { queryClient } from '@/shared/utils/queryClient';
 import { ToastType } from '@/shared/type/common';
@@ -52,8 +53,10 @@ interface CurrentEmotionProps {
 const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
   const notify = useToast();
   const nextProgressStep = useNextProgressStep();
+  const [isTypingMode, setTypingMode] = useState(false);
   const [isDisclose, setDisclose] = useState(false);
   const [tagList, setTagList] = useState<string[]>([]);
+  const [selectedFolderName, setSelectFolderName] = useState('폴더선택');
   const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
   const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
   const setPostId = useSetRecoilState(createPostResponseState);
@@ -96,6 +99,13 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
     },
   });
 
+  const onTextFieldBlur = () => {
+    setTypingMode(false);
+  };
+  const onTextFieldFocus = () => {
+    setTypingMode(true);
+  };
+
   const onChangeDisclose = () => {
     setSelectState((prev) => ({ ...prev, disclosure: !isDisclose }));
     setDisclose((prev) => !prev);
@@ -137,11 +147,10 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
     [tagList],
   );
 
-  const onCreateFolder = useCallback(() => {
+  const onCreateFolder = () => {
     createFolder(inputValue);
-    setInputValue('');
     toggleDialog();
-  }, [createFolder, inputValue, setInputValue, toggleDialog]);
+  };
 
   const onSubmit = () => {
     removeRouteChangeEvent();
@@ -152,11 +161,29 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
     window.scrollTo({ top: 0 });
   }, []);
 
+  useUpdateEffect(() => {
+    if (folderListData && inputValue) {
+      setSelectState((prev) => ({
+        ...prev,
+        folderId: folderListData?.folders[folderListData?.folders.length - 1].folderId,
+      }));
+      setInputValue('');
+    }
+  }, [folderListData?.folders, selectedFolderName]);
+
   useEffect(() => {
     if (defaultFolder && !isNaN(defaultFolder)) {
       setSelectState((prev) => ({ ...prev, folderId: defaultFolder }));
     }
   }, [defaultFolder, setSelectState]);
+
+  useEffect(() => {
+    if (selectedState.folderId) {
+      setSelectFolderName(
+        folderListData?.folders.find(({ folderId }) => folderId === selectedState.folderId)?.folderName as string,
+      );
+    }
+  }, [selectedState.folderId]);
 
   return (
     <>
@@ -174,7 +201,9 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
           <TextField
             value={tagValue}
             rightSideIcon={Whiteadd.src}
-            hasBorder={false}
+            hasBorder={isTypingMode}
+            onFocus={onTextFieldFocus}
+            onBlur={onTextFieldBlur}
             onChange={onChangeValue}
             onKeyPress={onKeyPressEnter}
             onClickRightSideIcon={onClickRightSideIcon}
@@ -199,7 +228,7 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
         <div className="space-between">
           <OptionTitle>폴더</OptionTitle>
           <FolderWrap>
-            <FolderButton onClick={toggleSheet}>폴더선택</FolderButton>
+            <FolderButton onClick={toggleSheet}>{selectedFolderName}</FolderButton>
             <CustomImage src={FolderPlus} alt="FolderPlus" onClick={toggleDialog} />
           </FolderWrap>
         </div>

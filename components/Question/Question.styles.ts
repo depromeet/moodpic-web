@@ -67,12 +67,13 @@ export const NumberTitle = styled.div`
   }
 `;
 
-export const ProvidedQuestionWrap = styled.div`
+export const QuestionWrap = styled.div`
   margin-bottom: 4rem;
 `;
 
 export const ProvidedQuestionMainTitle = styled.div`
   ${theme.fonts.h3};
+  line-height: 160%;
   color: ${theme.colors.white};
   margin-bottom: 2rem;
 `;

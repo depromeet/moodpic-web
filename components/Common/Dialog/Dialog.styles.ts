@@ -43,6 +43,7 @@ export const CancelBtn = styled.button`
   ${theme.fonts.h4}
   padding: 2rem 0;
   width: 50%;
+  height: 5.92rem;
   text-align: center;
   color: ${theme.colors.white};
   cursor: pointer;
@@ -53,6 +54,7 @@ export const ActionBtn = styled.button<{ dialogType: 'alert' | 'modal' }>`
   ${theme.fonts.h4}
   padding: 1.9rem 0;
   width: 50%;
+  height: 5.92rem;
   text-align: center;
   color: ${theme.colors.black};
   border-bottom-right-radius: 1.4rem;

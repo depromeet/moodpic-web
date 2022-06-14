@@ -65,7 +65,14 @@ const Complete = () => {
     <>
       <ImageWrap>
         {secondCategory ? (
-          <Image src={`/images/img_${secondCategory}.png`} alt={secondCategory} width={232} height={209} />
+          <Image
+            src={`/images/img_${secondCategory}.png`}
+            alt={secondCategory}
+            width={232}
+            height={209}
+            priority
+            loading="eager"
+          />
         ) : (
           <Image src={`/images/img_DONTKNOW.png`} alt="DONTKNOW" width={232} height={209} />
         )}

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useCallback, useEffect, ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -25,7 +26,7 @@ import {
   CommonFolderButton,
   CommonBottomSheetContainer,
 } from '@/components/Common';
-import { ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
+import { NumberTitle, ProvidedQuestionMainTitle, QuestionWrap } from '@/components/Question/Question.styles';
 import CategorySelector from '@/components/CategorySelector/CategorySelector';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
 import BottomSheetCategoryList from '@/components/BottomSheetCategoryList/BottomSheetCategoryList';
@@ -247,20 +248,32 @@ const PostDetail = () => {
         </SelectContainer>
         {hasMultipleContent ? (
           <QuestionContainer>
-            <ProvidedQuestionWrap>
+            <QuestionWrap>
+              <NumberTitle>
+                <span>1</span>
+                /3
+              </NumberTitle>
               <MultipleLineText>
                 {me?.nickname}님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
               <CommonTextArea value={firstContent} height="32.6rem" onChange={onChangeFirstContent} />
-            </ProvidedQuestionWrap>
-            <ProvidedQuestionWrap>
+            </QuestionWrap>
+            <QuestionWrap>
+              <NumberTitle>
+                <span>2</span>
+                /3
+              </NumberTitle>
               <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
               <CommonTextArea value={secondContent} height="32.6rem" onChange={onChangeSecondContent} />
-            </ProvidedQuestionWrap>
-            <ProvidedQuestionWrap>
+            </QuestionWrap>
+            <QuestionWrap>
+              <NumberTitle>
+                <span>3</span>
+                /3
+              </NumberTitle>
               <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
               <CommonTextArea value={thirdContent} height="32.6rem" onChange={onChangeThirdContent} />
-            </ProvidedQuestionWrap>
+            </QuestionWrap>
           </QuestionContainer>
         ) : (
           <CommonTextArea value={firstContent} height="42.2rem" onChange={onChangeFirstContent} />

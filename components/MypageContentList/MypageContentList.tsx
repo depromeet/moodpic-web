@@ -8,6 +8,7 @@ import { ROUTES } from '@/shared/constants/routes';
 import DialogWarning from '../Dialog/DialogWarning';
 import SorryFace from 'public/svgs/sorryFace.svg';
 import Image from 'next/image';
+import { removeLocalStorageValue } from '@/shared/utils/localStorage';
 
 const Version = styled.span`
   font-weight: 400;
@@ -72,7 +73,8 @@ const MypageContentList = () => {
   );
 
   const logout = () => {
-    console.log('로그아웃');
+    removeLocalStorageValue('authToken');
+    router.reload();
     toggleDialog();
   };
 

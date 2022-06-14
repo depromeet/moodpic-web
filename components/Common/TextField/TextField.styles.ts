@@ -19,6 +19,7 @@ const IconStyle = (isFocused: boolean) => {
 
 export const Container = styled.div<Pick<TextFieldProps, 'hasRightSideIcon' | 'height'>>`
   display: flex;
+
   ${({ hasRightSideIcon }) =>
     hasRightSideIcon
       ? css`

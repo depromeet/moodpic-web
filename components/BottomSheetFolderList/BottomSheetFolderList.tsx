@@ -6,7 +6,7 @@ import FolderPlus from 'public/svgs/folderplus.svg';
 import { BottomSheetFolderListWrap } from './BottomSheetFolderList.styles';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { isDefaultFolderSelectedState, createPostRequestState } from '@/store/post/atom';
+import { createPostRequestState } from '@/store/post/atom';
 import { Folder } from '@/shared/type/folder';
 
 interface BottomSheetFolderListProps {
@@ -17,20 +17,10 @@ interface BottomSheetFolderListProps {
 
 const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomSheetFolderListProps) => {
   const [selectedFolder, setSelectFolder] = useRecoilState(createPostRequestState);
-  const [isDefaultFolderSelected, setIsDefaultFolderSelected] = useRecoilState(isDefaultFolderSelectedState);
 
   const closeFolerList = (selectedForderId: number) => () => {
     setSelectFolder((prev) => ({ ...prev, folderId: selectedForderId }));
-    setIsDefaultFolderSelected(true);
     onClose();
-  };
-
-  const renderDefaultFolderOrSelectedFolder = (folderId: number, isDefaultFolder: boolean) => {
-    if (
-      (isDefaultFolder && !isDefaultFolderSelected) ||
-      (folderId === selectedFolder.folderId && isDefaultFolderSelected)
-    )
-      return <Image src={CheckCirclePr} alt="CheckCirclePr" />;
   };
 
   return (
@@ -42,9 +32,11 @@ const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomShee
         </FolderListItemWrap>
       )}
       {folderData
-        .map(({ folderId, folderName, default: isDefaultFolder }) => (
+        .map(({ folderId, folderName }) => (
           <FolderListItemWrap key={folderId} onClick={closeFolerList(folderId)}>
-            <IconWrap>{renderDefaultFolderOrSelectedFolder(folderId, isDefaultFolder)}</IconWrap>
+            <IconWrap>
+              {folderId === selectedFolder.folderId && <Image src={CheckCirclePr} alt="CheckCirclePr" />}
+            </IconWrap>
             {folderName}
           </FolderListItemWrap>
         ))

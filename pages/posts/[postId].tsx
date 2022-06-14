@@ -9,7 +9,7 @@ import {
 } from '@/components/Common';
 import Card from '@/components/Card/Card';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
+import { NumberTitle, ProvidedQuestionMainTitle, QuestionWrap } from '@/components/Question/Question.styles';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
 import useToast from '@/hooks/useToast';
@@ -119,20 +119,32 @@ const PostDetail = () => {
         </CardContainer>
         {hasMultipleContent ? (
           <QuestionContainer>
-            <ProvidedQuestionWrap>
+            <QuestionWrap>
+              <NumberTitle>
+                <span>1</span>
+                /3
+              </NumberTitle>
               <MultipleLineText>
                 {post.my ? me?.nickname : '유저'}님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
               <CommonTextArea value={contents[0]} height="32.6rem" disabled />
-            </ProvidedQuestionWrap>
-            <ProvidedQuestionWrap>
+            </QuestionWrap>
+            <QuestionWrap>
+              <NumberTitle>
+                <span>2</span>
+                /3
+              </NumberTitle>
               <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
               <CommonTextArea value={contents[1]} height="32.6rem" disabled />
-            </ProvidedQuestionWrap>
-            <ProvidedQuestionWrap>
+            </QuestionWrap>
+            <QuestionWrap>
+              <NumberTitle>
+                <span>3</span>
+                /3
+              </NumberTitle>
               <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
               <CommonTextArea value={contents[2]} height="32.6rem" disabled />
-            </ProvidedQuestionWrap>
+            </QuestionWrap>
           </QuestionContainer>
         ) : (
           <CommonTextArea value={post.content} height="42.2rem" disabled />

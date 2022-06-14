@@ -1,10 +1,8 @@
 /* eslint-disable max-lines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { tooltipStateAtom } from '@/store/tooltip/atom';
 import useDialog from '@/hooks/useDialog';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import { createPostRequestState } from '@/store/post/atom';
@@ -12,34 +10,23 @@ import Button from '@/components/Common/Button/Button';
 import DialogCancel from '@/components/Dialog/DialogCancel';
 import TextArea from '../Common/TextArea/TextArea';
 import { CommonDialog } from '../Common';
-import BgClose from 'public/svgs/bgclose.svg';
 import {
   ButtonContainer,
-  ImageWrap,
   MyselfQuestionTitle,
   NumberTitle,
   ProvidedQuestionMainTitle,
   ProvidedQuestionSubDescription,
-  ProvidedQuestionWrap,
-  TooltipDescription,
-  TooltipDescriptionWrap,
-  TooltipTitle,
-  TooltipWrapper,
-  Triangle,
+  QuestionWrap,
 } from './Question.styles';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
 import { useMemberQuery } from '@/hooks/apis';
-
-const questionList = ['어떤 일이 있었나요?', '그 때 어떤 감정이 들었나요?', '스스로에게 한마디를 쓴다면?'];
 
 const HEADER_HEIGHT = 50;
 
 const Question = () => {
   const [questionModeData, setQuestionModeData] = useRecoilState(questionModeState);
   const [postRequestData, setPostRequestData] = useRecoilState(createPostRequestState);
-  const isTooltipOpen = useRecoilValue(tooltipStateAtom);
-  const setTooltipState = useSetRecoilState(tooltipStateAtom);
   const [firstQuestionValue, onChangeFirstQuestionValue, setFirstQuestionValue] = useTypeInput('');
   const [secondQuestionValue, onChangeSecondQuestionValue, setSecondQuestionValue] = useTypeInput('');
   const [thirdQuestionValue, onChangeThirdQuestionValue, setThirdQuestionValue] = useTypeInput('');
@@ -104,10 +91,6 @@ const Question = () => {
     }
   };
 
-  const onCloseTooltip = () => {
-    setTooltipState(false);
-  };
-
   const onClickNextButton = () => {
     if (myselfQuestionValue) {
       setPostRequestData((prev) => ({ ...prev, content: myselfQuestionValue }));
@@ -158,30 +141,16 @@ const Question = () => {
             내맘대로 쓸래요
           </Button>
         </div>
-        {isTooltipOpen && (
-          <TooltipWrapper>
-            <Triangle />
-            <ImageWrap>
-              <Image src={BgClose} alt="bgClose" width={24} height={24} onClick={onCloseTooltip} />
-            </ImageWrap>
-            <TooltipTitle>📝 &nbsp; 이런 질문에 답하게 될거에요</TooltipTitle>
-            <TooltipDescriptionWrap>
-              {questionList.map((question) => (
-                <TooltipDescription key={question}>{question}</TooltipDescription>
-              ))}
-            </TooltipDescriptionWrap>
-          </TooltipWrapper>
-        )}
       </ButtonContainer>
       {mode === 'providedQuestion' ? (
         <>
-          <ProvidedQuestionWrap ref={firstQuestionRef}>
+          <QuestionWrap ref={firstQuestionRef}>
             <NumberTitle>
               <span className="highlight">1</span>
               /3
             </NumberTitle>
             <ProvidedQuestionMainTitle>
-              {me?.nickname ?? '유저'}님에게 <br />
+              {me?.nickname}님, <br />
               어떤 일이 있었나요?
             </ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>
@@ -194,8 +163,8 @@ const Question = () => {
               onFocus={scrollToTextAreaOffestTop(firstQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
-          </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={secondQuestionRef}>
+          </QuestionWrap>
+          <QuestionWrap ref={secondQuestionRef}>
             <NumberTitle>
               <span className="highlight">2</span>
               /3
@@ -209,8 +178,8 @@ const Question = () => {
               onFocus={scrollToTextAreaOffestTop(secondQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
-          </ProvidedQuestionWrap>
-          <ProvidedQuestionWrap ref={thirdQuestionRef}>
+          </QuestionWrap>
+          <QuestionWrap ref={thirdQuestionRef}>
             <NumberTitle>
               <span className="highlight">3</span>
               /3
@@ -226,10 +195,10 @@ const Question = () => {
               onFocus={scrollToTextAreaOffestTop(thirdQuestionRef)}
               placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
             />
-          </ProvidedQuestionWrap>
+          </QuestionWrap>
         </>
       ) : (
-        <>
+        <QuestionWrap>
           <MyselfQuestionTitle>✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.</MyselfQuestionTitle>
           <TextArea
             value={myselfQuestionValue}
@@ -237,7 +206,7 @@ const Question = () => {
             onChange={onChangeMyselfQuestionValue}
             placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
           />
-        </>
+        </QuestionWrap>
       )}
       <ButtonWrapper>
         <Button
