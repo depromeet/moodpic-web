@@ -150,7 +150,7 @@ const Question = () => {
               /3
             </NumberTitle>
             <ProvidedQuestionMainTitle>
-              {me?.nickname ?? '유저'}님에게 <br />
+              {me?.nickname ?? '유저'}님, <br />
               어떤 일이 있었나요?
             </ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>
