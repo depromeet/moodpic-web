@@ -46,8 +46,12 @@ const FolderList = ({
         <HomeFolder
           supportsEmptyImg={supportsCollectedFolder}
           key={folder.folderId}
-          folder={folder}
+          folderId={folder.folderId}
+          folderName={folder.folderName}
+          count={folder.postCount}
+          coverImage={folder.coverImg}
           isEditMode={isEditMode}
+          isDefaultFolder={folder.default}
           onClick={onClick}
           onEdit={onEdit}
           onDelete={onDelete}
