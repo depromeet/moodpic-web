@@ -73,6 +73,7 @@ export const QuestionWrap = styled.div`
 
 export const ProvidedQuestionMainTitle = styled.div`
   ${theme.fonts.h3};
+  line-height: 160%;
   color: ${theme.colors.white};
   margin-bottom: 2rem;
 `;
