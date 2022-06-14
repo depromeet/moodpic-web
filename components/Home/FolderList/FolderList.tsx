@@ -35,7 +35,12 @@ const FolderList = ({
   return (
     <>
       {supportsCollectedFolder && (
-        <HomeCollectedFolder count={totalCount} items={thumbnailList || []} onClick={goToPosts} />
+        <HomeCollectedFolder
+          count={totalCount}
+          items={thumbnailList || []}
+          isEditMode={isEditMode}
+          onClick={goToPosts}
+        />
       )}
       {folderList.map((folder) => (
         <HomeFolder
@@ -45,7 +50,8 @@ const FolderList = ({
           folderName={folder.folderName}
           count={folder.postCount}
           coverImage={folder.coverImg}
-          isEditMode={isEditMode && !folder.default}
+          isEditMode={isEditMode}
+          isDefaultFolder={folder.default}
           onClick={onClick}
           onEdit={onEdit}
           onDelete={onDelete}

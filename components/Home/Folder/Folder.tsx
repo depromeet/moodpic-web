@@ -18,6 +18,7 @@ export interface FolderProps {
   folderName: string;
   count: number;
   coverImage: string;
+  isDefaultFolder?: boolean;
   isEditMode?: boolean;
   supportsEmptyImg?: boolean;
   onClick: (id: number) => void;
@@ -30,6 +31,7 @@ const Folder = ({
   count,
   folderName,
   coverImage,
+  isDefaultFolder = false,
   isEditMode = false,
   supportsEmptyImg = false,
   onClick,
@@ -82,10 +84,10 @@ const Folder = ({
   return (
     <FolderContainer>
       <BoxContainer onClick={handleClick} backgroundImage={!supportsEmptyImg || count !== 0 ? coverImage : ''}>
-        {isEditMode && renderDeleteButton()}
+        {isEditMode && !isDefaultFolder && renderDeleteButton()}
       </BoxContainer>
       <CaptionContainer>
-        {isEditMode && renderEditButton()}
+        {isEditMode && !isDefaultFolder && renderEditButton()}
         <div>
           <FolderName>{folderName}</FolderName>
           <FolderCount>{commaNumber(count)}</FolderCount>

@@ -25,15 +25,13 @@ export const BoxContainer = styled.figure`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.4rem;
-  height: calc(100% - 4.2rem);
-  min-height: 16.5rem;
 `;
 
 export const FolderImage = styled.div<{ thumbnail?: string }>`
   border-radius: 1rem;
   padding-top: 100%;
   background-size: cover;
-  background-color: ${theme.colors.gray3};
+  background-color: ${theme.colors.gray2};
   ${(props) =>
     props.thumbnail &&
     css`

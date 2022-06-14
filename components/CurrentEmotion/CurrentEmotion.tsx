@@ -46,7 +46,11 @@ import {
 
 const MAX_TAG_LIST_LENGTH = 5;
 
-const CurrentEmotion = () => {
+interface CurrentEmotionProps {
+  removeRouteChangeEvent: () => void;
+}
+
+const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
   const notify = useToast();
   const nextProgressStep = useNextProgressStep();
   const [isTypingMode, setTypingMode] = useState(false);
@@ -149,6 +153,7 @@ const CurrentEmotion = () => {
   };
 
   const onSubmit = () => {
+    removeRouteChangeEvent();
     createPost(selectedState);
   };
 

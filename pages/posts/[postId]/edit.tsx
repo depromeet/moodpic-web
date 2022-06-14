@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useCallback, useEffect, ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -9,14 +10,14 @@ import {
   useCreateFolderMutation,
   useFolderByPostIdQuery,
   useFoldersQuery,
+  useMemberQuery,
   usePostByIdQuery,
   useUpdatePostMutation,
 } from '@/hooks/apis';
 import useDialog from '@/hooks/useDialog';
 import { useTags } from '@/hooks/post/useTags';
+import useSystemDialog from '@/hooks/useSystemDialog';
 import {
-  CommonAppBar,
-  CommonIconButton,
   CommonTagButton,
   CommonTextArea,
   CommonTextField,
@@ -35,7 +36,8 @@ import {
   MultipleLineText,
   QuestionContainer,
 } from '@/components/Post/PostDetail.style';
-import { TextButton, SelectContainer, SpaceBetweenContainer } from '@/components/Post/PostEdit.style';
+import PostEditAppBar from '@/components/Post/PostEdit/AppBar';
+import { SelectContainer, SpaceBetweenContainer } from '@/components/Post/PostEdit/PostEdit.style';
 import {
   OptionTitle,
   TextFieldWrap,
@@ -49,6 +51,7 @@ import FolderIcon from 'public/svgs/folder.svg';
 import FolderPlus from 'public/svgs/folderplus.svg';
 import usePostEditForm from '@/hooks/post/usePostEditForm';
 import { commaNumber } from '@/shared/utils/formatter';
+import DialogCancel from '@/components/Dialog/DialogCancel';
 
 const PostDetail = () => {
   const router = useRouter();
@@ -66,44 +69,56 @@ const PostDetail = () => {
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const [bottomSheetType, setBottomSheetType] = useState('');
   const { dialogVisible, toggleDialog } = useDialog();
+  const [dialogType, setDialogType] = useState('');
 
   const { data: folderListData } = useFoldersQuery();
   const { data: post, refetch: fetchPostById } = usePostByIdQuery(postId);
   const { data: categories } = useCategoryListQuery();
   const { data: folder, refetch: fetchFolderByPostId } = useFolderByPostIdQuery(postId);
+  const { data: me } = useMemberQuery();
   const { mutate: createFolder } = useCreateFolderMutation();
   const { mutate: updatePost } = useUpdatePostMutation();
+  const { confirmSystemDialog, cancelSystemDialog, removeRouteChangeEvent } = useSystemDialog(() => {
+    toggleDialog();
+    setDialogType('cancel');
+  });
 
   const onCreateFolder = useCallback(() => {
     createFolder(folderName, {
-      onSuccess: () => {
-        toggleDialog();
-      },
+      onSuccess: () => toggleDialog(),
     });
   }, [createFolder, folderName, toggleDialog]);
 
   const categoryOptions = categories ? Object.values(categories).flat() : [];
-
-  const getFolderName = (id: number) => folderListData?.folders.find(({ folderId }) => folderId === id)?.folderName;
+  const selectedFolderName = folderListData?.folders.find(
+    ({ folderId }) => folderId === selectedState.folderId,
+  )?.folderName;
 
   const handleEdit = () => {
     const updatedForm = {
       ...selectedState,
       tags: tagList,
-      content: [firstContent, secondContent, thirdContent].join(CONTENT_SEPARATOR),
+      content: hasMultipleContent ? [firstContent, secondContent, thirdContent].join(CONTENT_SEPARATOR) : firstContent,
     };
 
     updatePost(
       { id: postId, postData: { ...updatedForm, folderId: selectedState.folderId || 0 } },
       { onSuccess: () => router.push(`/posts/${postId}`) },
     );
+
+    removeRouteChangeEvent();
+  };
+
+  const toggleCreateDialog = () => {
+    setDialogType('folder');
+    toggleDialog();
   };
 
   useEffect(() => {
     if (!router.isReady) return;
 
     if (selectedState.secondCategory === 'DONTKNOW') {
-      !isVisibleSheet && showCategoryBottomSheet();
+      !isVisibleSheet && showBottomSheetByType('category');
     }
 
     fetchPostById();
@@ -136,21 +151,7 @@ const PostDetail = () => {
     folder,
   ]);
 
-  // TODO: 오류 페이지 이후 작업 요청해서 바꾸기..
   if (!post || !postId) return <div>404</div>;
-
-  const renderAppBar = () => {
-    return (
-      <CommonAppBar>
-        <CommonAppBar.Left>
-          <CommonIconButton iconName="close" onClick={() => router.back()} />
-        </CommonAppBar.Left>
-        <CommonAppBar.Right>
-          <TextButton onClick={handleEdit}>완료</TextButton>
-        </CommonAppBar.Right>
-      </CommonAppBar>
-    );
-  };
 
   const isCategoryBottomSheet = bottomSheetType === 'category';
   const bottomSheetHeight = isCategoryBottomSheet ? calcBottomSheetHeight({ folderSize: 4, hasHeader: true }) : 364;
@@ -163,8 +164,8 @@ const PostDetail = () => {
     </>
   );
 
-  const showCategoryBottomSheet = () => {
-    setBottomSheetType('category');
+  const showBottomSheetByType = (type: string) => {
+    setBottomSheetType(type);
     toggleSheet();
   };
 
@@ -188,9 +189,25 @@ const PostDetail = () => {
     );
   };
 
+  const renderSystemDialog = () => {
+    return (
+      <CommonDialog type="alert" onClose={cancelSystemDialog} onConfirm={confirmSystemDialog}>
+        <DialogCancel />
+      </CommonDialog>
+    );
+  };
+
+  const renderDialog = () => {
+    return (
+      <CommonDialog type="modal" onClose={toggleDialog} disabledConfirm={folderName === ''} onConfirm={onCreateFolder}>
+        <DialogFolderForm value={folderName} onChange={onChangeFolderName} />
+      </CommonDialog>
+    );
+  };
+
   return (
     <>
-      {renderAppBar()}
+      <PostEditAppBar onSubmit={handleEdit} />
       <PostDetailContainer>
         <OptionTitle>태그</OptionTitle>
         <TextFieldWrap>
@@ -226,7 +243,7 @@ const PostDetail = () => {
             title="기록 이후 감정"
             selectedValue={selectedState.secondCategory}
             options={categoryOptions}
-            onClick={showCategoryBottomSheet}
+            onClick={() => showBottomSheetByType('category')}
           />
         </SelectContainer>
         {hasMultipleContent ? (
@@ -237,7 +254,7 @@ const PostDetail = () => {
                 /3
               </NumberTitle>
               <MultipleLineText>
-                카톡이름님에게 <br /> 어떤 일이 있었나요?
+                {me?.nickname}님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
               <CommonTextArea value={firstContent} height="32.6rem" onChange={onChangeFirstContent} />
             </QuestionWrap>
@@ -273,23 +290,15 @@ const PostDetail = () => {
         <SpaceBetweenContainer>
           <OptionTitle>폴더</OptionTitle>
           <FolderWrap>
-            <CommonFolderButton onClick={toggleSheet}>
-              {selectedState.folderId ? getFolderName(selectedState.folderId) : '폴더선택'}
+            <CommonFolderButton onClick={() => showBottomSheetByType('folder')}>
+              {selectedFolderName}
             </CommonFolderButton>
-            <CustomImage src={FolderPlus} alt="추가" onClick={toggleDialog} />
+            <CustomImage src={FolderPlus} alt="추가" onClick={toggleCreateDialog} />
           </FolderWrap>
         </SpaceBetweenContainer>
-        {dialogVisible && (
-          <CommonDialog
-            type="modal"
-            onClose={toggleDialog}
-            disabledConfirm={folderName === ''}
-            onConfirm={onCreateFolder}
-          >
-            <DialogFolderForm value={folderName} onChange={onChangeFolderName} />
-          </CommonDialog>
-        )}
-        {isVisibleSheet ? renderBottomSheet() : null}
+        {dialogVisible && dialogType === 'folder' && renderDialog()}
+        {dialogVisible && dialogType !== 'folder' && renderSystemDialog()}
+        {isVisibleSheet && renderBottomSheet()}
       </PostDetailContainer>
     </>
   );
