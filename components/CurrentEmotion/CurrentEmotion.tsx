@@ -49,6 +49,7 @@ const MAX_TAG_LIST_LENGTH = 5;
 const CurrentEmotion = () => {
   const notify = useToast();
   const nextProgressStep = useNextProgressStep();
+  const [isTypingMode, setTypingMode] = useState(false);
   const [isDisclose, setDisclose] = useState(false);
   const [tagList, setTagList] = useState<string[]>([]);
   const [selectedFolderName, setSelectFolderName] = useState('폴더선택');
@@ -93,6 +94,13 @@ const CurrentEmotion = () => {
       });
     },
   });
+
+  const onTextFieldBlur = () => {
+    setTypingMode(false);
+  };
+  const onTextFieldFocus = () => {
+    setTypingMode(true);
+  };
 
   const onChangeDisclose = () => {
     setSelectState((prev) => ({ ...prev, disclosure: !isDisclose }));
@@ -188,7 +196,9 @@ const CurrentEmotion = () => {
           <TextField
             value={tagValue}
             rightSideIcon={Whiteadd.src}
-            hasBorder={false}
+            hasBorder={isTypingMode}
+            onFocus={onTextFieldFocus}
+            onBlur={onTextFieldBlur}
             onChange={onChangeValue}
             onKeyPress={onKeyPressEnter}
             onClickRightSideIcon={onClickRightSideIcon}
