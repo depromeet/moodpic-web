@@ -13,7 +13,7 @@ import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/
 import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
 import useToast from '@/hooks/useToast';
-import { useDeletePostMutation, usePostByIdQuery } from '@/hooks/apis';
+import { useDeletePostMutation, useMemberQuery, usePostByIdQuery } from '@/hooks/apis';
 import { useCategoryListQuery } from '@/hooks/apis/post/useCategoryListQuery';
 import { ToastType } from '@/shared/type/common';
 import { getPrevPath } from '@/shared/utils/storePathValues';
@@ -41,6 +41,7 @@ const PostDetail = () => {
 
   const { data: post } = usePostByIdQuery(postId);
   const { data: categories } = useCategoryListQuery();
+  const { data: me } = useMemberQuery();
 
   const folderId = router.query.folderId ? Number(router.query.folderId) : 0;
 
@@ -124,7 +125,7 @@ const PostDetail = () => {
                 /3
               </NumberTitle>
               <MultipleLineText>
-                카톡이름님에게 <br /> 어떤 일이 있었나요?
+                {me?.nickname}님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
               <CommonTextArea value={contents[0]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>

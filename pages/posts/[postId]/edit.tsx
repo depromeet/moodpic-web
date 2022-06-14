@@ -9,6 +9,7 @@ import {
   useCreateFolderMutation,
   useFolderByPostIdQuery,
   useFoldersQuery,
+  useMemberQuery,
   usePostByIdQuery,
   useUpdatePostMutation,
 } from '@/hooks/apis';
@@ -24,7 +25,7 @@ import {
   CommonFolderButton,
   CommonBottomSheetContainer,
 } from '@/components/Common';
-import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
+import { ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
 import CategorySelector from '@/components/CategorySelector/CategorySelector';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
 import BottomSheetCategoryList from '@/components/BottomSheetCategoryList/BottomSheetCategoryList';
@@ -73,6 +74,7 @@ const PostDetail = () => {
   const { data: post, refetch: fetchPostById } = usePostByIdQuery(postId);
   const { data: categories } = useCategoryListQuery();
   const { data: folder, refetch: fetchFolderByPostId } = useFolderByPostIdQuery(postId);
+  const { data: me } = useMemberQuery();
   const { mutate: createFolder } = useCreateFolderMutation();
   const { mutate: updatePost } = useUpdatePostMutation();
   const { confirmSystemDialog, cancelSystemDialog, removeRouteChangeEvent } = useSystemDialog(() => {
@@ -246,25 +248,16 @@ const PostDetail = () => {
         {hasMultipleContent ? (
           <QuestionContainer>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>1</span>/3
-              </NumberTitle>
               <MultipleLineText>
-                카톡이름님에게 <br /> 어떤 일이 있었나요?
+                {me?.nickname}님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
               <CommonTextArea value={firstContent} height="32.6rem" onChange={onChangeFirstContent} />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>2</span>/3
-              </NumberTitle>
               <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
               <CommonTextArea value={secondContent} height="32.6rem" onChange={onChangeSecondContent} />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>3</span>/3
-              </NumberTitle>
               <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
               <CommonTextArea value={thirdContent} height="32.6rem" onChange={onChangeThirdContent} />
             </ProvidedQuestionWrap>
@@ -284,7 +277,9 @@ const PostDetail = () => {
         <SpaceBetweenContainer>
           <OptionTitle>폴더</OptionTitle>
           <FolderWrap>
-            <CommonFolderButton onClick={toggleSheet}>{selectedFolderName}</CommonFolderButton>
+            <CommonFolderButton onClick={() => showBottomSheetByType('folder')}>
+              {selectedFolderName}
+            </CommonFolderButton>
             <CustomImage src={FolderPlus} alt="추가" onClick={toggleCreateDialog} />
           </FolderWrap>
         </SpaceBetweenContainer>

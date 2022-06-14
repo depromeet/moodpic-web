@@ -147,6 +147,7 @@ const Dimmed = styled.div<Pick<PostItemProps, 'checked'>>`
   left: 0;
   width: 100%;
   height: 100%;
+  border-radius: 1.4rem;
 
   ${(props) =>
     props.checked &&
