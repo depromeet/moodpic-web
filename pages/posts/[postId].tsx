@@ -9,7 +9,7 @@ import {
 } from '@/components/Common';
 import Card from '@/components/Card/Card';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { NumberTitle, ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
+import { ProvidedQuestionMainTitle, ProvidedQuestionWrap } from '@/components/Question/Question.styles';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
 import useToast from '@/hooks/useToast';
@@ -120,28 +120,16 @@ const PostDetail = () => {
         {hasMultipleContent ? (
           <QuestionContainer>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>1</span>
-                /3
-              </NumberTitle>
               <MultipleLineText>
                 {me?.nickname}님에게 <br /> 어떤 일이 있었나요?
               </MultipleLineText>
               <CommonTextArea value={contents[0]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>2</span>
-                /3
-              </NumberTitle>
               <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
               <CommonTextArea value={contents[1]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
             <ProvidedQuestionWrap>
-              <NumberTitle>
-                <span>3</span>
-                /3
-              </NumberTitle>
               <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
               <CommonTextArea value={contents[2]} height="32.6rem" disabled />
             </ProvidedQuestionWrap>
