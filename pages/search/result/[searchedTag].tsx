@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSearchedPostsQuery } from '../../../hooks/apis';
 import styled from 'styled-components';
