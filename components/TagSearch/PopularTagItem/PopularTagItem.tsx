@@ -14,7 +14,7 @@ const PopularTagItem = ({ rank, title, onClick }: PopularTagItemProps) => {
   return (
     <Container onClick={onClick}>
       <Rank>{rank}</Rank>
-      <Title>
+      <Title onClick={() => onClick(title)}>
         {TAG_FLAG}
         {title}
       </Title>
