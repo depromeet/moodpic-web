@@ -107,7 +107,7 @@ const LogoTitle = styled.h4`
 const RemoveSearchedResultButton = styled.button`
   height: 1.4rem;
   color: ${theme.colors.gray4};
-  ${theme.fonts.caption1};
+  ${theme.fonts.h6};
   cursor: pointer;
 `;
 
