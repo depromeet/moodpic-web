@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
 import useBottomSheet from '@/hooks/useBottomSheet';
@@ -35,7 +35,7 @@ import {
 
 interface DialogItem {
   type: 'alert' | 'modal';
-  title?: string;
+  title?: ReactNode;
   handleConfirm: () => void;
 }
 
@@ -138,6 +138,7 @@ const PostListPage = () => {
 
         setIsEditing(false);
         setCheckedItems([]);
+        toggleDialog();
       },
     });
   };
@@ -184,6 +185,11 @@ const PostListPage = () => {
     return folderId && folderName !== '미분류' ? folderBottomSheetItems : categoryBottomSheetItems;
   };
 
+  const showDeletePostDialog = () => {
+    setDialogType('deletePosts');
+    toggleDialog();
+  };
+
   const dialog: DialogItems = {
     deleteFolder: {
       type: 'alert',
@@ -196,13 +202,16 @@ const PostListPage = () => {
     },
     deletePosts: {
       type: 'alert',
-      title: '모든 감정 폴더에서도 <br/> 해당 기록이 삭제됩니다.',
+      title: (
+        <>
+          모든 감정 폴더에서도 <br /> 해당 기록이 삭제됩니다.
+        </>
+      ),
       handleConfirm: () => onDeletePosts(),
     },
   };
 
   const renderDialog = () => {
-    console.log(dialogType);
     const selectedDialog = dialog[dialogType];
 
     return (
@@ -257,7 +266,7 @@ const PostListPage = () => {
       {isEditing ? (
         <BottomController>
           <BottomButton disabled={totalCount === 0}>전체 삭제</BottomButton>
-          <BottomButton disabled={!checkedItems.length} onClick={() => setDialogType('deletePosts')}>
+          <BottomButton disabled={!checkedItems.length} onClick={showDeletePostDialog}>
             {checkedItems.length > 0 && `${checkedItems.length}개`} 삭제
           </BottomButton>
         </BottomController>
