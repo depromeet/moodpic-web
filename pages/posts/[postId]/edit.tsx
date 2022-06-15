@@ -17,6 +17,7 @@ import {
 import useDialog from '@/hooks/useDialog';
 import { useTags } from '@/hooks/post/useTags';
 import useSystemDialog from '@/hooks/useSystemDialog';
+import { formatDatetime } from '@/shared/utils/date';
 import {
   CommonTagButton,
   CommonTextArea,
@@ -154,7 +155,7 @@ const PostDetail = () => {
   if (!post || !postId) return <div>404</div>;
 
   const isCategoryBottomSheet = bottomSheetType === 'category';
-  const bottomSheetHeight = isCategoryBottomSheet ? calcBottomSheetHeight({ folderSize: 4, hasHeader: true }) : 364;
+  const bottomSheetHeight = isCategoryBottomSheet ? 375 : calcBottomSheetHeight({ folderSize: 4, hasHeader: true });
   const headerTitle = isCategoryBottomSheet ? (
     <div>글을 기록한 이후 어떤 감정을 느꼈나요?</div>
   ) : (
@@ -279,7 +280,7 @@ const PostDetail = () => {
           <CommonTextArea value={firstContent} height="42.2rem" onChange={onChangeFirstContent} />
         )}
         <Description>조회수 {commaNumber(post.views)}</Description>
-        <Description>{post.createdAt}</Description>
+        <Description>{formatDatetime(post.createdAt)}</Description>
         <SpaceBetweenContainer>
           <OptionTitle>공개</OptionTitle>
           <CommonToggle
