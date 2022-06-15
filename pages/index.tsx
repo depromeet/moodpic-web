@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import styled from 'styled-components';
-import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
+import { HOME_TAB_TYPE, CurrentTabType, MINIMUM_FOLDER_SIZE } from '@/shared/constants/home';
 import useDialog from '@/hooks/useDialog';
 import { useTypeInput } from '@/hooks/useTypeInput';
 import {
@@ -185,7 +185,8 @@ const Home = () => {
   };
 
   //TODO: 이후 Loading develop
-  if (isLoading) return <div>로딩중</div>;
+  if (isLoading && folderResponse) return <div>로딩중</div>;
+  const folderLength = folderResponse?.folders.length || 0;
 
   return (
     <>
@@ -193,17 +194,17 @@ const Home = () => {
       {isMounted && <HomeBanner nickname={me?.nickname || ''} title={randomTitle} background={randomImageSource} />}
       <HomeTabHeader
         currentTab={currentTab}
-        canEdit={!!folderResponse?.folders.length}
+        canEdit={folderLength > MINIMUM_FOLDER_SIZE}
         isEditMode={isEditMode}
         toggleEditMode={() => setIsEditMode(!isEditMode)}
       />
       <HomeTabs currentTab={currentTab} setCurrentTab={handleCurrentTab} onClick={onAddDialog} />
-      {currentTab === HOME_TAB_TYPE.FOLDER && folderResponse?.folders.length && (
+      {currentTab === HOME_TAB_TYPE.FOLDER && folderLength && (
         <FolderListContainer>
           <FolderList
             isEditMode={isEditMode}
-            folderList={folderResponse.folders}
-            thumbnailList={folderResponse.postsThumbnail}
+            folderList={folderResponse?.folders || []}
+            thumbnailList={folderResponse?.postsThumbnail}
             supportsCollectedFolder={currentTab === HOME_TAB_TYPE.FOLDER}
             onEdit={onEdit}
             onDelete={onDelete}
