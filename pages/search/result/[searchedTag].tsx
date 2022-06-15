@@ -12,12 +12,11 @@ import OrderTypeSelectSheet from '@/components/TagSearch/OrderTypeSelectSheet/Or
 import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '../../../shared/constants/tagSearch';
 import PostItem from '../../../components/Post/PostItem/PostItem';
 import postService from '../../../service/apis/postService';
-import { Post } from '../../../shared/type/post';
 
 const SearchedResultByTag = () => {
   const router = useRouter();
   const searchedTag = router.query.searchedTag as string;
-  const { searchResult, submitSearchResult, changeSearchResult, addSearchedRecentTags } = useSearchForm();
+  const { searchResult, changeSearchResult, searchByTag } = useSearchForm();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const [orderType, setOrderType] = useState<TagSearchOrderType>(TAG_SEARCH_ORDER_TYPE.NEWEST);
   const {
@@ -39,21 +38,15 @@ const SearchedResultByTag = () => {
     }
   }, [orderType]);
 
-  // TODO
+  if (isLoadingSearchedPosts) return <div>로딩중</div>;
+
   if (!searchedPosts) return <div>404</div>;
 
   return (
     <>
       <NavHeader onClickLeftIcon={() => router.push('/search')} />
       <SearchFieldContainer>
-        <SearchField
-          value={searchResult}
-          onChange={changeSearchResult}
-          onSubmit={(event: FormEvent) => {
-            submitSearchResult(event, searchResult);
-            addSearchedRecentTags();
-          }}
-        />
+        <SearchField value={searchResult} onChange={changeSearchResult} onSubmit={searchByTag} />
       </SearchFieldContainer>
       <Header>
         <SearchedPostsLengthInformation>총 {searchedPosts.length}개</SearchedPostsLengthInformation>
