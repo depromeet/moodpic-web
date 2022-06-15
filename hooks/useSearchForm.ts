@@ -38,10 +38,10 @@ const useSearchForm = () => {
     }
 
     if (currentSearchedRecentTags.length === MAX_SEARCHED_RECENT_TAGS_LENGTH) {
-      currentSearchedRecentTags.shift();
+      currentSearchedRecentTags.pop();
     }
 
-    const newSearchedRecentTags = [...currentSearchedRecentTags, searchedTag];
+    const newSearchedRecentTags = [searchedTag, ...currentSearchedRecentTags];
 
     setLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS, newSearchedRecentTags);
   };

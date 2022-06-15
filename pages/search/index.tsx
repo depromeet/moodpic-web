@@ -43,7 +43,7 @@ const Search = () => {
           {searchedRecentTags.length === 0 ? (
             <NoneTagMessage>최근 검색 태그 기록이 없어요.</NoneTagMessage>
           ) : (
-            searchedRecentTags.reverse().map((tagTitle, index) => (
+            searchedRecentTags.map((tagTitle, index) => (
               <TagButtonContainer key={`tag-button-${index}`} onClick={() => searchByTag(tagTitle)}>
                 <CommonTagButton>#{tagTitle}</CommonTagButton>
               </TagButtonContainer>
