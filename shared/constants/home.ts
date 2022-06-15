@@ -20,3 +20,4 @@ export const BANNER_TITLE_CASES = [
 ];
 
 export const TOTAL_BANNER_BACKGROUND_SIZE = 3;
+export const MINIMUM_FOLDER_SIZE = 1;
