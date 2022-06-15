@@ -4,6 +4,7 @@ import theme from '@/styles/theme';
 
 interface MenuItem {
   label: string;
+  disabled?: boolean;
   onClick: () => void;
 }
 
@@ -15,7 +16,7 @@ const BottomSheetList = ({ items }: BottomSheetListProps) => {
   return (
     <BottomSheetListContainer>
       {items.map((item: MenuItem) => (
-        <button key={item.label} onClick={item.onClick}>
+        <button key={item.label} onClick={item.onClick} disabled={item.disabled || false}>
           {item.label}
         </button>
       ))}
@@ -38,6 +39,10 @@ const BottomSheetListContainer = styled.div`
     color: ${theme.colors.white};
     cursor: pointer;
     text-align: left;
+
+    &:disabled {
+      color: ${theme.colors.gray3};
+    }
   }
 
   & > button:last-child {
