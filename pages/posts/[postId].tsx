@@ -17,6 +17,7 @@ import { useDeletePostMutation, useMemberQuery, usePostByIdQuery } from '@/hooks
 import { useCategoryListQuery } from '@/hooks/apis/post/useCategoryListQuery';
 import { ToastType } from '@/shared/type/common';
 import { getPrevPath } from '@/shared/utils/storePathValues';
+import { formatDatetime } from '@/shared/utils/date';
 import { CommonTextArea } from '@/components/Common';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import DialogWarning from '@/components/Dialog/DialogWarning';
@@ -150,7 +151,7 @@ const PostDetail = () => {
           <CommonTextArea value={post.content} height="42.2rem" disabled />
         )}
         <Description>조회수 {commaNumber(post.views)}</Description>
-        <Description>{post.createdAt}</Description>
+        <Description>{formatDatetime(post.createdAt)}</Description>
       </PostDetailContainer>
       {isFromWritePage && <PostFloatingButton />}
       {isVisibleSheet && (
