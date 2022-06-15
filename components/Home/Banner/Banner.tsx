@@ -6,11 +6,12 @@ import theme from '@/styles/theme';
 import Image from 'next/image';
 
 export interface BannerProps {
+  nickname: string;
   title: ReactNode;
   background: string;
 }
 
-const Banner = ({ title, background }: BannerProps): React.ReactElement => {
+const Banner = ({ nickname, title, background }: BannerProps): React.ReactElement => {
   const router = useRouter();
 
   const goToWritePage = () => {
@@ -22,7 +23,10 @@ const Banner = ({ title, background }: BannerProps): React.ReactElement => {
       <BannerImage />
       <Image src={background} alt="" layout="fill" priority={true} />
       <BannerContents>
-        <BannerTitle>닉네임{title}</BannerTitle>
+        <BannerTitle>
+          {nickname}
+          {title}
+        </BannerTitle>
         <CommonButton onClick={goToWritePage}>감정 기록하기 ✍🏻</CommonButton>
       </BannerContents>
     </BannerContainer>
