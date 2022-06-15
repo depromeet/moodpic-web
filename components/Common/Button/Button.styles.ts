@@ -68,7 +68,7 @@ const buttonSizeStyle = (size: string) => {
     case 'small':
       return css`
         padding: 0 1.2rem;
-        height: 3.6rem;
+        height: 4.2rem;
         ${theme.fonts.btn2};
       `;
   }
