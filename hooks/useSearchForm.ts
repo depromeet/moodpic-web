@@ -2,9 +2,12 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { getLocalStorageValue, setLocalStorageValue } from '../shared/utils/localStorage';
 import { LOCAL_STORAGE_KEY } from '../shared/constants/localStorageKey';
 import { useRouter } from 'next/router';
+import useToast from './useToast';
+import { ToastType } from '../shared/type/common';
 
 const useSearchForm = () => {
   const [searchResult, setSearchResult] = useState<string>('');
+  const notify = useToast();
   const router = useRouter();
 
   const changeSearchResult = (event: ChangeEvent<HTMLInputElement>) => {
@@ -13,6 +16,13 @@ const useSearchForm = () => {
 
   const submitSearchResult = (event: FormEvent, searchResult: string) => {
     event.preventDefault();
+    if (!searchResult) {
+      notify({
+        type: ToastType.ERROR,
+        message: '검색어를 입력해 주세요.',
+      });
+      return;
+    }
     router.push(`/search/result/${searchResult}`);
   };
 
