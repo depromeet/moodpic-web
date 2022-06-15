@@ -20,9 +20,7 @@ const Search = () => {
   );
 
   const { data: popularTags, isLoading: isPopularTagsLoading } = usePopularTags();
-
-  const { searchResult, submitSearchResult, changeSearchResult, addSearchedRecentTags } = useSearchForm();
-
+  const { searchResult, searchByTag, changeSearchResult } = useSearchForm();
   const resetRecentSearchedTags = () => {
     setLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS, []);
     setSearchedRecentTags([]);
@@ -38,8 +36,8 @@ const Search = () => {
           value={searchResult}
           onChange={changeSearchResult}
           onSubmit={(event: FormEvent<HTMLFormElement>) => {
-            submitSearchResult(event, searchResult);
-            addSearchedRecentTags();
+            event.preventDefault();
+            searchByTag(searchResult);
           }}
         />
       </SearchFieldContainer>
@@ -53,10 +51,7 @@ const Search = () => {
             <NoneTagMessage>최근 검색 태그 기록이 없어요.</NoneTagMessage>
           ) : (
             searchedRecentTags.reverse().map((tagTitle, index) => (
-              <TagButtonContainer
-                key={`tag-button-${index}`}
-                onClick={(event: FormEvent) => submitSearchResult(event, tagTitle)}
-              >
+              <TagButtonContainer key={`tag-button-${index}`} onClick={() => searchByTag(tagTitle)}>
                 <CommonTagButton>#{tagTitle}</CommonTagButton>
               </TagButtonContainer>
             ))

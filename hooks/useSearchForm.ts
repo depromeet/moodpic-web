@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { getLocalStorageValue, setLocalStorageValue } from '../shared/utils/localStorage';
 import { LOCAL_STORAGE_KEY } from '../shared/constants/localStorageKey';
 import { useRouter } from 'next/router';
@@ -14,23 +14,23 @@ const useSearchForm = () => {
     setSearchResult(event.target.value);
   };
 
-  const submitSearchResult = (event: FormEvent, searchResult: string) => {
-    event.preventDefault();
-    if (!searchResult) {
+  const searchByTag = (searchedTag: Tag) => {
+    if (!searchedTag) {
       notify({
         type: ToastType.ERROR,
-        message: '검색어를 입력해 주세요.',
+        message: '검색 할 태그를 입력하세요.',
       });
       return;
     }
-    router.push(`/search/result/${searchResult}`);
+    router.push(`/search/result/${searchedTag}`);
+    addSearchedRecentTags(searchedTag);
   };
 
-  const addSearchedRecentTags = () => {
+  const addSearchedRecentTags = (searchedTag: Tag) => {
     const MAX_SEARCHED_RECENT_TAGS_LENGTH = 8;
     const currentSearchedRecentTags = getLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS) || [];
 
-    const newSearchedRecentTags = [...currentSearchedRecentTags, searchResult];
+    const newSearchedRecentTags = [...currentSearchedRecentTags, searchedTag];
 
     if (newSearchedRecentTags.length > MAX_SEARCHED_RECENT_TAGS_LENGTH) {
       newSearchedRecentTags.shift();
@@ -41,7 +41,7 @@ const useSearchForm = () => {
 
   return {
     searchResult,
-    submitSearchResult,
+    searchByTag,
     changeSearchResult,
     addSearchedRecentTags,
   };
