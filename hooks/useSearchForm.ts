@@ -16,7 +16,7 @@ const useSearchForm = () => {
   };
 
   const searchByTag = (searchedTag: Tag) => {
-    if (!searchedTag) {
+    if (searchedTag.trim().length === 0) {
       notify({
         type: ToastType.ERROR,
         message: '검색 할 태그를 입력하세요.',
