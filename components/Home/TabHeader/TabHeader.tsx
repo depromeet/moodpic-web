@@ -5,15 +5,16 @@ import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
 
 export interface TabHeaderProps {
   currentTab: CurrentTabType;
+  canEdit: boolean;
   isEditMode: boolean;
   toggleEditMode: () => void;
 }
 
-const TabHeader = ({ currentTab, isEditMode, toggleEditMode }: TabHeaderProps): React.ReactElement => {
+const TabHeader = ({ currentTab, canEdit, isEditMode, toggleEditMode }: TabHeaderProps): React.ReactElement => {
   const EditButton = (): React.ReactElement => {
     const buttonLabel = isEditMode ? '편집종료' : '편집';
     return (
-      <Button highlight={isEditMode} onClick={toggleEditMode}>
+      <Button highlight={isEditMode} onClick={toggleEditMode} disabled={!canEdit}>
         {buttonLabel}
       </Button>
     );
@@ -43,6 +44,10 @@ const TabHeaderContainer = styled.div`
 const Button = styled.button<{ highlight: boolean }>`
   ${theme.fonts.h6};
   color: ${(props) => (props.highlight ? theme.colors.primary : theme.colors.gray6)};
+
+  &:disabled {
+    color: ${theme.colors.gray3};
+  }
 `;
 
 export default TabHeader;
