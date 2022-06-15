@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
+import { Tag } from '../../../shared/type/post';
 
 interface PopularTagItemProps {
   rank: number;
   title: string;
-  onClick: () => void;
+  onClick: (tagTitle: Tag) => void;
 }
 
 const PopularTagItem = ({ rank, title, onClick }: PopularTagItemProps) => {
   const TAG_FLAG = '#';
 
   return (
-    <Container onClick={onClick}>
+    <Container>
       <Rank>{rank}</Rank>
       <Title onClick={() => onClick(title)}>
         {TAG_FLAG}

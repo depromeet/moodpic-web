@@ -1,8 +1,10 @@
 import { Pagination, PaginationParam } from './common';
 
+export type Tag = string;
+
 export interface Post {
   id: string;
-  tags: string[];
+  tags: Tag[];
   firstCategory: string;
   secondCategory: string;
   firstCategoryName: string;
