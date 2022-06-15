@@ -26,6 +26,8 @@ const Search = () => {
     setSearchedRecentTags([]);
   };
 
+  const MIN_RANK = 1;
+
   if (searchedRecentTags == undefined || popularTags == undefined || isPopularTagsLoading) return <div>로딩중</div>;
 
   return (
@@ -67,7 +69,7 @@ const Search = () => {
             popularTags.map(({ tag }, index) => (
               <PopularTagItem
                 key={`id-${index}`}
-                rank={index + 1}
+                rank={MIN_RANK + index}
                 title={tag}
                 onClick={() => router.push(`/search/result/${tag}`)}
               />
