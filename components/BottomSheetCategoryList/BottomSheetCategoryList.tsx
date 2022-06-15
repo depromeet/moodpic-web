@@ -15,7 +15,7 @@ const BottomSheetCategoryList = ({ items, selectedItem, onClick }: BottomSheetCa
       {items.map((item: CategoryListItemResponse) => (
         <CommonButton
           key={item.categoryId}
-          size="medium"
+          size="small"
           color={selectedItem === item.categoryName ? 'primary' : 'gray'}
           onClick={() => onClick(item.categoryName)}
         >
