@@ -32,14 +32,7 @@ const Search = () => {
     <Container>
       <NavHeader onClickLeftIcon={() => router.push('/')} />
       <SearchFieldContainer>
-        <SearchField
-          value={searchResult}
-          onChange={changeSearchResult}
-          onSubmit={(event: FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            searchByTag(searchResult);
-          }}
-        />
+        <SearchField value={searchResult} onChange={changeSearchResult} onSubmit={searchByTag} />
       </SearchFieldContainer>
       <RecentTagsContainer>
         <RecentTagSearchContainer>
