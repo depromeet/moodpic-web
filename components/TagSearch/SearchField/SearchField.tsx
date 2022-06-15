@@ -1,15 +1,22 @@
 import TextField from '../../Common/TextField/TextField';
-import React, { ChangeEvent, FormEventHandler } from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import SearchIcon from '/public/svgs/magnifyingglass.svg';
+import { Tag } from '../../../shared/type/post';
 
 interface SearchFieldProps {
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: FormEventHandler<HTMLFormElement>;
+  onSubmit: (searchedTag: Tag) => void;
 }
 const SearchField = ({ value, onChange, onSubmit }: SearchFieldProps) => {
   return (
-    <form action="" onSubmit={onSubmit}>
+    <form
+      action=""
+      onSubmit={(event: FormEvent) => {
+        event.preventDefault();
+        onSubmit(value);
+      }}
+    >
       <TextField
         value={value}
         onChange={onChange}
