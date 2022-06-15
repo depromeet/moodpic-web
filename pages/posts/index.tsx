@@ -10,9 +10,7 @@ import {
   CommonIconButton,
   CommonLoading,
 } from '@/components/Common';
-import styled from 'styled-components';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
-import theme from '@/styles/theme';
 import useDialog from '@/hooks/useDialog';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
@@ -28,6 +26,25 @@ import {
   useUpdateFolderMutation,
 } from '@/hooks/apis';
 import { ToastType } from '@/shared/type/common';
+import {
+  BottomButton,
+  BottomController,
+  HeaderTitle,
+  LoadingContainer,
+} from '@/components/Post/PostList/PostList.style';
+
+interface DialogItem {
+  type: 'alert' | 'modal';
+  title?: string;
+  handleConfirm: () => void;
+}
+
+interface DialogItems {
+  [key: string]: DialogItem;
+  deleteFolder: DialogItem;
+  editFolder: DialogItem;
+  deletePosts: DialogItem;
+}
 
 const PostListPage = () => {
   const router = useRouter();
@@ -125,8 +142,6 @@ const PostListPage = () => {
     });
   };
 
-  const handleSubmit = () => setIsEditing(false);
-
   const postResponse = folderId ? postsByFolderId : categoryId ? postsByCategoryId : posts;
   const postData = postResponse?.pages || [{ posts: [], folderName: '', totalCount: 0 }];
   const { folderName, totalCount } = postData[0];
@@ -134,6 +149,7 @@ const PostListPage = () => {
   const categoryBottomSheetItems = [
     {
       label: '기록 선택하기',
+      disabled: totalCount === 0,
       onClick: () => {
         setIsEditing(true);
         toggleSheet();
@@ -145,8 +161,9 @@ const PostListPage = () => {
     ...categoryBottomSheetItems,
     {
       label: '폴더명 변경하기',
+      disabled: false,
       onClick: () => {
-        setDialogType('edit');
+        setDialogType('editFolder');
         setInputValue(folderName as string);
         toggleDialog();
         toggleSheet();
@@ -154,8 +171,9 @@ const PostListPage = () => {
     },
     {
       label: '폴더 삭제하기',
+      disabled: false,
       onClick: () => {
-        setDialogType('delete');
+        setDialogType('deleteFolder');
         toggleDialog();
         toggleSheet();
       },
@@ -164,6 +182,38 @@ const PostListPage = () => {
 
   const getBottomSheetItems = () => {
     return folderId && folderName !== '미분류' ? folderBottomSheetItems : categoryBottomSheetItems;
+  };
+
+  const dialog: DialogItems = {
+    deleteFolder: {
+      type: 'alert',
+      title: '폴더를 삭제하시겠습니까?',
+      handleConfirm: () => onDelete(),
+    },
+    editFolder: {
+      type: 'modal',
+      handleConfirm: () => onEdit(),
+    },
+    deletePosts: {
+      type: 'alert',
+      title: '모든 감정 폴더에서도 <br/> 해당 기록이 삭제됩니다.',
+      handleConfirm: () => onDeletePosts(),
+    },
+  };
+
+  const renderDialog = () => {
+    console.log(dialogType);
+    const selectedDialog = dialog[dialogType];
+
+    return (
+      <CommonDialog type={selectedDialog.type} onClose={toggleDialog} onConfirm={selectedDialog.handleConfirm}>
+        {selectedDialog.type === 'alert' ? (
+          <DialogWarning>{selectedDialog.title}</DialogWarning>
+        ) : (
+          <DialogFolderForm value={inputValue} isEditMode onChange={onChangeInput} />
+        )}
+      </CommonDialog>
+    );
   };
 
   const bottomSheetItems = getBottomSheetItems();
@@ -207,7 +257,7 @@ const PostListPage = () => {
       {isEditing ? (
         <BottomController>
           <BottomButton disabled={totalCount === 0}>전체 삭제</BottomButton>
-          <BottomButton disabled={!checkedItems.length} onClick={onDeletePosts}>
+          <BottomButton disabled={!checkedItems.length} onClick={() => setDialogType('deletePosts')}>
             {checkedItems.length > 0 && `${checkedItems.length}개`} 삭제
           </BottomButton>
         </BottomController>
@@ -222,63 +272,9 @@ const PostListPage = () => {
           <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>
       )}
-      {dialogVisible && (
-        <CommonDialog
-          type={dialogType === 'delete' ? 'alert' : 'modal'}
-          onClose={toggleDialog}
-          onConfirm={dialogType === 'delete' ? onDelete : onEdit}
-        >
-          {dialogType === 'delete' ? (
-            <DialogWarning>폴더를 삭제하시겠습니까?</DialogWarning>
-          ) : (
-            <DialogFolderForm value={inputValue} isEditMode onChange={onChangeInput} />
-          )}
-        </CommonDialog>
-      )}
+      {dialogVisible && renderDialog()}
     </>
   );
 };
-
-const TextButton = styled.button`
-  ${theme.fonts.h6};
-  color: ${theme.colors.primary};
-
-  &:disabled {
-    color: ${theme.colors.gray3};
-  }
-`;
-
-const HeaderTitle = styled.h2`
-  margin-left: -0.2rem;
-  ${theme.fonts.h4};
-  color: ${theme.colors.white};
-`;
-
-const BottomController = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  max-width: 48rem;
-  height: 9rem;
-  margin-left: -1.8rem;
-  display: flex;
-  justify-content: space-between;
-  background-color: ${theme.colors.black};
-  z-index: 1;
-`;
-
-const BottomButton = styled.button<{ disabled: boolean }>`
-  ${theme.fonts.h6};
-  padding: 1.8rem 2rem;
-  color: ${theme.colors.white};
-
-  &:disabled {
-    color: ${theme.colors.gray3};
-  }
-`;
-
-const LoadingContainer = styled.div`
-  margin: 2rem auto;
-`;
 
 export default PostListPage;
