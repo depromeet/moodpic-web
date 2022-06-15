@@ -6,6 +6,5 @@ import memberService from '../../../service/apis/memberService';
 import { Me } from '../../../shared/type/member';
 
 export const useMemberQuery = (): UseQueryResult<Me, AxiosError<ServerResponse>> => {
-  console.log('hello');
   return useQuery(QUERY_KEY.GET_ME, () => memberService.getMe());
 };
