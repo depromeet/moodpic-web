@@ -29,13 +29,19 @@ const useSearchForm = () => {
 
   const addSearchedRecentTags = (searchedTag: Tag) => {
     const MAX_SEARCHED_RECENT_TAGS_LENGTH = 8;
-    const currentSearchedRecentTags = getLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS) || [];
+    const currentSearchedRecentTags: Tag[] = getLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS) || [];
+
+    const duplicatedIndex = currentSearchedRecentTags.findIndex((tag) => tag === searchedTag);
+
+    if (duplicatedIndex > -1) {
+      currentSearchedRecentTags.splice(duplicatedIndex, 1);
+    }
+
+    if (currentSearchedRecentTags.length === MAX_SEARCHED_RECENT_TAGS_LENGTH) {
+      currentSearchedRecentTags.shift();
+    }
 
     const newSearchedRecentTags = [...currentSearchedRecentTags, searchedTag];
-
-    if (newSearchedRecentTags.length > MAX_SEARCHED_RECENT_TAGS_LENGTH) {
-      newSearchedRecentTags.shift();
-    }
 
     setLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS, newSearchedRecentTags);
   };
