@@ -9,6 +9,7 @@ import {
   useDeleteFolderMutation,
   useFoldersQuery,
   useIncompletedPostsQuery,
+  useMemberQuery,
   usePostsByCategoryQuery,
   useUpdateFolderMutation,
 } from '@/hooks/apis';
@@ -32,13 +33,14 @@ const Home = () => {
   const isMounted = useIsMounted();
   const { dialogVisible, toggleDialog } = useDialog();
   const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
-  const { data: folderResponse } = useFoldersQuery();
+  const { data: folderResponse, isLoading } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
   const { data: incompletedPosts } = useIncompletedPostsQuery();
   const [currentTab, setCurrentTab] = useState<CurrentTabType>(HOME_TAB_TYPE.FOLDER);
   const [dialogType, setDialogType] = useState('');
   const [selectedFolderId, setSelectedFolderId] = useState(0);
   const notify = useToast();
+  const { data: me } = useMemberQuery();
   const createFolderMutation = useCreateFolderMutation();
   const updateFolderMutation = useUpdateFolderMutation();
   const deleteFolderMutation = useDeleteFolderMutation();
@@ -182,12 +184,16 @@ const Home = () => {
     }
   };
 
+  //TODO: 이후 Loading develop
+  if (isLoading) return <div>로딩중</div>;
+
   return (
     <>
       <HomeHeader />
-      {isMounted && <HomeBanner title={randomTitle} background={randomImageSource} />}
+      {isMounted && <HomeBanner nickname={me?.nickname || ''} title={randomTitle} background={randomImageSource} />}
       <HomeTabHeader
         currentTab={currentTab}
+        canEdit={!!folderResponse?.folders.length}
         isEditMode={isEditMode}
         toggleEditMode={() => setIsEditMode(!isEditMode)}
       />
