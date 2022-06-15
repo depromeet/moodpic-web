@@ -14,11 +14,9 @@ import { useRouter } from 'next/router';
 
 const Search = () => {
   const router = useRouter();
-
   const [searchedRecentTags, setSearchedRecentTags] = useState<string[]>(
     () => getLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS) || [],
   );
-
   const { data: popularTags, isLoading: isPopularTagsLoading } = usePopularTags();
   const { searchResult, searchByTag, changeSearchResult } = useSearchForm();
   const resetRecentSearchedTags = () => {
@@ -71,7 +69,7 @@ const Search = () => {
                 key={`id-${index}`}
                 rank={MIN_RANK + index}
                 title={tag}
-                onClick={() => router.push(`/search/result/${tag}`)}
+                onClick={() => searchByTag(tag)}
               />
             ))
           )}
