@@ -31,7 +31,7 @@ export const FolderImage = styled.div<{ thumbnail?: string }>`
   border-radius: 1rem;
   padding-top: 100%;
   background-size: cover;
-  background-color: ${theme.colors.gray2};
+  background-color: ${theme.colors.gray1};
   ${(props) =>
     props.thumbnail &&
     css`
