@@ -139,6 +139,7 @@ const PostListPage = () => {
         setIsEditing(false);
         setCheckedItems([]);
         toggleDialog();
+        fetch();
       },
     });
   };
