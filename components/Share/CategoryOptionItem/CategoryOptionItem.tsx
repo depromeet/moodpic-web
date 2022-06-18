@@ -43,11 +43,13 @@ const Container = styled.div<{ bgColor: string; isSelect: boolean }>`
   border-radius: 1rem;
   min-width: auto;
   flex-shrink: 0;
+  opacity: 70%;
 
   ${({ isSelect }) =>
     isSelect &&
     css`
       border: 2px solid ${theme.colors.gray7};
+      opacity: 100%;
     `}
 `;
 
