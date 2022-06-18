@@ -9,6 +9,7 @@ const colors = {
   gray4: '#7f7f7f',
   gray5: '#a6a6a6',
   gray6: '#bfbfbf',
+  gray7: '#ffffff',
   white: '#f2f2f2',
   red: '#df3c3c',
 } as const;
