@@ -8,14 +8,11 @@ import TextArea from '../../components/Common/TextArea/TextArea';
 import { CATEGORY_OPTIONS_INFO } from '../../shared/constants/share';
 import CategoryOptionItem from '../../components/Share/CategoryOptionItem/CategoryOptionItem';
 import { useRouter } from 'next/router';
-import { copyClipboard } from '../../shared/utils/copyClipboard';
 import DialogWarning from '../../components/Dialog/DialogWarning';
 import { CommonAppBar, CommonDialog, CommonIconButton } from '../../components/Common';
 import useModal from '../../hooks/useDialog';
-import useToast from '../../hooks/useToast';
 import { ToastType } from '../../shared/type/common';
 import { useMemberQuery, usePostByIdQuery } from '../../hooks/apis';
-import Header from '../../components/Home/Header/Header';
 import shareService from '../../service/apis/shareService';
 
 type SharePageQuery = {
@@ -26,7 +23,6 @@ const Share = () => {
   const [receiverName, setReceiverName] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<keyof typeof CATEGORY_OPTIONS_INFO>('UNSELECT');
   const { dialogVisible: isOpenConfirmDialog, toggleDialog: toggleConfirmDialog } = useModal();
-  const notify = useToast();
 
   const router = useRouter();
   const { postId } = router.query as SharePageQuery;
@@ -61,25 +57,10 @@ const Share = () => {
   const copySharedPostLink = async () => {
     const sharedPostLdm = await getSharedPostLink();
 
-    // TODO: validate관련 부분 분리 필요
-    if (!receiverName) {
-      notify({
-        type: ToastType.ERROR,
-        message: '보내는 사람 이름을 적어주세요.',
-      });
-      return;
-    }
-
     if (!sharedPostLdm) return alert('404');
 
-    await copyClipboard({
-      text: createSharedPostLink(sharedPostLdm),
-      onSuccess: () =>
-        notify({
-          type: ToastType.WARNING,
-          message: '링크가 클립보드에 복사됐어요.',
-        }),
-    });
+    const sharedPostLink = createSharedPostLink(sharedPostLdm);
+    router.push(sharedPostLink);
   };
 
   useEffect(() => {
@@ -132,7 +113,7 @@ const Share = () => {
         {
           <ButtonWrapper>
             <Button color={'primary'} onClick={copySharedPostLink} disabled={canShare ? false : true}>
-              링크로 감정 공유하기
+              공유하기 페이지 생성하기
             </Button>
           </ButtonWrapper>
         }
