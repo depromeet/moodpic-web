@@ -14,7 +14,7 @@ const TabHeader = ({ currentTab, canEdit, isEditMode, toggleEditMode }: TabHeade
   const EditButton = (): React.ReactElement => {
     const buttonLabel = isEditMode ? '편집종료' : '편집';
     return (
-      <Button highlight={isEditMode} onClick={toggleEditMode} disabled={!canEdit}>
+      <Button highlight={isEditMode} onClick={toggleEditMode} disabled={!canEdit && !isEditMode}>
         {buttonLabel}
       </Button>
     );
