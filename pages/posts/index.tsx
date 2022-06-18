@@ -14,7 +14,7 @@ import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import useDialog from '@/hooks/useDialog';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
-import { useTypeInput } from '@/hooks/useTypeInput';
+import { useInput } from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import {
@@ -51,7 +51,7 @@ const PostListPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [dialogType, setDialogType] = useState('');
-  const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
+  const [inputValue, onChangeInput, setInputValue] = useInput('');
   const folderId = Number(router.query.folderId);
   const categoryId = Number(router.query.categoryId);
 
@@ -277,7 +277,7 @@ const PostListPage = () => {
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
-          BottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
+          bottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
         >
           <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>

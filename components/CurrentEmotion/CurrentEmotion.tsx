@@ -6,7 +6,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
 import folderService from '@/service/apis/folderService';
 import { createPostRequestState, createPostResponseState } from '@/store/post/atom';
-import { useTypeInput } from '@/hooks/useTypeInput';
+import { useInput } from '@/hooks/useInput';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import useToast from '@/hooks/useToast';
 import useDialog from '@/hooks/useDialog';
@@ -43,6 +43,7 @@ import {
   Divider,
   CustomImage,
 } from './CurrentEmotion.styles';
+import { DEFAULT_NICKNAME } from '@/shared/constants/common';
 
 const MAX_TAG_LIST_LENGTH = 5;
 
@@ -57,8 +58,8 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
   const [isDisclose, setDisclose] = useState(false);
   const [tagList, setTagList] = useState<string[]>([]);
   const [selectedFolderName, setSelectFolderName] = useState('폴더선택');
-  const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
-  const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
+  const [tagValue, onChangeValue, setTagValue] = useInput('');
+  const [inputValue, onChangeInput, setInputValue] = useInput('');
   const setPostId = useSetRecoilState(createPostResponseState);
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
@@ -188,7 +189,7 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
   return (
     <>
       <MainTitle>
-        {me?.nickname ?? '유저'}님의 <br />
+        {me?.nickname ?? DEFAULT_NICKNAME}님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
       <SelectButton title="☺️ &nbsp; 한결 나아졌어요" secondaryCategorytype="positive" />
@@ -256,7 +257,7 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
       {isVisibleSheet && folderListData ? (
         <CommonBottomSheetContainer
           onClose={toggleSheet}
-          BottomSheetHeight={calcBottomSheetHeight({
+          bottomSheetHeight={calcBottomSheetHeight({
             folderSize: folderListData?.folders.length,
             hasHeader: true,
           })}
