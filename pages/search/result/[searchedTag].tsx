@@ -8,10 +8,10 @@ import SearchField from '../../../components/TagSearch/SearchField/SearchField';
 import useSearchForm from '../../../hooks/useSearchForm';
 import { CommonBottomSheetContainer, CommonIconButton } from '../../../components/Common';
 import useBottomSheet from '../../../hooks/useBottomSheet';
-import OrderTypeSelectSheet from '@/components/TagSearch/OrderTypeSelectSheet/OrderTypeSelectSheet';
 import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '../../../shared/constants/tagSearch';
 import PostItem from '../../../components/Post/PostItem/PostItem';
 import postService from '../../../service/apis/postService';
+import BottomSheetList from '../../../components/BottomSheetList/BottomSheetList';
 
 const SearchedResultByTag = () => {
   const router = useRouter();
@@ -25,12 +25,22 @@ const SearchedResultByTag = () => {
     refetch: refetchSearchedPosts,
   } = useSearchedPostsQuery({ orderType, searchedTag });
 
-  const ORDER_TYPE_OPTIONS_LENGTH = 2;
-
-  const changeOrderTypeAndToggleSheet = (orderType: TagSearchOrderType) => {
-    setOrderType(orderType);
-    toggleSheet();
-  };
+  const bottomSheetItems = [
+    {
+      label: '최신순',
+      onClick: () => {
+        setOrderType(TAG_SEARCH_ORDER_TYPE.NEWEST);
+        toggleSheet();
+      },
+    },
+    {
+      label: '인기순',
+      onClick: () => {
+        setOrderType(TAG_SEARCH_ORDER_TYPE.POPULARITY);
+        toggleSheet();
+      },
+    },
+  ];
 
   useEffect(() => {
     if (searchedTag) {
@@ -77,10 +87,10 @@ const SearchedResultByTag = () => {
       </SearchedPostsContainer>
       {isVisibleSheet && (
         <CommonBottomSheetContainer
-          onClose={toggleSheet}
-          BottomSheetHeight={calcBottomSheetHeight({ folderSize: ORDER_TYPE_OPTIONS_LENGTH })}
+          onClose={() => toggleSheet()}
+          BottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
         >
-          <OrderTypeSelectSheet onClickOption={changeOrderTypeAndToggleSheet} />
+          <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>
       )}
     </>
@@ -105,7 +115,7 @@ const SearchFieldContainer = styled.div`
 
 const SelectOrderTypeButtonContainer = styled.div`
   display: flex;
-  align-content: center;
+  align-items: center;
   justify-content: center;
   cursor: pointer;
 `;
@@ -113,6 +123,7 @@ const SelectOrderTypeButtonContainer = styled.div`
 const SelectOrderTypeButton = styled.div`
   cursor: pointer;
   margin-right: 0.8rem;
+  line-height: 2.4rem;
   ${theme.fonts.h6}
   color: white;
 `;
