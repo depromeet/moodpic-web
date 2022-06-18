@@ -7,10 +7,14 @@ import TextArea from '../../../components/Common/TextArea/TextArea';
 import Button from '../../../components/Common/Button/Button';
 import CategoryBox from '../../../components/Share/CategoryBox/CategoryBox';
 import Header from '../../../components/Home/Header/Header';
+import { copyClipboard } from '../../../shared/utils/copyClipboard';
+import useToast from '../../../hooks/useToast';
+import { ToastType } from '../../../shared/type/common';
 
 const SharedPost = () => {
   const router = useRouter();
   const ldm = router.query.ldm as string;
+  const notify = useToast();
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
 
@@ -38,8 +42,21 @@ const SharedPost = () => {
         </BodyContainer>
         <UserName>From. {senderName}</UserName>
         <ButtonWrapper>
-          <Button color="primary" onClick={() => alert('TODO: 준비중입니다.')}>
-            나도 서비스명에서 감정보내기
+          <Button
+            color="primary"
+            onClick={async () => {
+              await copyClipboard({
+                text: window.document.location.href,
+                onSuccess: () => {
+                  notify({
+                    type: ToastType.CONFIRM,
+                    message: '링크가 클립보드에 복사됐어요.',
+                  });
+                },
+              });
+            }}
+          >
+            링크 복사
           </Button>
         </ButtonWrapper>
       </Container>
