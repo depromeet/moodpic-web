@@ -17,7 +17,6 @@ import { ToastType } from '../../shared/type/common';
 import { useMemberQuery, usePostByIdQuery } from '../../hooks/apis';
 import Header from '../../components/Home/Header/Header';
 import shareService from '../../service/apis/shareService';
-import { getClientBaseUrl } from '../../shared/utils/getBaseUrl';
 
 type SharePageQuery = {
   postId: string;
@@ -25,7 +24,7 @@ type SharePageQuery = {
 
 const Share = () => {
   const [receiverName, setReceiverName] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<keyof typeof CATEGORY_OPTIONS_INFO | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<keyof typeof CATEGORY_OPTIONS_INFO>('UNSELECT');
   const { dialogVisible: isOpenConfirmDialog, toggleDialog: toggleConfirmDialog } = useModal();
   const notify = useToast();
 
@@ -144,7 +143,7 @@ const Share = () => {
         }
         {isOpenConfirmDialog && (
           <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.push('/')}>
-            <DialogWarning description={'작성중인 내용은 삭제됩니다.'}>공유를 취소하시겠어요?</DialogWarning>
+            <DialogWarning>작성중인 내용을 삭제하시겠어요?</DialogWarning>
           </CommonDialog>
         )}
       </BodyContainer>
