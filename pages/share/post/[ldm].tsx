@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import TextArea from '../../../components/Common/TextArea/TextArea';
 import Button from '../../../components/Common/Button/Button';
 import CategoryBox from '../../../components/Share/CategoryBox/CategoryBox';
-import Header from '../../../components/Home/Header/Header';
 import { copyClipboard } from '../../../shared/utils/copyClipboard';
 import useToast from '../../../hooks/useToast';
 import { ToastType } from '../../../shared/type/common';
+import NavHeader from '../../../components/TagSearch/NavHeader/NavHeader';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -31,7 +31,7 @@ const SharedPost = () => {
 
   return (
     <>
-      <Header hasOnlyTitle={true} />
+      <NavHeader onClickLeftIcon={() => router.push('/')} />
       <Container>
         <UserName>To. {receiverName}</UserName>
         <BodyContainer>
@@ -43,7 +43,7 @@ const SharedPost = () => {
         <UserName>From. {senderName}</UserName>
         <ButtonWrapper>
           <Button
-            color="primary"
+            color="black"
             onClick={async () => {
               await copyClipboard({
                 text: window.document.location.href,
