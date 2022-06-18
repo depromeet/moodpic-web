@@ -38,17 +38,19 @@ const PostList = ({ postList = [], isEditing, checkedItems, setCheckedItems, isM
   const isChecked = (checkedId: string) => checkedItems.includes(checkedId);
 
   return (
-    <PostListContainer>
+    <>
       {postList.length ? (
-        postList.map((post) => (
-          <PostItem
-            {...{ post, isEditing }}
-            key={post.id}
-            checked={isChecked(post.id)}
-            onClick={() => handlePostItemClick(post.id)}
-            isMine={isMine}
-          />
-        ))
+        <PostListContainer>
+          {postList.map((post) => (
+            <PostItem
+              {...{ post, isEditing }}
+              key={post.id}
+              checked={isChecked(post.id)}
+              onClick={() => handlePostItemClick(post.id)}
+              isMine={isMine}
+            />
+          ))}
+        </PostListContainer>
       ) : (
         <EmptyContainer>
           <ImageContainer>
@@ -57,12 +59,12 @@ const PostList = ({ postList = [], isEditing, checkedItems, setCheckedItems, isM
           <GuideMessage>기록이 없어요.</GuideMessage>
         </EmptyContainer>
       )}
-    </PostListContainer>
+    </>
   );
 };
 
 const PostListContainer = styled.ul`
-  margin: 2rem 0;
+  margin-top: 2rem;
 
   li ~ li {
     margin-top: 1.8rem;
@@ -74,7 +76,7 @@ const EmptyContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 4.6rem);
+  height: calc(100vh - 12.7rem);
 `;
 
 const ImageContainer = styled.div`

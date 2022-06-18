@@ -11,7 +11,7 @@ const ReadyForOpen = () => {
         오픈 준비 중입니다 <Image src={PersonRunning} alt="PersonRunning" />
         <br />
       </span>
-      <span>&nbsp;&nbsp;얼른 달려갈게요 !</span>
+      <span>얼른 달려갈게요 !</span>
     </ReadyForOpenWrapper>
   );
 };
@@ -30,5 +30,8 @@ const ReadyForOpenWrapper = styled.div`
     display: flex;
     ${theme.fonts.h4};
     color: ${theme.colors.white};
+    &:nth-of-type(2) {
+      margin-left: 3.5px;
+    }
   }
 `;

@@ -9,11 +9,11 @@ export const formatDatetime = (inputDate: string) => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hourCycle: 'h24',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
   }).formatToParts(new Date(dateUTC));
 
-  const formattedDate = formatter.map(({ type, value }) => (type === 'dayPeriod' ? '' : value)).join('');
+  const formattedDate = formatter.map(({ value }) => value).join('');
   return formattedDate.replace('  ', ' ');
 };

@@ -33,14 +33,14 @@ export default PreEmotion;
 
 const ButtonWrapper = styled.div`
   position: sticky;
-  bottom: 28px;
+  bottom: 2.8rem;
   margin-top: auto;
   &::after {
     position: absolute;
-    bottom: -28px;
+    bottom: -2.8rem;
     left: 0;
     width: 100%;
-    height: 160px;
+    height: 16rem;
     content: '';
     background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 52.6%);
     z-index: -1;
