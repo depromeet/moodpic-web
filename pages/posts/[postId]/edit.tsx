@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { useTypeInput } from '@/hooks/useTypeInput';
+import { useInput } from '@/hooks/useInput';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import {
   useCategoryListQuery,
@@ -20,23 +20,16 @@ import useSystemDialog from '@/hooks/useSystemDialog';
 import { formatDatetime } from '@/shared/utils/date';
 import {
   CommonTagButton,
-  CommonTextArea,
   CommonTextField,
   CommonToggle,
   CommonDialog,
   CommonFolderButton,
   CommonBottomSheetContainer,
 } from '@/components/Common';
-import { NumberTitle, ProvidedQuestionMainTitle, QuestionWrap } from '@/components/Question/Question.styles';
 import CategorySelector from '@/components/CategorySelector/CategorySelector';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
 import BottomSheetCategoryList from '@/components/BottomSheetCategoryList/BottomSheetCategoryList';
-import {
-  PostDetailContainer,
-  Description,
-  MultipleLineText,
-  QuestionContainer,
-} from '@/components/Post/PostDetail.style';
+import { PostDetailContainer, Description } from '@/components/Post/PostDetail.style';
 import PostEditAppBar from '@/components/Post/PostEdit/AppBar';
 import { SelectContainer, SpaceBetweenContainer } from '@/components/Post/PostEdit/PostEdit.style';
 import {
@@ -53,19 +46,19 @@ import FolderPlus from 'public/svgs/folderplus.svg';
 import usePostEditForm from '@/hooks/post/usePostEditForm';
 import { commaNumber } from '@/shared/utils/formatter';
 import DialogCancel from '@/components/Dialog/DialogCancel';
+import Question from '@/components/Post/PostEdit/Question';
 
 const PostDetail = () => {
   const router = useRouter();
   const postId = router.query.postId as string;
 
-  const { selectedState, setSelectedState, hasMultipleContent, changePostForm, handleCategoryClick } =
-    usePostEditForm();
+  const { selectedState, setSelectedState, hasMultipleContent, changePostForm } = usePostEditForm();
   const { tagList, tagValue, setTagList, onChangeTagValue, onDeleteTag, onKeyPressEnter, onClickRightSideIcon } =
     useTags();
-  const [firstContent, onChangeFirstContent, setFirstContent] = useTypeInput('');
-  const [secondContent, onChangeSecondContent, setSecondContent] = useTypeInput('');
-  const [thirdContent, onChangeThirdContent, setThirdContent] = useTypeInput('');
-  const [folderName, onChangeFolderName] = useTypeInput('');
+  const [firstContent, onChangeFirstContent, setFirstContent] = useInput('');
+  const [secondContent, onChangeSecondContent, setSecondContent] = useInput('');
+  const [thirdContent, onChangeThirdContent, setThirdContent] = useInput('');
+  const [folderName, onChangeFolderName] = useInput('');
 
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const [bottomSheetType, setBottomSheetType] = useState('');
@@ -83,6 +76,11 @@ const PostDetail = () => {
     toggleDialog();
     setDialogType('cancel');
   });
+
+  const handleCategoryClick = (categoryName: string) => {
+    changePostForm('secondCategory', categoryName);
+    toggleSheet();
+  };
 
   const onCreateFolder = useCallback(() => {
     createFolder(folderName, {
@@ -172,7 +170,7 @@ const PostDetail = () => {
 
   const renderBottomSheet = () => {
     return (
-      <CommonBottomSheetContainer onClose={toggleSheet} BottomSheetHeight={bottomSheetHeight} headerTitle={headerTitle}>
+      <CommonBottomSheetContainer onClose={toggleSheet} bottomSheetHeight={bottomSheetHeight} headerTitle={headerTitle}>
         {isCategoryBottomSheet ? (
           <BottomSheetCategoryList
             items={categoryOptions}
@@ -247,38 +245,16 @@ const PostDetail = () => {
             onClick={() => showBottomSheetByType('category')}
           />
         </SelectContainer>
-        {hasMultipleContent ? (
-          <QuestionContainer>
-            <QuestionWrap>
-              <NumberTitle>
-                <span>1</span>
-                /3
-              </NumberTitle>
-              <MultipleLineText>
-                {me?.nickname}님에게 <br /> 어떤 일이 있었나요?
-              </MultipleLineText>
-              <CommonTextArea value={firstContent} height="32.6rem" onChange={onChangeFirstContent} />
-            </QuestionWrap>
-            <QuestionWrap>
-              <NumberTitle>
-                <span>2</span>
-                /3
-              </NumberTitle>
-              <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
-              <CommonTextArea value={secondContent} height="32.6rem" onChange={onChangeSecondContent} />
-            </QuestionWrap>
-            <QuestionWrap>
-              <NumberTitle>
-                <span>3</span>
-                /3
-              </NumberTitle>
-              <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
-              <CommonTextArea value={thirdContent} height="32.6rem" onChange={onChangeThirdContent} />
-            </QuestionWrap>
-          </QuestionContainer>
-        ) : (
-          <CommonTextArea value={firstContent} height="42.2rem" onChange={onChangeFirstContent} />
-        )}
+        <Question
+          nickname={me?.nickname || ''}
+          hasMultipleContent={hasMultipleContent}
+          firstContent={firstContent}
+          secondContent={secondContent}
+          thirdContent={thirdContent}
+          onChangeFirstContent={onChangeFirstContent}
+          onChangeSecondContent={onChangeSecondContent}
+          onChangeThirdContent={onChangeThirdContent}
+        />
         <Description>조회수 {commaNumber(post.views)}</Description>
         <Description>{formatDatetime(post.createdAt)}</Description>
         <SpaceBetweenContainer>
