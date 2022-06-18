@@ -30,7 +30,7 @@ const TextField = ({
 
   return (
     <>
-      <Container height={height} hasRightSideIcon={hasRightSideIcon}>
+      <Container height={height} supportsMaxLength={supportsMaxLength}>
         <Input
           value={value}
           borderRadius={borderRadius}
@@ -46,7 +46,7 @@ const TextField = ({
           maxLength={maxLength}
           {...restTextFieldProps}
         />
-        {rightSideIcon && (
+        {rightSideIcon && hasRightSideIcon && (
           <RightSideIcon src={rightSideIcon} alt="aside-icon" isFocused={isFocused} onClick={onClickRightSideIcon} />
         )}
       </Container>
