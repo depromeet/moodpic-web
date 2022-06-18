@@ -51,6 +51,7 @@ const useSearchForm = () => {
     searchByTag,
     changeSearchResult,
     addSearchedRecentTags,
+    setSearchResult,
   };
 };
 
