@@ -16,7 +16,7 @@ import {
 interface BottomSheetProps {
   children: React.ReactNode;
   onClose: () => void;
-  BottomSheetHeight: number;
+  bottomSheetHeight: number;
   headerTitle?: React.ReactNode;
 }
 
@@ -26,10 +26,10 @@ interface BottomSheetProps {
  * - padding은 자연스러운 애니메이션을 위해 콘텐츠들에서 패딩을 확보해줘야함
  */
 
-const BottomSheetContainer = ({ children, onClose, BottomSheetHeight, headerTitle }: BottomSheetProps) => {
+const BottomSheetContainer = ({ children, onClose, bottomSheetHeight, headerTitle }: BottomSheetProps) => {
   const { opacityAnimation, heightAnimation, setPrevClose } = useAnimation({
     onClose,
-    fullHeight: BottomSheetHeight,
+    fullHeight: bottomSheetHeight,
   });
 
   const bottomSheetRef = typeof window !== 'undefined' && document.getElementById('root-bottomsheet');
