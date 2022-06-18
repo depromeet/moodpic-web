@@ -72,6 +72,7 @@ const PostDetail = () => {
   const hasMultipleContent = post.content.includes(CONTENT_SEPARATOR);
   const contents = post.content.split(CONTENT_SEPARATOR);
   const isFromWritePage = getPrevPath() === '/write';
+  const isShowViews = !isFromWritePage && post.disclosure;
 
   const onDelete = () => {
     deletePostMutation.mutate([postId], {
@@ -119,7 +120,7 @@ const PostDetail = () => {
           thirdContent={contents[2]}
           disabled
         />
-        <Description>조회수 {commaNumber(post.views)}</Description>
+        {isShowViews && <Description>조회수 {commaNumber(post.views)}</Description>}
         <Description>{formatDatetime(post.createdAt)}</Description>
       </PostDetailContainer>
       {isFromWritePage && <PostFloatingButton />}

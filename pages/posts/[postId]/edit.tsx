@@ -44,7 +44,9 @@ import Whiteadd from 'public/svgs/whiteadd.svg';
 import FolderIcon from 'public/svgs/folder.svg';
 import FolderPlus from 'public/svgs/folderplus.svg';
 import usePostEditForm from '@/hooks/post/usePostEditForm';
+import useToast from '@/hooks/useToast';
 import { commaNumber } from '@/shared/utils/formatter';
+import { ToastType } from '@/shared/type/common';
 import DialogCancel from '@/components/Dialog/DialogCancel';
 import Question from '@/components/Post/PostEdit/Question';
 
@@ -76,6 +78,7 @@ const PostDetail = () => {
     toggleDialog();
     setDialogType('cancel');
   });
+  const notify = useToast();
 
   const handleCategoryClick = (categoryName: string) => {
     changePostForm('secondCategory', categoryName);
@@ -105,6 +108,11 @@ const PostDetail = () => {
       { onSuccess: () => router.replace(`/posts/${postId}`) },
     );
 
+    notify({
+      type: ToastType.CONFIRM,
+      message: '기록 수정이 완료되었습니다.',
+    });
+
     removeRouteChangeEvent();
   };
 
@@ -122,7 +130,7 @@ const PostDetail = () => {
 
     fetchPostById();
     fetchFolderByPostId();
-  }, [router.isReady, selectedState]);
+  }, [router.isReady, selectedState.secondCategory]);
 
   useEffect(() => {
     if (post) {
