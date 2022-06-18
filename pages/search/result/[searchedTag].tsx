@@ -88,7 +88,7 @@ const SearchedResultByTag = () => {
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
-          BottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
+          bottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
         >
           <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>
