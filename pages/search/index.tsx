@@ -18,7 +18,7 @@ const Search = () => {
     () => getLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS) || [],
   );
   const { data: popularTags, isLoading: isPopularTagsLoading } = usePopularTags();
-  const { searchResult, searchByTag, changeSearchResult } = useSearchForm();
+  const { searchResult, searchByTag, changeSearchResult, setSearchResult } = useSearchForm();
   const resetRecentSearchedTags = () => {
     setLocalStorageValue(LOCAL_STORAGE_KEY.SEARCHED_RECENT_TAGS, []);
     setSearchedRecentTags([]);
@@ -32,7 +32,12 @@ const Search = () => {
     <Container>
       <NavHeader onClickLeftIcon={() => router.push('/')} />
       <SearchFieldContainer>
-        <SearchField value={searchResult} onChange={changeSearchResult} onSubmit={searchByTag} />
+        <SearchField
+          value={searchResult}
+          onChange={changeSearchResult}
+          onSubmit={searchByTag}
+          onClickRightSideIcon={() => setSearchResult('')}
+        />
       </SearchFieldContainer>
       <RecentTagsContainer>
         <RecentTagSearchContainer>
