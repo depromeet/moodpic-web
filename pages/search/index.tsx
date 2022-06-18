@@ -90,8 +90,8 @@ const RecentTagsContainer = styled.div`
 `;
 
 const RecentTagSearchContainer = styled.div`
+  margin-bottom: 2.8rem;
   margin-top: 2.4rem;
-  margin-bottom: 1.4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
