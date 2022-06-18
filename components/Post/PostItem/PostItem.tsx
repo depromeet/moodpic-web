@@ -7,7 +7,7 @@ import { CommonCheckbox, CommonChipButton, CommonTagButton } from '@/components/
 import ArrowRightIcon from 'public/svgs/arrowright.svg';
 import { Post } from '@/shared/type/post';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { formatDatetime } from '@/shared/utils/date';
+import { formatDate } from '@/shared/utils/date';
 import { commaNumber } from '@/shared/utils/formatter';
 
 export interface PostItemProps {
@@ -57,8 +57,8 @@ const PostItem = ({
       </ChipContainer>
       <Content>{firstContent}</Content>
       <CaptionContainer>
-        <Caption>{formatDatetime(createdAt)}</Caption>
-        <Caption>조회수 {commaNumber(views)}</Caption>
+        <Caption>{formatDate(createdAt)}</Caption>
+        {supportsTag && <Caption>조회수 {commaNumber(views)}</Caption>}
       </CaptionContainer>
     </PostItemContainer>
   );
@@ -124,7 +124,18 @@ const Caption = styled.span`
   color: ${theme.colors.gray4};
 
   & ~ & {
+    position: relative;
     margin-left: 1.6rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 0.2rem;
+      height: 0.2rem;
+      left: -0.9rem;
+      top: 0.6rem;
+      background: ${theme.colors.gray4};
+    }
   }
 `;
 
