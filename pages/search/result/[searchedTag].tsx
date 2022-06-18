@@ -107,11 +107,7 @@ const Header = styled.div`
   margin-bottom: 2.4rem;
 `;
 
-const SearchFieldContainer = styled.div`
-  width: 100%;
-  align-items: center;
-  margin: 1rem 1.8rem;
-`;
+const SearchFieldContainer = styled.div``;
 
 const SelectOrderTypeButtonContainer = styled.div`
   display: flex;
