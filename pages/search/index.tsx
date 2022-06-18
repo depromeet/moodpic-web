@@ -75,7 +75,6 @@ const Search = () => {
 const SearchFieldContainer = styled.div`
   width: 100%;
   align-items: center;
-  margin: 1rem 1.8rem;
 `;
 
 const TagButtonContainer = styled.div`
@@ -96,7 +95,6 @@ const RecentTagSearchContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.6rem;
 `;
 
 const LogoTitle = styled.h4`
@@ -112,7 +110,6 @@ const RemoveSearchedResultButton = styled.button`
 `;
 
 const TagButtonWrap = styled.div`
-  padding: 0 1.6rem;
   display: flex;
   gap: 1.2rem;
   flex-wrap: wrap;
@@ -126,9 +123,7 @@ const NoneTagMessage = styled.h6`
   color: ${theme.colors.gray4};
 `;
 
-const PopularTagsContainer = styled.div`
-  padding: 0 1.8rem;
-`;
+const PopularTagsContainer = styled.div``;
 
 const PopularTagItemsContainer = styled.div`
   margin-top: 1.2rem;
