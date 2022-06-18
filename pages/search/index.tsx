@@ -25,6 +25,7 @@ const Search = () => {
   };
 
   const MIN_RANK = 1;
+  const TAG_FLAG = '#';
 
   if (searchedRecentTags == undefined || popularTags == undefined || isPopularTagsLoading) return <div>로딩중</div>;
 
@@ -49,7 +50,7 @@ const Search = () => {
             <NoneTagMessage>최근 검색 태그 기록이 없어요.</NoneTagMessage>
           ) : (
             searchedRecentTags.map((tagTitle, index) => (
-              <TagButtonContainer key={`tag-button-${index}`} onClick={() => searchByTag(tagTitle)}>
+              <TagButtonContainer key={`tag-button-${index}`} onClick={() => searchByTag(TAG_FLAG + tagTitle)}>
                 <CommonTagButton>#{tagTitle}</CommonTagButton>
               </TagButtonContainer>
             ))
@@ -67,7 +68,7 @@ const Search = () => {
                 key={`id-${index}`}
                 rank={MIN_RANK + index}
                 title={tag}
-                onClick={() => searchByTag(tag)}
+                onClick={() => searchByTag(TAG_FLAG + tag)}
               />
             ))
           )}
