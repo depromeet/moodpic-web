@@ -72,6 +72,8 @@ const SearchedResultByTag = () => {
           <PostItem
             key={searchedPost.id}
             post={searchedPost}
+            supportsTag={true}
+            isMine={searchedPost.my}
             onClick={async () => {
               try {
                 await postService.increasePostViewCounts(searchedPost.id);
