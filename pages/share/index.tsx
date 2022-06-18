@@ -93,7 +93,6 @@ const Share = () => {
 
   return (
     <>
-      <Header hasOnlyTitle={true} />
       <CommonAppBar>
         <CommonAppBar.Left>
           <CommonIconButton iconName="close" alt="취소" onClick={toggleConfirmDialog} />
@@ -132,17 +131,13 @@ const Share = () => {
         </SenderInformation>
         {
           <ButtonWrapper>
-            <Button
-              color={canShare ? 'primary' : 'gray'}
-              onClick={copySharedPostLink}
-              disabled={canShare ? false : true}
-            >
+            <Button color={'primary'} onClick={copySharedPostLink} disabled={canShare ? false : true}>
               링크로 감정 공유하기
             </Button>
           </ButtonWrapper>
         }
         {isOpenConfirmDialog && (
-          <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.push('/')}>
+          <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
             <DialogWarning>작성중인 내용을 삭제하시겠어요?</DialogWarning>
           </CommonDialog>
         )}
@@ -192,6 +187,9 @@ const CategorySelectContainer = styled.div`
   flex-flow: row nowrap;
   overflow: auto;
   margin-top: 2.4rem;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const UserName = styled.p`
