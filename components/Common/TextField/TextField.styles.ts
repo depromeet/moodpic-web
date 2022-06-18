@@ -17,12 +17,12 @@ const IconStyle = (isFocused: boolean) => {
   }
 };
 
-export const Container = styled.div<Pick<TextFieldProps, 'hasRightSideIcon' | 'height'>>`
+export const Container = styled.div<Pick<TextFieldProps, 'supportsMaxLength' | 'height'>>`
   height: 4rem;
   display: flex;
 
-  ${({ hasRightSideIcon }) =>
-    hasRightSideIcon
+  ${({ supportsMaxLength }) =>
+    supportsMaxLength
       ? css`
           flex-direction: column;
         `
@@ -35,7 +35,6 @@ export const Container = styled.div<Pick<TextFieldProps, 'hasRightSideIcon' | 'h
 export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'hasBorder' | 'height'>>`
   text-align: start;
   cursor: text;
-  height: 100%;
   width: 100%;
   padding: 0.6rem 4rem 0.6rem 1.4rem;
   border-radius: ${({ borderRadius }) => borderRadius || '1rem'};
