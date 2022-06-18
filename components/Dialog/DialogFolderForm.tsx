@@ -24,7 +24,6 @@ const DialogFolderForm = ({ isEditMode = false, value, onChange }: DialogFolderF
         hasBorder={true}
         onChange={onChange}
         autoFocus
-        hasRightSideIcon
       />
     </DialogContainer>
   );
