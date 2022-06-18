@@ -1,6 +1,6 @@
 import React from 'react';
 import { CATEGORY_OPTIONS_INFO } from '../../../shared/constants/share';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from '../../../styles/theme';
 import Image from 'next/image';
 import CheckIcon from 'public/svgs/check.svg';
@@ -15,7 +15,7 @@ const CategoryOptionItem = ({ isSelect, category, onClick }: CategoryOptionItemP
   const { categoryIcon, text, color } = CATEGORY_OPTIONS_INFO[category];
 
   return (
-    <Container onClick={onClick} bgColor={color}>
+    <Container onClick={onClick} bgColor={color} isSelect={isSelect}>
       {isSelect && (
         <CheckIconContainer isSelect={isSelect}>
           <Image src={CheckIcon} alt={'checkIcon'} />
@@ -31,7 +31,7 @@ const CategoryOptionItem = ({ isSelect, category, onClick }: CategoryOptionItemP
   );
 };
 
-const Container = styled.div<{ bgColor: string }>`
+const Container = styled.div<{ bgColor: string; isSelect: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -43,6 +43,12 @@ const Container = styled.div<{ bgColor: string }>`
   border-radius: 1rem;
   min-width: auto;
   flex-shrink: 0;
+
+  ${({ isSelect }) =>
+    isSelect &&
+    css`
+      border: 2px solid ${theme.colors.gray7};
+    `}
 `;
 
 // TODO: 타입 재활용 하기. Pick<CategoryOptionItemProps, 'isSelect'>으로 타입이 잡히지 않는 문제
