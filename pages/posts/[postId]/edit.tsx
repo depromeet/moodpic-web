@@ -104,7 +104,7 @@ const PostDetail = () => {
 
     updatePost(
       { id: postId, postData: { ...updatedForm, folderId: selectedState.folderId || 0 } },
-      { onSuccess: () => router.push(`/posts/${postId}`) },
+      { onSuccess: () => router.replace(`/posts/${postId}`) },
     );
 
     removeRouteChangeEvent();
