@@ -18,7 +18,7 @@ import {
   ProvidedQuestionSubDescription,
   QuestionWrap,
 } from './Question.styles';
-import { useTypeInput } from '@/hooks/useTypeInput';
+import { useInput } from '@/hooks/useInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
 import { useMemberQuery } from '@/hooks/apis';
 
@@ -27,10 +27,10 @@ const HEADER_HEIGHT = 50;
 const Question = () => {
   const [questionModeData, setQuestionModeData] = useRecoilState(questionModeState);
   const [postRequestData, setPostRequestData] = useRecoilState(createPostRequestState);
-  const [firstQuestionValue, onChangeFirstQuestionValue, setFirstQuestionValue] = useTypeInput('');
-  const [secondQuestionValue, onChangeSecondQuestionValue, setSecondQuestionValue] = useTypeInput('');
-  const [thirdQuestionValue, onChangeThirdQuestionValue, setThirdQuestionValue] = useTypeInput('');
-  const [myselfQuestionValue, onChangeMyselfQuestionValue, setMyselfQuestionValue] = useTypeInput('');
+  const [firstQuestionValue, onChangeFirstQuestionValue, setFirstQuestionValue] = useInput('');
+  const [secondQuestionValue, onChangeSecondQuestionValue, setSecondQuestionValue] = useInput('');
+  const [thirdQuestionValue, onChangeThirdQuestionValue, setThirdQuestionValue] = useInput('');
+  const [myselfQuestionValue, onChangeMyselfQuestionValue, setMyselfQuestionValue] = useInput('');
   const [mode, setMode] = useState(questionModeData);
   const firstQuestionRef = useRef<HTMLDivElement>(null);
   const secondQuestionRef = useRef<HTMLDivElement>(null);

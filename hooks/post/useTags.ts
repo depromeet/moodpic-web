@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
-import { useTypeInput } from '../useTypeInput';
+import { useInput } from '../useInput';
 
 export const useTags = () => {
-  const [tagValue, onChangeTagValue, setTagValue] = useTypeInput('');
+  const [tagValue, onChangeTagValue, setTagValue] = useInput('');
   const [tagList, setTagList] = useState<string[]>([]);
 
   const MAX_TAG_LIST_LENGTH = 5;
