@@ -187,6 +187,7 @@ const SenderInput = styled.input`
   margin-left: 0.8rem;
   background: ${theme.colors.gray3};
   border: none;
+  border-radius: 0;
   background-color: ${theme.colors.black};
   ${theme.fonts.h5}
   color: ${theme.colors.white};
