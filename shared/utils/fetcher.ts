@@ -12,11 +12,13 @@ axios.interceptors.request.use((config) => {
   const token = getCookie('authToken');
 
   if (!token) {
-    setCookies(
-      'authToken',
-      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI3Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTQ5NDU0MDEsImV4cCI6MTY1NjI4NDYwMX0.lYhaOcdF5MYXhOOmy9BuFiun0-ruVqlyLICJwDEMRY-tJd_u1p2XwszSI6QovucR1HeyWMQzzDPzH7tGVXPipg', // 자기 토큰으로 바꿔주세용
-      { secure: true, sameSite: 'lax', maxAge: 31536000 },
-    );
+    if (process.env.NODE_ENV === 'development') {
+      setCookies(
+        'authToken',
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI3Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTQ5NDU0MDEsImV4cCI6MTY1NjI4NDYwMX0.lYhaOcdF5MYXhOOmy9BuFiun0-ruVqlyLICJwDEMRY-tJd_u1p2XwszSI6QovucR1HeyWMQzzDPzH7tGVXPipg', // 자기 토큰으로 바꿔주세용
+        { secure: true, sameSite: 'lax', maxAge: 31536000 },
+      );
+    }
     return config;
   }
 
