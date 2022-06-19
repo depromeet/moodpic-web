@@ -16,7 +16,7 @@ import BottomSheetList from '../../../components/BottomSheetList/BottomSheetList
 const SearchedResultByTag = () => {
   const router = useRouter();
   const searchedTag = router.query.tag as string;
-  const { searchResult, changeSearchResult, searchByTag } = useSearchForm();
+  const { searchResult, changeSearchResult, searchByTag, setSearchResult } = useSearchForm();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const [orderType, setOrderType] = useState<TagSearchOrderType>(TAG_SEARCH_ORDER_TYPE.NEWEST);
   const {
@@ -43,6 +43,7 @@ const SearchedResultByTag = () => {
   ];
 
   useEffect(() => {
+    setSearchResult(searchedTag);
     if (searchedTag) {
       refetchSearchedPosts();
     }
