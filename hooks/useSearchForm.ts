@@ -12,26 +12,26 @@ const useSearchForm = () => {
   const router = useRouter();
 
   const changeSearchResult = (event: ChangeEvent<HTMLInputElement>) => {
-    const TAG_FLAG = '#';
-    const isFirstTyped = event.target.value.length === 1 && searchResult.length === 0;
-    const onlyTagFlagRemain = event.target.value === '#' && searchResult.length === 2;
-
-    if (isFirstTyped) {
-      setSearchResult(TAG_FLAG + event.target.value);
-      return;
-    }
-
-    if (onlyTagFlagRemain) {
-      setSearchResult('');
-      return;
-    }
+    // const TAG_FLAG = '#';
+    // const isFirstTyped = event.target.value.length === 1 && searchResult.length === 0;
+    // const onlyTagFlagRemain = event.target.value === '#' && searchResult.length === 2;
+    //
+    // if (isFirstTyped) {
+    //   setSearchResult(TAG_FLAG + event.target.value);
+    //   return;
+    // }
+    //
+    // if (onlyTagFlagRemain) {
+    //   setSearchResult('');
+    //   return;
+    // }
 
     setSearchResult(event.target.value);
   };
 
-  const searchByTag = (resultHasTagFlag: Tag) => {
-    const TAG_FLAG_INDEX = 0;
-    const searchedTag = resultHasTagFlag.slice(TAG_FLAG_INDEX + 1, resultHasTagFlag.length);
+  const searchByTag = (searchedTag: Tag) => {
+    // const TAG_FLAG_INDEX = 0;
+    // const searchedTag = resultHasTagFlag.slice(TAG_FLAG_INDEX + 1, resultHasTagFlag.length);
 
     if (searchedTag.trim().length === 0) {
       notify({
