@@ -21,9 +21,9 @@ export type Category = typeof CATEGORY[keyof typeof CATEGORY];
 
 export const CATEGORY_OPTIONS_INFO = {
   UNSELECT: { categoryIcon: union, text: '선택안함', color: theme.colors.gray3 },
-  SORRY: { categoryIcon: sorryFace, text: '미안해요', color: '#ffa8ec' },
-  THANKS: { categoryIcon: thanks, text: '고마워요', color: '#ffc24d' },
-  UNDERSTAND: { categoryIcon: empathizeFace, text: '이해해요', color: '#ffc24d' },
+  SORRY: { categoryIcon: sorryFace, text: '미안해요', color: '#f1ff9d' },
+  THANKS: { categoryIcon: thanks, text: '고마워요', color: '#ffa8ec' },
+  UNDERSTAND: { categoryIcon: empathizeFace, text: '이해해요', color: '#FFC24D' },
   RECONCILED: { categoryIcon: reconcile, text: '화해해요', color: '#96f18e' },
   SAD: { categoryIcon: disappointedFace, text: '서운해요', color: '#b899ff' },
   TIRED: { categoryIcon: tiredFace, text: '지쳤어요', color: '#a1dbf4' },
