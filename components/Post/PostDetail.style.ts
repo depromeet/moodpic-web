@@ -6,13 +6,14 @@ export const PostDetailContainer = styled.section`
   display: flex;
   flex-direction: column;
   padding-bottom: 8rem;
+  margin-top: 2rem;
 `;
 
 export const TagContainer = styled.div`
   display: flex;
   overflow-x: auto;
   padding: 0 1.8rem;
-  margin: 2rem -1.8rem 2.4rem;
+  margin: 0 -1.8rem 2.4rem;
 
   div {
     flex: 0 0 auto;
