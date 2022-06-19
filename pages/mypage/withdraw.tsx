@@ -11,6 +11,7 @@ import { CommonAppBarTitle } from './posts';
 import { ButtonWrapper } from '../write';
 import { DialogContent } from '@/components/MypageContentList/MypageContentList';
 import { useMemberQuery } from '@/hooks/apis';
+import { removeCookies } from '@/hooks/useCookie';
 
 const MyPageWithdraw = () => {
   const router = useRouter();
@@ -21,7 +22,8 @@ const MyPageWithdraw = () => {
     router.back();
   };
   const withdrawal = () => {
-    console.log('회원탈퇴');
+    removeCookies('authTokn');
+    console.log('회원탈퇴 api 호출');
     toggleDialog();
   };
 
