@@ -32,10 +32,12 @@ const Question = ({
       {hasMultipleContent ? (
         <QuestionContainer>
           <QuestionWrap>
-            <NumberTitle>
-              <span>1</span>
-              /3
-            </NumberTitle>
+            {!disabled && (
+              <NumberTitle>
+                <span>1</span>
+                /3
+              </NumberTitle>
+            )}
             <MultipleLineText>
               {nickname || DEFAULT_NICKNAME}님, <br />
               어떤 일이 있었나요?
@@ -49,10 +51,12 @@ const Question = ({
             />
           </QuestionWrap>
           <QuestionWrap>
-            <NumberTitle>
-              <span>2</span>
-              /3
-            </NumberTitle>
+            {!disabled && (
+              <NumberTitle>
+                <span>2</span>
+                /3
+              </NumberTitle>
+            )}
             <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
             <CommonTextArea
               value={secondContent}
@@ -63,10 +67,12 @@ const Question = ({
             />
           </QuestionWrap>
           <QuestionWrap>
-            <NumberTitle>
-              <span>3</span>
-              /3
-            </NumberTitle>
+            {!disabled && (
+              <NumberTitle>
+                <span>3</span>
+                /3
+              </NumberTitle>
+            )}
             <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
             <CommonTextArea
               value={thirdContent}

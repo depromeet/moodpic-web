@@ -18,7 +18,7 @@ const folderService = {
 
     return data;
   },
-  createFolder: async (folderName: string): Promise<ServerResponse> => {
+  createFolder: async (folderName: string) => {
     const { data } = await fetcher('post', '/api/v1/folders', { folderName });
 
     return data;

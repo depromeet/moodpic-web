@@ -5,3 +5,8 @@ export interface Folder {
   postCount: number;
   default: boolean;
 }
+
+export interface FolderSuccessResponse {
+  folderId: number;
+  folderName: string;
+}

@@ -47,7 +47,7 @@ import usePostEditForm from '@/hooks/post/usePostEditForm';
 import useToast from '@/hooks/useToast';
 import { commaNumber } from '@/shared/utils/formatter';
 import { ToastType } from '@/shared/type/common';
-import DialogCancel from '@/components/Dialog/DialogCancel';
+import DialogDelete from '@/components/Dialog/DialogDelete';
 import Question from '@/components/Post/PostEdit/Question';
 
 const PostDetail = () => {
@@ -60,7 +60,7 @@ const PostDetail = () => {
   const [firstContent, onChangeFirstContent, setFirstContent] = useInput('');
   const [secondContent, onChangeSecondContent, setSecondContent] = useInput('');
   const [thirdContent, onChangeThirdContent, setThirdContent] = useInput('');
-  const [folderName, onChangeFolderName] = useInput('');
+  const [folderName, onChangeFolderName, setFolderName] = useInput('');
 
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const [bottomSheetType, setBottomSheetType] = useState('');
@@ -87,7 +87,11 @@ const PostDetail = () => {
 
   const onCreateFolder = useCallback(() => {
     createFolder(folderName, {
-      onSuccess: () => toggleDialog(),
+      onSuccess: (res) => {
+        toggleDialog();
+        setFolderName('');
+        setSelectedState({ ...selectedState, folderId: res.folderId });
+      },
     });
   }, [createFolder, folderName, toggleDialog]);
 
@@ -105,13 +109,16 @@ const PostDetail = () => {
 
     updatePost(
       { id: postId, postData: { ...updatedForm, folderId: selectedState.folderId || 0 } },
-      { onSuccess: () => router.replace(`/posts/${postId}`) },
+      {
+        onSuccess: () => {
+          router.replace(`/posts/${postId}`);
+          notify({
+            type: ToastType.CONFIRM,
+            message: '기록 수정이 완료되었습니다.',
+          });
+        },
+      },
     );
-
-    notify({
-      type: ToastType.CONFIRM,
-      message: '기록 수정이 완료되었습니다.',
-    });
 
     removeRouteChangeEvent();
   };
@@ -147,16 +154,7 @@ const PostDetail = () => {
       }
       setFirstContent(post.content);
     }
-  }, [
-    post,
-    hasMultipleContent,
-    setFirstContent,
-    setSecondContent,
-    setSelectedState,
-    setThirdContent,
-    setTagList,
-    folder,
-  ]);
+  }, [post, hasMultipleContent, folder]);
 
   if (!post || !postId) return <div>404</div>;
 
@@ -189,7 +187,7 @@ const PostDetail = () => {
           <BottomSheetFolderList
             folderData={folderListData?.folders || []}
             onClose={toggleSheet}
-            toggleDialog={toggleDialog}
+            toggleDialog={toggleCreateDialog}
           />
         )}
       </CommonBottomSheetContainer>
@@ -199,7 +197,7 @@ const PostDetail = () => {
   const renderSystemDialog = () => {
     return (
       <CommonDialog type="alert" onClose={cancelSystemDialog} onConfirm={confirmSystemDialog}>
-        <DialogCancel />
+        <DialogDelete />
       </CommonDialog>
     );
   };
@@ -221,9 +219,9 @@ const PostDetail = () => {
           <CommonTextField
             value={tagValue}
             rightSideIcon={Whiteadd.src}
-            hasBorder={false}
             onChange={onChangeTagValue}
             onKeyPress={onKeyPressEnter}
+            hasRightSideIcon={true}
             onClickRightSideIcon={onClickRightSideIcon}
             placeholder="태그를 추가해주세요."
           />
