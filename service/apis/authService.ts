@@ -1,7 +1,6 @@
 import axios from 'axios';
 import fetcher from '../../shared/utils/fetcher';
-import { setLocalStorageValue } from '../../shared/utils/localStorage';
-import { LOCAL_STORAGE_KEY } from '../../shared/constants/localStorageKey';
+import { setCookies } from '@/hooks/useCookie';
 
 const authService = {
   getAuth: async (kakaoCode: string) => {
@@ -13,7 +12,7 @@ const authService = {
 
     const { auth, refresh } = data;
 
-    setLocalStorageValue(LOCAL_STORAGE_KEY.AUTH_TOKEN, auth);
+    setCookies('authToken', auth, { secure: true, sameSite: 'lax', maxAge: 31536000 }); //TODO: 이러면 refresh 토큰이 필요있나? maxAge가 1년이라.. 리팩토링 해야될듯
 
     return { auth, refresh };
   },
