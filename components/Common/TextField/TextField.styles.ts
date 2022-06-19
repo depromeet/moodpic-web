@@ -32,7 +32,7 @@ export const Container = styled.div<Pick<TextFieldProps, 'supportsMaxLength' | '
   flex: 0 1 auto;
 `;
 
-export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'hasBorder' | 'height'>>`
+export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'height'>>`
   text-align: start;
   cursor: text;
   width: 100%;
@@ -46,14 +46,11 @@ export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'hasBord
   height: ${({ height }) => height || '4rem'};
 
   ${theme.fonts.body};
-  ${({ hasBorder }) =>
-    hasBorder
-      ? css`
-          border: 0.1rem solid ${theme.colors.gray4};
-        `
-      : css`
-          border: none;
-        `};
+  border: none;
+
+  :focus {
+    border: 0.1rem solid ${theme.colors.gray4};
+  }
 `;
 
 export const RightSideIcon = styled.img<{ isFocused: boolean }>`
