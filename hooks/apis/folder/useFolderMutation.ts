@@ -13,7 +13,7 @@ export const useCreateFolderMutation = () =>
         queryClient.invalidateQueries(QUERY_KEY.GET_FOLDERS);
       },
       onError: (error) => {
-        // TODO: toast로 에러메시지 띄워주기, 문제 : 현재는 toast가 hook이라서 분기문 안에서 호출 불가, toast를 간소화 해야됨
+        // TODO: 콘솔 에러 안 띄우도록 수정해야 됨
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         console.log(({ error }.error as any).response.data.msg);
       },
