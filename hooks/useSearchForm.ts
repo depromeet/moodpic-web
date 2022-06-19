@@ -40,7 +40,12 @@ const useSearchForm = () => {
       });
       return;
     }
-    router.push(`/search/result/${searchedTag}`);
+    router.push({
+      pathname: '/search/result',
+      query: {
+        tag: searchedTag,
+      },
+    });
     addSearchedRecentTags(searchedTag);
   };
 
