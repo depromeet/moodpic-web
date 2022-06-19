@@ -44,10 +44,8 @@ const SearchedResultByTag = () => {
 
   useEffect(() => {
     setSearchResult(searchedTag);
-    if (searchedTag) {
-      refetchSearchedPosts();
-    }
-  }, [orderType]);
+    refetchSearchedPosts();
+  }, [orderType, searchedTag]);
 
   if (isLoadingSearchedPosts) return <div>로딩중</div>;
 
