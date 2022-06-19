@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AxiosError } from 'axios';
 import styled from 'styled-components';
 import { HOME_TAB_TYPE, CurrentTabType, MINIMUM_FOLDER_SIZE } from '@/shared/constants/home';
 import useDialog from '@/hooks/useDialog';
-import { useTypeInput } from '@/hooks/useTypeInput';
+import { useInput } from '@/hooks/useInput';
 import {
   useCreateFolderMutation,
   useDeleteFolderMutation,
@@ -32,7 +32,7 @@ const Home = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const isMounted = useIsMounted();
   const { dialogVisible, toggleDialog } = useDialog();
-  const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
+  const [inputValue, onChangeInput, setInputValue] = useInput('');
   const { data: folderResponse, isLoading } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
   const { data: incompletedPosts } = useIncompletedPostsQuery();
@@ -184,13 +184,15 @@ const Home = () => {
     }
   };
 
+  const renderHeader = useMemo(() => <HomeHeader />, []);
+
   //TODO: 이후 Loading develop
   if (isLoading && folderResponse) return <div>로딩중</div>;
   const folderLength = folderResponse?.folders.length || 0;
 
   return (
     <>
-      <HomeHeader />
+      {renderHeader}
       {isMounted && <HomeBanner nickname={me?.nickname || ''} title={randomTitle} background={randomImageSource} />}
       <HomeTabHeader
         currentTab={currentTab}

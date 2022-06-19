@@ -15,6 +15,13 @@ const buttonColorStyle = (color: string) => {
         color: ${theme.colors.white};
         background-color: ${theme.colors.gray3};
       `;
+
+    case 'black':
+      return css`
+        color: ${theme.colors.primary};
+        background-color: ${theme.colors.gray2};
+        border: 1px solid ${theme.colors.primary};
+      `;
   }
 };
 

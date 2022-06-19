@@ -6,11 +6,19 @@ import styled from 'styled-components';
 import TextArea from '../../../components/Common/TextArea/TextArea';
 import Button from '../../../components/Common/Button/Button';
 import CategoryBox from '../../../components/Share/CategoryBox/CategoryBox';
-import Header from '../../../components/Home/Header/Header';
+import { copyClipboard } from '../../../shared/utils/copyClipboard';
+import useToast from '../../../hooks/useToast';
+import { ToastType } from '../../../shared/type/common';
+import NavHeader from '../../../components/TagSearch/NavHeader/NavHeader';
+import DialogWarning from '../../../components/Dialog/DialogWarning';
+import { CommonDialog } from '../../../components/Common';
+import useModal from '../../../hooks/useDialog';
 
 const SharedPost = () => {
   const router = useRouter();
   const ldm = router.query.ldm as string;
+  const notify = useToast();
+  const { dialogVisible: isOpenConfirmDialog, toggleDialog: toggleConfirmDialog } = useModal();
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
 
@@ -27,7 +35,7 @@ const SharedPost = () => {
 
   return (
     <>
-      <Header hasOnlyTitle={true} />
+      <NavHeader onClickLeftIcon={toggleConfirmDialog} />
       <Container>
         <UserName>To. {receiverName}</UserName>
         <BodyContainer>
@@ -38,10 +46,28 @@ const SharedPost = () => {
         </BodyContainer>
         <UserName>From. {senderName}</UserName>
         <ButtonWrapper>
-          <Button color="primary" onClick={() => alert('TODO: 준비중입니다.')}>
-            나도 서비스명에서 감정보내기
+          <Button
+            color="black"
+            onClick={async () => {
+              await copyClipboard({
+                text: window.document.location.href,
+                onSuccess: () => {
+                  notify({
+                    type: ToastType.CONFIRM,
+                    message: '링크가 클립보드에 복사됐어요.',
+                  });
+                },
+              });
+            }}
+          >
+            링크 복사로 친구들에게 공유하기
           </Button>
         </ButtonWrapper>
+        {isOpenConfirmDialog && (
+          <CommonDialog confirmText="확인" type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
+            <DialogWarning>페이지를 떠나시겠어요?</DialogWarning>
+          </CommonDialog>
+        )}
       </Container>
     </>
   );

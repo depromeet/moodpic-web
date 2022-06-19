@@ -9,24 +9,27 @@ interface FloatingButtonGroupProps {
 
 const FloatingButtonGroup = ({ hasIncompletedPosts }: FloatingButtonGroupProps) => {
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
+  const [isScrollAfterBanner, setIsScrollAfterBanner] = useState(false);
   const router = useRouter();
+
+  const handleScrollOnTop = () => {
+    setIsScrollOnTop(window.scrollY === 0);
+  };
+
+  const handleScrollAfterBanner = () => {
+    setIsScrollAfterBanner(window.scrollY >= 256);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY !== 0) {
-        if (!isScrollOnTop) {
-          return;
-        }
-
-        setIsScrollOnTop(false);
-      } else {
-        setIsScrollOnTop(true);
-      }
+      handleScrollOnTop();
+      handleScrollAfterBanner();
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isScrollOnTop]);
+  }, []);
 
   const goToWritePage = () => {
     router.push('/write');
@@ -35,7 +38,7 @@ const FloatingButtonGroup = ({ hasIncompletedPosts }: FloatingButtonGroupProps) 
   return (
     <>
       {hasIncompletedPosts && <HomeFloatingButton isScrollOnTop={isScrollOnTop} />}
-      {!isScrollOnTop && <CommonWritingButton onClick={goToWritePage} />}
+      {isScrollAfterBanner && <CommonWritingButton onClick={goToWritePage} />}
     </>
   );
 };

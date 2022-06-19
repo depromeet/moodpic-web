@@ -6,7 +6,6 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   rightSideIcon?: string;
   height?: string;
   borderRadius?: '1rem' | '0.4rem';
-  hasBorder?: boolean;
   supportsMaxLength?: boolean;
   onClickRightSideIcon?: () => void;
   hasRightSideIcon?: boolean;
@@ -19,7 +18,6 @@ const TextField = ({
   rightSideIcon,
   height,
   borderRadius,
-  hasBorder,
   maxLength,
   supportsMaxLength = false,
   onClickRightSideIcon,
@@ -30,7 +28,7 @@ const TextField = ({
 
   return (
     <>
-      <Container height={height} hasRightSideIcon={hasRightSideIcon}>
+      <Container height={height} supportsMaxLength={supportsMaxLength}>
         <Input
           value={value}
           borderRadius={borderRadius}
@@ -42,11 +40,10 @@ const TextField = ({
             setIsFocused(false);
             onBlur?.(event);
           }}
-          hasBorder={hasBorder}
           maxLength={maxLength}
           {...restTextFieldProps}
         />
-        {rightSideIcon && (
+        {rightSideIcon && hasRightSideIcon && (
           <RightSideIcon src={rightSideIcon} alt="aside-icon" isFocused={isFocused} onClick={onClickRightSideIcon} />
         )}
       </Container>

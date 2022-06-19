@@ -6,7 +6,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
 import folderService from '@/service/apis/folderService';
 import { createPostRequestState, createPostResponseState } from '@/store/post/atom';
-import { useTypeInput } from '@/hooks/useTypeInput';
+import { useInput } from '@/hooks/useInput';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import useToast from '@/hooks/useToast';
 import useDialog from '@/hooks/useDialog';
@@ -20,17 +20,19 @@ import { PostRequestType, PostResponseType } from '@/shared/type/post';
 import postService from '@/service/apis/postService';
 
 import { ButtonWrapper } from '@/pages/write';
-import Button from '../Common/Button/Button';
-import SelectButton from '../Common/SelectButton/SecondCategorySelect';
-import Toggle from '../Common/Toggle/Toggle';
-import FolderButton from '../Common/Tag/FolderButton';
-import TextField from '../Common/TextField/TextField';
-import TagButton from '../Common/TagButton/TagButton';
+import {
+  CommonDialog,
+  CommonSelectButton,
+  CommonBottomSheetContainer,
+  CommonButton,
+  CommonToggle,
+  CommonFolderButton,
+  CommonTextField,
+  CommonTagButton,
+} from '@/components/Common';
 import { MainTitle } from '@/components/PreEmotion/PreEmotion';
-import { CommonBottomSheetContainer } from '@/components/Common';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
 import FolderPlus from 'public/svgs/folderplus.svg';
-import { CommonDialog } from '@/components/Common';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import Whiteadd from 'public/svgs/whiteadd.svg';
 import FolderIcon from 'public/svgs/folder.svg';
@@ -43,6 +45,7 @@ import {
   Divider,
   CustomImage,
 } from './CurrentEmotion.styles';
+import { DEFAULT_NICKNAME } from '@/shared/constants/common';
 
 const MAX_TAG_LIST_LENGTH = 5;
 
@@ -53,12 +56,11 @@ interface CurrentEmotionProps {
 const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
   const notify = useToast();
   const nextProgressStep = useNextProgressStep();
-  const [isTypingMode, setTypingMode] = useState(false);
   const [isDisclose, setDisclose] = useState(false);
   const [tagList, setTagList] = useState<string[]>([]);
   const [selectedFolderName, setSelectFolderName] = useState('폴더선택');
-  const [tagValue, onChangeValue, setTagValue] = useTypeInput('');
-  const [inputValue, onChangeInput, setInputValue] = useTypeInput('');
+  const [tagValue, onChangeValue, setTagValue] = useInput('');
+  const [inputValue, onChangeInput, setInputValue] = useInput('');
   const setPostId = useSetRecoilState(createPostResponseState);
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
@@ -98,13 +100,6 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
       });
     },
   });
-
-  const onTextFieldBlur = () => {
-    setTypingMode(false);
-  };
-  const onTextFieldFocus = () => {
-    setTypingMode(true);
-  };
 
   const onChangeDisclose = () => {
     setSelectState((prev) => ({ ...prev, disclosure: !isDisclose }));
@@ -188,24 +183,22 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
   return (
     <>
       <MainTitle>
-        {me?.nickname ?? '유저'}님의 <br />
+        {me?.nickname ?? DEFAULT_NICKNAME}님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
-      <SelectButton title="☺️ &nbsp; 한결 나아졌어요" secondaryCategorytype="positive" />
-      <SelectButton title="😞 &nbsp; 여전히" secondaryCategorytype="negative" />
-      <SelectButton title="🤔 &nbsp; 변화가 없었어요" secondaryCategorytype="natural" />
+      <CommonSelectButton title="☺️ &nbsp; 한결 나아졌어요" secondaryCategorytype="positive" />
+      <CommonSelectButton title="😞 &nbsp; 여전히" secondaryCategorytype="negative" />
+      <CommonSelectButton title="🤔 &nbsp; 변화가 없었어요" secondaryCategorytype="natural" />
       <Divider />
       <OptionWrapper>
         <OptionTitle>태그</OptionTitle>
         <TextFieldWrap>
-          <TextField
+          <CommonTextField
             value={tagValue}
             rightSideIcon={Whiteadd.src}
-            hasBorder={isTypingMode}
-            onFocus={onTextFieldFocus}
-            onBlur={onTextFieldBlur}
             onChange={onChangeValue}
             onKeyPress={onKeyPressEnter}
+            hasRightSideIcon={true}
             onClickRightSideIcon={onClickRightSideIcon}
             placeholder="태그를 추가해주세요."
           />
@@ -213,35 +206,35 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
         <TagButtonWrap>
           {tagList.length > 0 ? (
             tagList.map((content, index) => (
-              <TagButton canDelete onClick={onDeleteTag(index)} key={content}>
+              <CommonTagButton canDelete onClick={onDeleteTag(index)} key={content}>
                 #{content}
-              </TagButton>
+              </CommonTagButton>
             ))
           ) : (
-            <TagButton exampleTagMode>#태그는 5개까지 입력 가능해요.</TagButton>
+            <CommonTagButton exampleTagMode>#태그는 5개까지 입력 가능해요.</CommonTagButton>
           )}
         </TagButtonWrap>
         <div className="space-between">
           <OptionTitle>공개</OptionTitle>
-          <Toggle checked={isDisclose} onChange={onChangeDisclose} />
+          <CommonToggle checked={isDisclose} onChange={onChangeDisclose} />
         </div>
         <div className="space-between">
           <OptionTitle>폴더</OptionTitle>
           <FolderWrap>
-            <FolderButton onClick={toggleSheet}>{selectedFolderName}</FolderButton>
+            <CommonFolderButton onClick={toggleSheet}>{selectedFolderName}</CommonFolderButton>
             <CustomImage src={FolderPlus} alt="FolderPlus" onClick={toggleDialog} />
           </FolderWrap>
         </div>
       </OptionWrapper>
       <ButtonWrapper>
-        <Button
+        <CommonButton
           color="primary"
           onClick={onSubmit}
           size="large"
           disabled={selectedState.secondCategory === '' || !selectedState.folderId}
         >
           감정기록 완료
-        </Button>
+        </CommonButton>
       </ButtonWrapper>
       {dialogVisible && (
         <CommonDialog
@@ -256,7 +249,7 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
       {isVisibleSheet && folderListData ? (
         <CommonBottomSheetContainer
           onClose={toggleSheet}
-          BottomSheetHeight={calcBottomSheetHeight({
+          bottomSheetHeight={calcBottomSheetHeight({
             folderSize: folderListData?.folders.length,
             hasHeader: true,
           })}

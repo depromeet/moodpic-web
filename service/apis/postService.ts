@@ -67,7 +67,7 @@ const postService = {
   getPostsByCategories: async (): Promise<CategoryFolder[]> => {
     const { data } = await fetcher('get', '/api/v1/posts/categories');
 
-    return data;
+    return data.reverse();
   },
   getPostsByCategoryId: async ({ categoryId, page = 0 }: PostListRequest): Promise<PostListResponse> => {
     const { data } = await fetcher('get', `/api/v1/posts/categories/${categoryId}?page=${page}&size=${PAGE_SIZE}`);

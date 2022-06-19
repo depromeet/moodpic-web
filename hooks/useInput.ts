@@ -1,19 +1,17 @@
-import { useState, ChangeEvent, useCallback } from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
 
-export default function useInput(initialValue: string) {
-  const [inputValue, setInputValue] = useState(initialValue);
+type onChangeType = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
 
-  const onChangeInput = useCallback(({ target }: ChangeEvent<HTMLInputElement>) => {
+export const useInput = (initialValue = '') => {
+  const [value, setValue] = useState(initialValue);
+  const handler = useCallback(({ target }) => {
     const max = Number(target.getAttribute('maxlength'));
 
     if (max && target.value.length > max) {
       target.value = target.value.slice(0, max);
     }
 
-    setInputValue(target.value);
+    setValue(target.value);
   }, []);
-
-  const resetInputValue = () => setInputValue('');
-
-  return { inputValue, onChangeInput, resetInputValue };
-}
+  return [value, handler, setValue] as [string, onChangeType, typeof setValue];
+};

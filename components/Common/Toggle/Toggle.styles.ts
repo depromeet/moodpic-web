@@ -18,7 +18,7 @@ export const Trigger = styled.input`
 
 export const ToggleText = styled.span<{ checked: boolean }>`
   position: absolute;
-  top: 0.8rem;
+  top: 0.7rem;
   right: 1.2rem;
   ${theme.fonts.caption2};
   color: ${theme.colors.black};

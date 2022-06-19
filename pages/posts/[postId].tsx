@@ -9,7 +9,6 @@ import {
 } from '@/components/Common';
 import Card from '@/components/Card/Card';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { NumberTitle, ProvidedQuestionMainTitle, QuestionWrap } from '@/components/Question/Question.styles';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import useDialog from '@/hooks/useDialog';
 import useToast from '@/hooks/useToast';
@@ -18,19 +17,13 @@ import { useCategoryListQuery } from '@/hooks/apis/post/useCategoryListQuery';
 import { ToastType } from '@/shared/type/common';
 import { getPrevPath } from '@/shared/utils/storePathValues';
 import { formatDatetime } from '@/shared/utils/date';
-import { CommonTextArea } from '@/components/Common';
+import { DEFAULT_NICKNAME } from '@/shared/constants/common';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import DialogWarning from '@/components/Dialog/DialogWarning';
-import {
-  PostDetailContainer,
-  TagContainer,
-  Description,
-  CardContainer,
-  MultipleLineText,
-  QuestionContainer,
-} from '@/components/Post/PostDetail.style';
+import { PostDetailContainer, TagContainer, Description, CardContainer } from '@/components/Post/PostDetail.style';
 import PostFloatingButton from '@/components/Post/FloatingButton';
 import { commaNumber } from '@/shared/utils/formatter';
+import Question from '@/components/Post/PostEdit/Question';
 
 const PostDetail = () => {
   const router = useRouter();
@@ -79,6 +72,7 @@ const PostDetail = () => {
   const hasMultipleContent = post.content.includes(CONTENT_SEPARATOR);
   const contents = post.content.split(CONTENT_SEPARATOR);
   const isFromWritePage = getPrevPath() === '/write';
+  const isShowViews = !isFromWritePage && post.disclosure;
 
   const onDelete = () => {
     deletePostMutation.mutate([postId], {
@@ -108,56 +102,34 @@ const PostDetail = () => {
         )}
       </CommonAppBar>
       <PostDetailContainer>
-        <TagContainer>
-          {post.tags.map((tag: string, index: number) => (
-            <CommonTagButton key={index}>#{tag}</CommonTagButton>
-          ))}
-        </TagContainer>
+        {!!post.tags.length && (
+          <TagContainer>
+            {post.tags.map((tag: string, index: number) => (
+              <CommonTagButton key={index}>#{tag}</CommonTagButton>
+            ))}
+          </TagContainer>
+        )}
         <CardContainer>
           <Card firstEmotion={post.firstCategory} secondEmotion={post.secondCategory}>
             그땐 {getCategoryDescription(post.firstCategory)}, 지금은 {getCategoryDescription(post.secondCategory)}
           </Card>
         </CardContainer>
-        {hasMultipleContent ? (
-          <QuestionContainer>
-            <QuestionWrap>
-              <NumberTitle>
-                <span>1</span>
-                /3
-              </NumberTitle>
-              <MultipleLineText>
-                {post.my ? me?.nickname : '유저'}님에게 <br /> 어떤 일이 있었나요?
-              </MultipleLineText>
-              <CommonTextArea value={contents[0]} height="32.6rem" disabled />
-            </QuestionWrap>
-            <QuestionWrap>
-              <NumberTitle>
-                <span>2</span>
-                /3
-              </NumberTitle>
-              <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
-              <CommonTextArea value={contents[1]} height="32.6rem" disabled />
-            </QuestionWrap>
-            <QuestionWrap>
-              <NumberTitle>
-                <span>3</span>
-                /3
-              </NumberTitle>
-              <ProvidedQuestionMainTitle>고생했어요! 스스로에게 한마디를 쓴다면?</ProvidedQuestionMainTitle>
-              <CommonTextArea value={contents[2]} height="32.6rem" disabled />
-            </QuestionWrap>
-          </QuestionContainer>
-        ) : (
-          <CommonTextArea value={post.content} height="42.2rem" disabled />
-        )}
-        <Description>조회수 {commaNumber(post.views)}</Description>
+        <Question
+          nickname={post.my ? me?.nickname : DEFAULT_NICKNAME}
+          hasMultipleContent={hasMultipleContent}
+          firstContent={hasMultipleContent ? contents[0] : post.content}
+          secondContent={contents[1]}
+          thirdContent={contents[2]}
+          disabled
+        />
+        {isShowViews && <Description>조회수 {commaNumber(post.views)}</Description>}
         <Description>{formatDatetime(post.createdAt)}</Description>
       </PostDetailContainer>
       {isFromWritePage && <PostFloatingButton />}
       {isVisibleSheet && (
         <CommonBottomSheetContainer
           onClose={() => toggleSheet()}
-          BottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
+          bottomSheetHeight={calcBottomSheetHeight({ folderSize: bottomSheetItems.length })}
         >
           <BottomSheetList items={bottomSheetItems} />
         </CommonBottomSheetContainer>

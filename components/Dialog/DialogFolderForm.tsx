@@ -21,10 +21,8 @@ const DialogFolderForm = ({ isEditMode = false, value, onChange }: DialogFolderF
         supportsMaxLength
         maxLength={10}
         value={value}
-        hasBorder={true}
         onChange={onChange}
         autoFocus
-        hasRightSideIcon
       />
     </DialogContainer>
   );

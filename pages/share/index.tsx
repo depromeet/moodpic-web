@@ -8,14 +8,10 @@ import TextArea from '../../components/Common/TextArea/TextArea';
 import { CATEGORY_OPTIONS_INFO } from '../../shared/constants/share';
 import CategoryOptionItem from '../../components/Share/CategoryOptionItem/CategoryOptionItem';
 import { useRouter } from 'next/router';
-import { copyClipboard } from '../../shared/utils/copyClipboard';
 import DialogWarning from '../../components/Dialog/DialogWarning';
 import { CommonAppBar, CommonDialog, CommonIconButton } from '../../components/Common';
 import useModal from '../../hooks/useDialog';
-import useToast from '../../hooks/useToast';
-import { ToastType } from '../../shared/type/common';
 import { useMemberQuery, usePostByIdQuery } from '../../hooks/apis';
-import Header from '../../components/Home/Header/Header';
 import shareService from '../../service/apis/shareService';
 
 type SharePageQuery = {
@@ -26,7 +22,6 @@ const Share = () => {
   const [receiverName, setReceiverName] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<keyof typeof CATEGORY_OPTIONS_INFO>('UNSELECT');
   const { dialogVisible: isOpenConfirmDialog, toggleDialog: toggleConfirmDialog } = useModal();
-  const notify = useToast();
 
   const router = useRouter();
   const { postId } = router.query as SharePageQuery;
@@ -61,25 +56,10 @@ const Share = () => {
   const copySharedPostLink = async () => {
     const sharedPostLdm = await getSharedPostLink();
 
-    // TODO: validate관련 부분 분리 필요
-    if (!receiverName) {
-      notify({
-        type: ToastType.ERROR,
-        message: '보내는 사람 이름을 적어주세요.',
-      });
-      return;
-    }
-
     if (!sharedPostLdm) return alert('404');
 
-    await copyClipboard({
-      text: createSharedPostLink(sharedPostLdm),
-      onSuccess: () =>
-        notify({
-          type: ToastType.WARNING,
-          message: '링크가 클립보드에 복사됐어요.',
-        }),
-    });
+    const sharedPostLink = createSharedPostLink(sharedPostLdm);
+    router.push(sharedPostLink);
   };
 
   useEffect(() => {
@@ -93,7 +73,6 @@ const Share = () => {
 
   return (
     <>
-      <Header hasOnlyTitle={true} />
       <CommonAppBar>
         <CommonAppBar.Left>
           <CommonIconButton iconName="close" alt="취소" onClick={toggleConfirmDialog} />
@@ -132,17 +111,13 @@ const Share = () => {
         </SenderInformation>
         {
           <ButtonWrapper>
-            <Button
-              color={canShare ? 'primary' : 'gray'}
-              onClick={copySharedPostLink}
-              disabled={canShare ? false : true}
-            >
-              링크로 감정 공유하기
+            <Button color={'primary'} onClick={copySharedPostLink} disabled={canShare ? false : true}>
+              공유하기 페이지 생성하기
             </Button>
           </ButtonWrapper>
         }
         {isOpenConfirmDialog && (
-          <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.push('/')}>
+          <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
             <DialogWarning>작성중인 내용을 삭제하시겠어요?</DialogWarning>
           </CommonDialog>
         )}
@@ -192,6 +167,9 @@ const CategorySelectContainer = styled.div`
   flex-flow: row nowrap;
   overflow: auto;
   margin-top: 2.4rem;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const UserName = styled.p`
@@ -208,6 +186,7 @@ const SenderInput = styled.input`
   margin-left: 0.8rem;
   background: ${theme.colors.gray3};
   border: none;
+  border-radius: 0;
   background-color: ${theme.colors.black};
   ${theme.fonts.h5}
   color: ${theme.colors.white};

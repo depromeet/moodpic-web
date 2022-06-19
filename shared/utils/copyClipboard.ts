@@ -1,4 +1,4 @@
-export const copyClipboard = ({
+export const copyClipboard = async ({
   text,
   onSuccess,
   onFail,
@@ -8,14 +8,7 @@ export const copyClipboard = ({
   onFail?: () => void;
 }) => {
   try {
-    const el = <HTMLTextAreaElement>document.createElement('textarea');
-    document.body.appendChild(el);
-    el.value = text;
-    el.setSelectionRange(0, text.length);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-
+    await navigator.clipboard.writeText(text);
     onSuccess?.();
   } catch (error) {
     console.log(error);

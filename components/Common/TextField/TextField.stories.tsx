@@ -21,5 +21,4 @@ export const NoBorder = Template.bind({});
 NoBorder.args = {
   placeholder: '태그를 추가해주세요.',
   rightSideIcon: WhiteAdd,
-  hasBorder: false,
 };
