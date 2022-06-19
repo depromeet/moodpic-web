@@ -11,7 +11,6 @@ import { useRouter } from 'next/router';
 import DialogWarning from '../../components/Dialog/DialogWarning';
 import { CommonAppBar, CommonDialog, CommonIconButton } from '../../components/Common';
 import useModal from '../../hooks/useDialog';
-import { ToastType } from '../../shared/type/common';
 import { useMemberQuery, usePostByIdQuery } from '../../hooks/apis';
 import shareService from '../../service/apis/shareService';
 
@@ -187,6 +186,7 @@ const SenderInput = styled.input`
   margin-left: 0.8rem;
   background: ${theme.colors.gray3};
   border: none;
+  border-radius: 0;
   background-color: ${theme.colors.black};
   ${theme.fonts.h5}
   color: ${theme.colors.white};
