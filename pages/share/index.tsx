@@ -11,7 +11,6 @@ import { useRouter } from 'next/router';
 import DialogWarning from '../../components/Dialog/DialogWarning';
 import { CommonAppBar, CommonDialog, CommonIconButton } from '../../components/Common';
 import useModal from '../../hooks/useDialog';
-import { ToastType } from '../../shared/type/common';
 import { useMemberQuery, usePostByIdQuery } from '../../hooks/apis';
 import shareService from '../../service/apis/shareService';
 
