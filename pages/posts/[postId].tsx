@@ -102,11 +102,13 @@ const PostDetail = () => {
         )}
       </CommonAppBar>
       <PostDetailContainer>
-        <TagContainer>
-          {post.tags.map((tag: string, index: number) => (
-            <CommonTagButton key={index}>#{tag}</CommonTagButton>
-          ))}
-        </TagContainer>
+        {!!post.tags.length && (
+          <TagContainer>
+            {post.tags.map((tag: string, index: number) => (
+              <CommonTagButton key={index}>#{tag}</CommonTagButton>
+            ))}
+          </TagContainer>
+        )}
         <CardContainer>
           <Card firstEmotion={post.firstCategory} secondEmotion={post.secondCategory}>
             그땐 {getCategoryDescription(post.firstCategory)}, 지금은 {getCategoryDescription(post.secondCategory)}
