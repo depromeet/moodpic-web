@@ -10,11 +10,15 @@ import { copyClipboard } from '../../../shared/utils/copyClipboard';
 import useToast from '../../../hooks/useToast';
 import { ToastType } from '../../../shared/type/common';
 import NavHeader from '../../../components/TagSearch/NavHeader/NavHeader';
+import DialogWarning from '../../../components/Dialog/DialogWarning';
+import { CommonDialog } from '../../../components/Common';
+import useModal from '../../../hooks/useDialog';
 
 const SharedPost = () => {
   const router = useRouter();
   const ldm = router.query.ldm as string;
   const notify = useToast();
+  const { dialogVisible: isOpenConfirmDialog, toggleDialog: toggleConfirmDialog } = useModal();
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
 
@@ -31,7 +35,7 @@ const SharedPost = () => {
 
   return (
     <>
-      <NavHeader onClickLeftIcon={() => router.push('/')} />
+      <NavHeader onClickLeftIcon={toggleConfirmDialog} />
       <Container>
         <UserName>To. {receiverName}</UserName>
         <BodyContainer>
@@ -56,9 +60,14 @@ const SharedPost = () => {
               });
             }}
           >
-            링크 복사
+            링크 복사로 친구들에게 공유하기
           </Button>
         </ButtonWrapper>
+        {isOpenConfirmDialog && (
+          <CommonDialog confirmText="확인" type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
+            <DialogWarning>페이지를 떠나시겠어요?</DialogWarning>
+          </CommonDialog>
+        )}
       </Container>
     </>
   );
