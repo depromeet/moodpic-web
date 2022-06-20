@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import PostItem from '@/components/Post/PostItem/PostItem';
 import { Post } from '@/shared/type/post';
-import Image from 'next/image';
 import ListEmpty from 'public/images/list-empty.png';
+import ImageMessage from '../../ImageMessage/ImageMessage';
 
 interface PostListProps {
   postList: Post[];
@@ -52,12 +52,9 @@ const PostList = ({ postList = [], isEditing, checkedItems, setCheckedItems, isM
           ))}
         </PostListContainer>
       ) : (
-        <EmptyContainer>
-          <ImageContainer>
-            <Image src={ListEmpty} alt="기록이 없어요." />
-          </ImageContainer>
-          <GuideMessage>기록이 없어요.</GuideMessage>
-        </EmptyContainer>
+        <ImageMessage src={ListEmpty} alt="기록이 없어요.">
+          기록이 없어요.
+        </ImageMessage>
       )}
     </>
   );
@@ -69,27 +66,6 @@ const PostListContainer = styled.ul`
   li ~ li {
     margin-top: 1.8rem;
   }
-`;
-
-const EmptyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 12.7rem);
-`;
-
-const ImageContainer = styled.div`
-  width: 7.7rem;
-  height: 8.3rem;
-  margin-bottom: 0.4rem;
-`;
-
-const GuideMessage = styled.p`
-  ${theme.fonts.h4};
-  margin-top: 1.8rem;
-  opacity: 0.7;
-  color: ${theme.colors.gray4};
 `;
 
 export default PostList;
