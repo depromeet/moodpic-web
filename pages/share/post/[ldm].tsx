@@ -39,7 +39,7 @@ const SharedPost = () => {
       <Container>
         <UserName>To. {receiverName}</UserName>
         <BodyContainer>
-          <CategoryBox category={category} />
+          {category !== 'UNSELECT' && <CategoryBox category={category} />}
           <PostContentContainer>
             <TextArea value={content || 'undefined contents'} readOnly={true} height={'32.6rem'} />
           </PostContentContainer>
