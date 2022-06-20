@@ -1,12 +1,12 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import Image from 'next/image';
 import theme from '@/styles/theme';
 import PostItem from '@/components/Post/PostItem/PostItem';
 import { CommonAppBar, CommonIconButton } from '@/components/Common';
 import ListEmpty from 'public/images/list-empty.png';
 import { useIncompletedPostsQuery } from '@/hooks/apis';
+import ImageMessage from '../../components/ImageMessage/ImageMessage';
 
 const PostList = () => {
   const router = useRouter();
@@ -29,12 +29,9 @@ const PostList = () => {
             <PostItem key={post.id} post={post} isMine={false} onClick={() => router.push(`/posts/${post.id}`)} />
           ))
         ) : (
-          <EmptyContainer>
-            <ImageContainer>
-              <Image src={ListEmpty} alt="기록이 없어요." />
-            </ImageContainer>
-            <GuideMessage>기록이 없어요.</GuideMessage>
-          </EmptyContainer>
+          <ImageMessage src={ListEmpty} alt="기록이 없어요.">
+            기록이 없어요.
+          </ImageMessage>
         )}
       </PostListContainer>
     </>
@@ -53,25 +50,6 @@ const Title = styled.h4`
   ${theme.fonts.subtitle1};
   color: ${theme.colors.white};
   margin-bottom: 3.2rem;
-`;
-
-const EmptyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ImageContainer = styled.div`
-  width: 7.7rem;
-  height: 8.3rem;
-  margin: 12.6rem 0 0 0.4rem;
-`;
-
-const GuideMessage = styled.p`
-  ${theme.fonts.h4};
-  margin-top: 1.8rem;
-  opacity: 0.7;
-  color: ${theme.colors.gray4};
 `;
 
 export default PostList;

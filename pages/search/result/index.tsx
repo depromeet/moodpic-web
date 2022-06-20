@@ -12,6 +12,8 @@ import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '../../../shared/const
 import PostItem from '../../../components/Post/PostItem/PostItem';
 import postService from '../../../service/apis/postService';
 import BottomSheetList from '../../../components/BottomSheetList/BottomSheetList';
+import ListEmpty from '../../../public/images/list-empty.png';
+import ImageMessage from '../../../components/ImageMessage/ImageMessage';
 
 const SearchedResultByTag = () => {
   const router = useRouter();
@@ -63,9 +65,14 @@ const SearchedResultByTag = () => {
           <SelectOrderTypeButton>
             {orderType === TAG_SEARCH_ORDER_TYPE.NEWEST ? '최신순' : '인기순'}
           </SelectOrderTypeButton>
-          <CommonIconButton iconName="circleDown" />
+          <CommonIconButton iconName="circledown" />
         </SelectOrderTypeButtonContainer>
       </Header>
+      {searchedPosts.length === 0 && (
+        <ImageMessage src={ListEmpty} alt="기록이 없어요.">
+          기록이 없어요.
+        </ImageMessage>
+      )}
       <SearchedPostsContainer>
         {searchedPosts.map((searchedPost) => (
           <PostItem
