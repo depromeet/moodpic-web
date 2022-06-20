@@ -34,8 +34,9 @@ const Dialog = ({
   if (!DialogRef) return null;
 
   const renderDialogActionText = () => {
-    if (type === 'alert') return confirmText || '삭제';
-    if (type === 'modal') return confirmText || '저장';
+    if (confirmText) return confirmText;
+    if (type === 'alert') return '삭제';
+    if (type === 'modal') return '저장';
   };
 
   return createPortal(
