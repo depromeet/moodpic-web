@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 
 const useSystemDialog = (toggleDialog: () => void) => {
   const router = useRouter();
-  const currentPathname = typeof window !== 'undefined' ? globalThis.location.pathname : '';
+  const fromPathname = typeof window !== 'undefined' ? globalThis.location.pathname : '';
   const [confirmState, setConfirmState] = useRecoilState(systemDialogAtom);
   const [currentPath, setCurrentPath] = useState('');
   const [previousPath, setPreviousPath] = useState('');
@@ -17,26 +17,11 @@ const useSystemDialog = (toggleDialog: () => void) => {
     e.returnValue = ''; // 크롬에서는 필수
   }, []);
 
-  /**
-   * 뒤로가기 눌렀을때 나가기 전 물어보는 기능
-   */
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      window.onbeforeunload = browserTabcloseHandler;
-    }
-
-    return () => {
-      if (typeof window !== undefined) {
-        window.onbeforeunload = null;
-      }
-    };
-  }, [router, browserTabcloseHandler]);
-
   const routeChangeStart = useCallback(
-    (url: string) => {
-      if (currentPathname !== url && !confirmState) {
-        setCurrentPath(currentPathname);
-        setPreviousPath(url);
+    (toPathname: string) => {
+      if (fromPathname !== toPathname && !confirmState) {
+        setCurrentPath(fromPathname);
+        setPreviousPath(toPathname);
 
         toggleSystemDialog();
         router.events.emit('routeChangeError');
@@ -78,6 +63,21 @@ const useSystemDialog = (toggleDialog: () => void) => {
       setConfirmState(false);
     };
   }, [confirmState, previousPath, router, setConfirmState, toggleSystemDialog]);
+
+  /**
+   * 뒤로가기 눌렀을때 나가기 전 물어보는 기능
+   */
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      window.onbeforeunload = browserTabcloseHandler;
+    }
+
+    return () => {
+      if (typeof window !== undefined) {
+        window.onbeforeunload = null;
+      }
+    };
+  }, [router, browserTabcloseHandler]);
 
   return {
     confirmSystemDialog,
