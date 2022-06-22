@@ -1,6 +1,7 @@
 import axios from 'axios';
 import fetcher from '../../shared/utils/fetcher';
 import { setCookies } from '@/hooks/useCookie';
+import { AUTH_TOKEN } from '@/shared/constants/auth';
 
 const authService = {
   getAuth: async (kakaoCode: string) => {
@@ -12,7 +13,7 @@ const authService = {
 
     const { auth, refresh } = data;
 
-    setCookies('authToken', auth, { secure: true, sameSite: 'lax', maxAge: 31536000 }); //TODO: 이러면 refresh 토큰이 필요있나? maxAge가 1년이라.. 리팩토링 해야될듯
+    setCookies(AUTH_TOKEN, auth, { secure: true, sameSite: 'lax', maxAge: 31536000 }); //TODO: 이러면 refresh 토큰이 필요있나? maxAge가 1년이라.. 리팩토링 해야될듯
 
     return { auth, refresh };
   },

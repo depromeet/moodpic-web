@@ -9,6 +9,7 @@ import DialogWarning from '../Dialog/DialogWarning';
 import SorryFace from 'public/svgs/sorryFace.svg';
 import Image from 'next/image';
 import { removeCookies } from '@/hooks/useCookie';
+import { AUTH_TOKEN } from '@/shared/constants/auth';
 
 const Version = styled.span`
   font-weight: 400;
@@ -73,7 +74,7 @@ const MypageContentList = () => {
   );
 
   const logout = () => {
-    removeCookies('authToken');
+    removeCookies(AUTH_TOKEN);
     router.reload();
     toggleDialog();
   };
