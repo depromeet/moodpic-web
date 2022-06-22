@@ -12,7 +12,7 @@ import { commaNumber } from '@/shared/utils/formatter';
 
 export interface PostItemProps {
   post: Post;
-  supportsTag?: boolean;
+  isSearchedByTag?: boolean;
   canEdit?: boolean;
   isMine?: boolean;
   isEditing?: boolean;
@@ -22,7 +22,7 @@ export interface PostItemProps {
 
 const PostItem = ({
   post: { id, tags, firstCategoryName, secondCategoryName, content, createdAt, views },
-  supportsTag = false,
+  isSearchedByTag = false,
   isMine = false,
   isEditing = false,
   checked = false,
@@ -40,26 +40,30 @@ const PostItem = ({
           <Dimmed checked={checked} />
         </>
       )}
-      {supportsTag && (
+      {isSearchedByTag && (
         <TagList>
           {tags.map((tag: string, index: number) => (
             <CommonTagButton key={index}>#{tag}</CommonTagButton>
           ))}
         </TagList>
       )}
-      <ChipContainer>
-        {isMine && <HighlightButton>MY</HighlightButton>}
-        <CommonChipButton>{firstCategoryName}</CommonChipButton>
-        <Arrow>
-          <Image src={ArrowRightIcon} alt="" width={16} height={16} />
-        </Arrow>
-        <CommonChipButton>{secondCategoryName}</CommonChipButton>
-      </ChipContainer>
+      {!isSearchedByTag && (
+        <ChipContainer>
+          <CommonChipButton>{firstCategoryName}</CommonChipButton>
+          <Arrow>
+            <Image src={ArrowRightIcon} alt="" width={16} height={16} />
+          </Arrow>
+          <CommonChipButton>{secondCategoryName}</CommonChipButton>
+        </ChipContainer>
+      )}
       <Content>{firstContent}</Content>
-      <CaptionContainer>
-        <Caption>{formatDate(createdAt)}</Caption>
-        {supportsTag && <Caption>조회수 {commaNumber(views)}</Caption>}
-      </CaptionContainer>
+      <BottomContainer>
+        {isMine && <HighlightButton>MY</HighlightButton>}
+        <CaptionContainer>
+          <Caption>{formatDate(createdAt)}</Caption>
+          {isSearchedByTag && <Caption>조회수 {commaNumber(views)}</Caption>}
+        </CaptionContainer>
+      </BottomContainer>
     </PostItemContainer>
   );
 };
@@ -91,7 +95,6 @@ const TagList = styled.div`
   flex-wrap: wrap;
   overflow-y: hidden;
   height: 3rem;
-  margin-bottom: 2.4rem;
 
   div ~ div {
     margin-left: 1.2rem;
@@ -109,10 +112,18 @@ const Content = styled.p`
 const ChipContainer = styled.div`
   display: flex;
   align-items: center;
+
+  ${TagList} ~ & {
+    margin-top: 2.4rem;
+  }
 `;
 
 const Arrow = styled.i`
   margin: 0 0.8rem;
+`;
+
+const BottomContainer = styled.div`
+  display: flex;
 `;
 
 const CaptionContainer = styled.div`
@@ -141,11 +152,7 @@ const Caption = styled.span`
 
 const HighlightButton = styled.button`
   ${theme.fonts.caption1};
-  margin-right: 1.2rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 1.1rem;
-  background-color: ${theme.colors.primary};
-  color: ${theme.colors.black};
+  color: ${theme.colors.primary};
 `;
 
 const CheckboxContainer = styled.div<Pick<PostItemProps, 'checked'>>`
