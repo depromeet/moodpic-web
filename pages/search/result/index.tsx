@@ -78,7 +78,7 @@ const SearchedResultByTag = () => {
           <PostItem
             key={searchedPost.id}
             post={searchedPost}
-            supportsTag={true}
+            isSearchedByTag={true}
             isMine={searchedPost.my}
             onClick={async () => {
               try {
