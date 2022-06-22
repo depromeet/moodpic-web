@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import { getCookie, setCookies } from '@/hooks/useCookie';
+import { AUTH_TOKEN } from '../constants/auth';
 
 axios.defaults.paramsSerializer = (params: object) => {
   return qs.stringify(params);
@@ -9,12 +10,12 @@ axios.defaults.paramsSerializer = (params: object) => {
 axios.defaults.baseURL = 'https://api.moodpic.kr';
 
 axios.interceptors.request.use((config) => {
-  const token = getCookie('authToken');
+  const token = getCookie(AUTH_TOKEN);
 
   if (!token) {
     if (process.env.NODE_ENV === 'development') {
       setCookies(
-        'authToken',
+        AUTH_TOKEN,
         'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI3Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTQ5NDU0MDEsImV4cCI6MTY1NjI4NDYwMX0.lYhaOcdF5MYXhOOmy9BuFiun0-ruVqlyLICJwDEMRY-tJd_u1p2XwszSI6QovucR1HeyWMQzzDPzH7tGVXPipg', // 자기 토큰으로 바꿔주세용
         { secure: true, sameSite: 'lax', maxAge: 31536000 },
       );
