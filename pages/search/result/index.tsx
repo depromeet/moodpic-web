@@ -57,7 +57,12 @@ const SearchedResultByTag = () => {
     <>
       <NavHeader onClickLeftIcon={() => router.push('/search')} />
       <SearchFieldContainer>
-        <SearchField value={searchResult} onChange={changeSearchResult} onSubmit={searchByTag} />
+        <SearchField
+          value={searchResult}
+          onChange={changeSearchResult}
+          onSubmit={searchByTag}
+          onClickRightSideIcon={() => setSearchResult('')}
+        />
       </SearchFieldContainer>
       <Header>
         <SearchedPostsLengthInformation>총 {searchedPosts.length}개</SearchedPostsLengthInformation>
