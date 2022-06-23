@@ -70,7 +70,7 @@ const SearchedResultByTag = () => {
       </Header>
       {searchedPosts.length === 0 && (
         <ImageMessage src={ListEmpty} alt="기록이 없어요.">
-          기록이 없어요.
+          검색결과가 없어요.
         </ImageMessage>
       )}
       <SearchedPostsContainer>
