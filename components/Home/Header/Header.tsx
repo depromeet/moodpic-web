@@ -29,7 +29,7 @@ const Header = ({ hasOnlyTitle = false }: HeaderProps) => {
       <HeaderWrapper>
         <TitleWrapper onClick={handleLogoClick}>
           <LogoContainer>
-            <Image src={Logo} alt="moodpic" width={82} height={25} />
+            <Image src={Logo} alt="moodpic" width={82} height={25} loading="eager" priority />
             <Title>Moodpic</Title>
           </LogoContainer>
           <Image src={CaretDownPrimary} alt="메뉴" width={16} height={16} />
