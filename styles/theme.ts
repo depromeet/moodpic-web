@@ -1,5 +1,3 @@
-import { css } from 'styled-components';
-
 const colors = {
   primary: '#ffec3e',
   black: '#121212',
@@ -12,6 +10,7 @@ const colors = {
   gray7: '#ffffff',
   white: '#f2f2f2',
   red: '#df3c3c',
+  kakao: '#fdd902',
 } as const;
 
 const fonts = {
