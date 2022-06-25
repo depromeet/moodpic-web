@@ -41,6 +41,7 @@ class MyDocument extends Document {
             key="description"
             content="당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
           />
+          <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
           <Main />
