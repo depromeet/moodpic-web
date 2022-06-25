@@ -1,11 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import Logo404 from 'public/images/404.png';
 import theme from '@/styles/theme';
 import { CommonButton } from '@/components/Common';
 
 const Custom404 = () => {
+  const router = useRouter();
+
   return (
     <Container>
       <Image src={Logo404} alt="404" height="44" width="108" />
@@ -14,7 +17,7 @@ const Custom404 = () => {
         심호흡 한번 깊게 들이쉬고 <br /> 입력하신 주소를 다시 한번 확인해주세요!
       </Description>
       <ButtonContainer>
-        <CommonButton>뒤로가기</CommonButton>
+        <CommonButton onClick={() => router.back()}>뒤로가기</CommonButton>
       </ButtonContainer>
     </Container>
   );
