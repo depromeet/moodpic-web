@@ -19,11 +19,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1, user-scalable=no, maximum-sacle=1.0, mininum-scale=1.0"
         />
         <title>나만의 감정 기록 보관소, moodpic</title>
-        <meta
-          name="description"
-          key="description"
-          content="당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
-        />
       </Head>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>

@@ -36,6 +36,11 @@ class MyDocument extends Document {
             crossOrigin=""
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
           />
+          <meta
+            name="description"
+            key="description"
+            content="당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
+          />
         </Head>
         <body>
           <Main />
