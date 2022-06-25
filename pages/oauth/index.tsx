@@ -1,12 +1,27 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 import Image from 'next/image';
 import KakaoIcon from 'public/svgs/kakao.svg';
 import Logo from 'public/images/logo.png';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
+
+const Logos = [
+  'ANXIOUS',
+  'IRRITATION',
+  'REGRET',
+  'SADNESS',
+  'DISAPPOINTMENT',
+  'LETHARGY',
+  'CALMDOWN',
+  'EASYGOING',
+  'RELIEF',
+  'PROUD',
+  'JOY',
+];
+const InfiniteScrollingLogos = [...Logos, ...Logos];
 
 const Login = () => {
   const router = useRouter();
@@ -20,24 +35,46 @@ const Login = () => {
 
   return (
     <>
-      <LogoContainer>
-        <Image src={Logo} alt="moodpic" width={140} height={42} />
-        <Title>Moodpic</Title>
-      </LogoContainer>
-      <Description>
-        감정을 기록하고, <br /> 파악하여 해소해보세요.
-      </Description>
+      <MainTitleWrap>
+        <LogoContainer>
+          <Image src={Logo} alt="moodpic" width={196} height={64} />
+          <Title>Moodpic</Title>
+        </LogoContainer>
+        <Description>나만의 감정기록 보관소</Description>
+      </MainTitleWrap>
+      <InfiniteScrollingLogosWrapper>
+        <InfiniteScrollingLogosWrap>
+          {InfiniteScrollingLogos.map((shapeName, index) => (
+            <ImageWrap key={`image__${shapeName}_${index}`}>
+              <Image
+                src={`/images/${shapeName}_160x160.png`}
+                alt={shapeName}
+                width={160}
+                height={160}
+                unoptimized
+                loading="eager"
+                priority
+              />
+            </ImageWrap>
+          ))}
+        </InfiniteScrollingLogosWrap>
+      </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
         <KakaoButton onClick={goKakaoCallback}>
-          <i>
-            <Image src={KakaoIcon} alt="" />
-          </i>
-          카카오톡으로 로그인
+          <Image src={KakaoIcon} alt="kakaoIcon" />
+          <span>카카오톡으로 로그인</span>
         </KakaoButton>
       </ButtonContainer>
     </>
   );
 };
+
+const MainTitleWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 173px;
+`;
 
 const ButtonContainer = styled.div`
   position: fixed;
@@ -51,6 +88,9 @@ const ButtonContainer = styled.div`
 `;
 
 const KakaoButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 44.6rem;
   height: 100%;
@@ -61,15 +101,14 @@ const KakaoButton = styled.button`
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.8rem;
-
-  i {
-    height: 1.8rem;
-    margin-right: 0.7rem;
+  & > span {
+    margin-left: 0.7rem;
   }
 `;
 
 const LogoContainer = styled.div`
-  margin: 6rem 0 2.4rem 1.2rem;
+  text-align: center;
+  margin-bottom: 1rem;
 `;
 
 const Title = styled.h1`
@@ -77,9 +116,45 @@ const Title = styled.h1`
 `;
 
 const Description = styled.h2`
-  margin-left: 1.2rem;
-  ${theme.fonts.subtitle1};
+  ${theme.fonts.h3};
+  line-height: 2.148rem;
+  font-weight: 500;
   color: ${theme.colors.white};
+  text-align: center;
+`;
+
+const ImageWrap = styled.div`
+  flex-shrink: 0;
+  width: 16rem;
+  height: 16rem;
+  margin-right: 4rem;
+`;
+
+const RollingAnimation = () => keyframes`
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-220rem);
+  }
+`;
+
+const InfiniteScrollingLogosWrapper = styled.div`
+  position: absolute;
+  top: 35rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow: hidden;
+`;
+
+const InfiniteScrollingLogosWrap = styled.div`
+  display: flex;
+  align-items: center;
+  width: 220rem;
+  height: 16rem;
+  transform: translateX(-8rem);
+  animation: ${RollingAnimation} 30000ms linear infinite;
 `;
 
 export default Login;
