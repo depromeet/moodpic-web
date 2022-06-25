@@ -85,6 +85,16 @@ const ButtonContainer = styled.div`
   width: 100%;
   height: 5.5rem;
   padding: 0 1.6rem;
+  &::after {
+    position: absolute;
+    bottom: -8rem;
+    left: 0;
+    width: 100%;
+    height: 21.2rem;
+    content: '';
+    background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 52.6%);
+    z-index: -1;
+  }
 `;
 
 const KakaoButton = styled.button`
@@ -154,7 +164,7 @@ const InfiniteScrollingLogosWrap = styled.div`
   width: 220rem;
   height: 16rem;
   transform: translateX(-8rem);
-  animation: ${RollingAnimation} 30000ms linear infinite;
+  animation: ${RollingAnimation} 80000ms linear infinite;
 `;
 
 export default Login;
