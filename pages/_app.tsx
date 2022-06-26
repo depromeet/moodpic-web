@@ -15,9 +15,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>{'오지즁'}</title>
         <meta name="description" content={'오지즁오지즁오지즁'} />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no, maximum-sacle=1.0, mininum-scale=1.0"
+        />
+        <title>{'오지즁'}</title>
         <meta property="og:title" content={'오지쥬'} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={'https://11th-5team-fe.vercel.app/'} />
