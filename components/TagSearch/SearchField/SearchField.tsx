@@ -25,6 +25,7 @@ const SearchField = ({ value, onChange, onSubmit, onClickRightSideIcon }: Search
         placeholder={'궁금한 내용을 태그로 검색해보세요.'}
         onClickRightSideIcon={onClickRightSideIcon}
         hasRightSideIcon={value.length !== 0}
+        isSearchField={true}
       />
     </form>
   );

@@ -32,7 +32,7 @@ export const Container = styled.div<Pick<TextFieldProps, 'supportsMaxLength' | '
   flex: 0 1 auto;
 `;
 
-export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'height'>>`
+export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'height' | 'isSearchField'>>`
   text-align: start;
   cursor: text;
   width: 100%;
@@ -51,6 +51,40 @@ export const Input = styled.input<Pick<TextFieldProps, 'borderRadius' | 'height'
   :focus {
     border: 0.1rem solid ${theme.colors.gray4};
   }
+
+  ${({ isSearchField }) =>
+    isSearchField &&
+    css`
+      ::-webkit-input-placeholder {
+        background-image: url('/svgs/magnifyingglass-opacity.svg');
+        background-color: ${theme.colors.gray3};
+        background-size: contain;
+        background-position: 1px center;
+        background-repeat: no-repeat;
+        padding-left: 2.5rem;
+        text-indent: 0;
+      }
+
+      ::-moz-placeholder {
+        background-image: url('/svgs/magnifyingglass-opacity.svg');
+        background-color: ${theme.colors.gray3};
+        background-size: contain;
+        background-position: 1px center;
+        background-repeat: no-repeat;
+        padding-left: 2.5rem;
+        text-indent: 0;
+      }
+
+      :-moz-placeholder {
+        background-image: url('/svgs/magnifyingglass-opacity.svg');
+        background-color: ${theme.colors.gray3};
+        background-size: contain;
+        background-position: 1px center;
+        background-repeat: no-repeat;
+        padding-left: 2.5rem;
+        text-indent: 0;
+      }
+    `}
 `;
 
 export const RightSideIcon = styled.img<{ isFocused: boolean }>`
