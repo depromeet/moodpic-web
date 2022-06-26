@@ -1,4 +1,6 @@
 const intercept = require('intercept-stdout');
+const withPWA = require('next-pwa');
+const withPlugins = require('next-compose-plugins');
 
 // safely ignore recoil stdout warning messages
 function interceptStdout(text) {
@@ -11,7 +13,7 @@ function interceptStdout(text) {
 // Intercept in dev and prod
 intercept(interceptStdout);
 
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   compiler: {
     styledComponents: true,
@@ -27,3 +29,15 @@ module.exports = {
     return config;
   },
 };
+
+module.exports = withPlugins([
+  [
+    withPWA,
+    {
+      pwa: {
+        dest: 'public',
+      },
+    },
+  ],
+  nextConfig,
+]);
