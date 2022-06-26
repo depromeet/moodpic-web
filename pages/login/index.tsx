@@ -34,7 +34,7 @@ const Login = () => {
   };
 
   return (
-    <>
+    <LoginWrap>
       <MainTitleWrap>
         <LogoContainer>
           <Image src={Logo} alt="moodpic" width={196} height={64} />
@@ -65,9 +65,16 @@ const Login = () => {
           <span>카카오톡으로 로그인</span>
         </KakaoButton>
       </ButtonContainer>
-    </>
+    </LoginWrap>
   );
 };
+
+const LoginWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  touch-action: none;
+`;
 
 const MainTitleWrap = styled.div`
   display: flex;
@@ -77,11 +84,10 @@ const MainTitleWrap = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  position: fixed;
+  position: sticky;
   left: 0;
   bottom: 8rem;
-  display: flex;
-  justify-content: center;
+  margin-top: auto;
   width: 100%;
   height: 5.5rem;
   padding: 0 1.6rem;
