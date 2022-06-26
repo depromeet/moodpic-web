@@ -46,7 +46,7 @@ class MyDocument extends Document {
           <link rel="apple-touch-icon" href="/favicon.png" />
           {/* TODO: 임시 아이콘 */}
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
-          <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials" />
+          <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
           <Main />
