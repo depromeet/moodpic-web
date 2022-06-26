@@ -90,7 +90,7 @@ const Share = () => {
           <SenderInput value={receiverName} onChange={changeReceiverName} placeholder={'받는이'} />
         </SenderInformation>
         <PostContentContainer>
-          <TextArea value={post.content} readOnly={true} height={'8rem'} />
+          <TextArea value={post.content} readOnly={true} height={'8rem'} disabled={true} />
         </PostContentContainer>
         <CategorySelectContainer>
           {Object.keys(CATEGORY_OPTIONS_INFO).map((key, index) => {
