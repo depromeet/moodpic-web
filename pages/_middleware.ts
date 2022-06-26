@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { BASE_URL } from '@/shared/constants/url';
 
 export function middleware(req: NextRequest) {
-  if (!req.url.includes(`${BASE_URL}/oauth`) && !req.url.includes('/share/post') && !req.cookies.authToken) {
-    return NextResponse.redirect(`${BASE_URL}/oauth`);
+  const [, , baseUrl] = req.url.split('/');
+  if (!req.url.includes(`${baseUrl}/oauth`) && !req.url.includes('/share/post') && !req.cookies.authToken) {
+    console.log('미들웨어 발생!');
+    return NextResponse.redirect(`${baseUrl}/oauth`);
   }
 }
