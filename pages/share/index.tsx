@@ -112,7 +112,7 @@ const Share = () => {
         {
           <ButtonWrapper>
             <Button color="primary" onClick={copySharedPostLink} disabled={canShare ? false : true}>
-              다음
+              <ButtonMessage>다음</ButtonMessage>
             </Button>
           </ButtonWrapper>
         }
@@ -126,6 +126,9 @@ const Share = () => {
   );
 };
 
+const ButtonMessage = styled.p`
+  ${theme.fonts.btn1}
+`;
 const BodyContainer = styled.div`
   position: relative;
   display: flex;

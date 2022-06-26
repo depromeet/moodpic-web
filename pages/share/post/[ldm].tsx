@@ -9,13 +9,13 @@ import CategoryBox from '@/components/Share/CategoryBox/CategoryBox';
 import { copyClipboard } from '@/shared/utils/copyClipboard';
 import useToast from '@/hooks/useToast';
 import { ToastType } from '@/shared/type/common';
-import NavHeader from '@/components/TagSearch/NavHeader/NavHeader';
 import DialogWarning from '@/components/Dialog/DialogWarning';
-import { CommonDialog, LogoHeader } from '@/components/Common';
+import { CommonAppBar, CommonDialog, CommonIconButton, LogoHeader } from '@/components/Common';
 import useModal from '@/hooks/useDialog';
 import { getPrevPath } from '@/shared/utils/storePathValues';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
+import theme from '@/styles/theme';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -29,11 +29,25 @@ const SharedPost = () => {
     const SHARE_PAGE = '/share';
     setIsSharer(getPrevPath() === SHARE_PAGE);
   };
+
   const renderHeader = () => {
     if (isSharer) {
-      return <NavHeader onClickLeftIcon={toggleConfirmDialog} />;
+      return (
+        <CommonAppBar>
+          <CommonAppBar.Left>
+            <CommonIconButton iconName="left" alt="이전" onClick={() => router.back()} />
+          </CommonAppBar.Left>
+          <CommonAppBar.Right>
+            <CommonIconButton iconName="close" alt="취소" onClick={toggleConfirmDialog} />
+          </CommonAppBar.Right>
+        </CommonAppBar>
+      );
     } else {
-      return <LogoHeader onClickLogo={() => router.push('/')} />;
+      return (
+        <HeadWrapper>
+          <LogoHeader onClickLogo={() => router.push('/')} />
+        </HeadWrapper>
+      );
     }
   };
 
@@ -106,10 +120,15 @@ const SharedPost = () => {
   );
 };
 
+const HeadWrapper = styled.div`
+  margin-top: 0.9rem;
+`;
+
 const ButtonMessage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${theme.fonts.btn2}
 `;
 
 const IconWrapper = styled.div`
