@@ -16,7 +16,7 @@ import useModal from '@/hooks/useDialog';
 import { getPrevPath } from '@/shared/utils/storePathValues';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
-import metaImage from '*.png';
+import metaImage from '/public/images/meta.png';
 import Head from 'next/head';
 
 const SharedPost = () => {
