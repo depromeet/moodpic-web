@@ -5,12 +5,13 @@
   "scope": "/",
   "start_url": "/",
   "name": "moodpic",
-  "short_name": "\ubb34\ub4dc\ud53d",
+  "short_name": "moodpic",
   "icons": [
     {
       "src": "/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/icon-256x256.png",

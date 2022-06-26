@@ -10,13 +10,26 @@ import theme from '@/styles/theme';
 import { queryClient } from '@/shared/utils/queryClient';
 import { CommonAppLayout } from '@/components/Common';
 
+if (typeof window !== 'undefined') {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((registration) => {
+        console.log('service worker registration successful');
+      })
+      .catch((err) => {
+        console.warn('service worker registration failed', err.message);
+      });
+  }
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, user-scalable=no, maximum-sacle=1.0, mininum-scale=1.0"
+          content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"
         />
         <title>나만의 감정 기록 보관소, moodpic</title>
       </Head>

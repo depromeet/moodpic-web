@@ -41,7 +41,10 @@ class MyDocument extends Document {
             key="description"
             content="당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
           />
-          <link rel="manifest" href="/manifest.json" />
+          <link rel="manifest" href="/public/manifest.json" />
+          <link rel="apple-touch-icon" href="/public/favicon.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon.png" />
+          <meta name="theme-color" content="#121212" />
         </Head>
         <body>
           <Main />
