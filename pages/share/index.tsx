@@ -1,18 +1,18 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
-import Letter from '../../public/svgs/letter.svg';
+import Letter from '/public/svgs/letter.svg';
 import styled from 'styled-components';
-import theme from '../../styles/theme';
-import Button from '../../components/Common/Button/Button';
-import TextArea from '../../components/Common/TextArea/TextArea';
-import { CATEGORY_OPTIONS_INFO } from '../../shared/constants/share';
-import CategoryOptionItem from '../../components/Share/CategoryOptionItem/CategoryOptionItem';
+import theme from '@/styles/theme';
+import Button from '@/components/Common/Button/Button';
+import TextArea from '@/components/Common/TextArea/TextArea';
+import { CATEGORY_OPTIONS_INFO } from '@/shared/constants/share';
+import CategoryOptionItem from '@/components/Share/CategoryOptionItem/CategoryOptionItem';
 import { useRouter } from 'next/router';
-import DialogWarning from '../../components/Dialog/DialogWarning';
-import { CommonAppBar, CommonDialog, CommonIconButton } from '../../components/Common';
-import useModal from '../../hooks/useDialog';
-import { useMemberQuery, usePostByIdQuery } from '../../hooks/apis';
-import shareService from '../../service/apis/shareService';
+import DialogWarning from '@/components/Dialog/DialogWarning';
+import { CommonAppBar, CommonDialog, CommonIconButton } from '@/components/Common';
+import useModal from '@/hooks/useDialog';
+import { useMemberQuery, usePostByIdQuery } from '@/hooks/apis';
+import shareService from '@/service/apis/shareService';
 
 type SharePageQuery = {
   postId: string;
@@ -111,8 +111,8 @@ const Share = () => {
         </SenderInformation>
         {
           <ButtonWrapper>
-            <Button color={'primary'} onClick={copySharedPostLink} disabled={canShare ? false : true}>
-              공유하기 페이지 생성하기
+            <Button color="primary" onClick={copySharedPostLink} disabled={canShare ? false : true}>
+              다음
             </Button>
           </ButtonWrapper>
         }

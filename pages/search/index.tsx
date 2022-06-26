@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import theme from '../../styles/theme';
-import { CommonTagButton } from '../../components/Common';
-
-import PopularTagItem from '../../components/TagSearch/PopularTagItem/PopularTagItem';
-import NavHeader from '../../components/TagSearch/NavHeader/NavHeader';
-import SearchField from '../../components/TagSearch/SearchField/SearchField';
-import useSearchForm from '../../hooks/useSearchForm';
-import { getLocalStorageValue, setLocalStorageValue } from '../../shared/utils/localStorage';
-import { LOCAL_STORAGE_KEY } from '../../shared/constants/localStorageKey';
-import { usePopularTags } from '../../hooks/apis';
+import theme from '@/styles/theme';
+import { CommonTagButton } from '@/components/Common';
+import PopularTagItem from '@/components/TagSearch/PopularTagItem/PopularTagItem';
+import NavHeader from '@/components/TagSearch/NavHeader/NavHeader';
+import SearchField from '@/components/TagSearch/SearchField/SearchField';
+import useSearchForm from '@/hooks/useSearchForm';
+import { getLocalStorageValue, setLocalStorageValue } from '@/shared/utils/localStorage';
+import { LOCAL_STORAGE_KEY } from '@/shared/constants/localStorageKey';
+import { usePopularTags } from '@/hooks/apis';
 import { useRouter } from 'next/router';
 
 const Search = () => {

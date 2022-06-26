@@ -9,6 +9,7 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   supportsMaxLength?: boolean;
   onClickRightSideIcon?: () => void;
   hasRightSideIcon?: boolean;
+  isSearchField?: boolean;
 }
 
 const TextField = ({
@@ -22,6 +23,7 @@ const TextField = ({
   supportsMaxLength = false,
   onClickRightSideIcon,
   hasRightSideIcon = false,
+  isSearchField = false,
   ...restTextFieldProps
 }: TextFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -41,6 +43,7 @@ const TextField = ({
             onBlur?.(event);
           }}
           maxLength={maxLength}
+          isSearchField={isSearchField}
           {...restTextFieldProps}
         />
         {rightSideIcon && hasRightSideIcon && (

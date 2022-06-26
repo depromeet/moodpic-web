@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSearchedPostsQuery } from '../../../hooks/apis';
+import { useSearchedPostsQuery } from '@/hooks/apis';
 import styled from 'styled-components';
-import theme from '../../../styles/theme';
-import NavHeader from '../../../components/TagSearch/NavHeader/NavHeader';
-import SearchField from '../../../components/TagSearch/SearchField/SearchField';
-import useSearchForm from '../../../hooks/useSearchForm';
-import { CommonBottomSheetContainer, CommonIconButton } from '../../../components/Common';
-import useBottomSheet from '../../../hooks/useBottomSheet';
-import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '../../../shared/constants/tagSearch';
-import PostItem from '../../../components/Post/PostItem/PostItem';
-import postService from '../../../service/apis/postService';
-import BottomSheetList from '../../../components/BottomSheetList/BottomSheetList';
-import ListEmpty from '../../../public/images/list-empty.png';
-import ImageMessage from '../../../components/ImageMessage/ImageMessage';
+import theme from '@/styles/theme';
+import NavHeader from '@/components/TagSearch/NavHeader/NavHeader';
+import SearchField from '@/components/TagSearch/SearchField/SearchField';
+import useSearchForm from '@/hooks/useSearchForm';
+import { CommonBottomSheetContainer, CommonIconButton } from '@/components/Common';
+import useBottomSheet from '@/hooks/useBottomSheet';
+import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '@/shared/constants/tagSearch';
+import PostItem from '@/components/Post/PostItem/PostItem';
+import postService from '@/service/apis/postService';
+import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
+import ListEmpty from '@/public/images/list-empty.png';
+import ImageMessage from '@/components/ImageMessage/ImageMessage';
 
 const SearchedResultByTag = () => {
   const router = useRouter();
@@ -57,7 +57,12 @@ const SearchedResultByTag = () => {
     <>
       <NavHeader onClickLeftIcon={() => router.push('/search')} />
       <SearchFieldContainer>
-        <SearchField value={searchResult} onChange={changeSearchResult} onSubmit={searchByTag} />
+        <SearchField
+          value={searchResult}
+          onChange={changeSearchResult}
+          onSubmit={searchByTag}
+          onClickRightSideIcon={() => setSearchResult('')}
+        />
       </SearchFieldContainer>
       <Header>
         <SearchedPostsLengthInformation>총 {searchedPosts.length}개</SearchedPostsLengthInformation>
@@ -70,7 +75,7 @@ const SearchedResultByTag = () => {
       </Header>
       {searchedPosts.length === 0 && (
         <ImageMessage src={ListEmpty} alt="기록이 없어요.">
-          기록이 없어요.
+          검색결과가 없어요.
         </ImageMessage>
       )}
       <SearchedPostsContainer>
