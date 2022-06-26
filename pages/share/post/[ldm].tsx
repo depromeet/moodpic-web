@@ -16,7 +16,6 @@ import useModal from '@/hooks/useDialog';
 import { getPrevPath } from '@/shared/utils/storePathValues';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
-import Head from 'next/head';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -88,13 +87,6 @@ const SharedPost = () => {
     <>
       {renderHeader()}
       <Container>
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, user-scalable=no, maximum-sacle=1.0, mininum-scale=1.0"
-          />
-          <title>나만의 감정 기록 보관소, moodpic</title>
-        </Head>
         <UserName>To. {receiverName}</UserName>
         <BodyContainer>
           {category !== 'UNSELECT' && <CategoryBox category={category} />}
