@@ -21,7 +21,7 @@ export interface PostItemProps {
 }
 
 const PostItem = ({
-  post: { id, tags, firstCategoryName, secondCategoryName, content, createdAt, views },
+  post: { id, tags, firstCategory, secondCategory, firstCategoryName, secondCategoryName, content, createdAt, views },
   isSearchedByTag = false,
   isMine = false,
   isEditing = false,
@@ -49,11 +49,11 @@ const PostItem = ({
       )}
       {!isSearchedByTag && (
         <ChipContainer>
-          <CommonChipButton>{firstCategoryName}</CommonChipButton>
+          <CommonChipButton category={firstCategory}>{firstCategoryName}</CommonChipButton>
           <Arrow>
             <Image src={ArrowRightIcon} alt="" width={16} height={16} />
           </Arrow>
-          <CommonChipButton>{secondCategoryName}</CommonChipButton>
+          <CommonChipButton category={secondCategory}>{secondCategoryName}</CommonChipButton>
         </ChipContainer>
       )}
       <Content>{firstContent}</Content>
