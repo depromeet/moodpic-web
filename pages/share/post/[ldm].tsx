@@ -16,6 +16,8 @@ import useModal from '@/hooks/useDialog';
 import { getPrevPath } from '@/shared/utils/storePathValues';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
+import metaImage from '/public/images/meta.png';
+import Head from 'next/head';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -85,6 +87,19 @@ const SharedPost = () => {
 
   return (
     <>
+      <Head>
+        <meta name="description" content={'오지즁오지즁오지즁'} />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no, maximum-sacle=1.0, mininum-scale=1.0"
+        />
+        <title>공유공유공유공유</title>
+        <meta property="og:title" content={'오지쥬'} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={'https://11th-5team-fe.vercel.app/'} />
+        <meta property="og:image" content={metaImage.src} />
+        <meta property="og:article:author" content="오지즁" />
+      </Head>
       {renderHeader()}
       <Container>
         <UserName>To. {receiverName}</UserName>
