@@ -1,10 +1,22 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { createPostRequestState, createPostResponseState } from '@/store/post/atom';
-import { useRouter } from 'next/router';
+import ANXIOUS from 'public/images/img_ANXIOUS.png';
+import CALMDOWN from 'public/images/img_CALMDOWN.png';
+import DISAPPOINTMENT from 'public/images/img_DISAPPOINTMENT.png';
+import DONTKNOW from 'public/images/img_DONTKNOW.png';
+import EASYGOING from 'public/images/img_EASYGOING.png';
+import IRRITATION from 'public/images/img_IRRITATION.png';
+import JOY from 'public/images/img_JOY.png';
+import LETHARGY from 'public/images/img_LETHARGY.png';
+import PROUD from 'public/images/img_PROUD.png';
+import REGRET from 'public/images/img_REGRET.png';
+import RELIEF from 'public/images/img_RELIEF.png';
+import SADNESS from 'public/images/img_SADNESS.png';
 
 type RandomTextProps = { [x: number]: React.ReactElement | string };
 
@@ -45,6 +57,52 @@ const Complete = () => {
     return randomText[randomNumberZeroToFive];
   };
 
+  const renderSecondCategoryImage = (secondCategory: string) => {
+    if (secondCategory === 'ANXIOUS')
+      return <Image src={ANXIOUS} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />;
+    if (secondCategory === 'CALMDOWN')
+      return (
+        <Image src={CALMDOWN} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />
+      );
+    if (secondCategory === 'DISAPPOINTMENT')
+      return (
+        <Image
+          src={DISAPPOINTMENT}
+          alt={secondCategory}
+          width={232}
+          height={209}
+          priority
+          loading="eager"
+          unoptimized
+        />
+      );
+    if (secondCategory === 'DONTKNOW')
+      return (
+        <Image src={DONTKNOW} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />
+      );
+    if (secondCategory === 'EASYGOING')
+      return (
+        <Image src={EASYGOING} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />
+      );
+    if (secondCategory === 'IRRITATION')
+      return (
+        <Image src={IRRITATION} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />
+      );
+    if (secondCategory === 'JOY')
+      return <Image src={JOY} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />;
+    if (secondCategory === 'LETHARGY')
+      return (
+        <Image src={LETHARGY} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />
+      );
+    if (secondCategory === 'PROUD')
+      return <Image src={PROUD} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />;
+    if (secondCategory === 'REGRET')
+      return <Image src={REGRET} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />;
+    if (secondCategory === 'SADNESS')
+      return <Image src={SADNESS} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />;
+    return <Image src={RELIEF} alt={secondCategory} width={232} height={209} priority loading="eager" unoptimized />;
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (postId) router.replace(`/posts/${postId}`);
@@ -65,14 +123,7 @@ const Complete = () => {
     <>
       <ImageWrap>
         {secondCategory ? (
-          <Image
-            src={`/images/img_${secondCategory}.png`}
-            alt={secondCategory}
-            width={232}
-            height={209}
-            priority
-            loading="eager"
-          />
+          renderSecondCategoryImage(secondCategory)
         ) : (
           <Image src={`/images/img_DONTKNOW.png`} alt="DONTKNOW" width={232} height={209} />
         )}
