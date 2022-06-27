@@ -54,22 +54,24 @@ const SharedPost = () => {
   const renderButtonByUser = () => {
     if (isSharer) {
       return (
-        <Button
-          color="primary"
-          onClick={async () => {
-            await copyClipboard({
-              text: window.document.location.href,
-              onSuccess: () => {
-                notify({
-                  type: ToastType.CONFIRM,
-                  message: '링크가 클립보드에 복사됐어요.',
-                });
-              },
-            });
-          }}
-        >
-          링크로 감정 공유하기
-        </Button>
+        <ButtonWrapper>
+          <Button
+            color="black"
+            onClick={async () => {
+              await copyClipboard({
+                text: window.document.location.href,
+                onSuccess: () => {
+                  notify({
+                    type: ToastType.CONFIRM,
+                    message: '링크가 클립보드에 복사됐어요.',
+                  });
+                },
+              });
+            }}
+          >
+            <ButtonMessage>링크로 감정 공유하기</ButtonMessage>
+          </Button>
+        </ButtonWrapper>
       );
     }
 
@@ -120,6 +122,22 @@ const SharedPost = () => {
   );
 };
 
+const ButtonWrapperr = styled.div`
+  position: sticky;
+  bottom: 2.8rem;
+  margin-top: auto;
+  &::after {
+    position: absolute;
+    bottom: -2.8rem;
+    left: 0;
+    width: 100%;
+    height: 16rem;
+    content: '';
+    background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 52.6%);
+    z-index: -1;
+  }
+`;
+
 const HeadWrapper = styled.div`
   margin-top: 0.9rem;
 `;
@@ -128,7 +146,7 @@ const ButtonMessage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${theme.fonts.btn2}
+  ${theme.fonts.btn1}
 `;
 
 const IconWrapper = styled.div`
@@ -154,7 +172,11 @@ const PostContentContainer = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 4.6rem;
+  margin: auto 0 8rem;
+  position: fixed;
+  max-width: 44.4rem;
+  width: calc(100% - 3.6rem);
+  bottom: 0;
 `;
 
 export default SharedPost;
