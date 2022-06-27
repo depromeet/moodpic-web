@@ -1,17 +1,1 @@
-<svg width="95" height="63" viewBox="0 0 95 63" fill="none" xmlns="http://www.w3.org/2000/svg">
-<mask id="mask0_2608_26115" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="95" height="63">
-<rect x="95" y="63" width="95" height="63" transform="rotate(-180 95 63)" fill="#F2F2F2"/>
-</mask>
-<g mask="url(#mask0_2608_26115)">
-<g style="mix-blend-mode:overlay" opacity="0.3" filter="url(#filter0_f_2608_26115)">
-<rect x="74" y="71.2068" width="53" height="53" transform="rotate(-180 74 71.2068)" fill="#121212"/>
-</g>
-</g>
-<defs>
-<filter id="filter0_f_2608_26115" x="17" y="14.2068" width="61" height="61" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_2608_26115"/>
-</filter>
-</defs>
-</svg>
+<svg width="95" height="63" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="a" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="95" height="63"><path transform="rotate(-180 95 63)" fill="#F2F2F2" d="M95 63h95v63H95z"/></mask><g style="mix-blend-mode:overlay" opacity=".3" filter="url(#b)" mask="url(#a)"><path fill="#121212" d="M74 71.207H21v-53h53z"/></g><defs><filter id="b" x="17" y="14.207" width="61" height="61" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_2608_26115"/></filter></defs></svg>

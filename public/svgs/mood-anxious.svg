@@ -1,17 +1,1 @@
-<svg width="95" height="63" viewBox="0 0 95 63" fill="none" xmlns="http://www.w3.org/2000/svg">
-<mask id="mask0_2608_26101" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="95" height="63">
-<rect width="95" height="63" fill="#F2F2F2"/>
-</mask>
-<g mask="url(#mask0_2608_26101)">
-<g style="mix-blend-mode:overlay" opacity="0.3" filter="url(#filter0_f_2608_26101)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M28.9658 85H10L28.9655 10L38.3394 47.0696L47.5003 10L56.9827 48.3707L66.4651 10L84.9996 85H66.0348H47.931H47.9307H28.9658Z" fill="#121212"/>
-</g>
-</g>
-<defs>
-<filter id="filter0_f_2608_26101" x="6" y="6" width="83" height="83" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_2608_26101"/>
-</filter>
-</defs>
-</svg>
+<svg width="95" height="63" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="a" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="95" height="63"><path fill="#F2F2F2" d="M0 0h95v63H0z"/></mask><g style="mix-blend-mode:overlay" opacity=".3" filter="url(#b)" mask="url(#a)"><path fill-rule="evenodd" clip-rule="evenodd" d="M28.966 85H10l18.965-75 9.374 37.07L47.5 10l9.483 38.37L66.465 10 85 85H28.966Z" fill="#121212"/></g><defs><filter id="b" x="6" y="6" width="83" height="83" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_2608_26101"/></filter></defs></svg>
