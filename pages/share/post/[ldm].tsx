@@ -172,7 +172,7 @@ const PostContentContainer = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  margin: auto 0 8rem;
+  margin: auto 0 3.6rem;
   position: fixed;
   max-width: 44.4rem;
   width: calc(100% - 3.6rem);
