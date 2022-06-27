@@ -72,7 +72,7 @@ const Share = () => {
   if (!post || !me) return <div>404</div>;
 
   return (
-    <>
+    <div>
       <CommonAppBar>
         <CommonAppBar.Left>
           <CommonIconButton iconName="close" alt="취소" onClick={toggleConfirmDialog} />
@@ -122,7 +122,7 @@ const Share = () => {
           </CommonDialog>
         )}
       </BodyContainer>
-    </>
+    </div>
   );
 };
 
