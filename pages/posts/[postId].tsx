@@ -110,9 +110,12 @@ const PostDetail = () => {
           </TagContainer>
         )}
         <CardContainer>
-          <Card firstEmotion={post.firstCategory} secondEmotion={post.secondCategory}>
-            그땐 {getCategoryDescription(post.firstCategory)}, 지금은 {getCategoryDescription(post.secondCategory)}
-          </Card>
+          <Card
+            firstCategory={post.firstCategory}
+            secondCategory={post.secondCategory}
+            firstCategoryName={getCategoryDescription(post.firstCategory)}
+            secondCategoryName={getCategoryDescription(post.secondCategory)}
+          />
         </CardContainer>
         <Question
           nickname={post.my ? me?.nickname : DEFAULT_NICKNAME}
