@@ -15,7 +15,6 @@ const Header = ({ onClickLogo }: HeaderProps) => {
         <TitleWrapper onClick={onClickLogo}>
           <LogoContainer>
             <Image src={Logo} alt="moodpic" width={82} height={25} loading="eager" priority />
-            <Title>Moodpic</Title>
           </LogoContainer>
         </TitleWrapper>
       </HeaderWrapper>
