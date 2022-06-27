@@ -4,7 +4,7 @@ const MYPAGE = '/mypage';
 export const ROUTES = {
   HOME: '/',
   AUTH_CALLBACK_KAKAO: '/oauth/callback/kakao',
-  LOGIN: '/oauth',
+  LOGIN: '/login',
   READY: '/ready',
   MYPAGE: MYPAGE,
   MYPOSTS: `${MYPAGE}/posts`,
