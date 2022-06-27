@@ -13,7 +13,6 @@ const Template: Story<CardProps> = (args) => <CardComponent {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  children: '1차감정에서 2차감정으로 변하셨군요!',
-  firstEmotion: 'JOY',
-  secondEmotion: 'ANXIOUS',
+  firstCategory: 'JOY',
+  secondCategory: 'ANXIOUS',
 };

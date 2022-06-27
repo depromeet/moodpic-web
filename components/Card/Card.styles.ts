@@ -1,20 +1,20 @@
 import theme from '@/styles/theme';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-export const CardContainer = styled.aside<{ firstColor: string; secondColor: string }>`
+export const CardContainer = styled.aside`
   position: relative;
-  ${theme.fonts.h4};
-
   height: 6.3rem;
   padding: 2.2rem 3.6rem;
   border-radius: 1.4rem;
   text-align: center;
 
-  ${(props) => {
-    return css`
-      background: linear-gradient(90deg, ${props.firstColor} 0%, ${props.secondColor} 100.44%);
-    `;
-  }}
+  font-weight: bold;
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+  letter-spacing: -0.01em;
+  color: ${theme.colors.white};
+  background: ${theme.colors.gray1};
+  overflow: hidden;
 `;
 
 export const ImageContainer = styled.div`
@@ -25,14 +25,26 @@ export const ImageContainer = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
+  opacity: 0.6;
+`;
 
-  span:first-child {
-    img {
-      transform: rotate(-180deg);
-    }
+export const ImageBox = styled.div`
+  position: absolute;
+  width: 9.5rem;
+  height: 6.3rem;
+
+  &:first-child {
+    left: -0.8rem;
+    top: -1.1rem;
+    transform: rotate(-180deg);
   }
 
-  img {
-    mix-blend-mode: overlay;
+  &:last-child {
+    right: -0.4rem;
+    bottom: -0.7rem;
   }
+`;
+
+export const HighlightText = styled.span<{ color: string }>`
+  color: ${(props) => props.color};
 `;

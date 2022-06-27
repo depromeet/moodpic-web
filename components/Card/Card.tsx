@@ -1,23 +1,34 @@
 import React from 'react';
 import Image from 'next/image';
-import { EMOTION_COLOR_TYPE } from '@/shared/constants/category';
-import { EmotionColorType } from '@/shared/constants/category';
-import { CardContainer, ImageContainer } from './Card.styles';
+import { EmotionColorType, EMOTION_COLOR_TYPE } from '@/shared/constants/category';
+import { CardContainer, ImageContainer, ImageBox, HighlightText } from './Card.styles';
 
 export interface CardProps {
-  firstEmotion: EmotionColorType;
-  secondEmotion: EmotionColorType;
-  children: React.ReactNode;
+  firstCategory: EmotionColorType;
+  secondCategory: EmotionColorType;
+  firstCategoryName?: string;
+  secondCategoryName?: string;
 }
 
-const Card = ({ firstEmotion, secondEmotion, children }: CardProps): React.ReactElement => {
+const Card = ({
+  firstCategory,
+  secondCategory,
+  firstCategoryName,
+  secondCategoryName,
+}: CardProps): React.ReactElement => {
   return (
-    <CardContainer firstColor={EMOTION_COLOR_TYPE[firstEmotion]} secondColor={EMOTION_COLOR_TYPE[secondEmotion]}>
+    <CardContainer>
       <ImageContainer>
-        <Image src={`/svgs/mood-${firstEmotion.toLowerCase()}.svg`} alt="" width={95} height={63} />
-        <Image src={`/svgs/mood-${secondEmotion.toLowerCase()}.svg`} alt="" width={95} height={63} />
+        <ImageBox>
+          <Image src={`/category-images/banner-${firstCategory.toLowerCase()}.png`} alt="" width={95} height={63} />
+        </ImageBox>
+        <ImageBox>
+          <Image src={`/category-images/banner-${secondCategory.toLowerCase()}.png`} alt="" width={95} height={63} />
+        </ImageBox>
       </ImageContainer>
-      {children}
+      그땐&nbsp;
+      <HighlightText color={EMOTION_COLOR_TYPE[firstCategory]}>{firstCategoryName}</HighlightText>, &nbsp;지금은&nbsp;
+      <HighlightText color={EMOTION_COLOR_TYPE[secondCategory]}>{secondCategoryName}</HighlightText>
     </CardContainer>
   );
 };

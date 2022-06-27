@@ -19,7 +19,7 @@ const AppLayout = ({ children }: AppLayoutProps): React.ReactElement => {
   const dropdownState = useRecoilValue(dropdownStateAtom);
 
   useEffect(() => {
-    storePathValues;
+    storePathValues();
   }, [router.asPath]);
 
   const horizontalPaddingNone = useCallback(() => {
