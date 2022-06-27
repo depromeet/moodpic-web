@@ -49,7 +49,10 @@ class MyDocument extends Document {
           {/* 홈 화면에서 표시되는 앱 이름을 지정  */}
           <meta name="apple-mobile-web-app-title" content="moodpic" />
           {/* 홈 화면에서 표시되는 앱 아이콘을 지정  */}
-          <link rel="apple-touch-icon" href="/icon-192x192.png" />
+          <link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
+          <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+          <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
           {/* TODO: 임시 아이콘 변경 */}
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
           <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials" />
