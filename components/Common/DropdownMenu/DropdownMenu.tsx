@@ -10,6 +10,7 @@ import { dropdownStateAtom } from '@/store/dropdown/atom';
 import { useAnimation } from '@/hooks/useAnimation';
 import LeftIcon from 'public/svgs/left.svg';
 import Logo from 'public/images/logo.png';
+import { ROUTES } from '@/shared/constants/routes';
 
 const DropdownMenu = (): React.ReactElement => {
   const router = useRouter();
@@ -24,7 +25,12 @@ const DropdownMenu = (): React.ReactElement => {
 
   const goToMypage = () => {
     closeDropdown();
-    router.push('/mypage');
+    router.push(`${ROUTES.MYPAGE}`);
+  };
+
+  const goToReadyPage = () => {
+    closeDropdown();
+    router.push(`${ROUTES.READY}`);
   };
 
   const dropdownRef = typeof window !== 'undefined' && document.getElementById('dropdown-menu');
@@ -40,9 +46,9 @@ const DropdownMenu = (): React.ReactElement => {
             <Image src={Logo} alt="moodpic" width={82} height={25} />
             <MenuList>
               <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
-              <MenuItem>피드백 / 문의사항 보내기</MenuItem>
-              <MenuItem>개발자 소개</MenuItem>
-              <MenuItem>SNS 계정</MenuItem>
+              <MenuItem onClick={goToReadyPage}>피드백 / 문의사항 보내기</MenuItem>
+              <MenuItem onClick={goToReadyPage}>개발자 소개</MenuItem>
+              <MenuItem onClick={goToReadyPage}>SNS 계정</MenuItem>
             </MenuList>
             <ScrollUpButton onClick={closeDropdown}>
               <Image src={LeftIcon} alt="닫기" width={16} height={16} />

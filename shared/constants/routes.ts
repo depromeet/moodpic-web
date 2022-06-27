@@ -5,6 +5,7 @@ export const ROUTES = {
   HOME: '/',
   AUTH_CALLBACK_KAKAO: '/oauth/callback/kakao',
   LOGIN: '/oauth',
+  READY: '/ready',
   MYPAGE: MYPAGE,
   MYPOSTS: `${MYPAGE}/posts`,
   NOTICE: `${MYPAGE}/notice`,
