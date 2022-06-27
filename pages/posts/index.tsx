@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import WritingButon from '@/components/Common/WritingButton/WritingButton';
 import { useRouter } from 'next/router';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import PostList from '@/components/Post/PostList/PostList';
@@ -9,6 +8,7 @@ import {
   CommonDialog,
   CommonIconButton,
   CommonLoading,
+  CommonWritingButton,
 } from '@/components/Common';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import useDialog from '@/hooks/useDialog';
@@ -31,6 +31,8 @@ import {
   BottomController,
   HeaderTitle,
   LoadingContainer,
+  ButtonContainer,
+  FloatingContainer,
 } from '@/components/Post/PostList/PostList.style';
 
 interface DialogItem {
@@ -272,7 +274,11 @@ const PostListPage = () => {
           </BottomButton>
         </BottomController>
       ) : (
-        <WritingButon onClick={goToWritePage} />
+        <FloatingContainer>
+          <ButtonContainer>
+            <CommonWritingButton onClick={goToWritePage} />
+          </ButtonContainer>
+        </FloatingContainer>
       )}
       {isVisibleSheet && (
         <CommonBottomSheetContainer

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CommonWritingButton } from '@/components/Common';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import HomeFloatingButton from '@/components/Home/FloatingButton/FloatingButton';
 
 interface FloatingButtonGroupProps {
@@ -38,9 +39,30 @@ const FloatingButtonGroup = ({ hasIncompletedPosts }: FloatingButtonGroupProps) 
   return (
     <>
       {hasIncompletedPosts && <HomeFloatingButton isScrollOnTop={isScrollOnTop} />}
-      {isScrollAfterBanner && <CommonWritingButton onClick={goToWritePage} />}
+      <FloatingContainer>
+        <ButtonContainer>{isScrollAfterBanner && <CommonWritingButton onClick={goToWritePage} />}</ButtonContainer>
+      </FloatingContainer>
     </>
   );
 };
+
+export const FloatingContainer = styled.div`
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+`;
+
+export const ButtonContainer = styled.div`
+  position: relative;
+  max-width: 48rem;
+  margin: 0 auto;
+
+  button {
+    position: absolute;
+    right: 3rem;
+    bottom: 4rem;
+  }
+`;
 
 export default FloatingButtonGroup;
