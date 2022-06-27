@@ -16,7 +16,7 @@ axios.interceptors.request.use((config) => {
     if (process.env.NODE_ENV === 'development') {
       setCookies(
         AUTH_TOKEN,
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI3Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTQ5NDU0MDEsImV4cCI6MTY1NjI4NDYwMX0.lYhaOcdF5MYXhOOmy9BuFiun0-ruVqlyLICJwDEMRY-tJd_u1p2XwszSI6QovucR1HeyWMQzzDPzH7tGVXPipg', // 자기 토큰으로 바꿔주세용
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI3Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTYzNDM2MzQsImV4cCI6MTY1NzY4MjgzNH0.DPlMrFGJ2_Lv45-0o_INpqXJBq6nrsHNFRiw4-ZC2x3ndp_j8x7NY3GuIoQ0ZaV0VnCvaxmjfs1HXEMne3mS-A',
         { secure: true, sameSite: 'lax', maxAge: 31536000 },
       );
     }
