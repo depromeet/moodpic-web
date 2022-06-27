@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import { KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 import Image from 'next/image';
 import KakaoIcon from 'public/svgs/kakao.svg';
-import Logo from 'public/images/logo.png';
+import Logo from 'public/images/logo.svg';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
 
