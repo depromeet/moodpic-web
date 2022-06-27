@@ -24,22 +24,27 @@ const CategorySelector = ({
     : '';
 
   return (
-    <CategorySelectorContainer backgroundColor={EMOTION_COLOR_TYPE[selectedValue]} disabled={disabled} {...rest}>
-      <Title>{title}</Title>
-      <Description backgroundColor={EMOTION_COLOR_TYPE[selectedValue]}>{selectedCategoryDescription}</Description>
+    <CategorySelectorContainer disabled={disabled} {...rest}>
+      <TextContainer>
+        <Title>{title}</Title>
+        <Description color={EMOTION_COLOR_TYPE[selectedValue]}>{selectedCategoryDescription}</Description>
+      </TextContainer>
       <ImageContainer>
-        <Image src={`/svgs/mood-${selectedValue.toLowerCase()}.svg`} alt="" width={64} height={64} />
+        <Image src={`/images/${selectedValue}_160x160.png`} alt="" width={64} height={64} />
       </ImageContainer>
     </CategorySelectorContainer>
   );
 };
 
-const CategorySelectorContainer = styled.button<{ backgroundColor: string; disabled: boolean }>`
+const CategorySelectorContainer = styled.button`
   display: inline-flex;
+  justify-content: space-between;
   position: relative;
   width: 100%;
+  height: 6.3rem;
+  padding: 1.2rem 1.4rem 1.2rem 2.4rem;
   border-radius: 1.4rem;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${theme.colors.gray2};
   text-align: left;
   color: ${theme.colors.black};
 
@@ -50,28 +55,27 @@ const CategorySelectorContainer = styled.button<{ backgroundColor: string; disab
     `};
 `;
 
-const Title = styled.span`
-  position: absolute;
-  top: 1.2rem;
-  left: 2.4rem;
-  ${theme.fonts.caption1};
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
-const Description = styled.span<{ backgroundColor: string }>`
-  padding: 3.2rem 2.4rem 1.2rem;
+const Title = styled.span`
+  margin-bottom: 0.6rem;
+  ${theme.fonts.caption1};
+  color: ${theme.colors.gray6};
+`;
+
+const Description = styled.span<{ color: string }>`
   font-size: 1.6rem;
   font-weight: bold;
   line-height: 1.9rem;
+  color: ${(props) => props.color};
 `;
 
 const ImageContainer = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-
-  img {
-    mix-blend-mode: overlay;
-  }
+  width: 3.7rem;
+  height: 3.7rem;
 `;
 
 export default CategorySelector;
