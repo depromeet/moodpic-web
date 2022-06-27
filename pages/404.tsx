@@ -48,6 +48,7 @@ const ButtonContainer = styled.div`
   position: fixed;
   bottom: 2.8rem;
   width: calc(100% - 3.6rem);
+  max-width: 44.4rem;
 `;
 
 export default Custom404;
