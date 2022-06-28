@@ -30,6 +30,8 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta name="naver-site-verification" content="c1091fb630dd7c1716d30cdae621cbbd3280f6cb" />
+          <meta name="google-site-verification" content="xBuwjpCpK3qNwoG-XCrharPbtg72D75rxiTbUtGsDug" />
           <link
             rel="stylesheet"
             as="style"
@@ -41,7 +43,6 @@ class MyDocument extends Document {
             key="description"
             content="당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
           />
-          <meta name="naver-site-verification" content="c1091fb630dd7c1716d30cdae621cbbd3280f6cb" />
           <meta name="theme-color" content="#121212" />
           {/* 주소창 등의 웹 브라우저 UI를 표시하지 않기  */}
           <meta name="apple-mobile-web-app-capable" content="yes" />
