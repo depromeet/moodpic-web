@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# 구글 어날리틱스 키
+/lib/gtag.js
+
 # next.js
 /.next/
 /out/
