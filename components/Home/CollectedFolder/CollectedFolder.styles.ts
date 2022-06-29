@@ -28,7 +28,7 @@ export const BoxContainer = styled.figure`
 `;
 
 export const FolderImage = styled.div<{ thumbnail?: string }>`
-  border-radius: 1rem;
+  border-radius: 1.4rem;
   padding-top: 100%;
   background-size: cover;
   background-color: ${theme.colors.gray1};
