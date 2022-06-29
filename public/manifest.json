@@ -5,7 +5,7 @@
   "scope": "/",
   "start_url": "/",
   "name": "moodpic",
-  "short_name": "moopic",
+  "short_name": "moodpic",
   "description": "당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!",
   "icons": [
     {
