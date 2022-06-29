@@ -45,6 +45,7 @@ import FolderIcon from 'public/svgs/folder.svg';
 import FolderPlus from 'public/svgs/folderplus.svg';
 import usePostEditForm from '@/hooks/post/usePostEditForm';
 import useToast from '@/hooks/useToast';
+import { useIsMounted } from '@/hooks/useIsMounted';
 import { commaNumber } from '@/shared/utils/formatter';
 import { ToastType } from '@/shared/type/common';
 import DialogDelete from '@/components/Dialog/DialogDelete';
@@ -53,6 +54,7 @@ import Question from '@/components/Post/PostEdit/Question';
 const PostDetail = () => {
   const router = useRouter();
   const postId = router.query.postId as string;
+  const isMounted = useIsMounted();
 
   const { selectedState, setSelectedState, hasMultipleContent, changePostForm } = usePostEditForm();
   const { tagList, tagValue, setTagList, onChangeTagValue, onDeleteTag, onKeyPressEnter, onClickRightSideIcon } =
@@ -129,7 +131,7 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    if (!router.isReady) return;
+    if (!isMounted) return;
 
     if (selectedState.secondCategory === 'DONTKNOW') {
       !isVisibleSheet && showBottomSheetByType('category');
@@ -137,7 +139,7 @@ const PostDetail = () => {
 
     fetchPostById();
     fetchFolderByPostId();
-  }, [router.isReady, selectedState.secondCategory]);
+  }, [isMounted]);
 
   useEffect(() => {
     if (post) {
