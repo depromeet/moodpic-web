@@ -26,12 +26,7 @@ import {
   useUpdateFolderMutation,
 } from '@/hooks/apis';
 import { ToastType } from '@/shared/type/common';
-import {
-  BottomButton,
-  BottomController,
-  HeaderTitle,
-  LoadingContainer,
-} from '@/components/Post/PostList/PostList.style';
+import { BottomButton, Bottom, HeaderTitle, LoadingContainer } from '@/components/Post/PostList/PostList.style';
 import WritingButton from '@/components/Post/WritingButton';
 
 interface DialogItem {
@@ -91,18 +86,13 @@ const PostListPage = () => {
   });
 
   useEffect(() => {
-    if (router.isReady) {
-      fetch();
-    }
+    router.isReady && fetch();
   }, [router.isReady, fetch]);
 
   const onDelete = () => {
     deleteFolderMutation.mutate(folderId, {
       onSuccess: () => {
-        notify({
-          type: ToastType.CONFIRM,
-          message: '폴더가 삭제되었습니다.',
-        });
+        notify({ type: ToastType.CONFIRM, message: '폴더가 삭제되었습니다.' });
         toggleDialog();
         router.replace('/');
       },
@@ -114,10 +104,7 @@ const PostListPage = () => {
       { id: folderId, folderName: inputValue },
       {
         onSuccess: () => {
-          notify({
-            type: ToastType.CONFIRM,
-            message: '폴더이름이 변경되었습니다.',
-          });
+          notify({ type: ToastType.CONFIRM, message: '폴더이름이 변경되었습니다.' });
           toggleDialog();
           fetch();
         },
@@ -128,11 +115,7 @@ const PostListPage = () => {
   const onDeletePosts = () => {
     deletePostMutation.mutate(checkedItems, {
       onSuccess: () => {
-        notify({
-          type: ToastType.CONFIRM,
-          message: '기록이 삭제되었습니다.',
-        });
-
+        notify({ type: ToastType.CONFIRM, message: '기록이 삭제되었습니다.' });
         setIsEditing(false);
         setCheckedItems([]);
         toggleDialog();
@@ -144,11 +127,7 @@ const PostListPage = () => {
   const onDeleteAllPosts = () => {
     deleteAllPostsMutation.mutate(folderId, {
       onSuccess: () => {
-        notify({
-          type: ToastType.CONFIRM,
-          message: '모든 기록이 삭제되었습니다.',
-        });
-
+        notify({ type: ToastType.CONFIRM, message: '모든 기록이 삭제되었습니다.' });
         setIsEditing(false);
         toggleDialog();
         fetch();
@@ -290,14 +269,14 @@ const PostListPage = () => {
         </LoadingContainer>
       )}
       {isEditing ? (
-        <BottomController>
+        <Bottom>
           <BottomButton disabled={totalCount === 0} onClick={showDeletePostsDialog}>
             전체 삭제
           </BottomButton>
           <BottomButton disabled={!checkedItems.length} onClick={showDeletePostDialog}>
             {checkedItems.length > 0 && `${checkedItems.length}개`} 삭제
           </BottomButton>
-        </BottomController>
+        </Bottom>
       ) : (
         <WritingButton />
       )}

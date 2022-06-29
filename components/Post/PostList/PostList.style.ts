@@ -7,7 +7,7 @@ export const HeaderTitle = styled.h2`
   color: ${theme.colors.white};
 `;
 
-export const BottomController = styled.div`
+export const Bottom = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
