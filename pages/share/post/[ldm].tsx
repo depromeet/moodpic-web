@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSharedPostQuery } from '@/hooks/apis';
+import { useMemberQuery, useSharedPostQuery } from '@/hooks/apis';
 import { UserName } from '../index';
 import styled from 'styled-components';
 import TextArea from '@/components/Common/TextArea/TextArea';
@@ -12,7 +12,6 @@ import { ToastType } from '@/shared/type/common';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import { CommonAppBar, CommonDialog, CommonIconButton, LogoHeader } from '@/components/Common';
 import useModal from '@/hooks/useDialog';
-import { getPrevPath } from '@/shared/utils/storePathValues';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
 import theme from '@/styles/theme';
@@ -25,10 +24,7 @@ const SharedPost = () => {
   const [isSharer, setIsSharer] = useState(false);
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
-  const checkUserType = () => {
-    const SHARE_PAGE = '/share';
-    setIsSharer(getPrevPath() === SHARE_PAGE);
-  };
+  const { data: me, isLoading: isLoadingMe } = useMemberQuery();
 
   const renderHeader = () => {
     if (isSharer) {
@@ -89,12 +85,15 @@ const SharedPost = () => {
 
   useEffect(() => {
     if (ldm) {
-      checkUserType();
       refetchSharedPost();
     }
   }, [ldm]);
 
-  if (isLoadingSharedPost) return <div>로딩중</div>;
+  useEffect(() => {
+    setIsSharer(me?.nickname === sharedPost?.senderName);
+  }, [me, sharedPost]);
+
+  if (isLoadingSharedPost || isLoadingMe) return <div>로딩중</div>;
   if (!sharedPost || !ldm) return <div>404</div>;
 
   const { receiverName, category, content, senderName } = sharedPost;
