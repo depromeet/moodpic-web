@@ -4,7 +4,6 @@
 <img width="1016" alt="스크린샷 2022-06-29 오후 9 50 31" src="https://user-images.githubusercontent.com/29244798/176440486-a98d6aad-b62b-4246-9253-e03ac5cc21e3.png">
 
 <br />
-<br />
 
 <b>[무드픽 접속하기 ✏️](https://www.moodpic.kr/)</b>
 
@@ -17,13 +16,11 @@ $ npm run dev
 ```
 
 <br>
-<br>
 
 ## 🌡 Feature
 
 <img width="1045" alt="스크린샷 2022-06-29 오후 9 51 47" src="https://user-images.githubusercontent.com/29244798/176440677-63e21223-0592-4140-8137-f9530be079b1.png">
 
-<br/>
 <br/>
 
 
@@ -55,7 +52,6 @@ $ npm run dev
   <img src="https://img.shields.io/badge/GithubActions-CI/CD-232F3E?logo=githubactions"/>
 </div>
 
-<br/>
 <br/>
 
 
@@ -95,13 +91,11 @@ $ npm run dev
     - tsconfig.json
 ```
 <br/>
-<br/>
 
 ## 🌡 Back-end Repository
 
 https://github.com/depromeet/11th_5team
 
-<br />
 <br />
 
 ## 🌡 Contributors
@@ -109,7 +103,7 @@ https://github.com/depromeet/11th_5team
 | ```Lead``` 박수진 | 박상범 | 조기문 |
 | :-: |  :-: | :-: |
 | [@sujin-park](https://github.com/sujin-park) |  [@sangbooom](https://github.com/sangbooom)  | [@guymoon](https://github.com/guymoon) |
-| <img src="https://user-images.githubusercontent.com/29244798/176429437-f2b203a9-aa98-4bca-96e0-eada8d909cca.png" width="250" height="350px"> | <img src="https://user-images.githubusercontent.com/29244798/176429400-43d3cf65-c29e-43c1-a5f7-d530a0c77fb2.png" width="250" height="350px"> | <img src="https://user-images.githubusercontent.com/29244798/176429443-191b6bc8-2d40-470c-999f-7c08a8eedf4e.png" width="250" height="350px"> |
+| <img src="https://user-images.githubusercontent.com/29244798/176429437-f2b203a9-aa98-4bca-96e0-eada8d909cca.png" width="250" height="350px"> | <img src="https://user-images.githubusercontent.com/29244798/176429400-43d3cf65-c29e-43c1-a5f7-d530a0c77fb2.png" width="250" height="100%"> | <img src="https://user-images.githubusercontent.com/29244798/176429443-191b6bc8-2d40-470c-999f-7c08a8eedf4e.png" width="250" height="100%"> |
 
 <br/>
 <br/>
