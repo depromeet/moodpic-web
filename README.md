@@ -108,7 +108,7 @@ https://github.com/depromeet/11th_5team
 
 | ```Lead``` 박수진 | 박상범 | 조기문 |
 | :-: |  :-: | :-: |
-| [@sujin-park](https://github.com/zkdlu) |  [@sangbooom](https://github.com/grand7070u)  | [@guymoon](https://github.com/rere950303) |
+| [@sujin-park](https://github.com/sujin-park) |  [@sangbooom](https://github.com/sangbooom)  | [@guymoon](https://github.com/guymoon) |
 | <img src="https://user-images.githubusercontent.com/29244798/176429437-f2b203a9-aa98-4bca-96e0-eada8d909cca.png" width="250" height="350px"> | <img src="https://user-images.githubusercontent.com/29244798/176429400-43d3cf65-c29e-43c1-a5f7-d530a0c77fb2.png" width="250" height="350px"> | <img src="https://user-images.githubusercontent.com/29244798/176429443-191b6bc8-2d40-470c-999f-7c08a8eedf4e.png" width="250" height="350px"> |
 
 <br/>
