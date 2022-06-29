@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
         <title>나만의 감정 기록 보관소, moodpic</title>
       </Head>

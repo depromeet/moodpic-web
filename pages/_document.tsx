@@ -47,6 +47,7 @@ class MyDocument extends Document {
           {/* 상태 바의 스타일을 지정  */}
           <meta name="apple-mobile-web-app-status-bar-style" content="#121212" />
           {/* 홈 화면에서 표시되는 앱 이름을 지정  */}
+          <meta name="application-name" content="moodpic" />
           <meta name="apple-mobile-web-app-title" content="moodpic" />
           {/* 홈 화면에서 표시되는 앱 아이콘을 지정  */}
           <link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
