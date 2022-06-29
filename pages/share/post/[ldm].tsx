@@ -12,10 +12,10 @@ import { ToastType } from '@/shared/type/common';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import { CommonAppBar, CommonDialog, CommonIconButton, LogoHeader } from '@/components/Common';
 import useModal from '@/hooks/useDialog';
-import { getPrevPath } from '@/shared/utils/storePathValues';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
 import theme from '@/styles/theme';
+import { getPrevPath } from '@/shared/utils/storePathValues';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -25,9 +25,14 @@ const SharedPost = () => {
   const [isSharer, setIsSharer] = useState(false);
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
-  const checkUserType = () => {
+
+  const checkIsSharer = (prevPath: string | null) => {
     const SHARE_PAGE = '/share';
-    setIsSharer(getPrevPath() === SHARE_PAGE);
+    const POST_DETAIL_PAGE = '/share/post/';
+
+    const IS_SHARER = prevPath === SHARE_PAGE || prevPath?.slice(0, 12) === POST_DETAIL_PAGE;
+
+    setIsSharer(IS_SHARER);
   };
 
   const renderHeader = () => {
@@ -89,7 +94,7 @@ const SharedPost = () => {
 
   useEffect(() => {
     if (ldm) {
-      checkUserType();
+      checkIsSharer(getPrevPath());
       refetchSharedPost();
     }
   }, [ldm]);
