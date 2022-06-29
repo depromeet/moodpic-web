@@ -12,10 +12,10 @@ import { ToastType } from '@/shared/type/common';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import { CommonAppBar, CommonDialog, CommonIconButton, LogoHeader } from '@/components/Common';
 import useModal from '@/hooks/useDialog';
+import { getPrevPath } from '@/shared/utils/storePathValues';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
 import theme from '@/styles/theme';
-import { getPrevPath } from '@/shared/utils/storePathValues';
 
 const SharedPost = () => {
   const router = useRouter();
