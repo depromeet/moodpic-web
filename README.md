@@ -8,18 +8,13 @@
 
 <b>[무드픽 접속하기 ✏️](https://www.moodpic.kr/)</b>
 
-<details><summary><b>Quick Start</b></summary>
+## 🌡 Installation
 
 ```bash
 $ git clone https://github.com/depromeet/11th_5team_fe
 $ npm i
 $ npm run dev
 ```
-
-</details>
-<details><summary><b>Back-end repository</b></summary>
-https://github.com/depromeet/11th_5team
-</details>
 
 <br>
 <br>
@@ -102,6 +97,12 @@ https://github.com/depromeet/11th_5team
 <br/>
 <br/>
 
+## 🌡 Back-end Repository
+
+https://github.com/depromeet/11th_5team
+
+<br />
+<br />
 
 ## 🌡 Contributors
 
