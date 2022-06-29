@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSharedPostQuery } from '@/hooks/apis';
+import { useMemberQuery, useSharedPostQuery } from '@/hooks/apis';
 import { UserName } from '../index';
 import styled from 'styled-components';
 import TextArea from '@/components/Common/TextArea/TextArea';
@@ -12,7 +12,6 @@ import { ToastType } from '@/shared/type/common';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import { CommonAppBar, CommonDialog, CommonIconButton, LogoHeader } from '@/components/Common';
 import useModal from '@/hooks/useDialog';
-import { getPrevPath } from '@/shared/utils/storePathValues';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
 import theme from '@/styles/theme';
@@ -25,15 +24,7 @@ const SharedPost = () => {
   const [isSharer, setIsSharer] = useState(false);
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
-
-  const checkIsSharer = (prevPath: string | null) => {
-    const SHARE_PAGE = '/share';
-    const POST_DETAIL_PAGE = '/posts/';
-
-    const IS_SHARER = prevPath === SHARE_PAGE || prevPath?.slice(0, 7) === POST_DETAIL_PAGE;
-
-    setIsSharer(IS_SHARER);
-  };
+  const { data: me, isLoading: isLoadingMe } = useMemberQuery();
 
   const renderHeader = () => {
     if (isSharer) {
@@ -94,11 +85,15 @@ const SharedPost = () => {
 
   useEffect(() => {
     if (ldm) {
-      checkIsSharer(getPrevPath());
       refetchSharedPost();
     }
   }, [ldm]);
 
+  useEffect(() => {
+    setIsSharer(me?.nickname === sharedPost?.senderName);
+  }, [me, sharedPost]);
+
+  if (isLoadingSharedPost || isLoadingMe) return <div>로딩중</div>;
   if (isLoadingSharedPost) return <div>로딩중</div>;
   if (!sharedPost || !ldm) return <div>404</div>;
 

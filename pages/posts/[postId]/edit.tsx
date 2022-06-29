@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
 import { useInput } from '@/hooks/useInput';
 import useBottomSheet from '@/hooks/useBottomSheet';
+import { useIsMounted } from '@/hooks/useIsMounted';
 import {
   useCategoryListQuery,
   useCreateFolderMutation,
@@ -53,7 +54,7 @@ import Question from '@/components/Post/PostEdit/Question';
 const PostDetail = () => {
   const router = useRouter();
   const postId = router.query.postId as string;
-
+  const isMounted = useIsMounted();
   const { selectedState, setSelectedState, hasMultipleContent, changePostForm } = usePostEditForm();
   const { tagList, tagValue, setTagList, onChangeTagValue, onDeleteTag, onKeyPressEnter, onClickRightSideIcon } =
     useTags();
@@ -129,7 +130,7 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    if (!router.isReady) return;
+    if (!isMounted) return;
 
     if (selectedState.secondCategory === 'DONTKNOW') {
       !isVisibleSheet && showBottomSheetByType('category');
@@ -137,7 +138,7 @@ const PostDetail = () => {
 
     fetchPostById();
     fetchFolderByPostId();
-  }, [router.isReady, selectedState.secondCategory]);
+  }, [isMounted]);
 
   useEffect(() => {
     if (post) {

@@ -20,7 +20,7 @@ const KakaoAuth = () => {
     }
   }, []);
 
-  return <div>hello</div>;
+  return <div />;
 };
 
 export default KakaoAuth;
