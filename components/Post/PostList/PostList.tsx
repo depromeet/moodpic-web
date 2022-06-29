@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import theme from '@/styles/theme';
 import PostItem from '@/components/Post/PostItem/PostItem';
 import { Post } from '@/shared/type/post';
 import ListEmpty from 'public/images/list-empty.png';
@@ -14,7 +15,7 @@ interface PostListProps {
   isMine?: boolean;
 }
 
-const PostList = ({ postList = [], isEditing, checkedItems, setCheckedItems, isMine = false }: PostListProps) => {
+const PostList = ({ postList = [], isEditing, checkedItems, setCheckedItems, isMine = true }: PostListProps) => {
   const router = useRouter();
 
   const changeCheckedItems = (postId: string) => {

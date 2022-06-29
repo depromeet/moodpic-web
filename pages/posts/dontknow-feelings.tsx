@@ -25,7 +25,9 @@ const PostList = () => {
           지금은 어떤 감정이 드세요?
         </Title>
         {postList.length ? (
-          postList.map((post) => <PostItem key={post.id} post={post} onClick={() => router.push(`posts/${post.id}`)} />)
+          postList.map((post) => (
+            <PostItem key={post.id} post={post} isMine={false} onClick={() => router.push(`/posts/${post.id}`)} />
+          ))
         ) : (
           <ImageMessage src={ListEmpty} alt="기록이 없어요.">
             기록이 없어요.

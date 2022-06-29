@@ -35,11 +35,6 @@ const folderService = {
 
     return data;
   },
-  deletePostsByFolderId: async (id: number) => {
-    const { data } = await fetcher('delete', `/api/v1/folders/${id}/posts`);
-
-    return data;
-  },
 };
 
 export default folderService;

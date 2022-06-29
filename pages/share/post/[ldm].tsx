@@ -25,9 +25,14 @@ const SharedPost = () => {
   const [isSharer, setIsSharer] = useState(false);
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
-  const checkUserType = () => {
+
+  const checkIsSharer = (prevPath: string | null) => {
     const SHARE_PAGE = '/share';
-    setIsSharer(getPrevPath() === SHARE_PAGE);
+    const POST_DETAIL_PAGE = '/posts/';
+
+    const IS_SHARER = prevPath === SHARE_PAGE || prevPath?.slice(0, 7) === POST_DETAIL_PAGE;
+
+    setIsSharer(IS_SHARER);
   };
 
   const renderHeader = () => {
@@ -89,7 +94,7 @@ const SharedPost = () => {
 
   useEffect(() => {
     if (ldm) {
-      checkUserType();
+      checkIsSharer(getPrevPath());
       refetchSharedPost();
     }
   }, [ldm]);
