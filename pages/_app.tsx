@@ -10,6 +10,19 @@ import theme from '@/styles/theme';
 import { queryClient } from '@/shared/utils/queryClient';
 import { CommonAppLayout } from '@/components/Common';
 
+if (typeof window !== 'undefined') {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((registration) => {
+        console.log('service worker registration successful');
+      })
+      .catch((err) => {
+        console.warn('service worker registration failed', err.message);
+      });
+  }
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
