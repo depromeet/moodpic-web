@@ -30,7 +30,7 @@ const CategorySelector = ({
         <Description color={EMOTION_COLOR_TYPE[selectedValue]}>{selectedCategoryDescription}</Description>
       </TextContainer>
       <ImageContainer>
-        <Image src={`/images/${selectedValue}_160x160.png`} alt="" width={64} height={64} />
+        <Image src={`/category-images/category-${selectedValue}.png`} alt="" width={51} height={51} />
       </ImageContainer>
     </CategorySelectorContainer>
   );
@@ -74,8 +74,12 @@ const Description = styled.span<{ color: string }>`
 `;
 
 const ImageContainer = styled.div`
-  width: 3.7rem;
-  height: 3.7rem;
+  position: absolute;
+  top: 0.6rem;
+  right: 0.7rem;
+  bottom: 0.6rem;
+  width: 5.1rem;
+  height: 5.1rem;
 `;
 
 export default CategorySelector;
