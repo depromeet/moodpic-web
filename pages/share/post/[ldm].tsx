@@ -27,6 +27,7 @@ const SharedPost = () => {
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
 
   const checkIsSharer = (prevPath: string | null) => {
+    console.log('cs', getPrevPath());
     const SHARE_PAGE = '/share';
     const POST_DETAIL_PAGE = '/share/post/';
 
@@ -94,6 +95,7 @@ const SharedPost = () => {
 
   useEffect(() => {
     if (ldm) {
+      console.log(getPrevPath());
       checkIsSharer(getPrevPath());
       refetchSharedPost();
     }
