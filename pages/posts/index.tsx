@@ -8,7 +8,6 @@ import {
   CommonDialog,
   CommonIconButton,
   CommonLoading,
-  CommonWritingButton,
 } from '@/components/Common';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import useDialog from '@/hooks/useDialog';
@@ -20,20 +19,15 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import {
   useDeleteFolderMutation,
   useDeletePostMutation,
+  useDeletePostsByFolderMutation,
   usePostsByCategoryIdQuery,
   usePostsByFolderIdQuery,
   usePostsQuery,
   useUpdateFolderMutation,
 } from '@/hooks/apis';
 import { ToastType } from '@/shared/type/common';
-import {
-  BottomButton,
-  BottomController,
-  HeaderTitle,
-  LoadingContainer,
-  ButtonContainer,
-  FloatingContainer,
-} from '@/components/Post/PostList/PostList.style';
+import { BottomButton, Bottom, HeaderTitle, LoadingContainer } from '@/components/Post/PostList/PostList.style';
+import WritingButton from '@/components/Post/WritingButton';
 
 interface DialogItem {
   type: 'alert' | 'modal';
@@ -43,9 +37,6 @@ interface DialogItem {
 
 interface DialogItems {
   [key: string]: DialogItem;
-  deleteFolder: DialogItem;
-  editFolder: DialogItem;
-  deletePosts: DialogItem;
 }
 
 const PostListPage = () => {
@@ -82,6 +73,7 @@ const PostListPage = () => {
   const updateFolderMutation = useUpdateFolderMutation();
   const deleteFolderMutation = useDeleteFolderMutation();
   const deletePostMutation = useDeletePostMutation();
+  const deleteAllPostsMutation = useDeletePostsByFolderMutation();
 
   const { dialogVisible, toggleDialog } = useDialog();
   const notify = useToast();
@@ -94,20 +86,13 @@ const PostListPage = () => {
   });
 
   useEffect(() => {
-    if (router.isReady) {
-      fetch();
-    }
+    router.isReady && fetch();
   }, [router.isReady, fetch]);
-
-  const goToWritePage = () => router.push('/write');
 
   const onDelete = () => {
     deleteFolderMutation.mutate(folderId, {
       onSuccess: () => {
-        notify({
-          type: ToastType.CONFIRM,
-          message: '폴더가 삭제되었습니다.',
-        });
+        notify({ type: ToastType.CONFIRM, message: '폴더가 삭제되었습니다.' });
         toggleDialog();
         router.replace('/');
       },
@@ -119,10 +104,7 @@ const PostListPage = () => {
       { id: folderId, folderName: inputValue },
       {
         onSuccess: () => {
-          notify({
-            type: ToastType.CONFIRM,
-            message: '폴더이름이 변경되었습니다.',
-          });
+          notify({ type: ToastType.CONFIRM, message: '폴더이름이 변경되었습니다.' });
           toggleDialog();
           fetch();
         },
@@ -133,13 +115,21 @@ const PostListPage = () => {
   const onDeletePosts = () => {
     deletePostMutation.mutate(checkedItems, {
       onSuccess: () => {
-        notify({
-          type: ToastType.CONFIRM,
-          message: '기록이 삭제되었습니다.',
-        });
+        notify({ type: ToastType.CONFIRM, message: '기록이 삭제되었습니다.' });
 
         setIsEditing(false);
         setCheckedItems([]);
+        toggleDialog();
+        fetch();
+      },
+    });
+  };
+
+  const onDeleteAllPosts = () => {
+    deleteAllPostsMutation.mutate(folderId, {
+      onSuccess: () => {
+        notify({ type: ToastType.CONFIRM, message: '모든 기록이 삭제되었습니다.' });
+        setIsEditing(false);
         toggleDialog();
         fetch();
       },
@@ -193,6 +183,11 @@ const PostListPage = () => {
     toggleDialog();
   };
 
+  const showDeletePostsDialog = () => {
+    setDialogType('deleteAllPosts');
+    toggleDialog();
+  };
+
   const dialog: DialogItems = {
     deleteFolder: {
       type: 'alert',
@@ -212,6 +207,15 @@ const PostListPage = () => {
       ),
       handleConfirm: () => onDeletePosts(),
     },
+    deleteAllPosts: {
+      type: 'alert',
+      title: (
+        <>
+          모든 감정 폴더에서도 <br /> 해당 기록이 삭제됩니다.
+        </>
+      ),
+      handleConfirm: () => onDeleteAllPosts(),
+    },
   };
 
   const renderDialog = () => {
@@ -229,7 +233,6 @@ const PostListPage = () => {
   };
 
   const bottomSheetItems = getBottomSheetItems();
-
   if (!postData.length) return <div>404</div>;
 
   return (
@@ -253,7 +256,6 @@ const PostListPage = () => {
         return (
           <PostList
             key={index}
-            isMine={false}
             postList={item.posts}
             isEditing={isEditing}
             checkedItems={checkedItems}
@@ -267,18 +269,17 @@ const PostListPage = () => {
         </LoadingContainer>
       )}
       {isEditing ? (
-        <BottomController>
+        <Bottom>
+          <BottomButton disabled={totalCount === 0} onClick={showDeletePostsDialog}>
+            전체 삭제
+          </BottomButton>
           <BottomButton disabled={totalCount === 0}>전체 삭제</BottomButton>
           <BottomButton disabled={!checkedItems.length} onClick={showDeletePostDialog}>
             {checkedItems.length > 0 && `${checkedItems.length}개`} 삭제
           </BottomButton>
-        </BottomController>
+        </Bottom>
       ) : (
-        <FloatingContainer>
-          <ButtonContainer>
-            <CommonWritingButton onClick={goToWritePage} />
-          </ButtonContainer>
-        </FloatingContainer>
+        <WritingButton />
       )}
       {isVisibleSheet && (
         <CommonBottomSheetContainer

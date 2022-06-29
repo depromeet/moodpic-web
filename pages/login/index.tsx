@@ -48,7 +48,7 @@ const Login = () => {
     <LoginWrap>
       <MainTitleWrap>
         <LogoContainer>
-          <Image src={Logo} alt="moodpic" width={196} height={64} />
+          <Image src={Logo} alt="moodpic" width={210} height={64} />
           <Title>Moodpic</Title>
         </LogoContainer>
         <Description>나만의 감정기록 보관소</Description>
