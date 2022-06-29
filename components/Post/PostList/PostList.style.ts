@@ -33,22 +33,3 @@ export const BottomButton = styled.button<{ disabled: boolean }>`
 export const LoadingContainer = styled.div`
   margin: 2rem auto;
 `;
-
-export const FloatingContainer = styled.div`
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-`;
-
-export const ButtonContainer = styled.div`
-  position: relative;
-  max-width: 48rem;
-  margin: 0 auto;
-
-  button {
-    position: absolute;
-    right: 2.4rem;
-    bottom: 8rem;
-  }
-`;
