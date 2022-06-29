@@ -33,3 +33,10 @@ export const useDeleteFolderMutation = () =>
       queryClient.invalidateQueries(QUERY_KEY.GET_FOLDERS);
     },
   });
+
+export const useDeletePostsByFolderMutation = () =>
+  useMutation((id: number) => folderService.deletePostsByFolderId(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(QUERY_KEY.GET_POSTS_BY_FOLDER_ID);
+    },
+  });
