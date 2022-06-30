@@ -52,7 +52,7 @@ const SharedPost = () => {
       return (
         <ButtonContainer>
           <Button
-            color="black"
+            color="primary"
             onClick={async () => {
               await copyClipboard({
                 text: window.document.location.href,
