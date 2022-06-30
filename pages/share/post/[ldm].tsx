@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useMemberQuery, useSharedPostQuery } from '@/hooks/apis';
 import { UserName } from '../index';
 import styled from 'styled-components';
-import TextArea from '@/components/Common/TextArea/TextArea';
 import Button from '@/components/Common/Button/Button';
 import CategoryBox from '@/components/Share/CategoryBox/CategoryBox';
 import { copyClipboard } from '@/shared/utils/copyClipboard';
@@ -15,6 +14,9 @@ import useModal from '@/hooks/useDialog';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
 import theme from '@/styles/theme';
+import Question from '@/components/Post/PostEdit/Question';
+import { Post } from '@/shared/type/post';
+import { CONTENT_SEPARATOR } from '@/shared/constants/question';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -85,6 +87,19 @@ const SharedPost = () => {
     );
   };
 
+  const renderContent = (content: Post['content']) => {
+    const hasMultipleContent = content.includes(CONTENT_SEPARATOR);
+    const [firstContent, secondContent, thirdContent] = content.split(CONTENT_SEPARATOR);
+    return (
+      <Question
+        firstContent={firstContent}
+        secondContent={secondContent}
+        thirdContent={thirdContent}
+        hasMultipleContent={hasMultipleContent}
+      />
+    );
+  };
+
   useEffect(() => {
     if (ldm) {
       refetchSharedPost();
@@ -108,9 +123,7 @@ const SharedPost = () => {
         <UserName>To. {receiverName}</UserName>
         <ContentContainer>
           {category !== 'UNSELECT' && <CategoryBox category={category} />}
-          <PostContentContainer>
-            <TextArea value={content || 'undefined contents'} disabled={true} height={'32.6rem'} />
-          </PostContentContainer>
+          <PostContentContainer>{renderContent(content)}</PostContentContainer>
         </ContentContainer>
         <UserName>From. {senderName}</UserName>
         <ButtonWrapper>{renderButtonByUser()}</ButtonWrapper>
