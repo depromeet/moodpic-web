@@ -72,7 +72,7 @@ const Share = () => {
   if (!post || !me) return <div>404</div>;
 
   return (
-    <div>
+    <Container>
       <CommonAppBar>
         <CommonAppBar.Left>
           <CommonIconButton iconName="close" alt="취소" onClick={toggleConfirmDialog} />
@@ -122,9 +122,13 @@ const Share = () => {
           </CommonDialog>
         )}
       </BodyContainer>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding-bottom: 6rem;
+`;
 
 const ButtonMessage = styled.p`
   ${theme.fonts.btn1}

@@ -50,7 +50,7 @@ const SharedPost = () => {
   const renderButtonByUser = () => {
     if (isSharer) {
       return (
-        <ButtonWrapper>
+        <ButtonContainer>
           <Button
             color="black"
             onClick={async () => {
@@ -67,19 +67,21 @@ const SharedPost = () => {
           >
             <ButtonMessage>링크로 감정 공유하기</ButtonMessage>
           </Button>
-        </ButtonWrapper>
+        </ButtonContainer>
       );
     }
 
     return (
-      <Button color="black" onClick={() => router.push('/')}>
-        <ButtonMessage>
-          나도 무드픽에서 감정보내기
-          <IconWrapper>
-            <Image src={Right} alt="메뉴" width={24} height={24} />
-          </IconWrapper>
-        </ButtonMessage>
-      </Button>
+      <ButtonContainer>
+        <Button color="black" onClick={() => router.push('/')}>
+          <ButtonMessage>
+            나도 무드픽에서 감정보내기
+            <IconWrapper>
+              <Image src={Right} alt="메뉴" width={24} height={24} />
+            </IconWrapper>
+          </ButtonMessage>
+        </Button>
+      </ButtonContainer>
     );
   };
 
@@ -100,16 +102,16 @@ const SharedPost = () => {
   const { receiverName, category, content, senderName } = sharedPost;
 
   return (
-    <>
+    <Container>
       {renderHeader()}
-      <Container>
+      <BodyContainer>
         <UserName>To. {receiverName}</UserName>
-        <BodyContainer>
+        <ContentContainer>
           {category !== 'UNSELECT' && <CategoryBox category={category} />}
           <PostContentContainer>
             <TextArea value={content || 'undefined contents'} disabled={true} height={'32.6rem'} />
           </PostContentContainer>
-        </BodyContainer>
+        </ContentContainer>
         <UserName>From. {senderName}</UserName>
         <ButtonWrapper>{renderButtonByUser()}</ButtonWrapper>
         {isOpenConfirmDialog && (
@@ -117,10 +119,14 @@ const SharedPost = () => {
             <DialogWarning>페이지를 떠나시겠어요?</DialogWarning>
           </CommonDialog>
         )}
-      </Container>
-    </>
+      </BodyContainer>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding-bottom: 6rem;
+`;
 
 const ButtonWrapperr = styled.div`
   position: sticky;
@@ -155,12 +161,12 @@ const IconWrapper = styled.div`
   margin-left: 1rem;
 `;
 
-const BodyContainer = styled.div`
+const ContentContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
 
-const Container = styled.div`
+const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
@@ -177,6 +183,25 @@ const ButtonWrapper = styled.div`
   max-width: 44.4rem;
   width: calc(100% - 3.6rem);
   bottom: 0;
+`;
+
+const ButtonContainer = styled.div`
+  position: sticky;
+  left: 0;
+  bottom: 8rem;
+  margin-top: auto;
+  width: 100%;
+  height: 5.5rem;
+  &::after {
+    position: absolute;
+    bottom: -8rem;
+    left: 0;
+    width: 100%;
+    height: 21.2rem;
+    content: '';
+    background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 52.6%);
+    z-index: -1;
+  }
 `;
 
 export default SharedPost;
