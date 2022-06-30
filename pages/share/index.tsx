@@ -13,6 +13,8 @@ import { CommonAppBar, CommonDialog, CommonIconButton } from '@/components/Commo
 import useModal from '@/hooks/useDialog';
 import { useMemberQuery, usePostByIdQuery } from '@/hooks/apis';
 import shareService from '@/service/apis/shareService';
+import { CONTENT_SEPARATOR } from '@/shared/constants/question';
+import { ellipsis } from '@/styles/mixins';
 
 type SharePageQuery = {
   postId: string;
@@ -90,7 +92,8 @@ const Share = () => {
           <SenderInput value={receiverName} onChange={changeReceiverName} placeholder={'받는이'} />
         </SenderInformation>
         <PostContentContainer>
-          <TextArea value={post.content} readOnly={true} height={'8rem'} disabled={true} />
+          {/*<TextArea value={deleteSeparator(post.content)} readOnly={true} height={'8rem'} disabled={true} />*/}
+          <Content>{deleteSeparator(post.content)}</Content>
         </PostContentContainer>
         <CategorySelectContainer>
           {Object.keys(CATEGORY_OPTIONS_INFO).map((key, index) => {
@@ -125,6 +128,35 @@ const Share = () => {
     </Container>
   );
 };
+
+const deleteSeparator = (content: string) => {
+  const MAX_LENGTH = 60;
+  const deletedSeparator = content.replaceAll(CONTENT_SEPARATOR, ' ');
+
+  if (content.length > MAX_LENGTH) {
+    return deletedSeparator.slice(0, MAX_LENGTH) + '...';
+  }
+
+  return deletedSeparator;
+};
+
+const Content = styled.p`
+  width: 100%;
+  padding: 1.6rem 1.8rem 1.8rem 1.8rem;
+  display: inline-block;
+  text-align: start;
+  cursor: text;
+  height: 8rem;
+  border-radius: 1.6rem;
+  background: ${theme.colors.gray2};
+  border: none;
+  right: 0;
+  ${theme.fonts.body}
+  color: ${theme.colors.white};
+  outline: none;
+  resize: none;
+  margin-bottom: 1rem;
+`;
 
 const Container = styled.div`
   padding-bottom: 6rem;
@@ -164,6 +196,7 @@ const SenderInformation = styled.div`
 `;
 
 const PostContentContainer = styled.div`
+  ${ellipsis(2)};
   height: 8rem;
 `;
 
