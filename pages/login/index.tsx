@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import styled, { keyframes } from 'styled-components';
 import { KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
@@ -48,7 +48,7 @@ const Login = () => {
     <LoginWrap>
       <MainTitleWrap>
         <LogoContainer>
-          <Image src={Logo} alt="moodpic" width={210} height={64} />
+          <Image src={Logo} alt="moodpic" width={198} height={64} />
           <Title>Moodpic</Title>
         </LogoContainer>
         <Description>나만의 감정기록 보관소</Description>
