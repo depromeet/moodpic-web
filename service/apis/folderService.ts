@@ -40,6 +40,11 @@ const folderService = {
 
     return data;
   },
+  withdraw: async () => {
+    const { data } = await fetcher('delete', `/user/me`);
+
+    return data;
+  },
 };
 
 export default folderService;
