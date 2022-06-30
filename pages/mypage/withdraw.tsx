@@ -11,19 +11,19 @@ import { CommonAppBarTitle } from './posts';
 import { ButtonWrapper } from '../write';
 import { DialogContent } from '@/components/MypageContentList/MypageContentList';
 import { useMemberQuery } from '@/hooks/apis';
-import { removeCookies } from '@/hooks/useCookie';
+import { useDeleteUserMutation } from '@/hooks/apis/member/useMemberMutation';
 
 const MyPageWithdraw = () => {
   const router = useRouter();
   const { dialogVisible, toggleDialog } = useDialog();
   const { data: me } = useMemberQuery();
+  const { mutate: deleteUser } = useDeleteUserMutation();
 
   const onClickGoBack = () => {
     router.back();
   };
   const withdrawal = () => {
-    removeCookies('authTokn');
-    console.log('회원탈퇴 api 호출');
+    deleteUser();
     toggleDialog();
   };
 
