@@ -31,7 +31,6 @@ export const ImageContainer = styled.div`
 export const ImageBox = styled.div`
   position: absolute;
   width: 9.5rem;
-  height: 6.3rem;
 
   &:first-child {
     left: -0.8rem;
@@ -41,7 +40,7 @@ export const ImageBox = styled.div`
 
   &:last-child {
     right: -0.4rem;
-    bottom: -0.7rem;
+    bottom: -1.1rem;
   }
 `;
 

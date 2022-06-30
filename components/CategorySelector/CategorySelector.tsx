@@ -30,7 +30,7 @@ const CategorySelector = ({
         <Description color={EMOTION_COLOR_TYPE[selectedValue]}>{selectedCategoryDescription}</Description>
       </TextContainer>
       <ImageContainer>
-        <Image src={`/category-images/category-${selectedValue}.png`} alt="" width={51} height={51} />
+        <Image src={`/category-images/category-${selectedValue.toLowerCase()}.png`} alt="" width="100%" height="100%" />
       </ImageContainer>
     </CategorySelectorContainer>
   );
