@@ -9,7 +9,7 @@ interface IBeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-export function useAddToHomescreenPrompt(): [() => void, boolean] {
+export function useAddToHomescreenPrompt(): [boolean, () => void] {
   const deferredPrompt = useRef<IBeforeInstallPromptEvent | null>(null);
   const [isVisible, setVisible] = useState(false);
 
@@ -37,6 +37,7 @@ export function useAddToHomescreenPrompt(): [() => void, boolean] {
       e.preventDefault();
 
       deferredPrompt.current = e;
+      setVisible(true);
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,5 +49,5 @@ export function useAddToHomescreenPrompt(): [() => void, boolean] {
     };
   }, []);
 
-  return [promptToInstall, isVisible];
+  return [isVisible, promptToInstall];
 }

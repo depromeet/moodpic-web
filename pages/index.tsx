@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AxiosError } from 'axios';
 import styled from 'styled-components';
+import { isIOS, isBrowser, isMobileSafari } from 'react-device-detect';
 import { HOME_TAB_TYPE, CurrentTabType, MINIMUM_FOLDER_SIZE } from '@/shared/constants/home';
 import useDialog from '@/hooks/useDialog';
 import { useInput } from '@/hooks/useInput';
@@ -14,6 +15,9 @@ import {
   useUpdateFolderMutation,
 } from '@/hooks/apis';
 import { useRandomBanner } from '@/hooks/useRandomBanner';
+import { useAddToHomescreenPrompt } from '@/hooks/useAddToHomescreenPrompt';
+import useBottomSheet from '@/hooks/useBottomSheet';
+import { SESSION_STORAGE_KEY } from '@/shared/constants/storageKey';
 import HomeBanner from '@/components/Home/Banner/Banner';
 import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
@@ -27,11 +31,15 @@ import useToast from '@/hooks/useToast';
 import { ToastType } from '@/shared/type/common';
 import FloatingButtonGroup from '@/components/Home/FloatingButtonGroup/FloatingButtonGroup';
 import { useIsMounted } from '@/hooks/useIsMounted';
+import HomeScreenGuide from '@/components/Home/HomeScreenGuide/HomeScreenGuide';
+import HomeScreenBottomSheet from '@/components/Home/HomeScreenButtonSheet/HomeScreenButtonSheet';
 
 const Home = () => {
+  const [isVisible, promptToInstall] = useAddToHomescreenPrompt();
   const [isEditMode, setIsEditMode] = useState(false);
   const isMounted = useIsMounted();
   const { dialogVisible, toggleDialog } = useDialog();
+  const { toggleSheet } = useBottomSheet();
   const [inputValue, onChangeInput, setInputValue] = useInput('');
   const { data: folderResponse, isLoading } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
@@ -71,6 +79,13 @@ const Home = () => {
       fetchPosts();
     }
   }, [currentTab, fetchPosts]);
+
+  const hideHomeScreenBottomSheet = () => {
+    toggleSheet();
+    globalThis?.sessionStorage.setItem(SESSION_STORAGE_KEY.IS_ALREADY_VIEWED, 'true');
+  };
+
+  const isAlreadyViewed = Boolean(globalThis?.sessionStorage?.getItem(SESSION_STORAGE_KEY.IS_ALREADY_VIEWED));
 
   const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
 
@@ -186,6 +201,24 @@ const Home = () => {
 
   const renderHeader = useMemo(() => <HomeHeader />, []);
 
+  const renderAddToHomeScreen = () => {
+    if (isAlreadyViewed) return;
+
+    if (isMobileSafari) {
+      return <HomeScreenGuide toggleSheet={hideHomeScreenBottomSheet} onClose={hideHomeScreenBottomSheet} />;
+    }
+
+    if (isVisible) {
+      return (
+        <HomeScreenBottomSheet
+          onClick={promptToInstall}
+          toggleSheet={hideHomeScreenBottomSheet}
+          onClose={hideHomeScreenBottomSheet}
+        />
+      );
+    }
+  };
+
   //TODO: 이후 Loading develop
   if (isLoading && folderResponse) return <div>로딩중</div>;
   const folderLength = folderResponse?.folders.length || 0;
@@ -220,6 +253,7 @@ const Home = () => {
       )}
       <FloatingButtonGroup hasIncompletedPosts={!!incompletedPosts?.length} />
       {dialogVisible && renderDialog()}
+      {renderAddToHomeScreen()}
     </>
   );
 };
