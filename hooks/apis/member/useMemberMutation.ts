@@ -8,6 +8,6 @@ export const useDeleteUserMutation = () =>
   useMutation(() => folderService.withdraw(), {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY.DELETE_USER);
-      removeCookies('authTokn');
+      removeCookies('authToken');
     },
   });

@@ -41,7 +41,7 @@ const folderService = {
     return data;
   },
   withdraw: async () => {
-    const { data } = await fetcher('delete', `/user/me`);
+    const { data } = await fetcher('delete', `/users/me`);
 
     return data;
   },

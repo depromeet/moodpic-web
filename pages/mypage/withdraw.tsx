@@ -12,6 +12,7 @@ import { ButtonWrapper } from '../write';
 import { DialogContent } from '@/components/MypageContentList/MypageContentList';
 import { useMemberQuery } from '@/hooks/apis';
 import { useDeleteUserMutation } from '@/hooks/apis/member/useMemberMutation';
+import { ROUTES } from '@/shared/constants/routes';
 
 const MyPageWithdraw = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const MyPageWithdraw = () => {
   const withdrawal = () => {
     deleteUser();
     toggleDialog();
+    router.replace(`${ROUTES.LOGIN}`);
   };
 
   return (

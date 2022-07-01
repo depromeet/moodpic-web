@@ -27,7 +27,6 @@ export function middleware(req: NextRequest) {
   } else if (
     !req.url.includes(`${baseUrl}${ROUTES.LOGIN}`) &&
     !req.url.includes(`${baseUrl}${ROUTES.AUTH_CALLBACK_KAKAO}`) &&
-    !req.url.includes(`${baseUrl}${ROUTES.LOGIN}`) &&
     !req.url.includes('/share/post') &&
     !req.cookies.authToken
   ) {
