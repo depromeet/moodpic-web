@@ -113,11 +113,13 @@ const Share = () => {
           <UserName>From. {me.nickname}</UserName>
         </SenderInformation>
         {
-          <ButtonWrapper>
-            <Button color="primary" onClick={copySharedPostLink} disabled={canShare ? false : true}>
-              <ButtonMessage>다음</ButtonMessage>
-            </Button>
-          </ButtonWrapper>
+          <ButtonWrapperA>
+            <ButtonContainer>
+              <Button color="primary" onClick={copySharedPostLink} disabled={canShare ? false : true}>
+                <ButtonMessage>다음</ButtonMessage>
+              </Button>
+            </ButtonContainer>
+          </ButtonWrapperA>
         }
         {isOpenConfirmDialog && (
           <CommonDialog type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
@@ -140,6 +142,25 @@ const deleteSeparator = (content: string) => {
   return deletedSeparator;
 };
 
+const ButtonContainer = styled.div`
+  position: sticky;
+  left: 0;
+  bottom: 8rem;
+  margin-top: auto;
+  width: 100%;
+  height: 5.5rem;
+  &::after {
+    position: absolute;
+    bottom: -8rem;
+    left: 0;
+    width: 100%;
+    height: 21.2rem;
+    content: '';
+    background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 52.6%);
+    z-index: -1;
+  }
+`;
+
 const Content = styled.p`
   width: 100%;
   padding: 1.6rem 1.8rem 1.8rem 1.8rem;
@@ -156,6 +177,14 @@ const Content = styled.p`
   outline: none;
   resize: none;
   margin-bottom: 1rem;
+`;
+
+const ButtonWrapperA = styled.div`
+  margin: auto 0 3.6rem;
+  position: fixed;
+  max-width: 44.4rem;
+  width: calc(100% - 3.6rem);
+  bottom: 0;
 `;
 
 const Container = styled.div`
