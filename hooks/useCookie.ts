@@ -103,6 +103,14 @@ export const removeCookies = (key: string, options?: OptionsType): void => {
   return setCookies(key, '', { ...options, maxAge: -1 });
 };
 
+export const hasCookie = (key: string, options?: OptionsType): boolean => {
+  if (!key) return false;
+
+  const cookie = getCookies(options);
+  // eslint-disable-next-line no-prototype-builtins
+  return cookie.hasOwnProperty(key);
+};
+
 export const checkCookies = (key: string, options?: OptionsType): boolean => {
   if (!key) return false;
 

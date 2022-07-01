@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled, { keyframes } from 'styled-components';
-import { KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
+import { AUTH_TOKEN, KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 import Image from 'next/image';
 import KakaoIcon from 'public/svgs/kakao.svg';
 import Logo from 'public/svgs/logo.svg';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
+import { hasCookie } from '@/hooks/useCookie';
+import { ROUTES } from '@/shared/constants/routes';
 
 const Logos = [
   'ANXIOUS',
@@ -32,6 +34,12 @@ const Login = () => {
       `${KAKAO_CLIENT_ORIGIN}?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${kakaoRedirectURL}&response_type=code`,
     );
   };
+
+  useEffect(() => {
+    if (hasCookie(AUTH_TOKEN)) {
+      router.replace(ROUTES.HOME);
+    }
+  }, [router]);
 
   return (
     <LoginWrap>
