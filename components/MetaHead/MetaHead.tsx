@@ -13,14 +13,11 @@ const MetaHead = ({ title, description }: InferGetServerSidePropsType<typeof get
         property="viewport"
         content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
       />
-      <title>
-        {title}
-        {description}
-      </title>
+      <title>{'title-test'}</title>
       <meta property="og:type" content="article" />
-      <meta key="title" property="og:title" content={'og:title'} />
+      <meta key="og:title" property="og:title" content="안녕하세요." />
+      <meta key="og:description" property="og:description" content="디스크립션입니당" />
       <meta property="og:url" content={'og:url'} />
-      <meta key="description" property="og:description" content={'og:description'} />
       <meta property="og:image" content={SaGong.src} />
     </Head>
   );
