@@ -20,6 +20,14 @@ export function middleware(req: NextRequest) {
     `${baseUrl}/images/JOY_160x160.png`,
     `${baseUrl}/images/CALMDOWN_160x160.png`,
     `${baseUrl}/images/IRRITATION_160x160.png`,
+    `${baseUrl}/favicon.png`,
+    `${baseUrl}/apple-icon-120x120.png`,
+    `${baseUrl}/apple-icon-152x152.png`,
+    `${baseUrl}/apple-icon-180x180.png`,
+    `${baseUrl}/icon-192x192.png`,
+    `${baseUrl}/icon-256x256.png`,
+    `${baseUrl}/icon-384x384.png`,
+    `${baseUrl}/icon-512x512.png`,
   ];
 
   if (unprotectedPaths.includes(req.url)) {
