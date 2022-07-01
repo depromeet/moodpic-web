@@ -25,8 +25,14 @@ const SharedPost = () => {
   const { dialogVisible: isOpenConfirmDialog, toggleDialog: toggleConfirmDialog } = useModal();
   const [isSharer, setIsSharer] = useState(false);
 
-  const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
-  const { data: me, isLoading: isLoadingMe } = useMemberQuery();
+  const checkIsSharer = (prevPath: string | null) => {
+    const SHARE_PAGE = '/share';
+    const POST_DETAIL_PAGE = '/posts/';
+
+    const IS_SHARER = prevPath === SHARE_PAGE || prevPath?.slice(0, 7) === POST_DETAIL_PAGE;
+
+    setIsSharer(IS_SHARER);
+  };
 
   const renderHeader = () => {
     if (isSharer) {
@@ -96,24 +102,14 @@ const SharedPost = () => {
         secondContent={secondContent}
         thirdContent={thirdContent}
         hasMultipleContent={hasMultipleContent}
+        disabled={true}
       />
     );
   };
 
   useEffect(() => {
-    if (ldm) {
-      refetchSharedPost();
-    }
-  }, [ldm]);
-
-  useEffect(() => {
-    setIsSharer(me?.nickname === sharedPost?.senderName);
-  }, [me, sharedPost]);
-
-  if (isLoadingSharedPost || isLoadingMe) return <div>로딩중</div>;
-  if (!sharedPost || !ldm) return <div>404</div>;
-
-  const { receiverName, category, content, senderName } = sharedPost;
+    checkIsSharer(getPrevPath());
+  }, []);
 
   return (
     <>
