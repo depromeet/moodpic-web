@@ -208,7 +208,7 @@ const Home = () => {
       return <HomeScreenGuide toggleSheet={hideHomeScreenBottomSheet} onClose={hideHomeScreenBottomSheet} />;
     }
 
-    if (isVisible && (!isIOS || isBrowser)) {
+    if (isVisible) {
       return (
         <HomeScreenBottomSheet
           onClick={promptToInstall}

@@ -21,9 +21,13 @@ export function useAddToHomescreenPrompt(): [boolean, () => void] {
 
     //실행 후 유저가 설치를 했는지 안했는지를 알 수 있다
     deferredPrompt.current.userChoice.then((choiceResult) => {
-      //설치 되어있을 때
+      //설치 했을 때
       if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
         setVisible(false);
+      } else {
+        //설치 하지 않았을 때
+        console.log('User dismissed the A2HS prompt');
       }
     });
   };
@@ -33,6 +37,7 @@ export function useAddToHomescreenPrompt(): [boolean, () => void] {
       e.preventDefault();
 
       deferredPrompt.current = e;
+      setVisible(true);
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
