@@ -8,6 +8,7 @@ export function middleware(req: NextRequest) {
   // reference: https://stackoverflow.com/questions/72206974/next-js-middleware-with-nextresponse-blocks-images-from-rendering
   const unprotectedPaths: string[] = [
     `${baseUrl}/login`,
+    `${baseUrl}/oauth/callback/kakao`,
     `${baseUrl}/_next/webpack-hmr`,
     `${baseUrl}/images/ANXIOUS_160x160.png`,
     `${baseUrl}/images/RELIEF_160x160.png`,
