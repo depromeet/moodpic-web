@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useMemberQuery, useSharedPostQuery } from '@/hooks/apis';
 import { UserName } from '../index';
 import styled from 'styled-components';
 import Button from '@/components/Common/Button/Button';
@@ -17,10 +16,20 @@ import theme from '@/styles/theme';
 import Question from '@/components/Post/PostEdit/Question';
 import { Post } from '@/shared/type/post';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
+import { GetServerSideProps } from 'next';
+import shareService from '@/service/apis/shareService';
+import memberService from '@/service/apis/memberService';
+import { Me } from '@/shared/type/member';
+import { GetSharedPostResponse } from '@/shared/type/share';
+import { getPrevPath } from '@/shared/utils/storePathValues';
 
-const SharedPost = () => {
+interface ServerSideProps {
+  sharedPost: GetSharedPostResponse;
+  me: Me;
+}
+
+const SharedPost = ({ sharedPost: { receiverName, category, content, senderName }, me }: ServerSideProps) => {
   const router = useRouter();
-  const ldm = router.query.ldm as string;
   const notify = useToast();
   const { dialogVisible: isOpenConfirmDialog, toggleDialog: toggleConfirmDialog } = useModal();
   const [isSharer, setIsSharer] = useState(false);
@@ -132,6 +141,20 @@ const SharedPost = () => {
       </Container>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const ldm = context.query.ldm as string;
+
+  const sharedPost = await shareService.getSharedPost(ldm);
+  const me = await memberService.getMe();
+
+  return {
+    props: {
+      sharedPost,
+      me,
+    },
+  };
 };
 
 const Container = styled.div`
