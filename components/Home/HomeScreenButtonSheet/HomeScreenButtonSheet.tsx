@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { CommonBottomSheetContainer, CommonButton, CommonIconButton } from '@/components/Common';
 import theme from '@/styles/theme';
 import Image from 'next/image';
-import AppIcon from '/public/icon-512x512.png';
+import AppIcon from '/public/images/app-icon-border-radius.png';
 
 export interface ScreenButtonSheetProps {
   onClick: () => void;
