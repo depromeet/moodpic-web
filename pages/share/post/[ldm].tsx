@@ -17,6 +17,7 @@ import theme from '@/styles/theme';
 import Question from '@/components/Post/PostEdit/Question';
 import { Post } from '@/shared/type/post';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
+import MetaHead from '@/components/MetaHead/MetaHead';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -117,23 +118,26 @@ const SharedPost = () => {
   const { receiverName, category, content, senderName } = sharedPost;
 
   return (
-    <Container>
-      {renderHeader()}
-      <BodyContainer>
-        <UserName>To. {receiverName}</UserName>
-        <ContentContainer>
-          {category !== 'UNSELECT' && <CategoryBox category={category} />}
-          <PostContentContainer>{renderContent(content)}</PostContentContainer>
-        </ContentContainer>
-        <UserName>From. {senderName}</UserName>
-        <ButtonWrapper>{renderButtonByUser()}</ButtonWrapper>
-        {isOpenConfirmDialog && (
-          <CommonDialog confirmText="확인" type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
-            <DialogWarning>페이지를 떠나시겠어요?</DialogWarning>
-          </CommonDialog>
-        )}
-      </BodyContainer>
-    </Container>
+    <>
+      <MetaHead />
+      <Container>
+        {renderHeader()}
+        <BodyContainer>
+          <UserName>To. {receiverName}</UserName>
+          <ContentContainer>
+            {category !== 'UNSELECT' && <CategoryBox category={category} />}
+            <PostContentContainer>{renderContent(content)}</PostContentContainer>
+          </ContentContainer>
+          <UserName>From. {senderName}</UserName>
+          <ButtonWrapper>{renderButtonByUser()}</ButtonWrapper>
+          {isOpenConfirmDialog && (
+            <CommonDialog confirmText="확인" type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
+              <DialogWarning>페이지를 떠나시겠어요?</DialogWarning>
+            </CommonDialog>
+          )}
+        </BodyContainer>
+      </Container>
+    </>
   );
 };
 
