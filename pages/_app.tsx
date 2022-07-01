@@ -43,10 +43,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta
           name="viewport"
-          content="minimum-scale=1, maximum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
         <title>나만의 감정 기록 보관소, moodpic</title>
-        <meta key="og:description" property="og:description" content="디스크립션입니당" />
+        <meta
+          key="og:description"
+          property="og:description"
+          content="당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
+        />
       </Head>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>

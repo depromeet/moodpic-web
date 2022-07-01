@@ -17,9 +17,6 @@ import theme from '@/styles/theme';
 import Question from '@/components/Post/PostEdit/Question';
 import { Post } from '@/shared/type/post';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import MetaHead from '@/components/MetaHead/MetaHead';
-import SaGong from '*.png';
-import Head from 'next/head';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -114,24 +111,12 @@ const SharedPost = () => {
   }, [me, sharedPost]);
 
   if (isLoadingSharedPost || isLoadingMe) return <div>로딩중</div>;
-  if (isLoadingSharedPost) return <div>로딩중</div>;
   if (!sharedPost || !ldm) return <div>404</div>;
 
   const { receiverName, category, content, senderName } = sharedPost;
 
   return (
     <>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta
-          property="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
-        />
-        <title>공유title</title>
-        <meta name="description" key="description" content="공유desc" />
-        <meta key="og:title" property="og:title" content="안녕하세요.공유입니다." />
-        <meta key="og:description" property="og:description" content="우리 공유는요. 디스크립션입니당" />
-      </Head>
       <Container>
         {renderHeader()}
         <BodyContainer>
