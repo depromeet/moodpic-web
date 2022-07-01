@@ -41,6 +41,11 @@ const Share = () => {
     setSelectedCategory(category);
   };
 
+  const createSharedPostLink = (ldm: string) => {
+    const SHARED_POST_PAGE = '/share/post';
+    return window.location.origin + SHARED_POST_PAGE + '/' + ldm;
+  };
+
   const getSharedPostLink = async () => {
     try {
       if (!selectedCategory) return alert('선택해주셔요');
@@ -55,7 +60,8 @@ const Share = () => {
 
     if (!sharedPostLdm) return alert('404');
 
-    router.push({ pathname: '/share/post', query: { ldm: sharedPostLdm } });
+    const sharedPostLink = createSharedPostLink(sharedPostLdm);
+    router.push(sharedPostLink);
   };
 
   useEffect(() => {
