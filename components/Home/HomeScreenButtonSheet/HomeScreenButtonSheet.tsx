@@ -13,7 +13,7 @@ export interface ScreenButtonSheetProps {
 
 const HomeScreenButtonSheet = ({ onClick, onClose, toggleSheet }: ScreenButtonSheetProps): React.ReactElement => {
   return (
-    <CommonBottomSheetContainer onClose={toggleSheet} bottomSheetHeight={512}>
+    <CommonBottomSheetContainer onClose={toggleSheet} bottomSheetHeight={463}>
       <SheetContainer>
         <ButtonContainer>
           <CommonIconButton iconName="close" onClick={onClose} />
@@ -44,8 +44,8 @@ const SheetContainer = styled.section`
 `;
 
 const SheetImage = styled.div`
-  width: 13.5rem;
-  height: 13.5rem;
+  width: 8.7rem;
+  height: 8.7rem;
   border-radius: 2.7rem;
 
   span {
@@ -59,11 +59,11 @@ const SheetTitle = styled.h4`
   line-height: 160%;
   letter-spacing: -0.01rem;
   color: ${theme.colors.white};
-  margin-bottom: 2.8rem;
+  margin-bottom: 3.2rem;
 `;
 
 const SheetContents = styled.p`
-  margin: 3.6rem 0 4.6rem;
+  margin: 3.2rem 0 4.6rem;
   font-weight: 500;
   font-size: 1.6rem;
   line-height: 160%;
