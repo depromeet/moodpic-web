@@ -17,6 +17,7 @@ import theme from '@/styles/theme';
 import Question from '@/components/Post/PostEdit/Question';
 import { Post } from '@/shared/type/post';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
+import { getPrevPath } from '@/shared/utils/storePathValues';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -24,6 +25,9 @@ const SharedPost = () => {
   const notify = useToast();
   const { dialogVisible: isOpenConfirmDialog, toggleDialog: toggleConfirmDialog } = useModal();
   const [isSharer, setIsSharer] = useState(false);
+
+  const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
+  const { data: me, isLoading: isLoadingMe } = useMemberQuery();
 
   const checkIsSharer = (prevPath: string | null) => {
     const SHARE_PAGE = '/share';
@@ -108,8 +112,17 @@ const SharedPost = () => {
   };
 
   useEffect(() => {
-    checkIsSharer(getPrevPath());
-  }, []);
+    if (ldm) {
+      checkIsSharer(getPrevPath());
+      refetchSharedPost();
+    }
+  }, [ldm]);
+
+  if (isLoadingSharedPost || isLoadingMe) return <div>로딩중</div>;
+  if (isLoadingSharedPost) return <div>로딩중</div>;
+  if (!sharedPost || !ldm) return <div>404</div>;
+
+  const { receiverName, category, content, senderName } = sharedPost;
 
   return (
     <>
