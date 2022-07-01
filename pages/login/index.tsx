@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import styled, { keyframes } from 'styled-components';
 import { KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 import Image from 'next/image';
-import { useAddToHomescreenPrompt } from '@/hooks/useAddToHomescreenPrompt';
 import KakaoIcon from 'public/svgs/kakao.svg';
 import Logo from 'public/svgs/logo.svg';
 import { a11y } from '@/styles/mixins';
@@ -26,21 +25,11 @@ const InfiniteScrollingLogos = [...Logos, ...Logos];
 
 const Login = () => {
   const router = useRouter();
-  const [promptToInstall, isVisible] = useAddToHomescreenPrompt();
 
   const goKakaoCallback = async () => {
     const kakaoRedirectURL = `${window.location.origin}${KAKAO_REDIRECT_URL}`;
     router.push(
       `${KAKAO_CLIENT_ORIGIN}?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${kakaoRedirectURL}&response_type=code`,
-    );
-  };
-
-  const showHomescreen = () => {
-    return (
-      <HomeScreenContainer>
-        Hello! Wanna add to homescreen?
-        <button onClick={promptToInstall}>Add to homescreen</button>
-      </HomeScreenContainer>
     );
   };
 
@@ -76,7 +65,6 @@ const Login = () => {
           <span>카카오톡으로 로그인</span>
         </KakaoButton>
       </ButtonContainer>
-      {isVisible && showHomescreen()}
     </LoginWrap>
   );
 };
@@ -183,12 +171,6 @@ const InfiniteScrollingLogosWrap = styled.div`
   height: 16rem;
   transform: translateX(-8rem);
   animation: ${RollingAnimation} 80000ms linear infinite;
-`;
-
-const HomeScreenContainer = styled.div`
-  position: fixed;
-  ${theme.fonts.h1};
-  color: ${theme.colors.white};
 `;
 
 export default Login;
