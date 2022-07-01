@@ -127,6 +127,8 @@ const SharedPost = () => {
           property="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
+        <title>공유title</title>
+        <meta name="description" key="description" content="공유desc" />
         <meta key="og:title" property="og:title" content="안녕하세요.공유입니다." />
         <meta key="og:description" property="og:description" content="우리 공유는요. 디스크립션입니당" />
       </Head>
