@@ -5,17 +5,22 @@ import { AUTH_TOKEN } from '@/shared/constants/auth';
 
 const authService = {
   getAuth: async (kakaoCode: string) => {
-    const { data } = await fetcher('get', '/signIn', {
-      params: {
-        code: kakaoCode,
-      },
-    });
+    try {
+      const { data } = await fetcher('get', '/signIn', {
+        params: {
+          code: kakaoCode,
+        },
+      });
 
-    const { auth, refresh } = data;
+      const { auth, refresh } = data;
 
-    setCookies(AUTH_TOKEN, auth, { secure: true, sameSite: 'lax', maxAge: 31536000 }); //TODO: 이러면 refresh 토큰이 필요있나? maxAge가 1년이라.. 리팩토링 해야될듯
+      setCookies(AUTH_TOKEN, auth, { secure: true, sameSite: 'lax', maxAge: 31536000 }); //TODO: 이러면 refresh 토큰이 필요있나? maxAge가 1년이라.. 리팩토링 해야될듯
 
-    return { auth, refresh };
+      return { auth, refresh };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      throw new Error(error);
+    }
   },
 
   login: async (AUTH_TOKEN: string) => {

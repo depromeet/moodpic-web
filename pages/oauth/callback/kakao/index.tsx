@@ -8,9 +8,12 @@ const KakaoAuth = () => {
   const router = useRouter();
 
   const login = async (kakaoCode: string) => {
-    await authService.getAuth(kakaoCode);
-
-    router.push(ROUTES.HOME);
+    try {
+      await authService.getAuth(kakaoCode);
+      router.push(ROUTES.HOME);
+    } catch (error) {
+      router.replace(ROUTES.HOME);
+    }
   };
 
   useEffect(() => {
