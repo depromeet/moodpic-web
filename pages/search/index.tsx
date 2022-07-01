@@ -7,7 +7,7 @@ import NavHeader from '@/components/TagSearch/NavHeader/NavHeader';
 import SearchField from '@/components/TagSearch/SearchField/SearchField';
 import useSearchForm from '@/hooks/useSearchForm';
 import { getLocalStorageValue, setLocalStorageValue } from '@/shared/utils/localStorage';
-import { LOCAL_STORAGE_KEY } from '@/shared/constants/localStorageKey';
+import { LOCAL_STORAGE_KEY } from '@/shared/constants/storageKey';
 import { usePopularTags } from '@/hooks/apis';
 import { useRouter } from 'next/router';
 
