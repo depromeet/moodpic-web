@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AxiosError } from 'axios';
 import styled from 'styled-components';
-import { isIOS, isBrowser, isMobileSafari } from 'react-device-detect';
+import { isMobileSafari } from 'react-device-detect';
 import { HOME_TAB_TYPE, CurrentTabType, MINIMUM_FOLDER_SIZE } from '@/shared/constants/home';
 import useDialog from '@/hooks/useDialog';
 import { useInput } from '@/hooks/useInput';
