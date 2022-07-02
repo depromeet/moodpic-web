@@ -137,7 +137,12 @@ const SharedPost = () => {
           <UserName>From. {senderName}</UserName>
           <ButtonWrapper>{renderButtonByUser()}</ButtonWrapper>
           {isOpenConfirmDialog && (
-            <CommonDialog confirmText="확인" type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
+            <CommonDialog
+              confirmText="확인"
+              type="alert"
+              onClose={toggleConfirmDialog}
+              onConfirm={() => router.push('/')}
+            >
               <DialogWarning>페이지를 떠나시겠어요?</DialogWarning>
             </CommonDialog>
           )}
