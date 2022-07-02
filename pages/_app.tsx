@@ -11,6 +11,7 @@ import theme from '@/styles/theme';
 import { queryClient } from '@/shared/utils/queryClient';
 import { CommonAppLayout } from '@/components/Common';
 import * as gtag from '@/lib/gtag';
+import OgImage from 'public/images/og_image.png';
 
 if (typeof window !== 'undefined') {
   if ('serviceWorker' in navigator) {
@@ -51,6 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="og:description"
           content="당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
         />
+        <meta property="og:image" content={OgImage.src} />
       </Head>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
