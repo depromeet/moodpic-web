@@ -17,9 +17,7 @@ import theme from '@/styles/theme';
 import Question from '@/components/Post/PostEdit/Question';
 import { Post } from '@/shared/type/post';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import MetaHead from '@/components/MetaHead/MetaHead';
-import SaGong from '*.png';
-import Head from 'next/head';
+import { getPrevPath } from '@/shared/utils/storePathValues';
 
 const SharedPost = () => {
   const router = useRouter();
@@ -30,6 +28,15 @@ const SharedPost = () => {
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
   const { data: me, isLoading: isLoadingMe } = useMemberQuery();
+
+  const checkIsSharer = (prevPath: string | null) => {
+    const SHARE_PAGE = '/share';
+    const POST_DETAIL_PAGE = '/posts/';
+
+    const IS_SHARER = prevPath === SHARE_PAGE || prevPath?.slice(0, 7) === POST_DETAIL_PAGE;
+
+    setIsSharer(IS_SHARER);
+  };
 
   const renderHeader = () => {
     if (isSharer) {
@@ -99,19 +106,17 @@ const SharedPost = () => {
         secondContent={secondContent}
         thirdContent={thirdContent}
         hasMultipleContent={hasMultipleContent}
+        disabled={true}
       />
     );
   };
 
   useEffect(() => {
     if (ldm) {
+      checkIsSharer(getPrevPath());
       refetchSharedPost();
     }
   }, [ldm]);
-
-  useEffect(() => {
-    setIsSharer(me?.nickname === sharedPost?.senderName);
-  }, [me, sharedPost]);
 
   if (isLoadingSharedPost || isLoadingMe) return <div>로딩중</div>;
   if (isLoadingSharedPost) return <div>로딩중</div>;
@@ -121,17 +126,6 @@ const SharedPost = () => {
 
   return (
     <>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta
-          property="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
-        />
-        <title>공유title</title>
-        <meta name="description" key="description" content="공유desc" />
-        <meta key="og:title" property="og:title" content="안녕하세요.공유입니다." />
-        <meta key="og:description" property="og:description" content="우리 공유는요. 디스크립션입니당" />
-      </Head>
       <Container>
         {renderHeader()}
         <BodyContainer>
@@ -143,7 +137,12 @@ const SharedPost = () => {
           <UserName>From. {senderName}</UserName>
           <ButtonWrapper>{renderButtonByUser()}</ButtonWrapper>
           {isOpenConfirmDialog && (
-            <CommonDialog confirmText="확인" type="alert" onClose={toggleConfirmDialog} onConfirm={() => router.back()}>
+            <CommonDialog
+              confirmText="확인"
+              type="alert"
+              onClose={toggleConfirmDialog}
+              onConfirm={() => router.push('/')}
+            >
               <DialogWarning>페이지를 떠나시겠어요?</DialogWarning>
             </CommonDialog>
           )}

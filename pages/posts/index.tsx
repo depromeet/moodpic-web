@@ -273,7 +273,6 @@ const PostListPage = () => {
           <BottomButton disabled={totalCount === 0} onClick={showDeletePostsDialog}>
             전체 삭제
           </BottomButton>
-          <BottomButton disabled={totalCount === 0}>전체 삭제</BottomButton>
           <BottomButton disabled={!checkedItems.length} onClick={showDeletePostDialog}>
             {checkedItems.length > 0 && `${checkedItems.length}개`} 삭제
           </BottomButton>
