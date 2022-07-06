@@ -50,7 +50,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta
           key="og:description"
           property="og:description"
-          content="당신의 해소하고 싶은 감정들을 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
+          content="당신의 해소하고 싶은 감정들을 무드픽에 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
         />
         <meta property="og:image" content={OgImage.src} />
       </Head>
