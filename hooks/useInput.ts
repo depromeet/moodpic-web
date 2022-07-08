@@ -2,7 +2,7 @@ import { useState, useCallback, ChangeEvent } from 'react';
 
 type onChangeType = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
 
-export const useInput = (initialValue = '') => {
+const useInput = (initialValue = '') => {
   const [value, setValue] = useState(initialValue);
   const handler = useCallback(({ target }) => {
     const max = Number(target.getAttribute('maxlength'));
@@ -15,3 +15,5 @@ export const useInput = (initialValue = '') => {
   }, []);
   return [value, handler, setValue] as [string, onChangeType, typeof setValue];
 };
+
+export default useInput;

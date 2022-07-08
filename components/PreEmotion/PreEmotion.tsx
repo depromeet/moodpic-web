@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import Button from '@/components/Common/Button/Button';
+import { CommonButton } from '@/components/Common';
 import { useMemberQuery } from '@/hooks/apis';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import theme from '@/styles/theme';
@@ -21,9 +21,14 @@ const PreEmotion = () => {
       </MainTitle>
       <FirstCategorySelect />
       <ButtonWrapper>
-        <Button color="primary" onClick={nextProgressStep} size="large" disabled={selectedState.firstCategory === ''}>
+        <CommonButton
+          color="primary"
+          onClick={nextProgressStep}
+          size="large"
+          disabled={selectedState.firstCategory === ''}
+        >
           다음
-        </Button>
+        </CommonButton>
       </ButtonWrapper>
     </>
   );

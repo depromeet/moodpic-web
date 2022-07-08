@@ -12,7 +12,7 @@ interface ToastProps {
 const toastList = new Set();
 const MAX_TOAST = 1;
 
-export default function useToast() {
+const useToast = () => {
   const [type, setToastType] = useRecoilState(toastStateAtom);
 
   const showLimitToast = (message: string) => {
@@ -32,4 +32,6 @@ export default function useToast() {
     setToastType(type);
     showLimitToast(message);
   };
-}
+};
+
+export default useToast;
