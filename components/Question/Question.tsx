@@ -6,10 +6,8 @@ import styled from 'styled-components';
 import useDialog from '@/hooks/useDialog';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import { createPostRequestState } from '@/store/post/atom';
-import Button from '@/components/Common/Button/Button';
 import DialogCancel from '@/components/Dialog/DialogCancel';
-import TextArea from '../Common/TextArea/TextArea';
-import { CommonDialog } from '../Common';
+import { CommonTextArea, CommonDialog, CommonButton } from '../Common';
 import {
   ButtonContainer,
   MyselfQuestionTitle,
@@ -18,7 +16,7 @@ import {
   ProvidedQuestionSubDescription,
   QuestionWrap,
 } from './Question.styles';
-import { useInput } from '@/hooks/useInput';
+import useInput from '@/hooks/useInput';
 import { questionModeState, QuestionModeStateType } from '@/store/questionMode/atom';
 import { useMemberQuery } from '@/hooks/apis';
 
@@ -126,20 +124,20 @@ const Question = () => {
     <>
       <ButtonContainer>
         <div>
-          <Button
+          <CommonButton
             color={mode === 'providedQuestion' ? 'primary' : 'gray'}
             size="medium"
             onClick={onClickTabButton('myselfQuestion')}
           >
             질문에 맞춰 쓸래요
-          </Button>
-          <Button
+          </CommonButton>
+          <CommonButton
             color={mode === 'providedQuestion' ? 'gray' : 'primary'}
             size="medium"
             onClick={onClickTabButton('providedQuestion')}
           >
             내맘대로 쓸래요
-          </Button>
+          </CommonButton>
         </div>
       </ButtonContainer>
       {mode === 'providedQuestion' ? (
@@ -156,7 +154,7 @@ const Question = () => {
             <ProvidedQuestionSubDescription>
               상황을 객관적으로 파악해보는 시간을 가져보세요.
             </ProvidedQuestionSubDescription>
-            <TextArea
+            <CommonTextArea
               value={firstQuestionValue}
               height="32.6rem"
               onChange={onChangeFirstQuestionValue}
@@ -171,7 +169,7 @@ const Question = () => {
             </NumberTitle>
             <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
             <ProvidedQuestionSubDescription>너무 깊게 생각하지 않아도 돼요!</ProvidedQuestionSubDescription>
-            <TextArea
+            <CommonTextArea
               value={secondQuestionValue}
               height="32.6rem"
               onChange={onChangeSecondQuestionValue}
@@ -188,7 +186,7 @@ const Question = () => {
             <ProvidedQuestionSubDescription>
               지금의 나에게 해줄 수 있는 말은 무엇이 있을까요?
             </ProvidedQuestionSubDescription>
-            <TextArea
+            <CommonTextArea
               value={thirdQuestionValue}
               height="32.6rem"
               onChange={onChangeThirdQuestionValue}
@@ -200,7 +198,7 @@ const Question = () => {
       ) : (
         <QuestionWrap>
           <MyselfQuestionTitle>✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.</MyselfQuestionTitle>
-          <TextArea
+          <CommonTextArea
             value={myselfQuestionValue}
             height="32.6rem"
             onChange={onChangeMyselfQuestionValue}
@@ -209,14 +207,14 @@ const Question = () => {
         </QuestionWrap>
       )}
       <ButtonWrapper>
-        <Button
+        <CommonButton
           disabled={!(!!firstQuestionValue && !!secondQuestionValue && !!thirdQuestionValue) && !myselfQuestionValue}
           color="primary"
           onClick={onClickNextButton}
           size="large"
         >
           다음
-        </Button>
+        </CommonButton>
       </ButtonWrapper>
       {dialogVisible ? (
         <CommonDialog type="alert" onClose={toggleDialog} onConfirm={onClickConfirm(mode)}>

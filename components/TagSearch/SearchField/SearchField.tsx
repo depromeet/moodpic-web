@@ -1,5 +1,5 @@
-import TextField from '../../Common/TextField/TextField';
 import React, { ChangeEvent, FormEvent } from 'react';
+import { CommonTextField } from '@/components/Common';
 import Close from '/public/svgs/close.svg';
 import { Tag } from '../../../shared/type/post';
 
@@ -18,7 +18,7 @@ const SearchField = ({ value, onChange, onSubmit, onClickRightSideIcon }: Search
         onSubmit(value);
       }}
     >
-      <TextField
+      <CommonTextField
         value={value}
         onChange={onChange}
         rightSideIcon={Close.src}

@@ -6,7 +6,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
 import folderService from '@/service/apis/folderService';
 import { createPostRequestState, createPostResponseState } from '@/store/post/atom';
-import { useInput } from '@/hooks/useInput';
+import useInput from '@/hooks/useInput';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import useToast from '@/hooks/useToast';
 import useDialog from '@/hooks/useDialog';

@@ -1,7 +1,7 @@
 import { TOTAL_BANNER_BACKGROUND_SIZE } from '@/shared/constants/home';
 import { ReactNode, useEffect, useState } from 'react';
 
-export const useRandomBanner = (randomTitleCases: ReactNode[]) => {
+const useRandomBanner = (randomTitleCases: ReactNode[]) => {
   const [randomImageSource, setRandomImageSource] = useState('');
   const [randomTitle, setRandomTitle] = useState<ReactNode | null>(null);
 
@@ -19,3 +19,5 @@ export const useRandomBanner = (randomTitleCases: ReactNode[]) => {
     randomTitle,
   };
 };
+
+export default useRandomBanner;
