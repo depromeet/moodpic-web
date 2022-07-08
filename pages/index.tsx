@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AxiosError } from 'axios';
 import styled from 'styled-components';
-import { isIOS, isBrowser, isMobileSafari } from 'react-device-detect';
+import { isMobileSafari } from 'react-device-detect';
 import { HOME_TAB_TYPE, CurrentTabType, MINIMUM_FOLDER_SIZE } from '@/shared/constants/home';
 import useDialog from '@/hooks/useDialog';
-import { useInput } from '@/hooks/useInput';
+import useInput from '@/hooks/useInput';
 import {
   useCreateFolderMutation,
   useDeleteFolderMutation,
@@ -14,8 +14,8 @@ import {
   usePostsByCategoryQuery,
   useUpdateFolderMutation,
 } from '@/hooks/apis';
-import { useRandomBanner } from '@/hooks/useRandomBanner';
-import { useAddToHomescreenPrompt } from '@/hooks/useAddToHomescreenPrompt';
+import useRandomBanner from '@/hooks/useRandomBanner';
+import useAddToHomescreenPrompt from '@/hooks/useAddToHomescreenPrompt';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import { SESSION_STORAGE_KEY } from '@/shared/constants/storageKey';
 import HomeBanner from '@/components/Home/Banner/Banner';
@@ -30,7 +30,7 @@ import DialogWarning from '@/components/Dialog/DialogWarning';
 import useToast from '@/hooks/useToast';
 import { ToastType } from '@/shared/type/common';
 import FloatingButtonGroup from '@/components/Home/FloatingButtonGroup/FloatingButtonGroup';
-import { useIsMounted } from '@/hooks/useIsMounted';
+import useIsMounted from '@/hooks/useIsMounted';
 import HomeScreenGuide from '@/components/Home/HomeScreenGuide/HomeScreenGuide';
 import HomeScreenBottomSheet from '@/components/Home/HomeScreenButtonSheet/HomeScreenButtonSheet';
 

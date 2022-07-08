@@ -3,9 +3,9 @@ import React, { useCallback, useEffect, ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { CONTENT_SEPARATOR } from '@/shared/constants/question';
-import { useInput } from '@/hooks/useInput';
+import useInput from '@/hooks/useInput';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import { useIsMounted } from '@/hooks/useIsMounted';
+import useIsMounted from '@/hooks/useIsMounted';
 import {
   useCategoryListQuery,
   useCreateFolderMutation,
