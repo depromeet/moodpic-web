@@ -1,7 +1,7 @@
 import { CategoryListItemResponse } from '@/hooks/apis';
 import React from 'react';
 import styled from 'styled-components';
-import { CommonButton } from '../Common';
+import { CommonButton } from '@/components/Common';
 
 interface BottomSheetCategoryListProps {
   items: CategoryListItemResponse[];

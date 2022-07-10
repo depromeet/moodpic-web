@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { ProvidedQuestionMainTitle } from '../Question/Question.styles';
+import { ProvidedQuestionMainTitle } from '@/components/Question/Question.styles';
 
 export const PostDetailContainer = styled.section`
   display: flex;

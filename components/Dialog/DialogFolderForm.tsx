@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { CommonTextField } from '../Common';
+import { CommonTextField } from '@/components/Common';
 
 interface DialogFolderFormProps {
   isEditMode?: boolean;

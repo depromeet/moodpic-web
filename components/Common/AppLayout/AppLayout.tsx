@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { CommonToast } from '@/components/Common';
 import { Container, ContainerInner } from './AppLayout.styles';
 import { toastStateAtom } from '@/store/toast/atom';
-import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import DropdownMenu from '@/components/Common/DropdownMenu/DropdownMenu';
 import { dropdownStateAtom } from '@/store/dropdown/atom';
 import { ROUTES } from '@/shared/constants/routes';
 

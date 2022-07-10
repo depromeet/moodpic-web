@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { CommonButtonWithIcon } from '../Common';
+import { CommonButtonWithIcon } from '@/components/Common';
 
 const PostFloatingButton = (): React.ReactElement => {
   const router = useRouter();

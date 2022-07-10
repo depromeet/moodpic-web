@@ -1,5 +1,5 @@
 import axios from 'axios';
-import fetcher from '../../shared/utils/fetcher';
+import fetcher from '@/shared/utils/fetcher';
 import { setCookies } from '@/hooks/useCookie';
 import { AUTH_TOKEN } from '@/shared/constants/auth';
 

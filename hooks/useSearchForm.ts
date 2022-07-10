@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from 'react';
-import { getLocalStorageValue, setLocalStorageValue } from '../shared/utils/localStorage';
-import { LOCAL_STORAGE_KEY } from '../shared/constants/storageKey';
+import { getLocalStorageValue, setLocalStorageValue } from '@/shared/utils/localStorage';
+import { LOCAL_STORAGE_KEY } from '@/shared/constants/storageKey';
 import { useRouter } from 'next/router';
 import useToast from './useToast';
-import { ToastType } from '../shared/type/common';
-import { Tag } from '../shared/type/post';
+import { ToastType } from '@/shared/type/common';
+import { Tag } from '@/shared/type/post';
 
 const useSearchForm = () => {
   const [searchResult, setSearchResult] = useState<string>('');

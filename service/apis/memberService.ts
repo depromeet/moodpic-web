@@ -1,5 +1,5 @@
-import fetcher from '../../shared/utils/fetcher';
-import { Me } from '../../shared/type/member';
+import fetcher from '@/shared/utils/fetcher';
+import { Me } from '@/shared/type/member';
 
 const memberService = {
   getMe: async (): Promise<Me> => {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serialize, parse } from 'cookie';
-import { OptionsType, TmpCookiesObj, CookieValueTypes } from '../shared/type/cookie';
+import { OptionsType, TmpCookiesObj, CookieValueTypes } from '@/shared/type/cookie';
 
 const isClientSide = (): boolean => typeof window !== 'undefined';
 

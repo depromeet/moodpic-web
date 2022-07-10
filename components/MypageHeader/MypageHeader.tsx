@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { CommonAppBar, CommonIconButton } from '../Common';
+import { CommonAppBar, CommonIconButton } from '@/components/Common';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import Image from 'next/image';

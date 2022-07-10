@@ -1,5 +1,5 @@
-import fetcher from '../../shared/utils/fetcher';
-import { GetSharedPostResponse, SharePostRequest } from '../../shared/type/share';
+import fetcher from '@/shared/utils/fetcher';
+import { GetSharedPostResponse, SharePostRequest } from '@/shared/type/share';
 
 const shareService = {
   sharePost: async ({ receiverName, category, postId }: SharePostRequest): Promise<string> => {

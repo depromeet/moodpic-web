@@ -5,7 +5,7 @@ import Button from '@/components/Common/Button/Button';
 import { useMemberQuery } from '@/hooks/apis';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import theme from '@/styles/theme';
-import FirstCategorySelect from '../Common/SelectButton/FirstCategorySelect';
+import FirstCategorySelect from '@/components/Common/SelectButton/FirstCategorySelect';
 import { createPostRequestState } from '@/store/post/atom';
 
 const PreEmotion = () => {

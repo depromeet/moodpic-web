@@ -1,7 +1,7 @@
-import TextField from '../../Common/TextField/TextField';
 import React, { ChangeEvent, FormEvent } from 'react';
-import Close from '/public/svgs/close.svg';
-import { Tag } from '../../../shared/type/post';
+import TextField from '@/components/Common/TextField/TextField';
+import Close from 'public/svgs/close.svg';
+import { Tag } from '@/shared/type/post';
 
 interface SearchFieldProps {
   value: string;

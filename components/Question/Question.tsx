@@ -8,8 +8,8 @@ import useNextProgressStep from '@/hooks/useNextProgressStep';
 import { createPostRequestState } from '@/store/post/atom';
 import Button from '@/components/Common/Button/Button';
 import DialogCancel from '@/components/Dialog/DialogCancel';
-import TextArea from '../Common/TextArea/TextArea';
-import { CommonDialog } from '../Common';
+import TextArea from '@/components/Common/TextArea/TextArea';
+import { CommonDialog } from '@/components/Common';
 import {
   ButtonContainer,
   MyselfQuestionTitle,

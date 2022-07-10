@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../../../styles/theme';
-import { Tag } from '../../../shared/type/post';
+import theme from '@/styles/theme';
+import { Tag } from '@/shared/type/post';
 
 interface PopularTagItemProps {
   rank: number;
