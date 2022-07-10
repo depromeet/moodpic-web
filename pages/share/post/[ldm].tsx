@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useMemberQuery, useSharedPostQuery } from '@/hooks/apis';
-import UserName from '@/pages/index';
+import { UserName } from '../index';
 import styled from 'styled-components';
 import Button from '@/components/Common/Button/Button';
 import CategoryBox from '@/components/Share/CategoryBox/CategoryBox';
