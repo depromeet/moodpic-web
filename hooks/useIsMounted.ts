@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useIsMounted = () => {
+const useIsMounted = () => {
   const elementRef = useRef(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -18,3 +18,5 @@ export const useIsMounted = () => {
 
   return isMounted;
 };
+
+export default useIsMounted;

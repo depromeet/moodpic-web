@@ -13,7 +13,7 @@ import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 import useDialog from '@/hooks/useDialog';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
-import { useInput } from '@/hooks/useInput';
+import useInput from '@/hooks/useInput';
 import useToast from '@/hooks/useToast';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import {
