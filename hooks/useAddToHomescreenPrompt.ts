@@ -9,7 +9,7 @@ interface IBeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-export function useAddToHomescreenPrompt(): [boolean, () => void] {
+const useAddToHomescreenPrompt = (): [boolean, () => void] => {
   const deferredPrompt = useRef<IBeforeInstallPromptEvent | null>(null);
   const [isVisible, setVisible] = useState(false);
 
@@ -50,4 +50,6 @@ export function useAddToHomescreenPrompt(): [boolean, () => void] {
   }, []);
 
   return [isVisible, promptToInstall];
-}
+};
+
+export default useAddToHomescreenPrompt;

@@ -6,7 +6,7 @@ const LIST_ITEM_HEIGHT = 61.8;
 const LIST_BOTTOM_HEIGHT = 58;
 const NEW_CREATE_FOLDER = 47;
 
-export default function useBottomSheet() {
+const useBottomSheet = () => {
   const [isVisibleSheet, setVisibleSheet] = useState(false);
 
   const calcBottomSheetHeight = ({ folderSize, hasHeader = false }: { folderSize: number; hasHeader?: boolean }) => {
@@ -32,4 +32,6 @@ export default function useBottomSheet() {
     toggleSheet,
     isVisibleSheet,
   };
-}
+};
+
+export default useBottomSheet;

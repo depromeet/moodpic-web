@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { animated } from 'react-spring';
 import theme from '@/styles/theme';
 import { dropdownStateAtom } from '@/store/dropdown/atom';
-import { useAnimation } from '@/hooks/useAnimation';
+import useAnimation from '@/hooks/useAnimation';
 import LeftIcon from 'public/svgs/left.svg';
 import Logo from 'public/images/logo.png';
 import { ROUTES } from '@/shared/constants/routes';

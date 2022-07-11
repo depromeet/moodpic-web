@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useMemberQuery, useSharedPostQuery } from '@/hooks/apis';
+import { useSharedPostQuery } from '@/hooks/apis';
 import { UserName } from '../index';
 import styled from 'styled-components';
-import Button from '@/components/Common/Button/Button';
 import CategoryBox from '@/components/Share/CategoryBox/CategoryBox';
 import { copyClipboard } from '@/shared/utils/copyClipboard';
 import useToast from '@/hooks/useToast';
 import { ToastType } from '@/shared/type/common';
 import DialogWarning from '@/components/Dialog/DialogWarning';
-import { CommonAppBar, CommonDialog, CommonIconButton, LogoHeader } from '@/components/Common';
+import { CommonAppBar, CommonDialog, CommonIconButton, CommonButton, CommonLogoHeader } from '@/components/Common';
 import useModal from '@/hooks/useDialog';
 import Image from 'next/image';
 import Right from '@/public/svgs/right.svg';
@@ -27,7 +26,6 @@ const SharedPost = () => {
   const [isSharer, setIsSharer] = useState(false);
 
   const { data: sharedPost, isLoading: isLoadingSharedPost, refetch: refetchSharedPost } = useSharedPostQuery(ldm);
-  const { data: me, isLoading: isLoadingMe } = useMemberQuery();
 
   const checkIsSharer = (prevPath: string | null) => {
     const SHARE_PAGE = '/share';
@@ -53,7 +51,7 @@ const SharedPost = () => {
     } else {
       return (
         <HeadWrapper>
-          <LogoHeader onClickLogo={() => router.push('/')} />
+          <CommonLogoHeader onClickLogo={() => router.push('/')} />
         </HeadWrapper>
       );
     }
@@ -63,7 +61,7 @@ const SharedPost = () => {
     if (isSharer) {
       return (
         <ButtonContainer>
-          <Button
+          <CommonButton
             color="primary"
             onClick={async () => {
               await copyClipboard({
@@ -78,21 +76,21 @@ const SharedPost = () => {
             }}
           >
             <ButtonMessage>링크로 감정 공유하기</ButtonMessage>
-          </Button>
+          </CommonButton>
         </ButtonContainer>
       );
     }
 
     return (
       <ButtonContainer>
-        <Button color="black" onClick={() => router.push('/')}>
+        <CommonButton color="black" onClick={() => router.push('/')}>
           <ButtonMessage>
             나도 무드픽에서 감정보내기
             <IconWrapper>
               <Image src={Right} alt="메뉴" width={24} height={24} />
             </IconWrapper>
           </ButtonMessage>
-        </Button>
+        </CommonButton>
       </ButtonContainer>
     );
   };
@@ -118,7 +116,7 @@ const SharedPost = () => {
     }
   }, [ldm]);
 
-  if (isLoadingSharedPost || isLoadingMe) return <div>로딩중</div>;
+  if (isLoadingSharedPost) return <div>로딩중</div>;
   if (isLoadingSharedPost) return <div>로딩중</div>;
   if (!sharedPost || !ldm) return <div>404</div>;
 
@@ -154,22 +152,6 @@ const SharedPost = () => {
 
 const Container = styled.div`
   padding-bottom: 6rem;
-`;
-
-const ButtonWrapperr = styled.div`
-  position: sticky;
-  bottom: 2.8rem;
-  margin-top: auto;
-  &::after {
-    position: absolute;
-    bottom: -2.8rem;
-    left: 0;
-    width: 100%;
-    height: 16rem;
-    content: '';
-    background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 52.6%);
-    z-index: -1;
-  }
 `;
 
 const HeadWrapper = styled.div`

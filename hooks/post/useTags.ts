@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useInput } from '@/hooks/useInput';
+import useInput from '@/hooks/useInput';
 
 export const useTags = () => {
   const [tagValue, onChangeTagValue, setTagValue] = useInput('');

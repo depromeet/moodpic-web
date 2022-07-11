@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { useAnimation } from '@/hooks/useAnimation';
+import useAnimation from '@/hooks/useAnimation';
 
 import CloseIcon from 'public/svgs/close.svg';
 

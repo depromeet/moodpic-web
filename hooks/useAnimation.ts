@@ -6,7 +6,7 @@ interface SpringAnimationProps {
   onClose: () => void;
 }
 
-export const useAnimation = ({ onClose, fullHeight }: SpringAnimationProps) => {
+const useAnimation = ({ onClose, fullHeight }: SpringAnimationProps) => {
   const [isPrevClose, setPrevClose] = useState(false);
 
   const setOverflowStyle = () => {
@@ -44,3 +44,5 @@ export const useAnimation = ({ onClose, fullHeight }: SpringAnimationProps) => {
     setPrevClose,
   };
 };
+
+export default useAnimation;
