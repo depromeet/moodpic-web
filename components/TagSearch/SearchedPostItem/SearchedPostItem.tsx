@@ -1,8 +1,8 @@
 import React from 'react';
-import { Post } from '../../../shared/type/post';
+import { Post } from '@/shared/type/post';
 import styled from 'styled-components';
-import theme from '../../../styles/theme';
-import { CommonIconButton, CommonTagButton } from '../../Common';
+import theme from '@/styles/theme';
+import { CommonIconButton, CommonTagButton } from '@/components/Common';
 
 interface SearchedPostItemProps {
   searchedPost: Post;

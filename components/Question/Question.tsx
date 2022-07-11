@@ -7,7 +7,7 @@ import useDialog from '@/hooks/useDialog';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import { createPostRequestState } from '@/store/post/atom';
 import DialogCancel from '@/components/Dialog/DialogCancel';
-import { CommonTextArea, CommonDialog, CommonButton } from '../Common';
+import { CommonTextArea, CommonDialog, CommonButton } from '@/components/Common';
 import {
   ButtonContainer,
   MyselfQuestionTitle,

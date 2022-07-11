@@ -1,8 +1,8 @@
 import React from 'react';
 import { useEffect } from 'react';
-import authService from '../../../../service/apis/authService';
+import authService from '@/service/apis/authService';
 import { useRouter } from 'next/router';
-import { ROUTES } from '../../../../shared/constants/routes';
+import { ROUTES } from '@/shared/constants/routes';
 
 const KakaoAuth = () => {
   const router = useRouter();

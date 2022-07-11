@@ -8,7 +8,7 @@ import DialogWarning from '@/components/Dialog/DialogWarning';
 import theme from '@/styles/theme';
 import SorryFace from 'public/svgs/sorryFace.svg';
 import { CommonAppBarTitle } from './posts';
-import { ButtonWrapper } from '../write';
+import { ButtonWrapper } from '@/pages/write';
 import { DialogContent } from '@/components/MypageContentList/MypageContentList';
 import { useMemberQuery } from '@/hooks/apis';
 import { useDeleteUserMutation } from '@/hooks/apis/member/useMemberMutation';

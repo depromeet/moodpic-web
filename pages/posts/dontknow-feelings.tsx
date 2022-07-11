@@ -6,7 +6,7 @@ import PostItem from '@/components/Post/PostItem/PostItem';
 import { CommonAppBar, CommonIconButton } from '@/components/Common';
 import ListEmpty from 'public/images/list-empty.png';
 import { useIncompletedPostsQuery } from '@/hooks/apis';
-import ImageMessage from '../../components/ImageMessage/ImageMessage';
+import ImageMessage from '@/components/ImageMessage/ImageMessage';
 
 const PostList = () => {
   const router = useRouter();

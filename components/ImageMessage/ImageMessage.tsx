@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../../styles/theme';
+import theme from '@/styles/theme';
 
 interface ImageMessageProps {
   src: StaticImageData;

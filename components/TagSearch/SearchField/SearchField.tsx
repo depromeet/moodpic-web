@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import { CommonTextField } from '@/components/Common';
-import Close from '/public/svgs/close.svg';
-import { Tag } from '../../../shared/type/post';
+import Close from 'public/svgs/close.svg';
+import { Tag } from '@/shared/type/post';
 
 interface SearchFieldProps {
   value: string;

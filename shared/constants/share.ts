@@ -5,7 +5,7 @@ import tiredFace from '/public/svgs/tiredFace.svg';
 import empathizeFace from '/public/svgs/empathizeFace.svg';
 import disappointedFace from '/public/svgs/disappointedFace.svg';
 import thanks from '/public/svgs/thanks.svg';
-import theme from '../../styles/theme';
+import theme from '@/styles/theme';
 
 export const CATEGORY: { [key in keyof typeof CATEGORY_OPTIONS_INFO]: string } = {
   UNSELECT: 'unselect',

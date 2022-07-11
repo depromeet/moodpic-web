@@ -1,5 +1,5 @@
 import { Post } from './post';
-import { CATEGORY_OPTIONS_INFO } from '../constants/share';
+import { CATEGORY_OPTIONS_INFO } from '@/shared/constants/share';
 
 export interface SharePostRequest {
   receiverName: string;

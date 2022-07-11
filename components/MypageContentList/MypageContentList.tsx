@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { CommonDialog, CommonIconButton } from '../Common';
+import { CommonDialog, CommonIconButton } from '@/components/Common';
 import styled from 'styled-components';
 import useDialog from '@/hooks/useDialog';
 import theme from '@/styles/theme';
 import { ROUTES } from '@/shared/constants/routes';
-import DialogWarning from '../Dialog/DialogWarning';
+import DialogWarning from '@/components/Dialog/DialogWarning';
 import SorryFace from 'public/svgs/sorryFace.svg';
 import Image from 'next/image';
 import { removeCookies } from '@/hooks/useCookie';

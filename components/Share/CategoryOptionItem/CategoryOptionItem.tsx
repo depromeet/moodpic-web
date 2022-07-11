@@ -1,7 +1,7 @@
 import React from 'react';
-import { CATEGORY_OPTIONS_INFO } from '../../../shared/constants/share';
+import { CATEGORY_OPTIONS_INFO } from '@/shared/constants/share';
 import styled, { css } from 'styled-components';
-import theme from '../../../styles/theme';
+import theme from '@/styles/theme';
 import Image from 'next/image';
 import CheckIcon from 'public/svgs/check.svg';
 

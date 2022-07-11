@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PostItem from '@/components/Post/PostItem/PostItem';
 import { Post } from '@/shared/type/post';
 import ListEmpty from 'public/images/list-empty.png';
-import ImageMessage from '../../ImageMessage/ImageMessage';
+import ImageMessage from '@/components/ImageMessage/ImageMessage';
 
 interface PostListProps {
   postList: Post[];

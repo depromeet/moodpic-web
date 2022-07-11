@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../../../styles/theme';
-import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '../../../shared/constants/tagSearch';
+import theme from '@/styles/theme';
+import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '@/shared/constants/tagSearch';
 
 interface OrderTypeSelectSheetProps {
   onClickOption: (orderType: TagSearchOrderType) => void;

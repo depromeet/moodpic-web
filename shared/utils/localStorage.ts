@@ -1,4 +1,4 @@
-import { LocalStorageKey } from '../type/localStorage';
+import { LocalStorageKey } from '@/shared/type/localStorage';
 
 export const getLocalStorageValue = (key: LocalStorageKey) => {
   if (typeof window === 'undefined') return;

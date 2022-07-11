@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import { getCookie, setCookies } from '@/hooks/useCookie';
-import { AUTH_TOKEN } from '../constants/auth';
+import { AUTH_TOKEN } from '@/shared/constants/auth';
 
 axios.defaults.paramsSerializer = (params: object) => {
   return qs.stringify(params);

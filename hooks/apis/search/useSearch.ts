@@ -1,10 +1,10 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { AxiosError } from 'axios';
 import { ServerResponse } from 'http';
-import { QUERY_KEY } from '../../../shared/constants/queryKey';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { Post, TagFrequencies } from '@/shared/type/post';
-import searchService from '../../../service/apis/searchService';
-import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '../../../shared/constants/tagSearch';
+import searchService from '@/service/apis/searchService';
+import { TAG_SEARCH_ORDER_TYPE, TagSearchOrderType } from '@/shared/constants/tagSearch';
 
 const useSearchedPostsQuery = ({
   searchedTag,

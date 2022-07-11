@@ -1,4 +1,4 @@
-import { CommonAppBar, CommonIconButton } from '../../Common';
+import { CommonAppBar, CommonIconButton } from '@/components/Common';
 import React from 'react';
 
 interface NavHeaderProps {
