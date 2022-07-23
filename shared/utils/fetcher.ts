@@ -39,6 +39,7 @@ const onResponseError = (error: AxiosError) => {
 
   if (token && error.response?.status === 401) {
     removeCookies('authToken');
+    window.location.reload();
   }
 };
 
