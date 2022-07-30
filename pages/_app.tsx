@@ -12,6 +12,7 @@ import { queryClient } from '@/shared/utils/queryClient';
 import { CommonAppLayout } from '@/components/Common';
 import * as gtag from '@/lib/gtag';
 import OgImage from 'public/images/og_image.png';
+import Script from 'next/script';
 
 if (typeof window !== 'undefined') {
   if ('serviceWorker' in navigator) {
@@ -54,6 +55,22 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta property="og:image" content={OgImage.src} />
       </Head>
+      {/* Global Site Tag (gtag.js) - Google Analytics */}
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} strategy="afterInteractive" />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${gtag.GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
+        `,
+        }}
+      />
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <ThemeProvider theme={theme}>
