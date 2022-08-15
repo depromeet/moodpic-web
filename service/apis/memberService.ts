@@ -7,6 +7,13 @@ const memberService = {
 
     return data;
   },
+  updateNickname: async (name: string) => {
+    const { data } = await fetcher('patch', '/users/me', {
+      name,
+    });
+
+    return data;
+  },
 };
 
 export default memberService;
