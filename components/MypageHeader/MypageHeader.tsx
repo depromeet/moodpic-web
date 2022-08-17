@@ -1,17 +1,29 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-import { CommonAppBar, CommonIconButton } from '@/components/Common';
-import styled from 'styled-components';
-import theme from '@/styles/theme';
 import Image from 'next/image';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { useMemberQuery } from '@/hooks/apis';
+import { CommonAppBar, CommonDialog, CommonIconButton } from '@/components/Common';
+import useDialog from '@/hooks/useDialog';
+import theme from '@/styles/theme';
+import EditFolder from 'public/svgs/editfolder.svg';
+import DialogFolderForm from '../Dialog/DialogFolderForm';
+import useInput from '@/hooks/useInput';
+import { useUpdateNickname } from '@/hooks/apis/member/useMemberMutation';
 
 const MypageHeader = () => {
   const router = useRouter();
   const { data: me } = useMemberQuery();
-
+  const [changedName, onChangeName] = useInput('');
+  const { dialogVisible, toggleDialog } = useDialog();
+  const { mutate: updateNickname } = useUpdateNickname();
   const onClickGoBack = () => {
     router.back();
+  };
+
+  const editNickname = () => {
+    updateNickname(changedName);
+    toggleDialog();
   };
 
   return (
@@ -27,13 +39,23 @@ const MypageHeader = () => {
             <ProfileImageWrap>
               <Image src={me.profileImg} alt="profile-image" layout="fill" objectFit="cover" />
             </ProfileImageWrap>
-            <Nickname>{me.nickname}</Nickname>
+            <NicknameWrap>
+              {me.nickname}
+              <EditIconWrap>
+                <Image src={EditFolder} alt="edit-folder" onClick={toggleDialog} />
+              </EditIconWrap>
+            </NicknameWrap>
           </>
         ) : (
           <ProfileImageSkeleton />
         )}
       </ProfileWrap>
       <Divider />
+      {dialogVisible && (
+        <CommonDialog type="modal" onClose={toggleDialog} disabledConfirm={changedName === ''} onConfirm={editNickname}>
+          <DialogFolderForm title="변경할 닉네임을 입력해주세요." value={changedName} onChange={onChangeName} />
+        </CommonDialog>
+      )}
     </>
   );
 };
@@ -61,7 +83,8 @@ export const ProfileImageSkeleton = styled.div`
   margin: 0.6rem 0 0.7rem;
   background-color: white;
 `;
-export const Nickname = styled.div`
+export const NicknameWrap = styled.div`
+  position: relative;
   ${theme.fonts.h3};
   line-height: 2.2rem;
   color: ${theme.colors.white};
@@ -71,4 +94,12 @@ export const Divider = styled.div`
   height: 0.5rem;
   background-color: ${theme.colors.gray3};
   transform: translateX(-1.8rem);
+`;
+
+const EditIconWrap = styled.div`
+  position: absolute;
+  top: -0.1rem;
+  right: -2.8rem;
+  margin-left: 0.4rem;
+  cursor: pointer;
 `;
