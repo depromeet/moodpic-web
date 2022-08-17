@@ -98,8 +98,8 @@ export const Divider = styled.div`
 
 const EditIconWrap = styled.div`
   position: absolute;
-  top: -1px;
-  right: -28px;
-  margin-left: 4px !important;
+  top: -0.1rem;
+  right: -2.8rem;
+  margin-left: 0.4rem;
   cursor: pointer;
 `;

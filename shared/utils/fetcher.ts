@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import qs from 'qs';
-import { getCookie, setCookies } from '@/hooks/useCookie';
+import { getCookie, removeCookies, setCookies } from '@/hooks/useCookie';
 import { AUTH_TOKEN } from '@/shared/constants/auth';
 
 axios.defaults.paramsSerializer = (params: object) => {
@@ -29,6 +29,21 @@ axios.interceptors.request.use((config) => {
 
   return config;
 });
+
+const onResponse = (response: AxiosResponse): AxiosResponse => {
+  return response;
+};
+
+const onResponseError = (error: AxiosError) => {
+  const token = getCookie(AUTH_TOKEN);
+
+  if (token && error.response?.status === 401) {
+    removeCookies('authToken');
+    window.location.reload();
+  }
+};
+
+axios.interceptors.response.use(onResponse, onResponseError);
 
 const fetcher = async (method: 'get' | 'post' | 'patch' | 'delete', url: string, ...rest: object[]) => {
   try {
