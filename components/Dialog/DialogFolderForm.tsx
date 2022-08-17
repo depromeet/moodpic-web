@@ -15,7 +15,7 @@ const DialogFolderForm = ({ isEditMode = false, title = '', value, onChange }: D
 
   return (
     <DialogContainer>
-      {title ? <Title>{title}</Title> : <Title>📁 {dialogTitle} 입력해주세요.</Title>}
+      <Title>{title ? title : `📁 ${dialogTitle} 입력해주세요.`}</Title>
       <CommonTextField
         placeholder="폴더명 입력"
         borderRadius="0.4rem"
