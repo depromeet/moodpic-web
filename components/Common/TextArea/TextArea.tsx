@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Textarea } from './TextArea.styles';
+import { Textarea, TextareaContainer } from './TextArea.styles';
 
 export type TextAreaAttributes = Pick<
   React.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -33,20 +33,21 @@ const TextArea = ({
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <Textarea
-      value={value}
-      borderRadius={borderRadius}
-      height={height}
-      onFocus={(event: React.FocusEvent<HTMLTextAreaElement>) => {
-        setIsFocused(true);
-        onFocus?.(event);
-      }}
-      onBlur={(event: React.FocusEvent<HTMLTextAreaElement>) => {
-        setIsFocused(false);
-        onBlur?.(event);
-      }}
-      {...restTextAreaProps}
-    />
+    <TextareaContainer borderRadius={borderRadius} isFocused={isFocused}>
+      <Textarea
+        value={value}
+        height={height}
+        onFocus={(event: React.FocusEvent<HTMLTextAreaElement>) => {
+          setIsFocused(true);
+          onFocus?.(event);
+        }}
+        onBlur={(event: React.FocusEvent<HTMLTextAreaElement>) => {
+          setIsFocused(false);
+          onBlur?.(event);
+        }}
+        {...restTextAreaProps}
+      />
+    </TextareaContainer>
   );
 };
 
