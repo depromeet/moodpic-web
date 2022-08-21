@@ -20,14 +20,18 @@ const Banner = ({ nickname, title, background }: BannerProps): React.ReactElemen
         {nickname}
         {title}
       </BannerTitle>
-      <CommonButton>
-        <Link href="/write" passHref>
-          <a>감정 기록하기 ✍🏻</a>
-        </Link>
-      </CommonButton>
+      <Link href="/write">
+        <CommonButtonWrapper>
+          <CommonButton>감정 기록하기 ✍🏻</CommonButton>
+        </CommonButtonWrapper>
+      </Link>
     </BannerContents>
   </BannerContainer>
 );
+
+const CommonButtonWrapper = styled.a`
+  display: block;
+`;
 
 const BannerContainer = styled.section`
   position: relative;
