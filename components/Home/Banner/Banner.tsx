@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { CommonButton } from '@/components/Common';
 import theme from '@/styles/theme';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export interface BannerProps {
   nickname: string;
@@ -11,27 +11,23 @@ export interface BannerProps {
   background: string;
 }
 
-const Banner = ({ nickname, title, background }: BannerProps): React.ReactElement => {
-  const router = useRouter();
-
-  const goToWritePage = () => {
-    router.push('/write');
-  };
-
-  return (
-    <BannerContainer>
-      <BannerImage />
-      <Image src={background} alt="" layout="fill" priority={true} />
-      <BannerContents>
-        <BannerTitle>
-          {nickname}
-          {title}
-        </BannerTitle>
-        <CommonButton onClick={goToWritePage}>감정 기록하기 ✍🏻</CommonButton>
-      </BannerContents>
-    </BannerContainer>
-  );
-};
+const Banner = ({ nickname, title, background }: BannerProps): React.ReactElement => (
+  <BannerContainer>
+    <BannerImage />
+    <Image src={background} alt="" layout="fill" priority={true} />
+    <BannerContents>
+      <BannerTitle>
+        {nickname}
+        {title}
+      </BannerTitle>
+      <CommonButton>
+        <Link href="/write" passHref>
+          <a>감정 기록하기 ✍🏻</a>
+        </Link>
+      </CommonButton>
+    </BannerContents>
+  </BannerContainer>
+);
 
 const BannerContainer = styled.section`
   position: relative;
