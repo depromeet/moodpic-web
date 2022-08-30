@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled, { keyframes } from 'styled-components';
+import { isIOS } from 'react-device-detect';
 import { AUTH_TOKEN, KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 import Image from 'next/image';
 import KakaoIcon from 'public/svgs/kakao.svg';
+import AppleIcon from 'public/svgs/apple.svg';
 import Logo from 'public/svgs/logo.svg';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
@@ -34,6 +36,14 @@ const Login = () => {
       `${KAKAO_CLIENT_ORIGIN}?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${kakaoRedirectURL}&response_type=code`,
     );
   };
+
+  // const goAppleCallback = async () => {
+  //   AppleID.auth.init({
+  //     clientId: 'Z6VDRZCZ9U',
+  //     scope: 'name email',
+  //     redirectURI: `${BASE_URL}${KAKAO_REDIRECT_URL}`,
+  //   });
+  // };
 
   useEffect(() => {
     if (hasCookie(AUTH_TOKEN)) {
@@ -68,8 +78,22 @@ const Login = () => {
         </InfiniteScrollingLogosWrap>
       </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
+        {!isIOS && (
+          <AppleLoginButton>
+            <div
+              id="appleid-signin"
+              className="signin-button"
+              data-color="black"
+              data-border="true"
+              data-type="sign-in"
+            >
+              <Image src={AppleIcon} alt="카카오톡으로 로그인" />
+              <span>Apple로 로그인</span>
+            </div>
+          </AppleLoginButton>
+        )}
         <KakaoButton onClick={goKakaoCallback}>
-          <Image src={KakaoIcon} alt="kakaoIcon" />
+          <Image src={KakaoIcon} alt="카카오톡으로 로그인" />
           <span>카카오톡으로 로그인</span>
         </KakaoButton>
       </ButtonContainer>
@@ -97,7 +121,6 @@ const ButtonContainer = styled.div`
   bottom: 8rem;
   margin-top: auto;
   width: 100%;
-  height: 5.5rem;
   padding: 0 1.6rem;
   &::after {
     position: absolute;
@@ -109,24 +132,48 @@ const ButtonContainer = styled.div`
     background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 52.6%);
     z-index: -1;
   }
+
+  > button,
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 5.5rem;
+    margin: 0 auto;
+    border-radius: 0.8rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.8rem;
+  }
+
+  div ~ button {
+    margin-top: 2rem;
+  }
 `;
 
 const KakaoButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 44.6rem;
-  height: 100%;
-  margin: 0 auto;
   color: #341b1c;
   background-color: ${theme.colors.kakao};
-  border-radius: 0.8rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.8rem;
+
   & > span {
     margin-left: 0.7rem;
+  }
+`;
+
+const AppleLoginButton = styled.div`
+  div {
+    height: 100%;
+    background-color: ${theme.colors.gray7};
+  }
+
+  span {
+    z-index: 100;
+    margin-left: 0.7rem;
+  }
+
+  text {
+    color: ${theme.colors.black};
   }
 `;
 
