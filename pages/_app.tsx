@@ -58,7 +58,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:image" content={OgImage.src} />
         <meta name="appleid-signin-client-id" content="kr.moodpic" />
         <meta name="appleid-signin-scope" content="name email" />
-        <meta name="appleid-signin-redirect-uri" content={`${BASE_URL}${KAKAO_REDIRECT_URL}`} />
+        <meta name="appleid-signin-redirect-uri" content={`https://www.moodpic.kr/oauth/callback/kakao`} />
       </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
