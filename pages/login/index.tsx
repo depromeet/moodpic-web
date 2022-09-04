@@ -37,13 +37,22 @@ const Login = () => {
     );
   };
 
-  // const goAppleCallback = async () => {
-  //   AppleID.auth.init({
-  //     clientId: 'Z6VDRZCZ9U',
-  //     scope: 'name email',
-  //     redirectURI: `${BASE_URL}${KAKAO_REDIRECT_URL}`,
-  //   });
-  // };
+  const goAppleCallback = async () => {
+    console.log('check');
+    window.AppleID.auth.init({
+      clientId: 'Z6VDRZCZ9U',
+      scope: 'name email',
+      redirectURI: 'https://moodpic.kr/oauth/callback/kakao',
+    });
+
+    try {
+      const data = await window.AppleID.auth.signIn();
+      console.log(data);
+      return data; //doest receive
+    } catch (error) {
+      console.error({ error });
+    }
+  };
 
   useEffect(() => {
     if (hasCookie(AUTH_TOKEN)) {
@@ -79,17 +88,9 @@ const Login = () => {
       </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
         {!isIOS && (
-          <AppleLoginButton>
-            <div
-              id="appleid-signin"
-              className="signin-button"
-              data-color="black"
-              data-border="true"
-              data-type="sign-in"
-            >
-              <Image src={AppleIcon} alt="카카오톡으로 로그인" />
-              <span>Apple로 로그인</span>
-            </div>
+          <AppleLoginButton onClick={goAppleCallback}>
+            <Image src={AppleIcon} alt="Apple로 로그인" />
+            <span>Apple로 로그인</span>
           </AppleLoginButton>
         )}
         <KakaoButton onClick={goKakaoCallback}>
@@ -162,18 +163,16 @@ const KakaoButton = styled.button`
 `;
 
 const AppleLoginButton = styled.div`
+  background-color: ${theme.colors.gray7};
+  color: ${theme.colors.black};
+
   div {
     height: 100%;
-    background-color: ${theme.colors.gray7};
   }
 
   span {
     z-index: 100;
     margin-left: 0.7rem;
-  }
-
-  text {
-    color: ${theme.colors.black};
   }
 `;
 
