@@ -43,7 +43,6 @@ const Login = () => {
       clientId: 'kr.moodpic',
       scope: 'name email',
       redirectURI: 'https://moodpic.kr/oauth/callback/kakao',
-      usePopup: true,
     });
 
     try {
