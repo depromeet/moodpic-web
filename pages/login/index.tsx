@@ -38,15 +38,16 @@ const Login = () => {
   };
 
   const goAppleCallback = async () => {
-    console.log('check');
-    window.AppleID.auth.init({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).AppleID.auth.init({
       clientId: 'Z6VDRZCZ9U',
       scope: 'name email',
       redirectURI: 'https://moodpic.kr/oauth/callback/kakao',
     });
 
     try {
-      const data = await window.AppleID.auth.signIn();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data = await (window as any).AppleID.auth.signIn();
       console.log(data);
       return data; //doest receive
     } catch (error) {
