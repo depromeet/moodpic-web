@@ -40,7 +40,7 @@ const Login = () => {
   const goAppleCallback = async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).AppleID.auth.init({
-      clientId: 'Z6VDRZCZ9U',
+      clientId: 'kr.moodpic',
       scope: 'name email',
       redirectURI: 'https://moodpic.kr/oauth/callback/kakao',
     });
