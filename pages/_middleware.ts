@@ -9,6 +9,7 @@ export function middleware(req: NextRequest) {
   const unprotectedPaths: string[] = [
     `${baseUrl}/login`,
     `${baseUrl}/oauth/callback/kakao`,
+    `${baseUrl}/oauth/callback/apple`,
     `${baseUrl}/_next/webpack-hmr`,
     `${baseUrl}/images/ANXIOUS_160x160.png`,
     `${baseUrl}/images/RELIEF_160x160.png`,

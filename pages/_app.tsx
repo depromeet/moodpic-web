@@ -56,9 +56,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="당신의 해소하고 싶은 감정들을 무드픽에 기록하고 공유해보세요. 마음이 한결 편안해질거예요!"
         />
         <meta property="og:image" content={OgImage.src} />
-        <meta name="appleid-signin-client-id" content="kr.moodpic" />
-        <meta name="appleid-signin-scope" content="name email" />
-        <meta name="appleid-signin-redirect-uri" content="https://moodpic.kr/oauth/callback/kakao" />
       </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script

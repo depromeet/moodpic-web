@@ -42,7 +42,7 @@ const Login = () => {
     (window as any).AppleID.auth.init({
       clientId: 'kr.moodpic',
       scope: 'name email',
-      redirectURI: 'https://moodpic.kr/oauth/callback/kakao',
+      redirectURI: 'https://moodpic.kr/oauth/callback/apple',
     });
 
     try {
