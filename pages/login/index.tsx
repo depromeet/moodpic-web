@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled, { keyframes } from 'styled-components';
+import { isIOS } from 'react-device-detect';
 import { AUTH_TOKEN, KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 import Image from 'next/image';
 import KakaoIcon from 'public/svgs/kakao.svg';
+import AppleIcon from 'public/svgs/apple.svg';
 import Logo from 'public/svgs/logo.svg';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
@@ -33,6 +35,24 @@ const Login = () => {
     router.push(
       `${KAKAO_CLIENT_ORIGIN}?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${kakaoRedirectURL}&response_type=code`,
     );
+  };
+
+  const goAppleCallback = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).AppleID.auth.init({
+      clientId: 'kr.moodpic',
+      scope: 'name email',
+      redirectURI: 'https://moodpic.kr/oauth/callback/apple',
+    });
+
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data = await (window as any).AppleID.auth.signIn();
+      console.log(data);
+      return data; //doest receive
+    } catch (error) {
+      console.error({ error });
+    }
   };
 
   useEffect(() => {
@@ -68,6 +88,10 @@ const Login = () => {
         </InfiniteScrollingLogosWrap>
       </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
+        <AppleLoginButton onClick={goAppleCallback}>
+          <Image src={AppleIcon} alt="Apple로 로그인" />
+          <span>Apple로 로그인</span>
+        </AppleLoginButton>
         <KakaoButton onClick={goKakaoCallback}>
           <Image src={KakaoIcon} alt="카카오톡으로 로그인" />
           <span>카카오톡으로 로그인</span>
@@ -133,6 +157,20 @@ const KakaoButton = styled.button`
   background-color: ${theme.colors.kakao};
 
   & > span {
+    margin-left: 0.7rem;
+  }
+`;
+
+const AppleLoginButton = styled.div`
+  background-color: ${theme.colors.gray7};
+  color: ${theme.colors.black};
+
+  div {
+    height: 100%;
+  }
+
+  span {
+    z-index: 100;
     margin-left: 0.7rem;
   }
 `;

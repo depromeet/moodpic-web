@@ -13,8 +13,6 @@ import { CommonAppLayout } from '@/components/Common';
 import * as gtag from '@/lib/gtag';
 import OgImage from 'public/images/og_image.png';
 import Script from 'next/script';
-import { BASE_URL } from '@/shared/constants/url';
-import { KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 
 if (typeof window !== 'undefined') {
   if ('serviceWorker' in navigator) {
