@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled, { keyframes } from 'styled-components';
-import { isIOS } from 'react-device-detect';
 import { AUTH_TOKEN, KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 import Image from 'next/image';
 import KakaoIcon from 'public/svgs/kakao.svg';
-import AppleIcon from 'public/svgs/apple.svg';
 import Logo from 'public/svgs/logo.svg';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
@@ -36,14 +34,6 @@ const Login = () => {
       `${KAKAO_CLIENT_ORIGIN}?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${kakaoRedirectURL}&response_type=code`,
     );
   };
-
-  // const goAppleCallback = async () => {
-  //   AppleID.auth.init({
-  //     clientId: 'Z6VDRZCZ9U',
-  //     scope: 'name email',
-  //     redirectURI: `${BASE_URL}${KAKAO_REDIRECT_URL}`,
-  //   });
-  // };
 
   useEffect(() => {
     if (hasCookie(AUTH_TOKEN)) {
@@ -78,20 +68,6 @@ const Login = () => {
         </InfiniteScrollingLogosWrap>
       </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
-        {!isIOS && (
-          <AppleLoginButton>
-            <div
-              id="appleid-signin"
-              className="signin-button"
-              data-color="black"
-              data-border="true"
-              data-type="sign-in"
-            >
-              <Image src={AppleIcon} alt="카카오톡으로 로그인" />
-              <span>Apple로 로그인</span>
-            </div>
-          </AppleLoginButton>
-        )}
         <KakaoButton onClick={goKakaoCallback}>
           <Image src={KakaoIcon} alt="카카오톡으로 로그인" />
           <span>카카오톡으로 로그인</span>
@@ -158,22 +134,6 @@ const KakaoButton = styled.button`
 
   & > span {
     margin-left: 0.7rem;
-  }
-`;
-
-const AppleLoginButton = styled.div`
-  div {
-    height: 100%;
-    background-color: ${theme.colors.gray7};
-  }
-
-  span {
-    z-index: 100;
-    margin-left: 0.7rem;
-  }
-
-  text {
-    color: ${theme.colors.black};
   }
 `;
 
