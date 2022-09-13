@@ -41,15 +41,13 @@ const Login = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).AppleID.auth.init({
       clientId: 'kr.moodpic',
+      redirectURI: 'https://moodpic.kr/oauth/callback/apple',
       scope: 'name email',
-      redirectURI: 'https://moodpic.kr/oauth/callback/kakao',
     });
 
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const data = await (window as any).AppleID.auth.signIn();
-      console.log(data);
-      return data; //doest receive
+      await (window as any).AppleID.auth.signIn();
     } catch (error) {
       console.error({ error });
     }
@@ -88,10 +86,12 @@ const Login = () => {
         </InfiniteScrollingLogosWrap>
       </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
-        <AppleLoginButton onClick={goAppleCallback}>
-          <Image src={AppleIcon} alt="Apple로 로그인" />
-          <span>Apple로 로그인</span>
-        </AppleLoginButton>
+        {isIOS && (
+          <AppleLoginButton onClick={goAppleCallback}>
+            <Image src={AppleIcon} alt="Apple로 로그인" />
+            <span>Apple로 로그인</span>
+          </AppleLoginButton>
+        )}
         <KakaoButton onClick={goKakaoCallback}>
           <Image src={KakaoIcon} alt="카카오톡으로 로그인" />
           <span>카카오톡으로 로그인</span>

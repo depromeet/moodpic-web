@@ -4,6 +4,7 @@ const MYPAGE = '/mypage';
 export const ROUTES = {
   HOME: '/',
   AUTH_CALLBACK_KAKAO: '/oauth/callback/kakao',
+  AUTH_CALLBACK_APPLE: '/oauth/callback/apple',
   LOGIN: '/login',
   READY: '/ready',
   MYPAGE: MYPAGE,

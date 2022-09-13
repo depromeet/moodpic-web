@@ -28,6 +28,15 @@ const nextConfig = {
   webpack(config) {
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/oauth/callback/apple',
+        destination: '/oauth/callback/kakao',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = withPlugins([
