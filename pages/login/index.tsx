@@ -42,7 +42,7 @@ const Login = () => {
     (window as any).AppleID.auth.init({
       clientId: 'kr.moodpic',
       scope: 'name email',
-      redirectURI: 'https://moodpic.kr/oauth/callback/apple',
+      redirectURI: 'https://moodpic.kr/oauth/callback/kakao',
     });
 
     try {
@@ -88,12 +88,10 @@ const Login = () => {
         </InfiniteScrollingLogosWrap>
       </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
-        {isIOS && (
-          <AppleLoginButton onClick={goAppleCallback}>
-            <Image src={AppleIcon} alt="Apple로 로그인" />
-            <span>Apple로 로그인</span>
-          </AppleLoginButton>
-        )}
+        <AppleLoginButton onClick={goAppleCallback}>
+          <Image src={AppleIcon} alt="Apple로 로그인" />
+          <span>Apple로 로그인</span>
+        </AppleLoginButton>
         <KakaoButton onClick={goKakaoCallback}>
           <Image src={KakaoIcon} alt="카카오톡으로 로그인" />
           <span>카카오톡으로 로그인</span>
