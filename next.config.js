@@ -34,12 +34,6 @@ const nextConfig = {
         source: '/oauth/callback/apple',
         destination: '/oauth/callback/kakao',
         permanent: true,
-        has: [
-          {
-            type: 'header',
-            key: 'x-redirect-me',
-          },
-        ],
       },
     ];
   },
