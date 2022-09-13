@@ -39,10 +39,10 @@ const Login = () => {
 
   const goAppleCallback = async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).AppleID.auth.init({
+    await (window as any).AppleID.auth.init({
       clientId: 'kr.moodpic',
-      redirectURI: 'https://moodpic.kr/oauth/callback/apple',
       scope: 'name email',
+      redirectURI: 'https://www.moodpic.kr/oauth/callback/apple',
     });
 
     try {
