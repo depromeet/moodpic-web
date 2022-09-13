@@ -19,16 +19,17 @@ const KakaoAuth = () => {
   useEffect(() => {
     // Listen for authorization success.
     /* eslint-disable @typescript-eslint/no-explicit-any */
+    console.log('apple login');
     document.addEventListener('AppleIDSignInOnSuccess', (event: any) => {
       // Handle successful response.
-      alert(event.detail.data);
+      console.log(event.detail.data);
     });
 
-    // Listen for authorization failures.
-    /* eslint-disable @typescript-eslint/no-explicit-any */
+    // // Listen for authorization failures.
+    // /* eslint-disable @typescript-eslint/no-explicit-any */
     document.addEventListener('AppleIDSignInOnFailure', (event: any) => {
       // Handle error.
-      alert(event.detail.error);
+      console.log(event.detail.error);
     });
 
     const kakaoCode = new URL(window.location.href).searchParams.get('code');
