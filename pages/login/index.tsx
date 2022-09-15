@@ -80,7 +80,7 @@ const Login = () => {
         </InfiniteScrollingLogosWrap>
       </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
-        {!isIOS && (
+        {isIOS && (
           <AppleLoginButton onClick={goAppleCallback}>
             <Image src={AppleIcon} alt="Apple로 로그인" />
             <span>Apple로 로그인</span>
