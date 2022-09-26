@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useBlockScroll } from './useBlockModal';
 
 const MAX_SHOW_LIST_ITEM = 7;
 const HEADER_HEIGHT = 88;
@@ -23,8 +22,6 @@ const useBottomSheet = () => {
   const toggleSheet = () => {
     setVisibleSheet(!isVisibleSheet);
   };
-
-  useBlockScroll(isVisibleSheet);
 
   return {
     calcBottomSheetHeight,
