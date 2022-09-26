@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useBlockScroll } from './useBlockModal';
 
 const MAX_SHOW_LIST_ITEM = 7;
 const HEADER_HEIGHT = 88;
@@ -23,9 +24,7 @@ const useBottomSheet = () => {
     setVisibleSheet(!isVisibleSheet);
   };
 
-  useEffect(() => {
-    document.body.style.overflow = isVisibleSheet ? 'hidden' : 'unset';
-  }, [isVisibleSheet]);
+  useBlockScroll(isVisibleSheet);
 
   return {
     calcBottomSheetHeight,

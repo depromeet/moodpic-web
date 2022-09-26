@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useBlockScroll } from './useBlockModal';
 
 const useModal = (initialMode = false) => {
   const [dialogVisible, setDialogVisible] = useState(initialMode);
@@ -7,9 +8,7 @@ const useModal = (initialMode = false) => {
     setDialogVisible(!dialogVisible);
   };
 
-  useEffect(() => {
-    document.body.style.overflow = dialogVisible ? 'hidden' : 'unset';
-  }, [dialogVisible]);
+  useBlockScroll(dialogVisible);
 
   return { dialogVisible, toggleDialog };
 };

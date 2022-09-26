@@ -18,10 +18,8 @@ const useAnimation = ({ onClose, fullHeight }: SpringAnimationProps) => {
     from: { opacity: isPrevClose ? 1 : 0.6 },
     onRest: () => {
       isPrevClose && onClose();
-
-      setOverflowStyle();
     },
-    onStart: () => {
+    onResolve: () => {
       setOverflowStyle();
     },
   });
