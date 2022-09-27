@@ -11,6 +11,7 @@ import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
 import { hasCookie } from '@/hooks/useCookie';
 import { ROUTES } from '@/shared/constants/routes';
+import { generateQueryString } from '@/shared/utils/generateQueryString';
 
 const Logos = [
   'ANXIOUS',
@@ -38,19 +39,12 @@ const Login = () => {
   };
 
   const goAppleCallback = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (window as any).AppleID.auth.init({
-      clientId: 'kr.moodpic',
-      scope: 'name email',
-      redirectURI: 'https://www.moodpic.kr/oauth/callback/apple',
-    });
-
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (window as any).AppleID.auth.signIn();
-    } catch (error) {
-      console.error({ error });
-    }
+    window.location.href = `https://appleid.apple.com/auth/authorize?${generateQueryString({
+      response_type: 'code id_token',
+      response_mode: 'fragment',
+      client_id: 'kr.moodpic',
+      redirect_uri: encodeURIComponent('https://moodpic.kr/oauth/callback/apple'),
+    })}`;
   };
 
   useEffect(() => {

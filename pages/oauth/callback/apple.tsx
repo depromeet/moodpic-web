@@ -2,19 +2,10 @@ import React, { useEffect } from 'react';
 
 const AppleAuth = () => {
   useEffect(() => {
-    // Listen for authorization success.
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    document.addEventListener('AppleIDSignInOnSuccess', (event: any) => {
-      // Handle successful response.
-      alert(event.detail.data);
-    });
+    const urlSearchParams = new URLSearchParams(window.location.hash.slice(1));
 
-    // // Listen for authorization failures.
-    // /* eslint-disable @typescript-eslint/no-explicit-any */
-    document.addEventListener('AppleIDSignInOnFailure', (event: any) => {
-      // Handle error.
-      alert(event.detail.error);
-    });
+    // TODO: API 호출하고, 성공하면 router.replace / API가 실패하면 로그인 + 에러메세지
+    console.log(urlSearchParams.get('id_token'));
   }, []);
 
   return <div />;
