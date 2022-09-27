@@ -1,11 +1,26 @@
+import authService from '@/service/apis/authService';
+import { ROUTES } from '@/shared/constants/routes';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
 const AppleAuth = () => {
+  const router = useRouter();
+
+  const login = async (appleCode: string) => {
+    try {
+      await authService.getAppleAuth(appleCode);
+      router.push(ROUTES.HOME);
+    } catch (error) {
+      router.replace(ROUTES.HOME);
+    }
+  };
+
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(window.location.hash.slice(1));
-
-    // TODO: API 호출하고, 성공하면 router.replace / API가 실패하면 로그인 + 에러메세지
-    console.log(urlSearchParams.get('id_token'));
+    const searchParam = urlSearchParams.get('id_token');
+    if (searchParam) {
+      login(searchParam);
+    }
   }, []);
 
   return <div />;

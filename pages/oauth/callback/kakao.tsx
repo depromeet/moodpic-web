@@ -9,7 +9,7 @@ const KakaoAuth = () => {
 
   const login = async (kakaoCode: string) => {
     try {
-      await authService.getAuth(kakaoCode);
+      await authService.getKakaoAuth(kakaoCode);
       router.push(ROUTES.HOME);
     } catch (error) {
       router.replace(ROUTES.HOME);
