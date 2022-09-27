@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled, { keyframes } from 'styled-components';
+import { isIOS } from 'react-device-detect';
 import { AUTH_TOKEN, KAKAO_CLIENT_ID, KAKAO_CLIENT_ORIGIN, KAKAO_REDIRECT_URL } from '@/shared/constants/auth';
 import Image from 'next/image';
 import KakaoIcon from 'public/svgs/kakao.svg';
+import AppleIcon from 'public/svgs/apple.svg';
 import Logo from 'public/svgs/logo.svg';
 import { a11y } from '@/styles/mixins';
 import theme from '@/styles/theme';
 import { hasCookie } from '@/hooks/useCookie';
 import { ROUTES } from '@/shared/constants/routes';
+import { generateQueryString } from '@/shared/utils/generateQueryString';
 
 const Logos = [
   'ANXIOUS',
@@ -33,6 +36,15 @@ const Login = () => {
     router.push(
       `${KAKAO_CLIENT_ORIGIN}?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${kakaoRedirectURL}&response_type=code`,
     );
+  };
+
+  const goAppleCallback = async () => {
+    window.location.href = `https://appleid.apple.com/auth/authorize?${generateQueryString({
+      response_type: 'code id_token',
+      response_mode: 'fragment',
+      client_id: 'kr.moodpic',
+      redirect_uri: encodeURIComponent('https://moodpic.kr/oauth/callback/apple'),
+    })}`;
   };
 
   useEffect(() => {
@@ -68,6 +80,12 @@ const Login = () => {
         </InfiniteScrollingLogosWrap>
       </InfiniteScrollingLogosWrapper>
       <ButtonContainer>
+        {isIOS && (
+          <AppleLoginButton onClick={goAppleCallback}>
+            <Image src={AppleIcon} alt="Apple로 로그인" />
+            <span>Apple로 로그인</span>
+          </AppleLoginButton>
+        )}
         <KakaoButton onClick={goKakaoCallback}>
           <Image src={KakaoIcon} alt="카카오톡으로 로그인" />
           <span>카카오톡으로 로그인</span>
@@ -133,6 +151,20 @@ const KakaoButton = styled.button`
   background-color: ${theme.colors.kakao};
 
   & > span {
+    margin-left: 0.7rem;
+  }
+`;
+
+const AppleLoginButton = styled.div`
+  background-color: ${theme.colors.gray7};
+  color: ${theme.colors.black};
+
+  div {
+    height: 100%;
+  }
+
+  span {
+    z-index: 100;
     margin-left: 0.7rem;
   }
 `;
