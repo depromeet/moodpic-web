@@ -21,7 +21,6 @@ export interface FolderProps {
   isDefaultFolder?: boolean;
   isEditMode?: boolean;
   supportsEmptyImg?: boolean;
-  onClick: (id: number) => void;
   onEdit?: (id: number, name: string) => void;
   onDelete?: (id: number) => void;
 }
@@ -34,7 +33,6 @@ const Folder = ({
   isDefaultFolder = false,
   isEditMode = false,
   supportsEmptyImg = false,
-  onClick,
   onEdit,
   onDelete,
 }: FolderProps): React.ReactElement => {
@@ -50,15 +48,6 @@ const Folder = ({
 
     e.stopPropagation();
     onEdit(folderId, folderName);
-  };
-
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (isEditMode) {
-      e.stopPropagation();
-      return;
-    }
-
-    onClick(folderId);
   };
 
   const renderDeleteButton = () => {
@@ -83,7 +72,7 @@ const Folder = ({
 
   return (
     <FolderContainer>
-      <BoxContainer onClick={handleClick} backgroundImage={!supportsEmptyImg || count !== 0 ? coverImage : ''}>
+      <BoxContainer backgroundImage={!supportsEmptyImg || count !== 0 ? coverImage : ''}>
         {isEditMode && !isDefaultFolder && renderDeleteButton()}
       </BoxContainer>
       <CaptionContainer>

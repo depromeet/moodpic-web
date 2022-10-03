@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { CommonWritingButton } from '@/components/Common';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import HomeFloatingButton from '@/components/Home/FloatingButton/FloatingButton';
 
@@ -11,7 +10,6 @@ interface FloatingButtonGroupProps {
 const FloatingButtonGroup = ({ hasIncompletedPosts }: FloatingButtonGroupProps) => {
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
   const [isScrollAfterBanner, setIsScrollAfterBanner] = useState(false);
-  const router = useRouter();
 
   const handleScrollOnTop = () => {
     setIsScrollOnTop(window.scrollY === 0);
@@ -32,15 +30,11 @@ const FloatingButtonGroup = ({ hasIncompletedPosts }: FloatingButtonGroupProps) 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const goToWritePage = () => {
-    router.push('/write');
-  };
-
   return (
     <>
       {hasIncompletedPosts && <HomeFloatingButton isScrollOnTop={isScrollOnTop} />}
       <FloatingContainer>
-        <ButtonContainer>{isScrollAfterBanner && <CommonWritingButton onClick={goToWritePage} />}</ButtonContainer>
+        <ButtonContainer>{isScrollAfterBanner && <CommonWritingButton />}</ButtonContainer>
       </FloatingContainer>
     </>
   );
