@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import PostItem from '@/components/Post/PostItem/PostItem';

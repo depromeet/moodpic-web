@@ -1,16 +1,12 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { CommonWritingButton } from '@/components/Common';
 
 const WritingButton = () => {
-  const router = useRouter();
-  const goToWritePage = () => router.push('/write');
-
   return (
     <FloatingContainer>
       <ButtonContainer>
-        <CommonWritingButton onClick={goToWritePage} />
+        <CommonWritingButton />
       </ButtonContainer>
     </FloatingContainer>
   );

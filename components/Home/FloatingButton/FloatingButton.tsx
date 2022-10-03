@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 import { transition } from '@/styles/mixins';
 import theme from '@/styles/theme';
 import RightIcon from 'public/svgs/right-small.svg';
@@ -13,24 +13,22 @@ interface FloatingButtonProps {
 }
 
 const FloatingButton = ({ isScrollOnTop }: FloatingButtonProps) => {
-  const router = useRouter();
-
-  const goToDontknowFeelings = () => {
-    router.push('/posts/dontknow-feelings');
-  };
-
   return (
     <FloatingContainer isHidden={!isScrollOnTop}>
       <div>
-        <CommonButton color="gray" onClick={goToDontknowFeelings}>
-          <ButtonText>
-            <Image src={DontknowIcon} alt="" width={20} height={20} />
-            <strong>모르겠어요</strong>를 선택한 기록들
-            <ButtonIcon>
-              <Image src={RightIcon} alt="" />
-            </ButtonIcon>
-          </ButtonText>
-        </CommonButton>
+        <Link href="/posts/dontknow-feelings">
+          <a>
+            <CommonButton color="gray">
+              <ButtonText>
+                <Image src={DontknowIcon} alt="" width={20} height={20} />
+                <strong>모르겠어요</strong>를 선택한 기록들
+                <ButtonIcon>
+                  <Image src={RightIcon} alt="" />
+                </ButtonIcon>
+              </ButtonText>
+            </CommonButton>
+          </a>
+        </Link>
       </div>
     </FloatingContainer>
   );

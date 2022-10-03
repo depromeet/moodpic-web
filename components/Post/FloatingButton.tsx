@@ -1,13 +1,16 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { CommonButtonWithIcon } from '@/components/Common';
+import Link from 'next/link';
 
 const PostFloatingButton = (): React.ReactElement => {
-  const router = useRouter();
   return (
     <ButtonContainer>
-      <CommonButtonWithIcon onClick={() => router.push('/')}>홈으로 돌아가기</CommonButtonWithIcon>
+      <Link href="/">
+        <a>
+          <CommonButtonWithIcon>홈으로 돌아가기</CommonButtonWithIcon>
+        </a>
+      </Link>
     </ButtonContainer>
   );
 };
