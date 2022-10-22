@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -34,6 +34,11 @@ const DropdownMenu = (): React.ReactElement => {
   };
 
   const dropdownRef = typeof window !== 'undefined' && document.getElementById('dropdown-menu');
+
+  useEffect(() => {
+    router.prefetch(`${ROUTES.MYPAGE}`);
+    router.prefetch(`${ROUTES.READY}`);
+  }, []);
 
   if (!dropdownRef) return <></>;
 
