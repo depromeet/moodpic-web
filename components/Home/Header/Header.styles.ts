@@ -32,3 +32,8 @@ export const Title = styled.h1`
 export const Button = styled.button`
   height: 2.4rem;
 `;
+
+export const ButtonWrapper = styled.a`
+  display: flex;
+  align-items: center;
+`;
