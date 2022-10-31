@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -13,6 +13,19 @@ import { CommonAppLayout } from '@/components/Common';
 import * as gtag from '@/lib/gtag';
 import OgImage from 'public/images/og_image.png';
 import Script from 'next/script';
+import { NextPage } from 'next';
+
+type GetLayout = (page: ReactNode) => ReactNode;
+
+export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
+  getLayout?: GetLayout;
+};
+
+type AppPropsWithLayout<P = Record<string, unknown>> = AppProps<P> & {
+  Component: NextPageWithLayout;
+};
+
+const defaultGetLayout: GetLayout = (page: ReactNode): ReactNode => page;
 
 if (typeof window !== 'undefined') {
   if ('serviceWorker' in navigator) {
@@ -27,7 +40,7 @@ if (typeof window !== 'undefined') {
   }
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   useEffect(() => {
@@ -39,6 +52,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, [router.events]);
+
+  const getLayout = Component.getLayout ?? defaultGetLayout;
 
   return (
     <>
@@ -81,9 +96,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <ThemeProvider theme={theme}>
-            <CommonAppLayout>
-              <Component {...pageProps} />
-            </CommonAppLayout>
+            <CommonAppLayout>{getLayout(<Component {...pageProps} />)}</CommonAppLayout>
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         </RecoilRoot>

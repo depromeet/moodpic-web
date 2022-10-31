@@ -7,15 +7,21 @@ const PostFloatingButton = (): React.ReactElement => {
   return (
     <ButtonContainer>
       <Link href="/">
-        <a>
+        <ATagForA11y>
           <CommonButtonWithIcon>홈으로 돌아가기</CommonButtonWithIcon>
-        </a>
+        </ATagForA11y>
       </Link>
     </ButtonContainer>
   );
 };
 
 export default PostFloatingButton;
+
+// FIXME: 네이밍 변경
+const ATagForA11y = styled.a`
+  display: inline-block;
+  width: 100%;
+`;
 
 const ButtonContainer = styled.div`
   position: fixed;
