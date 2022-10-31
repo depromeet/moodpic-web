@@ -7,6 +7,7 @@ import { HeaderWrapper, TitleWrapper, LogoContainer, Title } from './Header.styl
 import CaretDownPrimary from 'public/svgs/caretdown-primary.svg';
 import { CommonIconButton } from '@/components/Common';
 import Logo from 'public/images/logo.png';
+import styled from 'styled-components';
 
 interface HeaderProps {
   hasOnlyTitle?: boolean;
@@ -31,9 +32,9 @@ const Header = ({ hasOnlyTitle = false }: HeaderProps) => {
         </TitleWrapper>
         {!hasOnlyTitle && (
           <Link href="/search">
-            <a>
+            <ATagForA11y>
               <CommonIconButton iconName="magnifyingglass" />
-            </a>
+            </ATagForA11y>
           </Link>
         )}
       </HeaderWrapper>
@@ -42,3 +43,7 @@ const Header = ({ hasOnlyTitle = false }: HeaderProps) => {
 };
 
 export default Header;
+
+export const ATagForA11y = styled.a`
+  display: flex;
+`;
