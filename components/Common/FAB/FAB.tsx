@@ -1,13 +1,12 @@
 import React from 'react';
-import { ButtonContainer } from './WritingButton.styles';
+import { ButtonContainer } from './FAB.styles';
 import Icon from './Icon';
 import FABPortal from './FABPortal';
 import { useToggleState } from '@/hooks/useToggleState';
 import FABMenu from './FABMenu';
 
-const WritingButton = () => {
+const FAB = () => {
   const [isVisible, toggleVisible] = useToggleState(false);
-
   return (
     <>
       <ButtonContainer onClick={toggleVisible}>
@@ -24,4 +23,4 @@ const WritingButton = () => {
   );
 };
 
-export default WritingButton;
+export default FAB;

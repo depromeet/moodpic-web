@@ -4,7 +4,7 @@ import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Button from '../../Common/Button/Button';
+import Button from '../Button/Button';
 
 interface Props {
   content: string;

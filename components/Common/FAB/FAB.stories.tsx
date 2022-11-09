@@ -2,14 +2,14 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import WritingButton from './WritingButton';
+import FAB from './FAB';
 
 export default {
-  component: WritingButton,
-  title: 'WritingButton',
+  component: FAB,
+  title: 'FAB',
 } as Meta;
 
-const Template: Story = (args) => <WritingButton {...args} />;
+const Template: Story = (args) => <FAB {...args} />;
 
 export const Default = Template.bind({});
 

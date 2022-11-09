@@ -7,7 +7,7 @@ export { default as CommonDialog } from './Dialog/Dialog';
 export { default as CommonChipButton } from './ChipButton/ChipButton';
 export { default as CommonToast } from './Toast/Toast';
 export { default as CommonToggle } from './Toggle/Toggle';
-export { default as CommonWritingButton } from './WritingButton/WritingButton';
+export { default as CommonFAB } from './FAB/FAB';
 export { default as CommonTagButton } from './TagButton/TagButton';
 export { default as CommonTextField } from './TextField/TextField';
 export { default as CommonTextArea } from './TextArea/TextArea';

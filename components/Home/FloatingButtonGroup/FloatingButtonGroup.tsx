@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CommonWritingButton } from '@/components/Common';
+import { CommonFAB } from '@/components/Common';
 import styled from 'styled-components';
 import HomeFloatingButton from '@/components/Home/FloatingButton/FloatingButton';
 
@@ -34,7 +34,7 @@ const FloatingButtonGroup = ({ hasIncompletedPosts }: FloatingButtonGroupProps) 
     <>
       {hasIncompletedPosts && <HomeFloatingButton isScrollOnTop={isScrollOnTop} />}
       <FloatingContainer>
-        <ButtonContainer>{isScrollAfterBanner && <CommonWritingButton />}</ButtonContainer>
+        <ButtonContainer>{isScrollAfterBanner && <CommonFAB />}</ButtonContainer>
       </FloatingContainer>
     </>
   );
