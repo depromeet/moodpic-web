@@ -45,6 +45,7 @@ export const FloatingContainer = styled.div`
   left: 0;
   bottom: 0;
   width: 100%;
+  z-index: 103;
 `;
 
 export const ButtonContainer = styled.div`

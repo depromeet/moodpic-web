@@ -7,6 +7,7 @@ export const ROUTES = {
   AUTH_CALLBACK_APPLE: '/oauth/callback/apple',
   LOGIN: '/login',
   READY: '/ready',
+  WRITE: '/write',
   MYPAGE: MYPAGE,
   MYPOSTS: `${MYPAGE}/posts`,
   NOTICE: `${MYPAGE}/notice`,
