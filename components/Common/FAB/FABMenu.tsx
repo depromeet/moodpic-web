@@ -1,5 +1,5 @@
 import { useBlockScroll } from '@/hooks/useBlockModal';
-import React from 'react';
+import React, { ReactNode, SyntheticEvent, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import FABMenuItem from './FABMenuItem';
 import Diary from 'public/images/diary.png';
@@ -22,14 +22,16 @@ const FAB_MENU_LIST = [
 ];
 
 const FABMenu = ({ isVisible, toggleVisible }: Props) => {
+  const FABMenuRef = useRef<HTMLDivElement>(null);
   useBlockScroll(isVisible);
 
-  const onClickFallback = () => {
+  const onClickFallback = (e: SyntheticEvent) => {
+    if (Array.from(FABMenuRef.current?.childNodes as Iterable<ReactNode>).some((v) => v === e.target)) return;
     toggleVisible();
   };
 
   return (
-    <Wrapper isVisible={isVisible} onClick={onClickFallback}>
+    <Wrapper ref={FABMenuRef} isVisible={isVisible} onClick={onClickFallback}>
       {FAB_MENU_LIST.map(({ content, imgSrc }, index) => (
         <FABMenuItem key={content} content={content} imgSrc={imgSrc} index={index} />
       ))}
