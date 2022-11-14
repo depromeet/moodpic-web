@@ -29,7 +29,7 @@ import HomeScreenGuide from '@/components/Home/HomeScreenGuide/HomeScreenGuide';
 import HomeScreenBottomSheet from '@/components/Home/HomeScreenButtonSheet/HomeScreenButtonSheet';
 import useIsMounted from '@/hooks/useIsMounted';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
-import useDynamicBottomSheet from '@/hooks/useDynamicBottomSheet';
+import useBottomSheet from '@/hooks/useBottomSheet';
 
 const Home = () => {
   const [isVisible, promptToInstall] = useAddToHomescreenPrompt();
@@ -43,7 +43,7 @@ const Home = () => {
     bottomSheetRender,
     setBottomSheetRender,
     onCloseBottomSheet: onCloseBottomSheet,
-  } = useDynamicBottomSheet();
+  } = useBottomSheet();
   const [inputValue, onChangeInput, setInputValue] = useInput('');
   const { data: folderResponse, isLoading } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
