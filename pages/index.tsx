@@ -14,7 +14,6 @@ import {
   useUpdateFolderMutation,
 } from '@/hooks/apis';
 import useAddToHomescreenPrompt from '@/hooks/useAddToHomescreenPrompt';
-import useBottomSheet from '@/hooks/useBottomSheet';
 import { SESSION_STORAGE_KEY } from '@/shared/constants/storageKey';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
 import HomeHeader from '@/components/Home/Header/Header';
