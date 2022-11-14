@@ -31,7 +31,7 @@ const useDynamicBottomSheet = () => {
   };
 
   const toggleSheet = () => {
-    setVisibleSheet(!isVisibleSheet);
+    setVisibleSheet((isVisibleSheet) => !isVisibleSheet);
   };
 
   const onClose = useCallback(
