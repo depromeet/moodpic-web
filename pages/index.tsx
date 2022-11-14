@@ -30,17 +30,21 @@ import HomeScreenGuide from '@/components/Home/HomeScreenGuide/HomeScreenGuide';
 import HomeScreenBottomSheet from '@/components/Home/HomeScreenButtonSheet/HomeScreenButtonSheet';
 import useIsMounted from '@/hooks/useIsMounted';
 import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
+import useDynamicBottomSheet from '@/hooks/useDynamicBottomSheet';
 
 const Home = () => {
   const [isVisible, promptToInstall] = useAddToHomescreenPrompt();
   const isMounted = useIsMounted();
   const [isEditMode, setIsEditMode] = useState(false);
   const { dialogVisible, toggleDialog } = useDialog();
-  const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
-  const [bottomSheet, setBottomSheet] = useState({
-    children: null,
-    props: {},
-  });
+  const {
+    isVisibleSheet,
+    toggleSheet,
+    calcBottomSheetHeight,
+    bottomSheetRender,
+    setBottomSheetRender,
+    onCloseBottomSheet: onCloseBottomSheet,
+  } = useDynamicBottomSheet();
   const [inputValue, onChangeInput, setInputValue] = useInput('');
   const { data: folderResponse, isLoading } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
@@ -48,7 +52,6 @@ const Home = () => {
   const [currentTab, setCurrentTab] = useState<CurrentTabType>(HOME_TAB_TYPE.FOLDER);
   const [dialogType, setDialogType] = useState('');
   const [selectedFolderId, setSelectedFolderId] = useState(0);
-  const [bottomSheetType, setBottomSheetType] = useState('');
 
   const notify = useToast();
   const createFolderMutation = useCreateFolderMutation();
@@ -85,8 +88,7 @@ const Home = () => {
     renderAddToHomeScreen();
   }, [isMounted]);
 
-  const hideHomeScreenBottomSheet = () => {
-    toggleSheet();
+  const setIsAlreadyViewed = () => {
     globalThis?.sessionStorage.setItem(SESSION_STORAGE_KEY.IS_ALREADY_VIEWED, 'true');
   };
 
@@ -95,8 +97,10 @@ const Home = () => {
   const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
 
   const showFolderBottomSheet = () => {
-    toggleSheet();
-    setBottomSheetType('folder');
+    setBottomSheetRender({
+      children: <BottomSheetList items={bottomSheetItems} />,
+      height: calcBottomSheetHeight({ folderSize: 2 }),
+    });
   };
 
   const onAddDialog = () => {
@@ -211,37 +215,24 @@ const Home = () => {
 
   const renderHeader = useMemo(() => <HomeHeader />, []);
 
-  const compositionComponents: {
-    [key: string]: { children: JSX.Element; bottomSheetHeight: number; toggleSheet: () => void };
-  } = {
-    folder: {
-      children: <BottomSheetList items={bottomSheetItems} />,
-      bottomSheetHeight: calcBottomSheetHeight({ folderSize: 2 }),
-      toggleSheet,
-    },
-    homeScreenGuide: {
-      children: <HomeScreenGuide onClose={hideHomeScreenBottomSheet} />,
-      bottomSheetHeight: 390,
-      toggleSheet: hideHomeScreenBottomSheet,
-    },
-    homeScreen: {
-      children: <HomeScreenBottomSheet onClick={promptToInstall} onClose={hideHomeScreenBottomSheet} />,
-      bottomSheetHeight: 463,
-      toggleSheet: hideHomeScreenBottomSheet,
-    },
-  };
-
   const renderAddToHomeScreen = () => {
     if (isMobileSafari) {
-      setBottomSheetType('homeScreenGuide');
+      setBottomSheetRender({
+        children: <HomeScreenGuide onClose={setIsAlreadyViewed} />,
+        height: 390,
+        closeCallback: setIsAlreadyViewed,
+      });
+
       return;
     }
 
     if (isVisible) {
-      setBottomSheetType('homeScreen');
+      setBottomSheetRender({
+        children: <HomeScreenBottomSheet onClick={promptToInstall} onClose={setIsAlreadyViewed} />,
+        height: 463,
+        closeCallback: setIsAlreadyViewed,
+      });
     }
-
-    toggleSheet();
   };
 
   //TODO: 이후 Loading develop
@@ -278,11 +269,8 @@ const Home = () => {
       <FloatingButtonGroup hasIncompletedPosts={!!incompletedPosts?.length} />
       {dialogVisible && renderDialog()}
       {isVisibleSheet && (
-        <CommonBottomSheetContainer
-          onClose={() => compositionComponents[bottomSheetType].toggleSheet()}
-          bottomSheetHeight={compositionComponents[bottomSheetType]?.bottomSheetHeight || 0}
-        >
-          {compositionComponents[bottomSheetType] && compositionComponents[bottomSheetType].children}
+        <CommonBottomSheetContainer onClose={onCloseBottomSheet} bottomSheetHeight={bottomSheetRender.height}>
+          {bottomSheetRender.children}
         </CommonBottomSheetContainer>
       )}
     </>
