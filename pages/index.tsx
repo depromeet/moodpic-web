@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AxiosError } from 'axios';
 import styled from 'styled-components';
 import { isMobileSafari } from 'react-device-detect';
-import { HOME_TAB_TYPE, CurrentTabType } from '@/shared/constants/home';
+import { HOME_TAB_TYPE, CurrentTabType, MINIMUM_FOLDER_SIZE } from '@/shared/constants/home';
 import useDialog from '@/hooks/useDialog';
 import useInput from '@/hooks/useInput';
 import {
@@ -10,37 +10,36 @@ import {
   useDeleteFolderMutation,
   useFoldersQuery,
   useIncompletedPostsQuery,
+  useMemberQuery,
   usePostsByCategoryQuery,
   useUpdateFolderMutation,
 } from '@/hooks/apis';
+import useRandomBanner from '@/hooks/useRandomBanner';
 import useAddToHomescreenPrompt from '@/hooks/useAddToHomescreenPrompt';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import { SESSION_STORAGE_KEY } from '@/shared/constants/storageKey';
+import HomeBanner from '@/components/Home/Banner/Banner';
+import HomeTabHeader from '@/components/Home/TabHeader/TabHeader';
 import HomeTabs from '@/components/Home/Tabs/Tabs';
 import HomeHeader from '@/components/Home/Header/Header';
 import FolderList from '@/components/Home/FolderList/FolderList';
-import { CommonBottomSheetContainer, CommonDialog } from '@/components/Common';
+import { CommonDialog } from '@/components/Common';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
 import CategoryFolderList from '@/components/Home/CategoryFolderList/CategoryFolderList';
 import DialogWarning from '@/components/Dialog/DialogWarning';
 import useToast from '@/hooks/useToast';
 import { ToastType } from '@/shared/type/common';
 import FloatingButtonGroup from '@/components/Home/FloatingButtonGroup/FloatingButtonGroup';
+import useIsMounted from '@/hooks/useIsMounted';
 import HomeScreenGuide from '@/components/Home/HomeScreenGuide/HomeScreenGuide';
 import HomeScreenBottomSheet from '@/components/Home/HomeScreenButtonSheet/HomeScreenButtonSheet';
-import useIsMounted from '@/hooks/useIsMounted';
-import BottomSheetList from '@/components/BottomSheetList/BottomSheetList';
 
 const Home = () => {
   const [isVisible, promptToInstall] = useAddToHomescreenPrompt();
-  const isMounted = useIsMounted();
   const [isEditMode, setIsEditMode] = useState(false);
+  const isMounted = useIsMounted();
   const { dialogVisible, toggleDialog } = useDialog();
-  const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
-  const [bottomSheet, setBottomSheet] = useState({
-    children: null,
-    props: {},
-  });
+  const { toggleSheet } = useBottomSheet();
   const [inputValue, onChangeInput, setInputValue] = useInput('');
   const { data: folderResponse, isLoading } = useFoldersQuery();
   const { data: postResponse, refetch: fetchPosts } = usePostsByCategoryQuery();
@@ -48,29 +47,31 @@ const Home = () => {
   const [currentTab, setCurrentTab] = useState<CurrentTabType>(HOME_TAB_TYPE.FOLDER);
   const [dialogType, setDialogType] = useState('');
   const [selectedFolderId, setSelectedFolderId] = useState(0);
-  const [bottomSheetType, setBottomSheetType] = useState('');
-
   const notify = useToast();
+  const { data: me } = useMemberQuery();
   const createFolderMutation = useCreateFolderMutation();
   const updateFolderMutation = useUpdateFolderMutation();
   const deleteFolderMutation = useDeleteFolderMutation();
 
-  const bottomSheetItems = [
-    {
-      label: '폴더 편집',
-      onClick: () => {
-        setIsEditMode(true);
-        toggleSheet();
-      },
-    },
-    {
-      label: '폴더 추가',
-      onClick: () => {
-        onAddDialog();
-        toggleSheet();
-      },
-    },
+  const randomTitleCases = [
+    <>
+      님의 <br />
+      모든 감정은 소중해잉 🥺
+    </>,
+    <>
+      님, 감정을 되짚어보면 <br />
+      기분이 나아질거예요!
+    </>,
+    <>
+      님, 오늘 어떤 일이 <br />
+      있었는지 들려주세요!
+    </>,
+    <>
+      님, 오늘의 감정을 <br />
+      풀어보는 시간을 가져볼까요?
+    </>,
   ];
+  const { randomImageSource, randomTitle } = useRandomBanner(randomTitleCases);
 
   useEffect(() => {
     if (currentTab === HOME_TAB_TYPE.EMOTION) {
@@ -78,12 +79,6 @@ const Home = () => {
       fetchPosts();
     }
   }, [currentTab, fetchPosts]);
-
-  useEffect(() => {
-    if (!isMounted && isAlreadyViewed) return;
-
-    renderAddToHomeScreen();
-  }, [isMounted]);
 
   const hideHomeScreenBottomSheet = () => {
     toggleSheet();
@@ -93,11 +88,6 @@ const Home = () => {
   const isAlreadyViewed = Boolean(globalThis?.sessionStorage?.getItem(SESSION_STORAGE_KEY.IS_ALREADY_VIEWED));
 
   const handleCurrentTab = (tab: CurrentTabType) => setCurrentTab(tab);
-
-  const showFolderBottomSheet = () => {
-    toggleSheet();
-    setBottomSheetType('folder');
-  };
 
   const onAddDialog = () => {
     setDialogType('add');
@@ -211,37 +201,22 @@ const Home = () => {
 
   const renderHeader = useMemo(() => <HomeHeader />, []);
 
-  const compositionComponents: {
-    [key: string]: { children: JSX.Element; bottomSheetHeight: number; toggleSheet: () => void };
-  } = {
-    folder: {
-      children: <BottomSheetList items={bottomSheetItems} />,
-      bottomSheetHeight: calcBottomSheetHeight({ folderSize: 2 }),
-      toggleSheet,
-    },
-    homeScreenGuide: {
-      children: <HomeScreenGuide onClose={hideHomeScreenBottomSheet} />,
-      bottomSheetHeight: 390,
-      toggleSheet: hideHomeScreenBottomSheet,
-    },
-    homeScreen: {
-      children: <HomeScreenBottomSheet onClick={promptToInstall} onClose={hideHomeScreenBottomSheet} />,
-      bottomSheetHeight: 463,
-      toggleSheet: hideHomeScreenBottomSheet,
-    },
-  };
-
   const renderAddToHomeScreen = () => {
+    if (isAlreadyViewed) return;
+
     if (isMobileSafari) {
-      setBottomSheetType('homeScreenGuide');
-      return;
+      return <HomeScreenGuide toggleSheet={hideHomeScreenBottomSheet} onClose={hideHomeScreenBottomSheet} />;
     }
 
     if (isVisible) {
-      setBottomSheetType('homeScreen');
+      return (
+        <HomeScreenBottomSheet
+          onClick={promptToInstall}
+          toggleSheet={hideHomeScreenBottomSheet}
+          onClose={hideHomeScreenBottomSheet}
+        />
+      );
     }
-
-    toggleSheet();
   };
 
   //TODO: 이후 Loading develop
@@ -251,13 +226,14 @@ const Home = () => {
   return (
     <>
       {renderHeader}
-      <HomeTabs
+      {isMounted && <HomeBanner nickname={me?.nickname || ''} title={randomTitle} background={randomImageSource} />}
+      <HomeTabHeader
         currentTab={currentTab}
+        canEdit={folderLength > MINIMUM_FOLDER_SIZE}
         isEditMode={isEditMode}
-        setCurrentTab={handleCurrentTab}
         toggleEditMode={() => setIsEditMode(!isEditMode)}
-        onClick={showFolderBottomSheet}
       />
+      <HomeTabs currentTab={currentTab} setCurrentTab={handleCurrentTab} onClick={onAddDialog} />
       {currentTab === HOME_TAB_TYPE.FOLDER && folderLength && (
         <FolderListContainer>
           <FolderList
@@ -277,14 +253,7 @@ const Home = () => {
       )}
       <FloatingButtonGroup hasIncompletedPosts={!!incompletedPosts?.length} />
       {dialogVisible && renderDialog()}
-      {isVisibleSheet && (
-        <CommonBottomSheetContainer
-          onClose={() => compositionComponents[bottomSheetType].toggleSheet()}
-          bottomSheetHeight={compositionComponents[bottomSheetType]?.bottomSheetHeight || 0}
-        >
-          {compositionComponents[bottomSheetType] && compositionComponents[bottomSheetType].children}
-        </CommonBottomSheetContainer>
-      )}
+      {renderAddToHomeScreen()}
     </>
   );
 };
@@ -294,7 +263,7 @@ const FolderListContainer = styled.ul`
   grid-template-columns: repeat(2, 1fr);
   column-gap: 0.8rem;
   row-gap: 1.4rem;
-  padding-top: 1.2rem;
+  padding-top: 2rem;
 `;
 
 export default Home;
