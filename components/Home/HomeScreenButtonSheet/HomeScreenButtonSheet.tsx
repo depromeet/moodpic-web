@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CommonButton, CommonIconButton } from '@/components/Common';
+import { CommonBottomSheetContainer, CommonButton, CommonIconButton } from '@/components/Common';
 import theme from '@/styles/theme';
 import Image from 'next/image';
 import AppIcon from '/public/icon-512x512.png';
@@ -8,27 +8,30 @@ import AppIcon from '/public/icon-512x512.png';
 export interface ScreenButtonSheetProps {
   onClick: () => void;
   onClose: () => void;
+  toggleSheet: () => void;
 }
 
-const HomeScreenButtonSheet = ({ onClick, onClose }: ScreenButtonSheetProps): React.ReactElement => {
+const HomeScreenButtonSheet = ({ onClick, onClose, toggleSheet }: ScreenButtonSheetProps): React.ReactElement => {
   return (
-    <SheetContainer>
-      <ButtonContainer>
-        <CommonIconButton iconName="close" onClick={onClose} />
-      </ButtonContainer>
-      <SheetTitle>홈 화면에 추가</SheetTitle>
-      <SheetImage>
-        <Image src={AppIcon} alt="무드픽" />
-      </SheetImage>
-      <SheetContents>
-        더 편하고 빠르게 무드픽으로 진입해
-        <br />
-        감정을 기록할 수 있어요.
-      </SheetContents>
-      <CommonButton size="large" onClick={onClick}>
-        추가
-      </CommonButton>
-    </SheetContainer>
+    <CommonBottomSheetContainer onClose={toggleSheet} bottomSheetHeight={463}>
+      <SheetContainer>
+        <ButtonContainer>
+          <CommonIconButton iconName="close" onClick={onClose} />
+        </ButtonContainer>
+        <SheetTitle>홈 화면에 추가</SheetTitle>
+        <SheetImage>
+          <Image src={AppIcon} alt="무드픽" />
+        </SheetImage>
+        <SheetContents>
+          더 편하고 빠르게 무드픽으로 진입해
+          <br />
+          감정을 기록할 수 있어요.
+        </SheetContents>
+        <CommonButton size="large" onClick={onClick}>
+          추가
+        </CommonButton>
+      </SheetContainer>
+    </CommonBottomSheetContainer>
   );
 };
 

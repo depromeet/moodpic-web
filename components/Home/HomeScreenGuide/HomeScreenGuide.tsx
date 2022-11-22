@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CommonIconButton } from '@/components/Common';
+import { CommonBottomSheetContainer, CommonIconButton } from '@/components/Common';
 import theme from '@/styles/theme';
 import Image from 'next/image';
 import AppIcon from '/public/icon-512x512.png';
@@ -8,31 +8,34 @@ import AddWhiteIcon from '/public/svgs/add-white.svg';
 import DownloadSafariIcon from '/public/svgs/download-safari.svg';
 
 export interface ScreenGuideProps {
+  toggleSheet: () => void;
   onClose: () => void;
 }
 
-const HomeScreenGuide = ({ onClose }: ScreenGuideProps): React.ReactElement => {
+const HomeScreenGuide = ({ toggleSheet, onClose }: ScreenGuideProps): React.ReactElement => {
   return (
-    <GuideContainer>
-      <ButtonContainer>
-        <CommonIconButton iconName="close" onClick={onClose} />
-      </ButtonContainer>
-      <GuideImage>
-        <Image src={AppIcon} alt="무드픽" />
-      </GuideImage>
-      <GuideContents>
-        더 편하고 빠르게 무드픽으로 진입해
-        <br />
-        감정을 기록할 수 있어요.
-      </GuideContents>
-      <GuideTooltip>
-        <span>홈 화면에 추가</span>
-        <Image src={AddWhiteIcon} alt="" width={18} height={18} />
-      </GuideTooltip>
-      <IconContainer>
-        <Image src={DownloadSafariIcon} alt="홈 화면에 추가" width={19} height={25} />
-      </IconContainer>
-    </GuideContainer>
+    <CommonBottomSheetContainer onClose={toggleSheet} bottomSheetHeight={390}>
+      <GuideContainer>
+        <ButtonContainer>
+          <CommonIconButton iconName="close" onClick={onClose} />
+        </ButtonContainer>
+        <GuideImage>
+          <Image src={AppIcon} alt="무드픽" />
+        </GuideImage>
+        <GuideContents>
+          더 편하고 빠르게 무드픽으로 진입해
+          <br />
+          감정을 기록할 수 있어요.
+        </GuideContents>
+        <GuideTooltip>
+          <span>홈 화면에 추가</span>
+          <Image src={AddWhiteIcon} alt="" width={18} height={18} />
+        </GuideTooltip>
+        <IconContainer>
+          <Image src={DownloadSafariIcon} alt="홈 화면에 추가" width={19} height={25} />
+        </IconContainer>
+      </GuideContainer>
+    </CommonBottomSheetContainer>
   );
 };
 
