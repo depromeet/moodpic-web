@@ -34,14 +34,10 @@ const useBottomSheet = () => {
     setVisibleSheet((isVisibleSheet) => !isVisibleSheet);
   };
 
-  const onClose = useCallback(
-    (event?: MouseEvent<HTMLElement | HTMLButtonElement>) => {
-      event && event.stopPropagation();
-      setVisibleSheet(false);
-      typeof bottomSheetRender.closeCallback === 'function' && bottomSheetRender.closeCallback();
-    },
-    [setVisibleSheet, bottomSheetRender],
-  );
+  const onClose = useCallback(() => {
+    setVisibleSheet(false);
+    typeof bottomSheetRender.closeCallback === 'function' && bottomSheetRender.closeCallback();
+  }, [setVisibleSheet, bottomSheetRender]);
 
   const updateBottomSheetRender = useCallback(
     (render: DynamicBottomSheet) => {
