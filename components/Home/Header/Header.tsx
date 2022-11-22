@@ -3,10 +3,11 @@ import Image from 'next/image';
 import { useSetRecoilState } from 'recoil';
 import Link from 'next/link';
 import { dropdownStateAtom } from '@/store/dropdown/atom';
-import { HeaderWrapper, TitleWrapper, LogoContainer, Title, ButtonWrapper } from './Header.styles';
+import { HeaderWrapper, TitleWrapper, LogoContainer, Title } from './Header.styles';
 import CaretDownPrimary from 'public/svgs/caretdown-primary.svg';
 import { CommonIconButton } from '@/components/Common';
 import Logo from 'public/images/logo.png';
+import styled from 'styled-components';
 
 interface HeaderProps {
   hasOnlyTitle?: boolean;
@@ -31,9 +32,9 @@ const Header = ({ hasOnlyTitle = false }: HeaderProps) => {
         </TitleWrapper>
         {!hasOnlyTitle && (
           <Link href="/search">
-            <ButtonWrapper>
+            <ATagForA11y>
               <CommonIconButton iconName="magnifyingglass" />
-            </ButtonWrapper>
+            </ATagForA11y>
           </Link>
         )}
       </HeaderWrapper>
@@ -42,3 +43,7 @@ const Header = ({ hasOnlyTitle = false }: HeaderProps) => {
 };
 
 export default Header;
+
+export const ATagForA11y = styled.a`
+  display: flex;
+`;
