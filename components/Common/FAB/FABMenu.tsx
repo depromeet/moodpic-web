@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import FABMenuItem from './FABMenuItem';
 import Diary from 'public/images/diary.png';
 import SpeechBubble from 'public/images/speechBubble.png';
+import { ROUTES } from '@/shared/constants/routes';
 
 interface Props {
   isVisible: boolean;
@@ -14,10 +15,12 @@ const FAB_MENU_LIST = [
   {
     imgSrc: Diary,
     content: '일기를 쓸래요',
+    destination: ROUTES.DIARY,
   },
   {
     imgSrc: SpeechBubble,
     content: '고민을 쓸래요',
+    destination: ROUTES.WORRY,
   },
 ];
 
@@ -32,8 +35,8 @@ const FABMenu = ({ isVisible, toggleVisible }: Props) => {
 
   return (
     <Wrapper ref={FABMenuRef} isVisible={isVisible} onClick={onClickFallback}>
-      {FAB_MENU_LIST.map(({ content, imgSrc }, index) => (
-        <FABMenuItem key={content} content={content} imgSrc={imgSrc} index={index} />
+      {FAB_MENU_LIST.map((props, index) => (
+        <FABMenuItem key={props.content} index={index} {...props} />
       ))}
     </Wrapper>
   );

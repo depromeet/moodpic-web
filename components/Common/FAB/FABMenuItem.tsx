@@ -9,20 +9,16 @@ import Button from '../Button/Button';
 interface Props {
   content: string;
   imgSrc: StaticImageData;
+  destination: string;
   index: number;
 }
 
-const FABMenuItem = ({ content, imgSrc, index }: Props) => {
+const FABMenuItem = ({ content, imgSrc, destination, index }: Props) => {
   const router = useRouter();
+  const goToDestination = () => router.push(destination);
 
   return (
-    <CustomizedButton
-      color="gray"
-      hasBorderRadius
-      onClick={() => router.push(ROUTES.WRITE)}
-      size="medium"
-      index={index}
-    >
+    <CustomizedButton color="gray" hasBorderRadius onClick={goToDestination} size="medium" index={index}>
       <Image src={imgSrc} alt={imgSrc.src} />
       {content}
     </CustomizedButton>
