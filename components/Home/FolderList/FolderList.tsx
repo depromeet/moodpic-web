@@ -56,7 +56,7 @@ const FolderList = ({
               onDelete={onDelete}
             />
           ) : (
-            <Link key={folder.folderId} href={`/posts?folderId=${folder.folderId}`}>
+            <Link key={folder.folderId} href={`/posts?folderId=${folder.folderId}`} passHref>
               <a>
                 <HomeFolder
                   supportsEmptyImg={supportsCollectedFolder}

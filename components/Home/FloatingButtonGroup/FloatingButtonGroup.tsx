@@ -9,20 +9,14 @@ interface FloatingButtonGroupProps {
 
 const FloatingButtonGroup = ({ hasIncompletedPosts }: FloatingButtonGroupProps) => {
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
-  const [isScrollAfterBanner, setIsScrollAfterBanner] = useState(false);
 
   const handleScrollOnTop = () => {
     setIsScrollOnTop(window.scrollY === 0);
   };
 
-  const handleScrollAfterBanner = () => {
-    setIsScrollAfterBanner(window.scrollY >= 256);
-  };
-
   useEffect(() => {
     const handleScroll = () => {
       handleScrollOnTop();
-      handleScrollAfterBanner();
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -34,7 +28,9 @@ const FloatingButtonGroup = ({ hasIncompletedPosts }: FloatingButtonGroupProps) 
     <>
       {hasIncompletedPosts && <HomeFloatingButton isScrollOnTop={isScrollOnTop} />}
       <FloatingContainer>
-        <ButtonContainer>{isScrollAfterBanner && <CommonWritingButton />}</ButtonContainer>
+        <ButtonContainer>
+          <CommonWritingButton />
+        </ButtonContainer>
       </FloatingContainer>
     </>
   );

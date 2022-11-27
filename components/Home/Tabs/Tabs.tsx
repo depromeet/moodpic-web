@@ -1,8 +1,7 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import Image from 'next/image';
+import styled from 'styled-components';
 import theme from '@/styles/theme';
-import FolderIcon from 'public/svgs/folderplus.svg';
+import { CommonIconButton } from '@/components/Common';
 import { HOME_TAB_TYPE, HOME_TAB_LABEL, CurrentTabType } from '@/shared/constants/home';
 
 interface Tab {
@@ -13,10 +12,12 @@ interface Tab {
 export interface TabsProps {
   currentTab: CurrentTabType;
   setCurrentTab: (tab: CurrentTabType) => void;
+  isEditMode: boolean;
+  toggleEditMode: () => void;
   onClick: () => void;
 }
 
-const Tabs = ({ currentTab, setCurrentTab, onClick }: TabsProps): React.ReactElement => {
+const Tabs = ({ currentTab, setCurrentTab, isEditMode, toggleEditMode, onClick }: TabsProps): React.ReactElement => {
   const tabList = [
     {
       key: HOME_TAB_TYPE.FOLDER,
@@ -39,9 +40,13 @@ const Tabs = ({ currentTab, setCurrentTab, onClick }: TabsProps): React.ReactEle
           );
         })}
         {currentTab === HOME_TAB_TYPE.FOLDER && (
-          <FolderImage onClick={onClick}>
-            <Image src={FolderIcon} alt="폴더 추가" />
-          </FolderImage>
+          <ButtonContainer>
+            {isEditMode ? (
+              <ActivateButton onClick={toggleEditMode}>완료</ActivateButton>
+            ) : (
+              <CommonIconButton iconName="more" alt="더보기" onClick={onClick} />
+            )}
+          </ButtonContainer>
         )}
       </TabList>
     </TabContainer>
@@ -54,7 +59,6 @@ const TabContainer = styled.div`
   margin-right: -1.8rem;
   margin-left: -1.8rem;
   padding: 0 1.8rem;
-  border-bottom: 0.1rem solid ${theme.colors.gray1};
   z-index: 1;
 `;
 
@@ -63,24 +67,26 @@ const TabList = styled.div`
   background-color: ${theme.colors.black};
 `;
 
-const FolderImage = styled.button`
-  justify-self: flex-end;
-  margin-left: auto;
-`;
-
 const TabButton = styled.button<{ activate: boolean }>`
   padding: 1.1rem 0;
-  ${theme.fonts.h4};
-  color: ${(props) => (props.activate ? theme.colors.white : theme.colors.gray4)};
-  border-bottom: ${(props) =>
-    props.activate &&
-    css`
-    0.1rem solid ${theme.colors.primary}
-  `};
+  ${theme.fonts.h3};
+  font-weight: normal;
+  color: ${(props) => (props.activate ? theme.colors.white : '#505051')};
 
   & ~ & {
     margin-left: 1.6rem;
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+`;
+
+const ActivateButton = styled.button`
+  ${theme.fonts.h6};
+  color: ${theme.colors.primary};
 `;
 
 export default Tabs;

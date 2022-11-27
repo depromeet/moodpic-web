@@ -11,14 +11,16 @@ const CategoryFolderList = ({ list }: CategoryFolderListProps): React.ReactEleme
   return (
     <>
       {list.map((folder: CategoryFolder) => (
-        <Link key={folder.categoryId} href={`/posts?categoryId=${folder.categoryId}`}>
-          <HomeFolder
-            folderId={folder.categoryId}
-            folderName={folder.description}
-            count={folder.count}
-            coverImage={folder.image}
-            isEditMode={false}
-          />
+        <Link key={folder.categoryId} href={`/posts?categoryId=${folder.categoryId}`} passHref>
+          <a>
+            <HomeFolder
+              folderId={folder.categoryId}
+              folderName={folder.description}
+              count={folder.count}
+              coverImage={folder.image}
+              isEditMode={false}
+            />
+          </a>
         </Link>
       ))}
     </>
