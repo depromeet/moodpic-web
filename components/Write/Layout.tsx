@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useResetRecoilState } from 'recoil';
 import { progressStepStateAtom } from '@/store/progressStep/atom';
 import { createPostRequestState } from '@/store/post/atom';
-import { CommonProgress } from '../Common';
 import AppBar from './AppBar';
 
 interface LayoutProps {
@@ -10,7 +9,6 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const progressStep = useRecoilValue(progressStepStateAtom);
   const resetcreatePostRequestState = useResetRecoilState(createPostRequestState);
   const resetProgressStepState = useResetRecoilState(progressStepStateAtom);
 
@@ -24,7 +22,6 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <AppBar />
-      <CommonProgress step={progressStep} />
       {children}
     </>
   );
