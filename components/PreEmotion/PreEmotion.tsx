@@ -55,7 +55,7 @@ const ButtonWrapper = styled.div`
 export const MainTitle = styled.div`
   ${theme.fonts.subtitle1}
   font-weight: 500;
-  margin: 5.4rem 0 4rem;
+  margin: 3.2rem 0 4rem;
   color: ${theme.colors.white};
 `;
 
