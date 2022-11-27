@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CommonWritingButton } from '@/components/Common';
+import { CommonFAB } from '@/components/Common';
 
-const WritingButton = () => {
+const FAB = () => {
   return (
     <FloatingContainer>
       <ButtonContainer>
-        <CommonWritingButton />
+        <CommonFAB />
       </ButtonContainer>
     </FloatingContainer>
   );
@@ -30,4 +30,4 @@ export const ButtonContainer = styled.div`
   }
 `;
 
-export default WritingButton;
+export default FAB;

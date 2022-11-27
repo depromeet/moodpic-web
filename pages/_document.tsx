@@ -90,6 +90,7 @@ class MyDocument extends Document {
           <div id="root-bottomsheet" />
           <div id="dropdown-menu" />
           <div id="root-dialog" />
+          <div id="FAB" />
           <NextScript />
         </body>
       </Html>

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useBottomSheet from '@/hooks/useBottomSheet';
@@ -6,6 +7,7 @@ import {
   CommonAppBar,
   CommonBottomSheetContainer,
   CommonDialog,
+  CommonFAB,
   CommonIconButton,
   CommonLoading,
 } from '@/components/Common';
@@ -27,7 +29,7 @@ import {
 } from '@/hooks/apis';
 import { ToastType } from '@/shared/type/common';
 import { BottomButton, Bottom, HeaderTitle, LoadingContainer } from '@/components/Post/PostList/PostList.style';
-import WritingButton from '@/components/Post/WritingButton';
+import { ButtonContainer, FloatingContainer } from '@/components/Home/FloatingButtonGroup/FloatingButtonGroup';
 
 interface DialogItem {
   type: 'alert' | 'modal';
@@ -278,7 +280,11 @@ const PostListPage = () => {
           </BottomButton>
         </Bottom>
       ) : (
-        <WritingButton />
+        <FloatingContainer>
+          <ButtonContainer>
+            <CommonFAB />
+          </ButtonContainer>
+        </FloatingContainer>
       )}
       {isVisibleSheet && (
         <CommonBottomSheetContainer
