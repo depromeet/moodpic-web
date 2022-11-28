@@ -26,3 +26,5 @@ export const ToastType = {
 } as const;
 
 export type ToastType = typeof ToastType[keyof typeof ToastType];
+
+export type WriteModeType = 'diary' | 'worry';

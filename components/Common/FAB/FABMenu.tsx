@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 import FABMenuItem from './FABMenuItem';
 import Diary from 'public/images/diary.png';
 import SpeechBubble from 'public/images/speechBubble.png';
-import { ROUTES } from '@/shared/constants/routes';
 
 interface Props {
   isVisible: boolean;
@@ -15,14 +14,14 @@ const FAB_MENU_LIST = [
   {
     imgSrc: Diary,
     content: '일기를 쓸래요',
-    destination: ROUTES.DIARY,
+    writeMode: 'diary',
   },
   {
     imgSrc: SpeechBubble,
     content: '고민을 쓸래요',
-    destination: ROUTES.WORRY,
+    writeMode: 'worry',
   },
-];
+] as const;
 
 const FABMenu = ({ isVisible, toggleVisible }: Props) => {
   const FABMenuRef = useRef<HTMLDivElement>(null);

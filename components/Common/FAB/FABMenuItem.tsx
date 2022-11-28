@@ -1,21 +1,29 @@
 import { ROUTES } from '@/shared/constants/routes';
+import { WriteModeType } from '@/shared/type/common';
+import { writeModeStateAtom } from '@/store/writeMode/atom';
 import theme from '@/styles/theme';
 import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSetRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
 import Button from '../Button/Button';
 
 interface Props {
   content: string;
   imgSrc: StaticImageData;
-  destination: string;
+  writeMode: WriteModeType;
   index: number;
 }
 
-const FABMenuItem = ({ content, imgSrc, destination, index }: Props) => {
+const FABMenuItem = ({ content, imgSrc, writeMode, index }: Props) => {
   const router = useRouter();
-  const goToDestination = () => router.push(destination);
+  const setWriteMode = useSetRecoilState(writeModeStateAtom);
+
+  const goToDestination = () => {
+    setWriteMode(writeMode);
+    router.push(ROUTES.WRITE);
+  };
 
   return (
     <CustomizedButton color="gray" hasBorderRadius onClick={goToDestination} size="medium" index={index}>
