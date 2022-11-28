@@ -1,53 +1,61 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import useDialog from '@/hooks/useDialog';
 import { progressStepStateAtom } from '@/store/progressStep/atom';
 import { CommonDialog } from '@/components/Common';
 import PreEmotion from '@/components/PreEmotion/PreEmotion';
 import Question from '@/components/Question/Question';
 import CurrentEmotion from '@/components/CurrentEmotion/CurrentEmotion';
-import Complete from '@/components/Complete/Complete';
 import DialogCancel from '@/components/Dialog/DialogCancel';
 import useSystemDialog from '@/hooks/useSystemDialog';
 import Layout from '@/components/Write/Layout';
+import { writeModeStateAtom } from '@/store/writeMode/atom';
 
 const Write = () => {
-  const progressStep = useRecoilValue(progressStepStateAtom);
-  const setPrevProgressStep = useSetRecoilState(progressStepStateAtom);
+  const [progressStep, setPrevProgressStep] = useRecoilState(progressStepStateAtom);
   const { dialogVisible, toggleDialog } = useDialog();
   const { confirmSystemDialog, cancelSystemDialog, removeRouteChangeEvent } = useSystemDialog(toggleDialog);
-
+  const writeMode = useRecoilValue(writeModeStateAtom);
   const onClickGoHome = () => {
     // TODO: 취소 버튼 눌렀을시 선택한 카테고리, textArea의 value 들도 초기화 시켜줘야함
     setPrevProgressStep(1);
     confirmSystemDialog();
   };
 
-  const renderProgressStep = () => {
-    switch (progressStep) {
-      case 1:
-        return <PreEmotion />;
-      case 2:
-        return <Question />;
-      case 3:
-        return <CurrentEmotion removeRouteChangeEvent={removeRouteChangeEvent} />;
-      case 4:
-        return <Complete />;
-      default:
-        break;
+  const renderProgressStep = useMemo(() => {
+    if (writeMode === 'worry') {
+      switch (progressStep) {
+        case 1:
+          return <PreEmotion />;
+        case 2:
+          return <Question />;
+        case 3:
+          return <CurrentEmotion removeRouteChangeEvent={removeRouteChangeEvent} />;
+        default:
+          break;
+      }
+    } else if (writeMode === 'diary') {
+      switch (progressStep) {
+        case 1:
+          return <Question />;
+        case 2:
+          return <CurrentEmotion removeRouteChangeEvent={removeRouteChangeEvent} />;
+        default:
+          break;
+      }
     }
-  };
+  }, [progressStep, removeRouteChangeEvent, writeMode]);
 
   return (
-    <>
-      {renderProgressStep()}
+    <form>
+      {renderProgressStep}
       {dialogVisible ? (
         <CommonDialog type="alert" onClose={cancelSystemDialog} onConfirm={onClickGoHome}>
           <DialogCancel />
         </CommonDialog>
       ) : null}
-    </>
+    </form>
   );
 };
 
