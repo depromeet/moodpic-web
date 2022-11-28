@@ -5,12 +5,13 @@ import useDialog from '@/hooks/useDialog';
 import { progressStepStateAtom } from '@/store/progressStep/atom';
 import { CommonDialog } from '@/components/Common';
 import PreEmotion from '@/components/PreEmotion/PreEmotion';
-import Question from '@/components/Question/Question';
 import CurrentEmotion from '@/components/CurrentEmotion/CurrentEmotion';
 import DialogCancel from '@/components/Dialog/DialogCancel';
 import useSystemDialog from '@/hooks/useSystemDialog';
 import Layout from '@/components/Write/Layout';
 import { writeModeStateAtom } from '@/store/writeMode/atom';
+import WorryQuestion from '@/components/Question/WorryQuestion';
+import DiaryQuestion from '@/components/Question/DiaryQuestion';
 
 const Write = () => {
   const [progressStep, setPrevProgressStep] = useRecoilState(progressStepStateAtom);
@@ -29,7 +30,7 @@ const Write = () => {
         case 1:
           return <PreEmotion />;
         case 2:
-          return <Question />;
+          return <WorryQuestion />;
         case 3:
           return <CurrentEmotion removeRouteChangeEvent={removeRouteChangeEvent} />;
         default:
@@ -38,7 +39,7 @@ const Write = () => {
     } else if (writeMode === 'diary') {
       switch (progressStep) {
         case 1:
-          return <Question />;
+          return <DiaryQuestion />;
         case 2:
           return <CurrentEmotion removeRouteChangeEvent={removeRouteChangeEvent} />;
         default:

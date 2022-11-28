@@ -11,7 +11,6 @@ import useNextProgressStep from '@/hooks/useNextProgressStep';
 import useToast from '@/hooks/useToast';
 import useDialog from '@/hooks/useDialog';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import { useMemberQuery } from '@/hooks/apis';
 import useUpdateEffect from '@/hooks/useUpdateEffect';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { queryClient } from '@/shared/utils/queryClient';
@@ -22,7 +21,6 @@ import postService from '@/service/apis/postService';
 import { ButtonWrapper } from '@/pages/write';
 import {
   CommonDialog,
-  CommonSelectButton,
   CommonBottomSheetContainer,
   CommonButton,
   CommonToggle,
@@ -30,7 +28,6 @@ import {
   CommonTextField,
   CommonTagButton,
 } from '@/components/Common';
-import { MainTitle } from '@/components/PreEmotion/PreEmotion';
 import BottomSheetFolderList from '@/components/BottomSheetFolderList/BottomSheetFolderList';
 import FolderPlus from 'public/svgs/folderplus.svg';
 import DialogFolderForm from '@/components/Dialog/DialogFolderForm';
@@ -42,10 +39,8 @@ import {
   FolderWrap,
   TextFieldWrap,
   TagButtonWrap,
-  Divider,
   CustomImage,
 } from './CurrentEmotion.styles';
-import { DEFAULT_NICKNAME } from '@/shared/constants/common';
 
 const MAX_TAG_LIST_LENGTH = 5;
 
@@ -65,7 +60,6 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
   const { dialogVisible, toggleDialog } = useDialog();
   const { isVisibleSheet, toggleSheet, calcBottomSheetHeight } = useBottomSheet();
   const [selectedState, setSelectState] = useRecoilState(createPostRequestState);
-  const { data: me } = useMemberQuery();
   const { data: folderListData } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders);
   const { data: defaultFolder } = useQuery(QUERY_KEY.GET_FOLDERS, folderService.getFolders, {
     select: (data) => data.folders.filter(({ default: isDefaultFolder }) => isDefaultFolder)[0].folderId,
@@ -182,14 +176,6 @@ const CurrentEmotion = ({ removeRouteChangeEvent }: CurrentEmotionProps) => {
 
   return (
     <>
-      <MainTitle>
-        {me?.nickname ?? DEFAULT_NICKNAME}님의 <br />
-        지금 감정은 어떠세요?
-      </MainTitle>
-      <CommonSelectButton title="☺️ &nbsp; 한결 나아졌어요" secondaryCategorytype="positive" />
-      <CommonSelectButton title="😞 &nbsp; 여전히" secondaryCategorytype="negative" />
-      <CommonSelectButton title="🤔 &nbsp; 변화가 없었어요" secondaryCategorytype="natural" />
-      <Divider />
       <OptionWrapper>
         <OptionTitle>태그</OptionTitle>
         <TextFieldWrap>
