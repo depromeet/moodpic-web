@@ -46,7 +46,9 @@ export default FABMenu;
 const Wrapper = styled.div<{ isVisible: boolean }>`
   position: fixed;
   top: 0px;
-  left: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 480px;
   width: 100%;
   height: 100%;
   transition: all 0.2s ease;
