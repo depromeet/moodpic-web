@@ -25,7 +25,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ iconName, alt = '', children, ...rest }: ButtonProps): React.ReactElement => {
   return (
-    <ButtonContainer {...rest}>
+    <ButtonContainer type="button" {...rest}>
       <Image src={`/svgs/${iconName}.svg`} alt={alt} width={24} height={24} />
       {children}
     </ButtonContainer>

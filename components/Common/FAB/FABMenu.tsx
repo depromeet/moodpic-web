@@ -14,12 +14,14 @@ const FAB_MENU_LIST = [
   {
     imgSrc: Diary,
     content: '일기를 쓸래요',
+    writeMode: 'diary',
   },
   {
     imgSrc: SpeechBubble,
     content: '고민을 쓸래요',
+    writeMode: 'worry',
   },
-];
+] as const;
 
 const FABMenu = ({ isVisible, toggleVisible }: Props) => {
   const FABMenuRef = useRef<HTMLDivElement>(null);
@@ -32,8 +34,8 @@ const FABMenu = ({ isVisible, toggleVisible }: Props) => {
 
   return (
     <Wrapper ref={FABMenuRef} isVisible={isVisible} onClick={onClickFallback}>
-      {FAB_MENU_LIST.map(({ content, imgSrc }, index) => (
-        <FABMenuItem key={content} content={content} imgSrc={imgSrc} index={index} />
+      {FAB_MENU_LIST.map((props, index) => (
+        <FABMenuItem key={props.content} index={index} {...props} />
       ))}
     </Wrapper>
   );
@@ -44,7 +46,9 @@ export default FABMenu;
 const Wrapper = styled.div<{ isVisible: boolean }>`
   position: fixed;
   top: 0px;
-  left: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 480px;
   width: 100%;
   height: 100%;
   transition: all 0.2s ease;

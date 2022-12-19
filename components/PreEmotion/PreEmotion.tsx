@@ -5,7 +5,6 @@ import { CommonButton } from '@/components/Common';
 import { useMemberQuery } from '@/hooks/apis';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
 import theme from '@/styles/theme';
-import FirstCategorySelect from '@/components/Common/SelectButton/FirstCategorySelect';
 import { createPostRequestState } from '@/store/post/atom';
 
 const PreEmotion = () => {
@@ -19,13 +18,13 @@ const PreEmotion = () => {
         {me?.nickname}님의 <br />
         지금 감정은 어떠세요?
       </MainTitle>
-      <FirstCategorySelect />
+
       <ButtonWrapper>
         <CommonButton
           color="primary"
           onClick={nextProgressStep}
           size="large"
-          disabled={selectedState.firstCategory === ''}
+          // disabled
         >
           다음
         </CommonButton>
@@ -55,7 +54,7 @@ const ButtonWrapper = styled.div`
 export const MainTitle = styled.div`
   ${theme.fonts.subtitle1}
   font-weight: 500;
-  margin: 5.4rem 0 4rem;
+  margin: 3.2rem 0 4rem;
   color: ${theme.colors.white};
 `;
 

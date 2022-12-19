@@ -5,6 +5,7 @@ import theme from '@/styles/theme';
 export const OptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 3.2rem;
   & > div.space-between {
     display: flex;
     justify-content: space-between;

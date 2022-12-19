@@ -5,9 +5,10 @@ import CheckCirclePr from 'public/svgs/CheckCirclePr.svg';
 import FolderPlus from 'public/svgs/folderplus.svg';
 import { BottomSheetFolderListWrap } from './BottomSheetFolderList.styles';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { createPostRequestState } from '@/store/post/atom';
 import { Folder } from '@/shared/type/folder';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { WriteFormValues } from '@/shared/type/post';
+import { useBlockScroll } from '@/hooks/useBlockModal';
 
 interface BottomSheetFolderListProps {
   folderData: Folder[];
@@ -16,11 +17,18 @@ interface BottomSheetFolderListProps {
 }
 
 const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomSheetFolderListProps) => {
-  const [selectedFolder, setSelectFolder] = useRecoilState(createPostRequestState);
+  const { setValue, control } = useFormContext<WriteFormValues>();
+  const currentFolderId = useWatch({
+    control,
+    name: 'folderId',
+  });
+  // FIXME: 폴더를 선택하면 overflow: hidden이 강제되어 임시방편으로 해결
+  const unBlockScroll = useBlockScroll(true);
 
   const closeFolerList = (selectedForderId: number) => () => {
-    setSelectFolder((prev) => ({ ...prev, folderId: selectedForderId }));
+    setValue('folderId', selectedForderId);
     onClose();
+    unBlockScroll;
   };
 
   return (
@@ -34,9 +42,7 @@ const BottomSheetFolderList = ({ folderData, onClose, toggleDialog }: BottomShee
       {folderData
         .map(({ folderId, folderName }) => (
           <FolderListItemWrap key={folderId} onClick={closeFolerList(folderId)}>
-            <IconWrap>
-              {folderId === selectedFolder.folderId && <Image src={CheckCirclePr} alt="CheckCirclePr" />}
-            </IconWrap>
+            <IconWrap>{folderId === currentFolderId && <Image src={CheckCirclePr} alt="CheckCirclePr" />}</IconWrap>
             {folderName}
           </FolderListItemWrap>
         ))

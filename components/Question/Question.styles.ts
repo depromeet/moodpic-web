@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
-export const ButtonContainer = styled.div`
-  margin: 2.4rem 0;
-  & > div > button:not(:last-child) {
-    margin-right: 1.2rem;
-  }
-`;
-
 export const TooltipWrapper = styled.div`
   position: absolute;
   left: 1.8rem;
@@ -89,5 +82,5 @@ export const ProvidedQuestionSubDescription = styled.div`
 export const MyselfQuestionTitle = styled.div`
   ${theme.fonts.btn1};
   color: ${theme.colors.gray6};
-  margin: 0.6rem 0 2rem;
+  margin: 3.2rem 0 2rem;
 `;
