@@ -50,6 +50,18 @@ export interface PostRequestType {
   folderId: number | undefined;
 }
 
+export interface WriteFormValues {
+  firstCategory: string;
+  secondCategory: string;
+  content: string;
+  worryQuestion1: string | undefined;
+  worryQuestion2: string | undefined;
+  worryQuestion3: string | undefined;
+  tags: string[];
+  disclosure: boolean;
+  folderId: number | undefined;
+}
+
 export interface PostResponseType {
   postId: string;
 }

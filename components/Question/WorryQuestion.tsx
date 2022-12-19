@@ -1,32 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { RefObject, useEffect, useRef } from 'react';
-import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
-import { createPostRequestState } from '@/store/post/atom';
-import { CommonTextArea, CommonButton } from '@/components/Common';
+import { CommonButton } from '@/components/Common';
 import {
   NumberTitle,
   ProvidedQuestionMainTitle,
   ProvidedQuestionSubDescription,
   QuestionWrap,
 } from './Question.styles';
-import useInput from '@/hooks/useInput';
 import { useMemberQuery } from '@/hooks/apis';
+import { WriteFormValues } from '@/shared/type/post';
+import { useFormContext, useWatch } from 'react-hook-form';
+import RHFTextArea from '../Common/TextArea/RHFTextArea';
 
 const HEADER_HEIGHT = 50;
 
 const WorryQuestion = () => {
-  const [postRequestData, setPostRequestData] = useRecoilState(createPostRequestState);
-  const [firstQuestionValue, onChangeFirstQuestionValue, setFirstQuestionValue] = useInput('');
-  const [secondQuestionValue, onChangeSecondQuestionValue, setSecondQuestionValue] = useInput('');
-  const [thirdQuestionValue, onChangeThirdQuestionValue, setThirdQuestionValue] = useInput('');
   const firstQuestionRef = useRef<HTMLDivElement>(null);
   const secondQuestionRef = useRef<HTMLDivElement>(null);
   const thirdQuestionRef = useRef<HTMLDivElement>(null);
   const timer = useRef<any>(null);
   const nextProgressStep = useNextProgressStep();
   const { data: me } = useMemberQuery();
+  const { control } = useFormContext<WriteFormValues>();
+
+  const [worryQuestion1, worryQuestion2, worryQuestion3] = useWatch({
+    control,
+    name: ['worryQuestion1', 'worryQuestion2', 'worryQuestion3'],
+  });
 
   const scrollToTextAreaOffestTop = (target: RefObject<HTMLDivElement>) => () => {
     const targetRef = target;
@@ -42,22 +44,6 @@ const WorryQuestion = () => {
       }, 100);
     }
   };
-
-  const onClickNextButton = () => {
-    setPostRequestData((prev) => ({
-      ...prev,
-      content: `${firstQuestionValue}|${secondQuestionValue}|${thirdQuestionValue}`,
-    }));
-    nextProgressStep();
-  };
-
-  useEffect(() => {
-    const [postRequestFirstQuestionValue, postRequestSecondQuestionValue, postRequestThirdQuestionValue] =
-      postRequestData.content.split('|');
-    setFirstQuestionValue(postRequestFirstQuestionValue);
-    setSecondQuestionValue(postRequestSecondQuestionValue);
-    setThirdQuestionValue(postRequestThirdQuestionValue);
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -77,10 +63,9 @@ const WorryQuestion = () => {
           어떤 일이 있었나요?
         </ProvidedQuestionMainTitle>
         <ProvidedQuestionSubDescription>상황을 객관적으로 파악해보는 시간을 가져보세요.</ProvidedQuestionSubDescription>
-        <CommonTextArea
-          value={firstQuestionValue}
+        <RHFTextArea<WriteFormValues>
+          name="worryQuestion1"
           height="32.6rem"
-          onChange={onChangeFirstQuestionValue}
           onFocus={scrollToTextAreaOffestTop(firstQuestionRef)}
           placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
         />
@@ -92,10 +77,9 @@ const WorryQuestion = () => {
         </NumberTitle>
         <ProvidedQuestionMainTitle>그 때 어떤 감정이 들었나요?</ProvidedQuestionMainTitle>
         <ProvidedQuestionSubDescription>너무 깊게 생각하지 않아도 돼요!</ProvidedQuestionSubDescription>
-        <CommonTextArea
-          value={secondQuestionValue}
+        <RHFTextArea<WriteFormValues>
+          name="worryQuestion2"
           height="32.6rem"
-          onChange={onChangeSecondQuestionValue}
           onFocus={scrollToTextAreaOffestTop(secondQuestionRef)}
           placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
         />
@@ -109,10 +93,9 @@ const WorryQuestion = () => {
         <ProvidedQuestionSubDescription>
           지금의 나에게 해줄 수 있는 말은 무엇이 있을까요?
         </ProvidedQuestionSubDescription>
-        <CommonTextArea
-          value={thirdQuestionValue}
+        <RHFTextArea<WriteFormValues>
+          name="worryQuestion3"
           height="32.6rem"
-          onChange={onChangeThirdQuestionValue}
           onFocus={scrollToTextAreaOffestTop(thirdQuestionRef)}
           placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
         />
@@ -120,9 +103,9 @@ const WorryQuestion = () => {
 
       <ButtonWrapper>
         <CommonButton
-          disabled={!(!!firstQuestionValue && !!secondQuestionValue && !!thirdQuestionValue)}
+          disabled={!(!!worryQuestion1 && !!worryQuestion2 && !!worryQuestion3)}
           color="primary"
-          onClick={onClickNextButton}
+          onClick={nextProgressStep}
           size="large"
         >
           다음

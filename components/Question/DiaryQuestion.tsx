@@ -1,40 +1,34 @@
-import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import React from 'react';
 import styled from 'styled-components';
 import useNextProgressStep from '@/hooks/useNextProgressStep';
-import { createPostRequestState } from '@/store/post/atom';
-import { CommonTextArea, CommonButton } from '@/components/Common';
+import { CommonButton } from '@/components/Common';
 import { MyselfQuestionTitle, QuestionWrap } from './Question.styles';
-import useInput from '@/hooks/useInput';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { WriteFormValues } from '@/shared/type/post';
+import RHFTextArea from '../Common/TextArea/RHFTextArea';
 
 const DiaryQuestion = () => {
-  const [postRequestData, setPostRequestData] = useRecoilState(createPostRequestState);
-  const [myselfQuestionValue, onChangeMyselfQuestionValue, setMyselfQuestionValue] = useInput('');
   const nextProgressStep = useNextProgressStep();
+  const { control } = useFormContext<WriteFormValues>();
 
-  const onClickNextButton = () => {
-    setPostRequestData((prev) => ({ ...prev, content: myselfQuestionValue }));
-    nextProgressStep();
-  };
-
-  useEffect(() => {
-    setMyselfQuestionValue(postRequestData.content);
-  }, []);
+  const content = useWatch({
+    control,
+    name: 'content',
+  });
 
   return (
     <>
       <QuestionWrap>
         <MyselfQuestionTitle>✏️ &nbsp; 감정과 생각을 자유롭게 적어주세요.</MyselfQuestionTitle>
-        <CommonTextArea
-          value={myselfQuestionValue}
+        <RHFTextArea<WriteFormValues>
+          name="content"
           height="32.6rem"
-          onChange={onChangeMyselfQuestionValue}
           placeholder="질문에 대한 감정과 생각을 자유롭게 적어주세요."
         />
       </QuestionWrap>
 
       <ButtonWrapper>
-        <CommonButton disabled={!myselfQuestionValue} color="primary" onClick={onClickNextButton} size="large">
+        <CommonButton disabled={!content} color="primary" onClick={nextProgressStep} size="large">
           다음
         </CommonButton>
       </ButtonWrapper>
